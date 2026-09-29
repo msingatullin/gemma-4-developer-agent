@@ -1,0 +1,14 @@
+agent_class: LlmAgent
+name: bug_localizer
+description: Specialized subagent to analyze test failures, traceback lines, and pin down exact file paths and line ranges.
+model: gemma-4-31b-it-qat-w4a16-ct
+
+instruction: !include prompts/bug_localizer.md
+generate_content_config: !include configs/sampling.yaml
+
+tools:
+  - read_file
+  - search_similar_code
+  - get_code_neighbors
+  - get_code_subgraph
+  - run_command
