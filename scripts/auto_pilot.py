@@ -17,6 +17,8 @@ SPOOL_DB = Path("/home/mikhail/.config/mmw/spool.db")
 COMPETITION_MAIN = "gemma-4-developer-agent"
 COMPETITION_PAPER = "gemma-4-developer-agent-paper"
 
+ACTIVE_SUBMISSION_REF = "56660578"  # v1 baseline
+
 def run_cmd(cmd, cwd=WORKDIR):
     res = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
     return res.stdout.strip(), res.stderr.strip(), res.returncode
@@ -44,7 +46,7 @@ def log_to_mmw_spool(title, content):
 def check_main_submissions():
     out, err, code = run_cmd([KAGGLE_CLI, "competitions", "submissions", "-c", COMPETITION_MAIN])
     if code != 0:
-        return f"[Status] Not joined or no submissions yet ({err})"
+        return f"[Status] Error fetching submissions: {err}"
     return out
 
 def run_cycle():
