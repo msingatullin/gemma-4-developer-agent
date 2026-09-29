@@ -53,31 +53,31 @@ def run_cycle():
     now_iso = datetime.now(timezone.utc).isoformat()
     report = [f"=== Gemma 4 AutoPilot Cycle at {now_iso} ==="]
 
-    # 1. Validation check of latest candidate (v3_dev)
-    v_out, v_err, v_code = run_cmd(["python3", str(WORKDIR / "tools" / "validate_submission.py"), str(WORKDIR / "v3_dev")])
+    # 1. Validation check of latest candidate (v4_dev)
+    v_out, v_err, v_code = run_cmd(["python3", str(WORKDIR / "tools" / "validate_submission.py"), str(WORKDIR / "v4_dev")])
     if v_code == 0:
-        report.append("✓ v3_dev submission candidate validated: PASS")
+        report.append("✓ v4_dev submission candidate validated: PASS")
     else:
-        report.append(f"✗ v3_dev validation failed: {v_err}")
+        report.append(f"✗ v4_dev validation failed: {v_err}")
 
     # 2. Check main competition submissions status
     main_subs = check_main_submissions()
     report.append(f"\n--- Main Track Submissions ---\n{main_subs}")
 
-    # 3. Check automated daily submission queue for v3/v2
-    target_zip = WORKDIR / "submission_v3.zip"
+    # 3. Check automated daily submission queue for v4
+    target_zip = WORKDIR / "submission_v4.zip"
     if not target_zip.exists():
-        target_zip = WORKDIR / "submission_v2.zip"
+        target_zip = WORKDIR / "submission_v3.zip"
 
     if target_zip.exists():
-        version_tag = "v3" if "v3" in target_zip.name else "v2"
+        version_tag = "v4" if "v4" in target_zip.name else "v3"
         already_submitted = version_tag in main_subs
         if not already_submitted:
             print(f"[AutoPilot] Checking if daily quota allows submission of {target_zip.name}...")
             sub_out, sub_err, sub_code = run_cmd([
                 KAGGLE_CLI, "competitions", "submit", "-c", COMPETITION_MAIN,
                 "-f", str(target_zip),
-                "-m", f"{version_tag}: bug_localizer, syntax_checker, thinking_budget 4096, eval_config 20m/50c"
+                "-m", f"{version_tag}: bug_localizer, syntax_checker, context-anchored edit_file, git clean revert, thinking_budget 4096"
             ])
             if sub_code == 0 and "Successfully submitted" in sub_out:
                 report.append(f"\n[AUTO-DEPLOY] Successfully deployed {target_zip.name}: {sub_out}")
