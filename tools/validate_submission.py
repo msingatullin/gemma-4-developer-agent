@@ -74,6 +74,9 @@ def validate_submission(submission_dir: Path) -> bool:
 
 
 if __name__ == "__main__":
-    base_dir = Path(__file__).resolve().parent.parent / "submission"
+    if len(sys.argv) > 1:
+        base_dir = Path(sys.argv[1]).resolve()
+    else:
+        base_dir = Path(__file__).resolve().parent.parent / "submission"
     success = validate_submission(base_dir)
     sys.exit(0 if success else 1)
