@@ -1,0 +1,26 @@
+agent_class: LlmAgent
+name: developer_agent
+description: Autonomous software engineering agent for repository navigation, debugging, and patch generation.
+model: gemma-4-31b-it-qat-w4a16-ct
+
+instruction: !include prompts/system.md
+generate_content_config: !include configs/sampling.yaml
+
+tools:
+  - read_file
+  - edit_file
+  - write_file
+  - run_command
+  - get_status
+  - submit_patch
+  - search_similar_code
+  - get_code_neighbors
+  - get_code_subgraph
+  - agent_tool:
+      config_path: sub_agents/bug_localizer.yaml
+      skip_summarization: true
+
+skills:
+  - test_runner
+  - ast_indexer
+  - syntax_checker
