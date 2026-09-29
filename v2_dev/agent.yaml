@@ -18,7 +18,7 @@ tools:
   - get_code_subgraph
   - agent_tool:
       config_path: sub_agents/bug_localizer.yaml
-      skip_summarization: false
+      skip_summarization: true
 
 skills:
   - test_runner
