@@ -17,7 +17,7 @@ SPOOL_DB = Path("/home/mikhail/.config/mmw/spool.db")
 COMPETITION_MAIN = "gemma-4-developer-agent"
 COMPETITION_PAPER = "gemma-4-developer-agent-paper"
 
-ACTIVE_SUBMISSION_REF = "56660578"  # v1 baseline
+ACTIVE_SUBMISSION_REF = "56660578"  # v1 baseline (COMPLETE)
 
 def run_cmd(cmd, cwd=WORKDIR):
     res = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
@@ -53,31 +53,35 @@ def run_cycle():
     now_iso = datetime.now(timezone.utc).isoformat()
     report = [f"=== Gemma 4 AutoPilot Cycle at {now_iso} ==="]
 
-    # 1. Validation check of v2_dev candidate
-    v_out, v_err, v_code = run_cmd(["python3", str(WORKDIR / "tools" / "validate_submission.py"), str(WORKDIR / "v2_dev")])
+    # 1. Validation check of latest candidate (v3_dev)
+    v_out, v_err, v_code = run_cmd(["python3", str(WORKDIR / "tools" / "validate_submission.py"), str(WORKDIR / "v3_dev")])
     if v_code == 0:
-        report.append("✓ v2_dev submission candidate validated: PASS")
+        report.append("✓ v3_dev submission candidate validated: PASS")
     else:
-        report.append(f"✗ v2_dev validation failed: {v_err}")
+        report.append(f"✗ v3_dev validation failed: {v_err}")
 
     # 2. Check main competition submissions status
     main_subs = check_main_submissions()
     report.append(f"\n--- Main Track Submissions ---\n{main_subs}")
 
-    # 3. Check automated daily submission queue for v2
-    v2_zip = WORKDIR / "submission_v2.zip"
-    if v2_zip.exists():
-        v2_already = "v2" in main_subs
-        if not v2_already:
-            print(f"[AutoPilot] Checking if daily quota allows submission of {v2_zip.name}...")
+    # 3. Check automated daily submission queue for v3/v2
+    target_zip = WORKDIR / "submission_v3.zip"
+    if not target_zip.exists():
+        target_zip = WORKDIR / "submission_v2.zip"
+
+    if target_zip.exists():
+        version_tag = "v3" if "v3" in target_zip.name else "v2"
+        already_submitted = version_tag in main_subs
+        if not already_submitted:
+            print(f"[AutoPilot] Checking if daily quota allows submission of {target_zip.name}...")
             sub_out, sub_err, sub_code = run_cmd([
                 KAGGLE_CLI, "competitions", "submit", "-c", COMPETITION_MAIN,
-                "-f", str(v2_zip),
-                "-m", "v2: bug_localizer subagent, thinking_budget 4096, eval_config budget expansion"
+                "-f", str(target_zip),
+                "-m", f"{version_tag}: bug_localizer, syntax_checker, thinking_budget 4096, eval_config 20m/50c"
             ])
             if sub_code == 0 and "Successfully submitted" in sub_out:
-                report.append(f"\n[AUTO-DEPLOY] Successfully deployed {v2_zip.name}: {sub_out}")
-                log_to_mmw_spool("AutoPilot Auto-Deployment v2", f"Deployed v2 on quota reset:\n{sub_out}")
+                report.append(f"\n[AUTO-DEPLOY] Successfully deployed {target_zip.name}: {sub_out}")
+                log_to_mmw_spool(f"AutoPilot Auto-Deployment {version_tag}", f"Deployed {version_tag} on quota reset:\n{sub_out}")
             else:
                 report.append(f"\n[AUTO-DEPLOY-WAIT] Daily quota exhausted or waiting. Submitter response: {sub_out or sub_err}")
 
