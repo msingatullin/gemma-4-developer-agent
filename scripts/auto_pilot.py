@@ -53,18 +53,35 @@ def run_cycle():
     now_iso = datetime.now(timezone.utc).isoformat()
     report = [f"=== Gemma 4 AutoPilot Cycle at {now_iso} ==="]
 
-    # 1. Validation check of current submission candidate
-    v_out, v_err, v_code = run_cmd(["python3", str(WORKDIR / "tools" / "validate_submission.py")])
+    # 1. Validation check of v2_dev candidate
+    v_out, v_err, v_code = run_cmd(["python3", str(WORKDIR / "tools" / "validate_submission.py"), str(WORKDIR / "v2_dev")])
     if v_code == 0:
-        report.append("✓ Local submission package validated: PASS")
+        report.append("✓ v2_dev submission candidate validated: PASS")
     else:
-        report.append(f"✗ Local submission package validation failed: {v_err}")
+        report.append(f"✗ v2_dev validation failed: {v_err}")
 
     # 2. Check main competition submissions status
     main_subs = check_main_submissions()
     report.append(f"\n--- Main Track Submissions ---\n{main_subs}")
 
-    # 3. Paper Track status
+    # 3. Check automated daily submission queue for v2
+    v2_zip = WORKDIR / "submission_v2.zip"
+    if v2_zip.exists():
+        v2_already = "v2" in main_subs
+        if not v2_already:
+            print(f"[AutoPilot] Checking if daily quota allows submission of {v2_zip.name}...")
+            sub_out, sub_err, sub_code = run_cmd([
+                KAGGLE_CLI, "competitions", "submit", "-c", COMPETITION_MAIN,
+                "-f", str(v2_zip),
+                "-m", "v2: bug_localizer subagent, thinking_budget 4096, eval_config budget expansion"
+            ])
+            if sub_code == 0 and "Successfully submitted" in sub_out:
+                report.append(f"\n[AUTO-DEPLOY] Successfully deployed {v2_zip.name}: {sub_out}")
+                log_to_mmw_spool("AutoPilot Auto-Deployment v2", f"Deployed v2 on quota reset:\n{sub_out}")
+            else:
+                report.append(f"\n[AUTO-DEPLOY-WAIT] Daily quota exhausted or waiting. Submitter response: {sub_out or sub_err}")
+
+    # 4. Paper Track status
     report.append(f"\n--- Paper Track Status ---")
     report.append("Writeup: AST-Guided Loops: Deterministic Verification for Gemma 4 SWE Agents")
     report.append("URL: https://www.kaggle.com/competitions/gemma-4-developer-agent-paper/writeups/ast-guided-deterministic-gemma4-agent")
