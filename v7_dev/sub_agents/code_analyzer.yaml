@@ -1,0 +1,13 @@
+agent_class: LlmAgent
+name: code_analyzer
+description: Read-only code exploration agent that searches symbols, traverses code graphs, and inspects files to pinpoint exact bug locations.
+model: gemma-4-31b-it-qat-w4a16-ct
+
+instruction: !include prompts/analyzer.md
+generate_content_config: !include configs/sampling.yaml
+
+tools:
+  - read_file
+  - search_similar_code
+  - get_code_neighbors
+  - get_code_subgraph

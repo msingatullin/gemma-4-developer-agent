@@ -18,7 +18,7 @@ SPOOL_DB = Path("/home/mikhail/.config/mmw/spool.db")
 COMPETITION_MAIN = "gemma-4-developer-agent"
 COMPETITION_PAPER = "gemma-4-developer-agent-paper"
 
-ACTIVE_SUBMISSION_REF = "56695474"  # v6 deployed at 2026-09-30 03:00:33 UTC (PENDING)
+ACTIVE_SUBMISSION_REF = "56695474"  # v6 completed
 
 def run_cmd(cmd, cwd=WORKDIR):
     res = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
@@ -54,23 +54,23 @@ def run_cycle():
     now_iso = datetime.now(timezone.utc).isoformat()
     report = [f"=== Gemma 4 AutoPilot Cycle at {now_iso} ==="]
 
-    # 1. Validation check of latest candidate (v6_dev)
-    v_out, v_err, v_code = run_cmd(["python3", str(WORKDIR / "tools" / "validate_submission.py"), str(WORKDIR / "v6_dev")])
+    # 1. Validation check of latest candidate (v7_dev)
+    v_out, v_err, v_code = run_cmd(["python3", str(WORKDIR / "tools" / "validate_submission.py"), str(WORKDIR / "v7_dev")])
     if v_code == 0:
-        report.append("✓ v6_dev submission candidate validated: PASS")
+        report.append("✓ v7_dev submission candidate validated: PASS")
     else:
-        report.append(f"✗ v6_dev validation failed: {v_err}")
+        report.append(f"✗ v7_dev validation failed: {v_err}")
 
     # 2. Check main competition submissions status
     main_subs = check_main_submissions()
     report.append(f"\n--- Main Track Submissions ---\n{main_subs}")
 
     # 3. Check automated daily submission queue (always staging as submission.zip)
-    target_zip = WORKDIR / "submission_v6.zip"
+    target_zip = WORKDIR / "submission_v7.zip"
     staged_zip = WORKDIR / "submission.zip"
 
     if target_zip.exists():
-        version_tag = "v6"
+        version_tag = "v7"
         already_submitted = version_tag in main_subs
         if not already_submitted:
             print(f"[AutoPilot] Staging {target_zip.name} as submission.zip for deployment...")
@@ -78,7 +78,7 @@ def run_cycle():
             sub_out, sub_err, sub_code = run_cmd([
                 KAGGLE_CLI, "competitions", "submit", "-c", COMPETITION_MAIN,
                 "-f", str(staged_zip),
-                "-m", "v6: bug_localizer, syntax_checker, patch_validator, 30m/80c budget, PYTHONSAFEPATH test flags"
+                "-m", "v7: two-tier architecture (coder + read-only code_analyzer agent_tool), AST indexing, 25m/80c budget"
             ])
             if sub_code == 0 and "Successfully submitted" in sub_out:
                 report.append(f"\n[AUTO-DEPLOY] Successfully deployed {target_zip.name}: {sub_out}")
