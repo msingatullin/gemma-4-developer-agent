@@ -4,6 +4,7 @@
 import os
 import sys
 import json
+import shutil
 import sqlite3
 import subprocess
 from pathlib import Path
@@ -17,7 +18,7 @@ SPOOL_DB = Path("/home/mikhail/.config/mmw/spool.db")
 COMPETITION_MAIN = "gemma-4-developer-agent"
 COMPETITION_PAPER = "gemma-4-developer-agent-paper"
 
-ACTIVE_SUBMISSION_REF = "56660578"  # v1 baseline (COMPLETE)
+ACTIVE_SUBMISSION_REF = "56695474"  # v6 deployed at 2026-09-30 03:00:33 UTC (PENDING)
 
 def run_cmd(cmd, cwd=WORKDIR):
     res = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
@@ -64,26 +65,26 @@ def run_cycle():
     main_subs = check_main_submissions()
     report.append(f"\n--- Main Track Submissions ---\n{main_subs}")
 
-    # 3. Check automated daily submission queue for v6
+    # 3. Check automated daily submission queue (always staging as submission.zip)
     target_zip = WORKDIR / "submission_v6.zip"
-    if not target_zip.exists():
-        target_zip = WORKDIR / "submission_v5.zip"
+    staged_zip = WORKDIR / "submission.zip"
 
     if target_zip.exists():
-        version_tag = "v6" if "v6" in target_zip.name else "v5"
+        version_tag = "v6"
         already_submitted = version_tag in main_subs
         if not already_submitted:
-            print(f"[AutoPilot] Checking if daily quota allows submission of {target_zip.name}...")
+            print(f"[AutoPilot] Staging {target_zip.name} as submission.zip for deployment...")
+            shutil.copyfile(target_zip, staged_zip)
             sub_out, sub_err, sub_code = run_cmd([
                 KAGGLE_CLI, "competitions", "submit", "-c", COMPETITION_MAIN,
-                "-f", str(target_zip),
-                "-m", f"{version_tag}: bug_localizer, syntax_checker, patch_validator, 30m/80c budget, PYTHONSAFEPATH test flags"
+                "-f", str(staged_zip),
+                "-m", "v6: bug_localizer, syntax_checker, patch_validator, 30m/80c budget, PYTHONSAFEPATH test flags"
             ])
             if sub_code == 0 and "Successfully submitted" in sub_out:
                 report.append(f"\n[AUTO-DEPLOY] Successfully deployed {target_zip.name}: {sub_out}")
                 log_to_mmw_spool(f"AutoPilot Auto-Deployment {version_tag}", f"Deployed {version_tag} on quota reset:\n{sub_out}")
             else:
-                report.append(f"\n[AUTO-DEPLOY-WAIT] Daily quota exhausted or waiting. Submitter response: {sub_out or sub_err}")
+                report.append(f"\n[AUTO-DEPLOY-WAIT] Submitter response: {sub_out or sub_err}")
 
     # 4. Paper Track status
     report.append(f"\n--- Paper Track Status ---")
