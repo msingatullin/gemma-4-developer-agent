@@ -18,7 +18,7 @@ SPOOL_DB = Path("/home/mikhail/.config/mmw/spool.db")
 COMPETITION_MAIN = "gemma-4-developer-agent"
 COMPETITION_PAPER = "gemma-4-developer-agent-paper"
 
-ACTIVE_SUBMISSION_REF = "56760943"  # v8 scored 0.12 (Rank 209/1313)
+ACTIVE_SUBMISSION_REF = "57779231"  # v9 submitted at 2026-10-29 18:10:43 UTC
 
 def run_cmd(cmd, cwd=WORKDIR):
     res = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
