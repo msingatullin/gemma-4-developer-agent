@@ -12,7 +12,7 @@
 
 Deploying autonomous software engineering (SWE) agents with quantized large language models—such as `google/gemma-4-31B-it-qat-w4a16-ct`—on edge-tier single-accelerator developer workstations (1× NVIDIA L4 24GB VRAM) reveals severe operational bottlenecks. Full-file reading across multi-thousand-line modules rapidly inflates prompt context, while unvalidated patches waste valuable container execution time on trivial syntax failures. Furthermore, multi-test failure logs flood context with hundreds of lines of irrelevant environment banners and captured stdout buffers.
 
-This work introduces the **AST-Guided Verification Suite**, an open-source, deterministic evaluation and execution framework engineered specifically for local SWE agents. The suite couples sub-millisecond abstract syntax tree (`ast.NodeVisitor`) symbol indexing, a dual-stage pre-flight syntax and compilation gate (`compile(mode='exec')`), and a multi-failure assertion-preserving traceback compression engine that eliminates captured stdout pollution while strictly retaining diagnostic root causes across single-, multiline-, and multi-failure parametrized test runs. Tested on the `ASTVerificationBenchmark` (a curated microbenchmark of 31 representative defect and context scenarios across FastAPI, Flask, Click, SymPy, Scikit-Learn, and Django with strict ground-truth line and error oracles verified by hard assertions), the suite achieves an average **44.6% reduction in prompt token consumption on symbol-sliced modules** (reducing targeted context to 36.0 estimated tokens per extracted method), a **30.6% corpus-level volume reduction on traceback logs** (892 to 619 estimated tokens; 30.3% mean per-log reduction) while strictly preserving 100% of diagnostic assertion lines (`E ...`), failing frame locations, and error signatures, and intercepts 100% of syntactically invalid patches in under 0.1 milliseconds (58.5 µs mean latency). By integrating zero-cost deterministic validation gates ahead of expensive sandbox runners, the architecture eliminates unvalidated syntax container spins, stabilizes context depth well within Gemma's 1,024-token sliding window attention layers, and enforces single-token deterministic completion. All benchmark evaluations execute live within the public notebook without external network or GPU dependencies.
+This work introduces the **AST-Guided Verification Suite**, an open-source, deterministic evaluation and execution framework engineered specifically for local SWE agents. The suite couples sub-millisecond abstract syntax tree (`ast.NodeVisitor`) symbol indexing, a native pre-flight syntax and compilation gate (`compile(mode='exec')`), and a multi-format, multi-failure assertion-preserving traceback compression engine that eliminates captured stdout pollution while strictly retaining diagnostic root causes across standard pytest formats (`--tb=auto`, `--tb=long`, `--tb=short`) and native tracebacks (`--tb=native`). Tested on the `ASTVerificationBenchmark` (a curated microbenchmark of 31 representative defect and diagnostic scenarios across FastAPI, Flask, Click, SymPy, Scikit-Learn, Django, and PyTest with strict ground-truth line, exception, and multiline assertion oracles verified by hard executable assertions), the suite achieves an average **44.6% reduction in prompt token consumption on symbol-sliced modules** (reducing targeted context from 65.8 to 36.0 estimated tokens per extracted method), a **30.6% corpus-level volume reduction on traceback logs** (892 to 619 estimated tokens; 30.3% mean per-log reduction) while strictly preserving 100% of diagnostic root causes, line pointers, and multiline assertion details across single- and multi-failure parametrized test runs, and intercepts 100% of syntactically invalid patches in under 0.1 milliseconds (35.9 µs cloud / 58.5 µs local mean latency). The microbenchmark evaluates the deterministic components in isolation using strict ground-truth oracles verified by hard executable assertions, providing empirical foundations for autonomous SWE agent integration without external network or GPU dependencies.
 
 ---
 
@@ -70,61 +70,63 @@ Autonomous software engineering agents have advanced rapidly across benchmark ev
 
 In contrast to prior art, this suite introduces a **zero-inference, deterministic verification layer**:
 1. **Zero LLM Overhead for Localization:** Symbol discovery relies entirely on Python's built-in `ast` visitor, extracting precise function and class line ranges in sub-millisecond latency without consuming model generation tokens.
-2. **Dual-Stage Pre-Flight Compilation Guard:** Catches syntax regressions, top-level return anomalies, and indentation corruptions in under 0.1 ms using `compile(mode='exec')` before initiating expensive container test suites.
-3. **Multi-Failure Traceback Compression:** Strips hundreds of lines of pytest session banners and captured stdout spam while strictly preserving all individual failing assertion lines (`E ...`), markers, and error signatures across single-, multiline-, and multi-failure parametrized test runs.
+2. **Native Pre-Flight Compilation Gate:** Catches syntax regressions, top-level return anomalies, and indentation corruptions in under 0.1 ms using Python's standard `compile(mode='exec')` before initiating expensive container test suites.
+3. **Multi-Format Traceback Compression:** Strips hundreds of lines of pytest session banners and captured stdout spam while strictly preserving all individual failing assertion lines (`E ...`), line pointers, and multiline exception messages across standard pytest (`--tb=auto`, `--tb=long`, `--tb=short`) and native tracebacks (`--tb=native`).
 
 ---
 
-## 4. Deterministic Component Evaluation: Executable Benchmark with Strict Oracles
+## 4. Deterministic Component Evaluation: Executable Benchmark with Hardened Oracles
 
-We evaluated the deterministic components across the `ASTVerificationBenchmark`, a curated microbenchmark of 31 representative defect and context scenarios with strict ground-truth line and error oracles enforced by executable assertions:
+We evaluated the deterministic components across the `ASTVerificationBenchmark`, a curated microbenchmark of 31 representative defect and context scenarios with strict ground-truth line, exception, and multiline assertion oracles enforced by executable assertions:
 
 | Category | Tasks | Mean CPU Latency (µs) | Strict Oracle Accuracy | Mean Raw Tokens (Est.) | Mean Processed Tokens | Mean Token Reduction |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Code Slicing** | 8 | 441.5 µs | 100.0% (Exact line bounds) | 65.8 | 36.0 | **44.6%** |
-| **Syntax Interception** | 10 | 58.5 µs | 100.0% (Syntax catches) | 6.8 | 6.8 | Pre-flight catch (100%) |
-| **Traceback Compression** | 8 | 165.4 µs | 100.0% (All causes preserved) | 111.5 | 77.4 | **30.6%** (Corpus aggregate) |
-| **Valid Clean Patches** | 5 | 101.9 µs | 100.0% (Zero false rejections) | 15.2 | 15.2 | Gate pass (100%) |
+| **Code Slicing** | 8 | 447.4 µs | 100.0% (Exact bounds & content) | 65.8 | 36.0 | **44.6%** |
+| **Syntax Interception** | 10 | 35.9 µs | 100.0% (Syntax catches) | 6.8 | 6.8 | Pre-flight catch (100%) |
+| **Traceback Compression** | 8 | 168.7 µs | 100.0% (All details preserved) | 111.5 | 77.4 | **30.6%** (Corpus aggregate) |
+| **Valid Clean Patches** | 5 | 97.5 µs | 100.0% (Zero false rejections) | 15.2 | 15.2 | Gate pass (100%) |
 
-### Key Takeaways
-1. **Sub-Millisecond Execution:** All four verification categories execute in aggregate under 6.0 ms on a standard CPU for all 31 tasks combined.
-2. **Targeted Context Economy:** Code slicing restricts prompt context to precise symbol line boundaries, yielding a 44.6% reduction in token consumption per inspected function or class.
-3. **Lossless Multi-Failure Diagnostic Safety:** Traceback compression delivers a 30.6% corpus-level volume reduction across real-world pytest failure logs while strictly preserving 100% of diagnostic assertion lines (`E ...`), multiline error descriptions, and multiple failure markers across parametrized test executions.
-4. **Certified Verification Gate:** The benchmark execution is permanently certified in the public notebook via an active hard assertion (`assert len(failed_cases) == 0`) that terminates execution with an exception if any ground-truth oracle fails.
+### Hardened Oracles and Methodological Rigor
+1. **Slicing Oracle Hardening:** In addition to validating expected start and end line coordinates (`s_line == expected_start and e_line == expected_end`), the oracle validates that the extracted slice is non-empty, contains the target symbol identifier, and byte-for-byte matches the exact line range of the source code. Fault-injection tests confirming that empty slices with correct coordinates fail the oracle are verified in the test suite.
+2. **Traceback Oracle Hardening:** In addition to verifying primary failure markers and `FAILED` summary lines, multiline exception fixtures (such as `TRC-08`) require that all 30 intermediate assertion detail lines (`detail-0` through `detail-29`) and both boundary markers are preserved verbatim. Fault-injection tests omitting any intermediate lines trigger immediate oracle rejection.
+3. **Multi-Format Support:** The compressor supports standard pytest formats (`--tb=auto`, `--tb=long`, `--tb=short`), native tracebacks (`--tb=native`), and provides safe fallback preserving failure block content if an unrecognized format is supplied.
+4. **Sub-Millisecond Execution:** All four verification categories execute in aggregate under 6.0 ms on CPU for all 31 tasks combined (2.86 ms on Kaggle cloud CPU).
+5. **Certified Test Gate:** The benchmark execution is permanently certified in the public notebook via an active hard assertion (`assert len(failed_cases) == 0`) that terminates execution with an exception if any ground-truth oracle fails.
 
 ---
 
-## 5. Autonomous SWE Agent Integration Architecture & Operational Guarantees
+## 5. SWE Agent Integration Architecture & Operational Design Principles
 
-Integrating the deterministic verification suite into an autonomous developer agent loop establishes formal operational guarantees that overcome the inherent constraints of quantized models running on edge accelerators.
+The microbenchmark in Section 4 evaluates the deterministic CPU-based components in isolation. Full end-to-end multi-turn agent evaluations with live Gemma model inference remain prospective future work. In this section, we present the integration architecture and design principles for embedding these verified components into an autonomous agent loop.
 
-### 5.1 Zero-Cost Pre-Flight Compiler Gate
+### 5.1 Native Pre-Flight Compiler Gate
 In unconstrained agent loops, LLMs frequently emit malformed Python patches containing syntax regressions—such as unmatched parentheses, incorrect indentation, top-level `return` or `await` statements outside function scopes, or truncated blocks. In standard agent harnesses, each malformed patch triggers an expensive container execution cycle:
 - Spinning up or invoking the Docker sandbox container (~2–5 seconds).
 - Invoking the project test suite runner (~10–20 seconds).
 - Consuming an agent conversational turn to ingest the resulting syntax traceback.
 
-The dual-stage pre-flight compiler gate invokes Python's native compilation pipeline (`compile(patch_code, filename, 'exec')`) before any sandbox command is dispatched. If syntax or indentation anomalies exist, the gate intercepts the patch in under 60 µs and returns an actionable diagnostic feedback message directly to the model. This eliminates wasted container execution cycles and preserves the agent's turn budget for legitimate semantic debugging.
+The native pre-flight compiler gate invokes Python's compilation pipeline (`compile(patch_code, '<candidate_patch>', 'exec')`) before any sandbox command is dispatched. If syntax or indentation anomalies exist, the gate intercepts the patch in under 0.1 ms (35.9 µs cloud / 58.5 µs local mean latency) and returns an actionable diagnostic feedback message directly to the model. This design prevents unnecessary container spin overhead and preserves the agent's turn budget for legitimate semantic debugging.
 
 ### 5.2 Context Window Stability and Attention Mechanics
-The quantized `gemma-4-31B-it-qat-w4a16-ct` architecture utilizes hybrid attention, comprising 50 sliding-window layers with an effective window of $W = 1024$ tokens and 10 full-attention layers. Unconstrained file navigation—where agents read complete multi-thousand-line modules—rapidly inflates the context depth beyond 8,192 tokens. In sliding-window attention layers, this expansion causes the earliest instructions and task definitions to slide outside the active window, degrading attention focus and causing reasoning drift.
+The quantized `gemma-4-31B-it-qat-w4a16-ct` architecture utilizes hybrid attention, comprising 50 sliding-window layers with an effective window of $W = 1024$ tokens and 10 full-attention layers. Unconstrained file navigation—where agents read complete multi-thousand-line modules—rapidly expands context depth. In sliding-window attention layers, this expansion causes the earliest instructions and task definitions to slide outside the active window, degrading attention focus and causing reasoning drift.
 
-By deploying AST-guided symbol slicing (`ast_indexer`), the agent reads only the relevant function or class definitions (44.6% token reduction). Combined with traceback compression (30.6% corpus volume reduction), the prompt context remains bounded within the optimal attention regime, preventing memory bloat and preserving high attention fidelity across multi-turn sessions.
+By deploying AST-guided symbol slicing (`ast_indexer`), the agent reads only targeted function or class definitions (44.6% token reduction). Combined with traceback compression (30.6% corpus volume reduction), the prompt context remains bounded within the optimal attention regime, preventing memory bloat and preserving high attention fidelity across multi-turn sessions.
 
-### 5.3 Lossless Diagnostic Retention Across Multi-Failure Test Suites
+### 5.3 Multi-Format Lossless Diagnostic Retention
 A primary hazard in log compression is the accidental suppression of critical diagnostic clues. In real pytest environments, test failures frequently produce:
 - Multiline exception messages spanning dozens of assertion details.
 - Parametrized tests where multiple distinct input fixtures fail with different root causes.
 - Plugin-level or framework configuration errors (`plugins: ...`).
+- Formats without `E ` prefixes, such as Python's native traceback mode (`--tb=native`).
 
-The AST-guided traceback filter employs block-aware parsing. It isolates failing test blocks, collapses captured stdout noise, but strictly preserves:
-1. Every failing test header and file location (`.py:line: Error`).
+The AST-guided traceback filter employs block-aware parsing. It isolates failing test blocks, collapses captured stdout noise, and strictly preserves:
+1. Every failing test header and file location (`.py:line: Error` or `File "...", line ..., in ...`).
 2. The failing source code line (`> assert ...`).
-3. Every single diagnostic assertion line prefixed with `E ` or `E\t`, ensuring that multiline assertion messages (such as `TRC-08` multiline audit fixtures) are retained in their entirety.
+3. Every single diagnostic assertion line prefixed with `E ` or `E\t` in standard pytest modes, and the full exception block in native traceback mode.
 4. All independent test failure blocks within parametrized suites.
 
 ### 5.4 Deterministic Loop Termination
-Autonomous agents frequently suffer from conversational over-generation—continuing to explain, apologize, or query after a task has been successfully solved. The verification harness enforces a strict deterministic completion rule: once the test runner verifies that all targeted test cases pass, the agent emits a single-token completion token (`Done.`), terminating the turn cycle immediately.
+Autonomous agents frequently suffer from conversational over-generation—continuing to explain, apologize, or query after a task has been successfully solved. The agent system prompt instructs concise single-sentence completion upon resolving all failing tests, and the integration harness can enforce termination via deterministic test exit-code inspection, halting the loop immediately upon test suite pass.
 
 ### 5.5 Production ADK Specification
 The complete system is formalized as a Google Agent Development Kit (ADK) specification in `agent.yaml`:
