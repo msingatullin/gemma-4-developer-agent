@@ -30,6 +30,8 @@ This work introduces the **AST-Guided Verification Suite**, an open-source, dete
 
 ### Analytical Analysis of KV Cache Growth Across Hybrid Attention Layers
 
+The memory and latency values below are analytical estimates under the stated cache-layout, storage-precision, resident-memory and bandwidth assumptions. They are not GPU measurements and do not establish the actual memory headroom or token latency of a serving runtime.
+
 For a context sequence of $T$ tokens stored in FP16 ($2$ bytes/scalar), memory allocation scales differently across sliding and global layers:
 
 1. **Sliding-Window Attention Layers (50 layers):**
@@ -49,7 +51,7 @@ For a context sequence of $T$ tokens stored in FP16 ($2$ bytes/scalar), memory a
 
 Under the memory-bound autoregressive decoding regime (operational intensity $I \approx 1$ FLOP/byte), per-token generation latency follows:
 $$\tau(T) = \frac{(M_{\text{static}} + M_{\text{KV}}(T)) \times 1024^3}{\text{BW}_{\text{eff}} \times 10^9} \times 1000$$
-Converting binary GiB to bytes and decimal memory bandwidth ($242.0 \times 10^9$ bytes/sec) yields an exact per-token generation latency of **87.2 ms/token at 8,192 tokens** versus **92.7 ms/token at 24,576 tokens** ($+6.36\%$ latency growth), while shrinking buffer headroom from 4.27 GiB to under 2.94 GiB on single-accelerator setups.
+Converting binary GiB to bytes and decimal memory bandwidth ($242.0 \times 10^9$ bytes/sec) yields a modeled per-token generation latency of **87.2 ms/token at 8,192 tokens** versus **92.7 ms/token at 24,576 tokens** ($+6.36\%$ latency growth), while shrinking buffer headroom from 4.27 GiB to under 2.94 GiB on single-accelerator setups.
 
 ---
 
@@ -100,12 +102,9 @@ We evaluated the deterministic components across the `ASTVerificationBenchmark`,
 The microbenchmark in Section 4 evaluates the deterministic CPU-based components in isolation. Full end-to-end multi-turn agent evaluations with live Gemma model inference remain prospective future work. In this section, we present the integration architecture and design principles for embedding these verified components into an autonomous agent loop.
 
 ### 5.1 Native Pre-Flight Compiler Gate
-In unconstrained agent loops, LLMs frequently emit malformed Python patches containing syntax regressions—such as unmatched parentheses, incorrect indentation, top-level `return` or `await` statements outside function scopes, or truncated blocks. In standard agent harnesses, each malformed patch triggers an expensive container execution cycle:
-- Spinning up or invoking the Docker sandbox container (~2–5 seconds).
-- Invoking the project test suite runner (~10–20 seconds).
-- Consuming an agent conversational turn to ingest the resulting syntax traceback.
+When a candidate Python module contains a syntax error, a pre-flight compiler gate can reject it before the project test command is dispatched. Potentially avoided work includes sandbox invocation, test-runner startup and handling the resulting test traceback. These costs are unmeasured in this study; no numerical container or test-runner timing is claimed. A persistent sandbox may incur no per-attempt container startup cost. The net effect, including model correction turns, must be measured in the paired E2E study.
 
-The native pre-flight compiler gate invokes Python's compilation pipeline (`compile(patch_code, '<candidate_patch>', 'exec')`) before any sandbox command is dispatched. If syntax or indentation anomalies exist, the gate intercepts the patch in under 0.1 ms (47.2 µs cloud / 58.5 µs local mean latency) and returns an actionable diagnostic feedback message directly to the model. This design prevents unnecessary container spin overhead and preserves the agent's turn budget for legitimate semantic debugging.
+The native pre-flight compiler gate invokes Python's compilation pipeline (`compile(patch_code, '<candidate_patch>', 'exec')`) before any sandbox command is dispatched. If syntax or indentation anomalies exist, the gate intercepts the patch in under 0.1 ms (47.2 µs cloud / 58.5 µs local mean latency) and returns an actionable diagnostic feedback message directly to the model. The intended benefit is avoiding test execution on syntactically invalid modules; the effect on total latency, token use and task resolution has not been measured.
 
 ### 5.2 Context Window Stability and Attention Mechanics
 The quantized `gemma-4-31B-it-qat-w4a16-ct` architecture utilizes hybrid attention, comprising 50 sliding-window layers with an effective window of $W = 1024$ tokens and 10 full-attention layers. Unconstrained file navigation—where agents read complete multi-thousand-line modules—rapidly expands context depth. In sliding-window attention layers, this expansion causes the earliest instructions and task definitions to slide outside the active window, degrading attention focus and causing reasoning drift.
