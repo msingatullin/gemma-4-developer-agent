@@ -2,7 +2,7 @@
 
 **Author:** Mikhail Singatullin (`msingatullin` / Team `Михаил`)  
 **Competition Track:** [Google - The Gemma 4 Developer Agent Paper Track](https://www.kaggle.com/competitions/gemma-4-developer-agent-paper)  
-**Primary Award Nomination:** Overall Best Paper ($15,000) (Secondary Nominations: Best New Resource / Best New Application)  
+**Target Track / Category:** Overall Best Paper / Best New Resource & Application  
 **Public Executable Notebook:** [Kaggle Notebook](https://www.kaggle.com/code/msingatullin/ast-guided-loops-verification-for-gemma-4)  
 **License:** Apache 2.0  
 
