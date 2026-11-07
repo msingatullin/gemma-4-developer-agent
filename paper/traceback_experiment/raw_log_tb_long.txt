@@ -1,0 +1,356 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.2, pluggy-1.6.0
+rootdir: /home/mikhail/gemma-4-developer-agent/paper/traceback_experiment
+collected 8 items
+
+test_real_fixtures.py FFF.FFFF                                           [100%]
+
+=================================== FAILURES ===================================
+__________________________ test_single_verbose_stdout __________________________
+
+    def test_single_verbose_stdout():
+        """Single test failure buried under verbose stdout spam."""
+        for i in range(120):
+            print(f"[STDOUT_BUFFER_LOG_NOISE_{i}] processing batch item {i} with metadata payload")
+>       assert 42 == 99, "EXACT_DIAGNOSTIC_ROOT_CAUSE: single_failure_target_marker"
+E       AssertionError: EXACT_DIAGNOSTIC_ROOT_CAUSE: single_failure_target_marker
+E       assert 42 == 99
+
+test_real_fixtures.py:8: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[STDOUT_BUFFER_LOG_NOISE_0] processing batch item 0 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_1] processing batch item 1 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_2] processing batch item 2 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_3] processing batch item 3 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_4] processing batch item 4 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_5] processing batch item 5 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_6] processing batch item 6 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_7] processing batch item 7 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_8] processing batch item 8 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_9] processing batch item 9 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_10] processing batch item 10 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_11] processing batch item 11 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_12] processing batch item 12 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_13] processing batch item 13 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_14] processing batch item 14 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_15] processing batch item 15 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_16] processing batch item 16 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_17] processing batch item 17 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_18] processing batch item 18 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_19] processing batch item 19 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_20] processing batch item 20 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_21] processing batch item 21 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_22] processing batch item 22 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_23] processing batch item 23 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_24] processing batch item 24 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_25] processing batch item 25 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_26] processing batch item 26 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_27] processing batch item 27 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_28] processing batch item 28 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_29] processing batch item 29 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_30] processing batch item 30 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_31] processing batch item 31 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_32] processing batch item 32 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_33] processing batch item 33 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_34] processing batch item 34 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_35] processing batch item 35 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_36] processing batch item 36 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_37] processing batch item 37 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_38] processing batch item 38 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_39] processing batch item 39 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_40] processing batch item 40 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_41] processing batch item 41 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_42] processing batch item 42 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_43] processing batch item 43 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_44] processing batch item 44 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_45] processing batch item 45 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_46] processing batch item 46 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_47] processing batch item 47 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_48] processing batch item 48 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_49] processing batch item 49 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_50] processing batch item 50 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_51] processing batch item 51 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_52] processing batch item 52 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_53] processing batch item 53 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_54] processing batch item 54 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_55] processing batch item 55 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_56] processing batch item 56 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_57] processing batch item 57 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_58] processing batch item 58 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_59] processing batch item 59 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_60] processing batch item 60 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_61] processing batch item 61 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_62] processing batch item 62 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_63] processing batch item 63 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_64] processing batch item 64 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_65] processing batch item 65 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_66] processing batch item 66 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_67] processing batch item 67 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_68] processing batch item 68 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_69] processing batch item 69 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_70] processing batch item 70 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_71] processing batch item 71 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_72] processing batch item 72 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_73] processing batch item 73 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_74] processing batch item 74 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_75] processing batch item 75 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_76] processing batch item 76 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_77] processing batch item 77 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_78] processing batch item 78 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_79] processing batch item 79 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_80] processing batch item 80 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_81] processing batch item 81 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_82] processing batch item 82 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_83] processing batch item 83 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_84] processing batch item 84 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_85] processing batch item 85 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_86] processing batch item 86 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_87] processing batch item 87 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_88] processing batch item 88 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_89] processing batch item 89 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_90] processing batch item 90 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_91] processing batch item 91 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_92] processing batch item 92 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_93] processing batch item 93 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_94] processing batch item 94 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_95] processing batch item 95 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_96] processing batch item 96 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_97] processing batch item 97 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_98] processing batch item 98 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_99] processing batch item 99 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_100] processing batch item 100 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_101] processing batch item 101 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_102] processing batch item 102 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_103] processing batch item 103 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_104] processing batch item 104 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_105] processing batch item 105 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_106] processing batch item 106 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_107] processing batch item 107 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_108] processing batch item 108 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_109] processing batch item 109 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_110] processing batch item 110 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_111] processing batch item 111 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_112] processing batch item 112 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_113] processing batch item 113 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_114] processing batch item 114 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_115] processing batch item 115 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_116] processing batch item 116 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_117] processing batch item 117 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_118] processing batch item 118 with metadata payload
+[STDOUT_BUFFER_LOG_NOISE_119] processing batch item 119 with metadata payload
+________________________ test_multiline_assertion_diff _________________________
+
+    def test_multiline_assertion_diff():
+        """Multiline assertion failure with 30+ structured diagnostic detail lines."""
+        diagnostics = ["MULTILINE_HEADER_MARKER"]
+        for i in range(32):
+            diagnostics.append(f"diagnostic_frame_detail_{i:02d}: payload_state_verification_active")
+        diagnostics.append("MULTILINE_FOOTER_MARKER")
+>       assert False, "\n".join(diagnostics)
+E       AssertionError: MULTILINE_HEADER_MARKER
+E         diagnostic_frame_detail_00: payload_state_verification_active
+E         diagnostic_frame_detail_01: payload_state_verification_active
+E         diagnostic_frame_detail_02: payload_state_verification_active
+E         diagnostic_frame_detail_03: payload_state_verification_active
+E         diagnostic_frame_detail_04: payload_state_verification_active
+E         diagnostic_frame_detail_05: payload_state_verification_active
+E         diagnostic_frame_detail_06: payload_state_verification_active
+E         diagnostic_frame_detail_07: payload_state_verification_active
+E         diagnostic_frame_detail_08: payload_state_verification_active
+E         diagnostic_frame_detail_09: payload_state_verification_active
+E         diagnostic_frame_detail_10: payload_state_verification_active
+E         diagnostic_frame_detail_11: payload_state_verification_active
+E         diagnostic_frame_detail_12: payload_state_verification_active
+E         diagnostic_frame_detail_13: payload_state_verification_active
+E         diagnostic_frame_detail_14: payload_state_verification_active
+E         diagnostic_frame_detail_15: payload_state_verification_active
+E         diagnostic_frame_detail_16: payload_state_verification_active
+E         diagnostic_frame_detail_17: payload_state_verification_active
+E         diagnostic_frame_detail_18: payload_state_verification_active
+E         diagnostic_frame_detail_19: payload_state_verification_active
+E         diagnostic_frame_detail_20: payload_state_verification_active
+E         diagnostic_frame_detail_21: payload_state_verification_active
+E         diagnostic_frame_detail_22: payload_state_verification_active
+E         diagnostic_frame_detail_23: payload_state_verification_active
+E         diagnostic_frame_detail_24: payload_state_verification_active
+E         diagnostic_frame_detail_25: payload_state_verification_active
+E         diagnostic_frame_detail_26: payload_state_verification_active
+E         diagnostic_frame_detail_27: payload_state_verification_active
+E         diagnostic_frame_detail_28: payload_state_verification_active
+E         diagnostic_frame_detail_29: payload_state_verification_active
+E         diagnostic_frame_detail_30: payload_state_verification_active
+E         diagnostic_frame_detail_31: payload_state_verification_active
+E         MULTILINE_FOOTER_MARKER
+E       assert False
+
+test_real_fixtures.py:16: AssertionError
+_____ test_parametrized_cases[alpha_case-100-ALPHA_PARAMETRIZED_CAUSE_KEY] _____
+
+scenario = 'alpha_case', expected = 100
+audit_marker = 'ALPHA_PARAMETRIZED_CAUSE_KEY'
+
+    @pytest.mark.parametrize("scenario,expected,audit_marker", [
+        ("alpha_case", 100, "ALPHA_PARAMETRIZED_CAUSE_KEY"),
+        ("beta_case", 200, "BETA_PARAMETRIZED_PASS"),
+        ("gamma_case", 300, "GAMMA_PARAMETRIZED_CAUSE_KEY"),
+    ])
+    def test_parametrized_cases(scenario, expected, audit_marker):
+        """Parametrized test suite where distinct fixtures fail with unique causes."""
+        for j in range(15):
+            print(f"[PARAM_BUFFER_{scenario}_{j}] debug message")
+        if scenario == "alpha_case":
+>           assert False, f"FAILED_CASE: {audit_marker}"
+E           AssertionError: FAILED_CASE: ALPHA_PARAMETRIZED_CAUSE_KEY
+E           assert False
+
+test_real_fixtures.py:28: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[PARAM_BUFFER_alpha_case_0] debug message
+[PARAM_BUFFER_alpha_case_1] debug message
+[PARAM_BUFFER_alpha_case_2] debug message
+[PARAM_BUFFER_alpha_case_3] debug message
+[PARAM_BUFFER_alpha_case_4] debug message
+[PARAM_BUFFER_alpha_case_5] debug message
+[PARAM_BUFFER_alpha_case_6] debug message
+[PARAM_BUFFER_alpha_case_7] debug message
+[PARAM_BUFFER_alpha_case_8] debug message
+[PARAM_BUFFER_alpha_case_9] debug message
+[PARAM_BUFFER_alpha_case_10] debug message
+[PARAM_BUFFER_alpha_case_11] debug message
+[PARAM_BUFFER_alpha_case_12] debug message
+[PARAM_BUFFER_alpha_case_13] debug message
+[PARAM_BUFFER_alpha_case_14] debug message
+_____ test_parametrized_cases[gamma_case-300-GAMMA_PARAMETRIZED_CAUSE_KEY] _____
+
+scenario = 'gamma_case', expected = 300
+audit_marker = 'GAMMA_PARAMETRIZED_CAUSE_KEY'
+
+    @pytest.mark.parametrize("scenario,expected,audit_marker", [
+        ("alpha_case", 100, "ALPHA_PARAMETRIZED_CAUSE_KEY"),
+        ("beta_case", 200, "BETA_PARAMETRIZED_PASS"),
+        ("gamma_case", 300, "GAMMA_PARAMETRIZED_CAUSE_KEY"),
+    ])
+    def test_parametrized_cases(scenario, expected, audit_marker):
+        """Parametrized test suite where distinct fixtures fail with unique causes."""
+        for j in range(15):
+            print(f"[PARAM_BUFFER_{scenario}_{j}] debug message")
+        if scenario == "alpha_case":
+            assert False, f"FAILED_CASE: {audit_marker}"
+        elif scenario == "beta_case":
+            assert expected == 200
+        elif scenario == "gamma_case":
+>           raise ValueError(f"CRITICAL_EXCEPTION: {audit_marker}")
+E           ValueError: CRITICAL_EXCEPTION: GAMMA_PARAMETRIZED_CAUSE_KEY
+
+test_real_fixtures.py:32: ValueError
+----------------------------- Captured stdout call -----------------------------
+[PARAM_BUFFER_gamma_case_0] debug message
+[PARAM_BUFFER_gamma_case_1] debug message
+[PARAM_BUFFER_gamma_case_2] debug message
+[PARAM_BUFFER_gamma_case_3] debug message
+[PARAM_BUFFER_gamma_case_4] debug message
+[PARAM_BUFFER_gamma_case_5] debug message
+[PARAM_BUFFER_gamma_case_6] debug message
+[PARAM_BUFFER_gamma_case_7] debug message
+[PARAM_BUFFER_gamma_case_8] debug message
+[PARAM_BUFFER_gamma_case_9] debug message
+[PARAM_BUFFER_gamma_case_10] debug message
+[PARAM_BUFFER_gamma_case_11] debug message
+[PARAM_BUFFER_gamma_case_12] debug message
+[PARAM_BUFFER_gamma_case_13] debug message
+[PARAM_BUFFER_gamma_case_14] debug message
+__________________________ test_independent_cause_one __________________________
+
+    def test_independent_cause_one():
+        """Independent failure 1: standard AssertionError."""
+        for i in range(25):
+            print(f"[LOG_CAUSE_1_{i}] initializing subsystem")
+>       assert False, "INDEPENDENT_CAUSE_ONE_ASSERTION_MARKER"
+E       AssertionError: INDEPENDENT_CAUSE_ONE_ASSERTION_MARKER
+E       assert False
+
+test_real_fixtures.py:38: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[LOG_CAUSE_1_0] initializing subsystem
+[LOG_CAUSE_1_1] initializing subsystem
+[LOG_CAUSE_1_2] initializing subsystem
+[LOG_CAUSE_1_3] initializing subsystem
+[LOG_CAUSE_1_4] initializing subsystem
+[LOG_CAUSE_1_5] initializing subsystem
+[LOG_CAUSE_1_6] initializing subsystem
+[LOG_CAUSE_1_7] initializing subsystem
+[LOG_CAUSE_1_8] initializing subsystem
+[LOG_CAUSE_1_9] initializing subsystem
+[LOG_CAUSE_1_10] initializing subsystem
+[LOG_CAUSE_1_11] initializing subsystem
+[LOG_CAUSE_1_12] initializing subsystem
+[LOG_CAUSE_1_13] initializing subsystem
+[LOG_CAUSE_1_14] initializing subsystem
+[LOG_CAUSE_1_15] initializing subsystem
+[LOG_CAUSE_1_16] initializing subsystem
+[LOG_CAUSE_1_17] initializing subsystem
+[LOG_CAUSE_1_18] initializing subsystem
+[LOG_CAUSE_1_19] initializing subsystem
+[LOG_CAUSE_1_20] initializing subsystem
+[LOG_CAUSE_1_21] initializing subsystem
+[LOG_CAUSE_1_22] initializing subsystem
+[LOG_CAUSE_1_23] initializing subsystem
+[LOG_CAUSE_1_24] initializing subsystem
+__________________________ test_independent_cause_two __________________________
+
+    def test_independent_cause_two():
+        """Independent failure 2: ValueError with non-assertion trace."""
+        for i in range(25):
+            print(f"[LOG_CAUSE_2_{i}] validating schema")
+>       raise ValueError("INDEPENDENT_CAUSE_TWO_VALUE_ERROR_MARKER")
+E       ValueError: INDEPENDENT_CAUSE_TWO_VALUE_ERROR_MARKER
+
+test_real_fixtures.py:44: ValueError
+----------------------------- Captured stdout call -----------------------------
+[LOG_CAUSE_2_0] validating schema
+[LOG_CAUSE_2_1] validating schema
+[LOG_CAUSE_2_2] validating schema
+[LOG_CAUSE_2_3] validating schema
+[LOG_CAUSE_2_4] validating schema
+[LOG_CAUSE_2_5] validating schema
+[LOG_CAUSE_2_6] validating schema
+[LOG_CAUSE_2_7] validating schema
+[LOG_CAUSE_2_8] validating schema
+[LOG_CAUSE_2_9] validating schema
+[LOG_CAUSE_2_10] validating schema
+[LOG_CAUSE_2_11] validating schema
+[LOG_CAUSE_2_12] validating schema
+[LOG_CAUSE_2_13] validating schema
+[LOG_CAUSE_2_14] validating schema
+[LOG_CAUSE_2_15] validating schema
+[LOG_CAUSE_2_16] validating schema
+[LOG_CAUSE_2_17] validating schema
+[LOG_CAUSE_2_18] validating schema
+[LOG_CAUSE_2_19] validating schema
+[LOG_CAUSE_2_20] validating schema
+[LOG_CAUSE_2_21] validating schema
+[LOG_CAUSE_2_22] validating schema
+[LOG_CAUSE_2_23] validating schema
+[LOG_CAUSE_2_24] validating schema
+_________________________ test_independent_cause_three _________________________
+
+    def test_independent_cause_three():
+        """Independent failure 3: KeyError with dictionary contract breach."""
+        d = {"status": "active"}
+        print("[LOG_CAUSE_3] accessing missing key")
+>       val = d["missing_route_target_INDEPENDENT_CAUSE_THREE_MARKER"]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'missing_route_target_INDEPENDENT_CAUSE_THREE_MARKER'
+
+test_real_fixtures.py:50: KeyError
+----------------------------- Captured stdout call -----------------------------
+[LOG_CAUSE_3] accessing missing key
+=========================== short test summary info ============================
+FAILED test_real_fixtures.py::test_single_verbose_stdout - AssertionError: EX...
+FAILED test_real_fixtures.py::test_multiline_assertion_diff - AssertionError:...
+FAILED test_real_fixtures.py::test_parametrized_cases[alpha_case-100-ALPHA_PARAMETRIZED_CAUSE_KEY]
+FAILED test_real_fixtures.py::test_parametrized_cases[gamma_case-300-GAMMA_PARAMETRIZED_CAUSE_KEY]
+FAILED test_real_fixtures.py::test_independent_cause_one - AssertionError: IN...
+FAILED test_real_fixtures.py::test_independent_cause_two - ValueError: INDEPE...
+FAILED test_real_fixtures.py::test_independent_cause_three - KeyError: 'missi...
+========================= 7 failed, 1 passed in 0.08s ==========================

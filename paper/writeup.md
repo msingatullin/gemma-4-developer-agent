@@ -92,15 +92,30 @@ We evaluated the deterministic components across the `ASTVerificationBenchmark`,
 
 ### Component Ablation Study and Comparison Against Naive SWE Baselines
 
-To rigorously evaluate the isolated and synergistic contributions of each verification layer, we conducted an ablation study comparing the proposed framework against standard naive SWE agent patterns:
+To evaluate the isolated and synergistic contributions of each verification layer, we conducted an ablation study comparing the proposed framework against standard naive SWE agent patterns:
 
-| Configuration / Mode | Symbol Context Reduction | Traceback Volume Reduction | Syntax Errors Caught Pre-Flight | Diagnostic Assertion Retention | Aggregate Benchmark Runtime |
+| Configuration / Mode | Symbol Context Reduction | Traceback Volume Reduction | Syntax Errors Caught Pre-Flight | Diagnostic Assertion Retention | Deterministic Verification Latency (CPU) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Baseline 0: Naive SWE Agent** (Full file read, raw pytest logs, no pre-flight gate) | 0.0% (65.8 tok/fn) | 0.0% (892 tok corpus) | 0% (Escapes to test container) | 100% (Uncompressed raw) | Container test suite dispatch (~sec) |
-| **Ablation 1: AST Slicing Alone** (`ast.NodeVisitor` symbol extraction) | **44.6%** (36.0 tok/fn) | 0.0% (892 tok corpus) | 0% (Escapes to test container) | 100% (Uncompressed raw) | ~0.24 ms |
-| **Ablation 2: Syntax Gate Alone** (`compile(mode='exec')` pre-flight) | 0.0% (65.8 tok/fn) | 0.0% (892 tok corpus) | **100%** (38.2 µs catch) | 100% (Uncompressed raw) | ~0.04 ms |
-| **Ablation 3: Traceback Compression Alone** (Multiline assertion parser) | 0.0% (65.8 tok/fn) | **30.6%** (619 tok corpus) | 0% (Escapes to test container) | **100%** (Zero diagnostic loss) | ~0.16 ms |
-| **Full AST-Guided Verification Suite** (All deterministic components active) | **44.6%** | **30.6%** | **100%** | **100%** | **3.893 ms** (All 31 tasks) |
+| **Baseline 0: Naive SWE Agent** (Full file read, raw pytest logs, no pre-flight gate) | 0.0% (65.8 tok/fn) | 0.0% (892 tok corpus) | 0% (Escapes to test runner) | 100% (Uncompressed raw) | N/A (No verification layer; passes raw files/logs to test runner) |
+| **Ablation 1: AST Slicing Alone** (`ast.NodeVisitor` symbol extraction) | **44.6%** (36.0 tok/fn) | 0.0% (892 tok corpus) | 0% (Escapes to test runner) | 100% (Uncompressed raw) | 235.8 µs |
+| **Ablation 2: Syntax Gate Alone** (`compile(mode='exec')` pre-flight) | 0.0% (65.8 tok/fn) | 0.0% (892 tok corpus) | **100%** (38.2 µs catch) | 100% (Uncompressed raw) | 38.2 µs |
+| **Ablation 3: Traceback Compression Alone** (Multiline assertion parser) | 0.0% (65.8 tok/fn) | **30.6%** (619 tok corpus) | 0% (Escapes to test runner) | **100%** (Zero diagnostic loss) | 159.3 µs |
+| **Full AST-Guided Verification Suite** (All deterministic components active) | **44.6%** | **30.6%** | **100%** | **100%** | **3.893 ms** (All 31 benchmark tasks) |
+
+### Empirical Traceback Validation on Real Pytest Execution Logs
+
+To verify the compressor on unmocked execution logs, we evaluated real test runs generated with `pytest 8.4.2` (`Python 3.12.3`) across verbose stdout logs (120 stdout lines), multiline assertion diffs (32 frames), parametrized tests, and multiple distinct exceptions (`AssertionError`, `ValueError`, `KeyError`):
+
+| Pytest Log Format / Configuration | Raw Volume (Chars / Est. Tokens) | Compressed Volume (Chars / Est. Tokens) | Prompt Volume Reduction | Diagnostic Retention (22 Markers) | Processing Latency |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Standard Verbose (`-v`, `--tb=auto`)** | 21,555 chars / 5,388 tok | **5,813 chars / 1,453 tok** | **73.0%** | **100.0%** (22/22) | 5.48 ms |
+| **Short Traceback (`--tb=short`)** | 18,104 chars / 4,526 tok | **4,548 chars / 1,137 tok** | **74.9%** | **100.0%** (22/22) | 3.99 ms |
+| **Long Traceback (`--tb=long`)** | 20,828 chars / 5,207 tok | **5,813 chars / 1,453 tok** | **72.1%** | **100.0%** (22/22) | 5.18 ms |
+| **Native Traceback (`--tb=native`)** | 44,584 chars / 11,146 tok | 44,584 chars / 11,146 tok | Untruncated safe fallback | **100.0%** (22/22) | 0.05 ms |
+| **Baseline 1: Naive Tail-Cap (35 lines)** | 21,555 chars / 5,388 tok | 1,873 chars / 468 tok | 91.3% (Heuristic cutoff) | **63.6%** (Drops 8/22 markers) | 0.10 ms |
+| **Baseline 2: Naive E-Lines Only** | 21,555 chars / 5,388 tok | 3,500 chars / 875 tok | 83.8% (Strips headers/sites) | Drops code sites & fails native | 0.26 ms |
+
+The experiment confirms that standard naive tail capping drops earlier test failures in multi-test runs (losing 36.4% of diagnostic evidence), while naive E-line extraction drops source code sites and fails entirely on native tracebacks. In contrast, the AST-Guided Suite achieves 73.0% volume reduction on verbose real logs while preserving 100% of diagnostic root causes, line pointers, and test section boundaries.
 
 ### Hardened Oracles and Methodological Rigor
 1. **Slicing Oracle Hardening:** In addition to validating expected start and end line coordinates (`s_line == expected_start and e_line == expected_end`), the oracle validates that the extracted slice is non-empty, contains the target symbol identifier, and matches the expected source lines (modulo normalized whitespace). Fault-injection tests confirming that empty slices with correct coordinates fail the oracle are verified in the test suite.
