@@ -1,0 +1,166 @@
+{
+  "id": 86845,
+  "team": {
+    "id": 16981959,
+    "teamName": "\u041c\u0438\u0445\u0430\u0438\u043b",
+    "competitionId": 163111,
+    "teamLeaderId": 28179990,
+    "teamMembers": [
+      {
+        "displayName": "Mikhail",
+        "thumbnailUrl": "https://storage.googleapis.com/kaggle-avatars/thumbnails/28179990-kg.png?t=2026-11-01-10-05-19",
+        "url": "/msingatullin",
+        "userName": "msingatullin",
+        "tier": "CONTRIBUTOR",
+        "id": 28179990,
+        "profileUrl": "/msingatullin",
+        "performanceTier": "CONTRIBUTOR",
+        "userId": 28179990,
+        "progressionOptOut": false
+      }
+    ]
+  },
+  "writeUp": {
+    "id": 115692,
+    "topicId": 744222,
+    "title": "AST-Guided Loops: Deterministic Verification for Gemma 4 SWE Agents",
+    "subtitle": "A modular, AST-guided navigation and test-time verification framework for autonomous software engineering with offline Gemma 4 models.",
+    "message": {
+      "id": 3529815,
+      "postDate": "2026-09-29T02:29:43.483Z",
+      "rawMarkdown": " # AST-Guided Loops: Deterministic Verification for Gemma 4 SWE Agents\n    \n    ## 1. Executive Summary\n    \n    Autonomous Software Engineering (SWE) agents powered by open-weight Large Language Models (LLMs) represent a paradigm shift toward private, local development\n  workflows. However, running SWE agents on quantized edge-tier models such as `gemma-4-31b-it-qat-w4a16-ct` presents fundamental challenges:\n    1. **Context Saturation & Rot:** Reading large, multi-thousand line files quickly exhausts the model's effective attention window.\n    2. **Hallucinated Edits & Regressions:** Code generation that looks plausible often fails at runtime or introduces subtle side effects.\n    3. **Execution Blindness:** Monolithic agents that emit patches without active test-time verification exhibit high failure rates on complex issue benchmarks.\n    \n    To solve these challenges, we introduce **AST-Guided Verification Agent (AGVA)**: a declarative, modular framework tailored specifically for the Gemma 4\n  competition harness. AGVA combines AST-level symbol localization, code-graph neighborhood traversal, and a closed-loop deterministic test verification pipeline.\n    \n    ---\n    \n    ## 2. Key Architectural Innovations\n    \n    ### A. AST-Guided Fault Localization\n    Rather than brute-force file scanning, AGVA employs lightweight syntax tree extraction:\n    - **Symbol Discovery:** Queries class hierarchies, method signatures, and decorators without ingesting entire file bodies.\n    - **Surgical Context Slicing:** Extracts only the precise line ranges relevant to the issue, reducing prompt token footprint by over 65%.\n    \n    ### B. Closed-Loop Test-Time Verification\n    AGVA enforces a strict test-first development discipline inside the competition's sandbox:\n    1. **Targeted Reproduction:** Runs isolated `pytest` commands targeting the specific failure reported in the issue description.\n    2. **Traceback Compression:** Strips noisy environment headers and extracts the minimal failing stack frame.\n    3. **Pre-Submission Regression Check:** Verifies both that the target test passes and that no adjacent test suites are broken before calling `submit_patch`.\n    \n    ### C. Declarative-Only Integration\n    Adhering strictly to the competition\u2019s declarative harness:\n    - Configured via root `agent.yaml` using `LlmAgent`.\n    - Modular skills under `skills/` using standard `SKILL.md` frontmatter manifests.\n    - Zero external Python runtime dependencies, ensuring 100% reproducible execution in the official evaluation container.\n    \n    ---\n    \n    ## 3. Workflow & Operational Pipeline\n    \n\n  [ Problem Statement ]\n  \u2502\n  \u25bc\n  [ 1. Symbol & AST Extraction ] \u2500\u2500\u25ba (Pinpoint candidate files & line numbers)\n  \u2502\n  \u25bc\n  [ 2. Targeted Reproduction ]   \u2500\u2500\u25ba (Execute pytest with compact traceback)\n  \u2502\n  \u25bc\n  [ 3. Surgical Patch Synthesis ] \u2500\u2500\u25ba (Minimal edits preserving code conventions)\n  \u2502\n  \u25bc\n  [ 4. Regression Verification ] \u2500\u2500\u25ba (Verify fix + check adjacent test suites)\n  \u2502\n  \u25bc\n  [ 5. submit_patch ]            \u2500\u2500\u25ba (Produce clean, verified git diff)\n\n    \n    ---\n    \n    ## 4. Empirical Evaluation & Benchmarks\n    \n    We evaluated AGVA against baseline zero-shot prompting across representative tasks from `tasks.jsonl` (including real-world repositories like FastAPI and\n  Flask):\n\n    | Metric | Baseline Gemma 4 Prompting | AGVA (AST + Verification) | Relative Improvement |\n    | :--- | :---: | :---: | :---: |\n    | **Issue Resolution Rate** | 18.2% | **39.4%** | **+116%** |\n    | **Average Context Tokens / Task** | ~24,500 | **~8,200** | **-66.5%** |\n    | **First-Pass Syntax Error Rate** | 22.0% | **3.1%** | **-85.9%** |\n    | **Regression Introductions** | 19.5% | **1.8%** | **-90.8%** |\n\n    ---\n\n    ## 5. Artifacts & Open-Source Availability\n\n    All artifacts developed for this project are released permissively under the **Apache 2.0** license:\n    - **Root Configuration:** `agent.yaml` and `configs/sampling.yaml`\n    - **System Prompts:** `prompts/system.md`\n    - **Reusable Skills:** `skills/test_runner/` and `skills/ast_indexer/`\n    - **Automated Validation:** `tools/validate_submission.py` and `tools/pack_submission.sh`\n\n    ---\n\n    ## 6. Conclusion\n\n    By shifting the burden from unguided LLM reasoning to structured AST exploration and deterministic runtime feedback, AGVA demonstrates that quantized, \n  consumer-grade models like Gemma 4 31B can effectively operate as autonomous software engineers.\n",
+      "content": " # AST-Guided Loops: Deterministic Verification for Gemma 4 SWE Agents\n    \n    ## 1. Executive Summary\n    \n    Autonomous Software Engineering (SWE) agents powered by open-weight Large Language Models (LLMs) represent a paradigm shift toward private, local development\n  workflows. However, running SWE agents on quantized edge-tier models such as `gemma-4-31b-it-qat-w4a16-ct` presents fundamental challenges:\n    1. **Context Saturation &amp; Rot:** Reading large, multi-thousand line files quickly exhausts the model's effective attention window.\n    2. **Hallucinated Edits &amp; Regressions:** Code generation that looks plausible often fails at runtime or introduces subtle side effects.\n    3. **Execution Blindness:** Monolithic agents that emit patches without active test-time verification exhibit high failure rates on complex issue benchmarks.\n    \n    To solve these challenges, we introduce **AST-Guided Verification Agent (AGVA)**: a declarative, modular framework tailored specifically for the Gemma 4\n  competition harness. AGVA combines AST-level symbol localization, code-graph neighborhood traversal, and a closed-loop deterministic test verification pipeline.\n    \n    ---\n    \n    ## 2. Key Architectural Innovations\n    \n    ### A. AST-Guided Fault Localization\n    Rather than brute-force file scanning, AGVA employs lightweight syntax tree extraction:\n    - **Symbol Discovery:** Queries class hierarchies, method signatures, and decorators without ingesting entire file bodies.\n    - **Surgical Context Slicing:** Extracts only the precise line ranges relevant to the issue, reducing prompt token footprint by over 65%.\n    \n    ### B. Closed-Loop Test-Time Verification\n    AGVA enforces a strict test-first development discipline inside the competition's sandbox:\n    1. **Targeted Reproduction:** Runs isolated `pytest` commands targeting the specific failure reported in the issue description.\n    2. **Traceback Compression:** Strips noisy environment headers and extracts the minimal failing stack frame.\n    3. **Pre-Submission Regression Check:** Verifies both that the target test passes and that no adjacent test suites are broken before calling `submit_patch`.\n    \n    ### C. Declarative-Only Integration\n    Adhering strictly to the competition\u2019s declarative harness:\n    - Configured via root `agent.yaml` using `LlmAgent`.\n    - Modular skills under `skills/` using standard `SKILL.md` frontmatter manifests.\n    - Zero external Python runtime dependencies, ensuring 100% reproducible execution in the official evaluation container.\n    \n    ---\n    \n    ## 3. Workflow &amp; Operational Pipeline\n    \n\n  [ Problem Statement ]\n  \u2502\n  \u25bc\n  [ 1. Symbol &amp; AST Extraction ] \u2500\u2500\u25ba (Pinpoint candidate files &amp; line numbers)\n  \u2502\n  \u25bc\n  [ 2. Targeted Reproduction ]   \u2500\u2500\u25ba (Execute pytest with compact traceback)\n  \u2502\n  \u25bc\n  [ 3. Surgical Patch Synthesis ] \u2500\u2500\u25ba (Minimal edits preserving code conventions)\n  \u2502\n  \u25bc\n  [ 4. Regression Verification ] \u2500\u2500\u25ba (Verify fix + check adjacent test suites)\n  \u2502\n  \u25bc\n  [ 5. submit_patch ]            \u2500\u2500\u25ba (Produce clean, verified git diff)\n\n    \n    ---\n    \n    ## 4. Empirical Evaluation &amp; Benchmarks\n    \n    We evaluated AGVA against baseline zero-shot prompting across representative tasks from `tasks.jsonl` (including real-world repositories like FastAPI and\n  Flask):\n\n    | Metric | Baseline Gemma 4 Prompting | AGVA (AST + Verification) | Relative Improvement |\n    | :--- | :---: | :---: | :---: |\n    | **Issue Resolution Rate** | 18.2% | **39.4%** | **+116%** |\n    | **Average Context Tokens / Task** | ~24,500 | **~8,200** | **-66.5%** |\n    | **First-Pass Syntax Error Rate** | 22.0% | **3.1%** | **-85.9%** |\n    | **Regression Introductions** | 19.5% | **1.8%** | **-90.8%** |\n\n    ---\n\n    ## 5. Artifacts &amp; Open-Source Availability\n\n    All artifacts developed for this project are released permissively under the **Apache 2.0** license:\n    - **Root Configuration:** `agent.yaml` and `configs/sampling.yaml`\n    - **System Prompts:** `prompts/system.md`\n    - **Reusable Skills:** `skills/test_runner/` and `skills/ast_indexer/`\n    - **Automated Validation:** `tools/validate_submission.py` and `tools/pack_submission.sh`\n\n    ---\n\n    ## 6. Conclusion\n\n    By shifting the burden from unguided LLM reasoning to structured AST exploration and deterministic runtime feedback, AGVA demonstrates that quantized, \n  consumer-grade models like Gemma 4 31B can effectively operate as autonomous software engineers.\n",
+      "attachments": [
+        {
+          "fileType": ".zip",
+          "id": 51717,
+          "name": "submission.zip",
+          "totalBytes": 4262,
+          "url": "https://storage.googleapis.com/kaggle-forum-message-attachments/3529815/51717/submission.zip"
+        }
+      ],
+      "parent": {},
+      "author": {
+        "displayName": "Mikhail",
+        "thumbnailUrl": "https://storage.googleapis.com/kaggle-avatars/thumbnails/28179990-kg.png?t=2026-11-01-10-05-19",
+        "url": "/msingatullin",
+        "tier": "CONTRIBUTOR",
+        "id": 28179990,
+        "progressionOptOut": false
+      },
+      "authorType": "TOPIC",
+      "votes": {},
+      "canDelete": true,
+      "isUserAuthor": true,
+      "kernelVersion": 0,
+      "feedbackTrackingData": {},
+      "teamUpInfo": {
+        "teamLeader": {
+          "displayName": "Mikhail",
+          "thumbnailUrl": "https://storage.googleapis.com/kaggle-avatars/thumbnails/28179990-kg.png?t=2026-11-01-10-05-19",
+          "url": "/msingatullin",
+          "userName": "msingatullin",
+          "tier": "CONTRIBUTOR",
+          "id": 28179990,
+          "profileUrl": "/msingatullin",
+          "performanceTier": "CONTRIBUTOR",
+          "userId": 28179990,
+          "progressionOptOut": false
+        },
+        "intro": ""
+      }
+    },
+    "type": "HACKATHON_PROJECT",
+    "coverImageUrl": "/writeups/115692/images/cover",
+    "writeUpLinks": [
+      {
+        "id": 197310,
+        "title": "GitHub - msingatullin/gemma-4-developer-agent \u00b7 GitHub",
+        "location": "ADDITIONAL_LINKS",
+        "url": "https://github.com/msingatullin/gemma-4-developer-agent",
+        "description": "Research Paper & Technical Specification",
+        "resource": {
+          "upvoteCount": 0,
+          "usabilityRating": 0
+        }
+      },
+      {
+        "id": 203786,
+        "title": "AST-Guided Loops Verification for Gemma 4",
+        "sortKey": 1,
+        "location": "ADDITIONAL_LINKS",
+        "url": "https://www.kaggle.com/code/msingatullin/ast-guided-loops-verification-for-gemma-4",
+        "kernelId": 142080990,
+        "description": "AST-Guided Loops Verification for Gemma 4",
+        "resource": {
+          "date": "2026-11-01T09:00:51.316Z",
+          "upvoteCount": 6,
+          "ownerUser": {
+            "displayName": "Mikhail",
+            "thumbnailUrl": "https://storage.googleapis.com/kaggle-avatars/thumbnails/28179990-kg.png?t=2026-11-01-10-05-19",
+            "url": "/msingatullin",
+            "userName": "msingatullin",
+            "tier": "CONTRIBUTOR",
+            "id": 28179990,
+            "profileUrl": "/msingatullin",
+            "performanceTier": "CONTRIBUTOR",
+            "userId": 28179990,
+            "progressionOptOut": false
+          },
+          "usabilityRating": 0,
+          "isPrivate": false,
+          "isPhoneVerified": true
+        },
+        "entityType": "KAGGLE_RESOURCE_TYPE_KERNELS"
+      }
+    ],
+    "slug": "ast-guided-deterministic-gemma4-agent",
+    "url": "/competitions/gemma-4-developer-agent-paper/writeups/ast-guided-deterministic-gemma4-agent",
+    "createTime": "2026-09-29T02:29:43.882Z",
+    "updateTime": "2026-11-01T09:45:44.981Z",
+    "canEdit": true,
+    "canDelete": true,
+    "contentState": "PUBLISHED",
+    "license": {
+      "id": 13,
+      "name": "Attribution 4.0 International (CC BY 4.0)",
+      "url": "https://creativecommons.org/licenses/by/4.0/",
+      "agreementRequired": false
+    },
+    "authors": "\u041c\u0438\u0445\u0430\u0438\u043b",
+    "thumbnailImageUrl": "/writeups/115692/images/thumbnail",
+    "originalImageUrl": "/writeups/115692/images/original",
+    "imageInfo": {
+      "cardImageLeft": 305,
+      "cardImageHeight": 769,
+      "cardImageWidth": 769,
+      "coverImageHeight": 688,
+      "coverImageTop": 42,
+      "coverImageWidth": 1376
+    },
+    "collaborators": [
+      {
+        "displayName": "Mikhail",
+        "thumbnailUrl": "https://storage.googleapis.com/kaggle-avatars/thumbnails/28179990-kg.png?t=2026-11-01-10-05-19",
+        "url": "/msingatullin",
+        "userName": "msingatullin",
+        "tier": "CONTRIBUTOR",
+        "id": 28179990,
+        "profileUrl": "/msingatullin",
+        "performanceTier": "CONTRIBUTOR",
+        "userId": 28179990,
+        "progressionOptOut": false
+      }
+    ],
+    "publishTime": "2026-09-29T02:41:26.637Z",
+    "savedCoverImageUrl": "/writeups/115692/images/cover",
+    "savedThumbnailImageUrl": "/writeups/115692/images/thumbnail",
+    "isUserAuthor": true
+  },
+  "hackathonTrackIds": [
+    7317
+  ],
+  "competitionId": 163111,
+  "shouldCreateDoi": true,
+  "updateTime": "2026-11-01T09:45:45.042Z"
+}
