@@ -470,25 +470,101 @@ def main():
     })
     print("PASS: Negative Control 7 (naive e-lines baseline rejected by oracle with AssertionError)")
 
-    # Negative Test 8: Internal Fallback Gate Rejection in filter_pytest_log
-    # Construct a log where proposed parsing would lose a header:
-    # Verify that filter_pytest_log detects the loss and returns raw uncompressed log.
-    tricky_log = """=== FAILURES ===
-______ test_special_marker ______
->       assert False
-E       AssertionError: special_marker_cause
+    # Negative Test 8: Fail-Closed Internal Fallback Gate (Evidence & Header Loss Rejection)
+    # Step 1: Construct adversarial log where diagnostic error is inside captured stdout buffer
+    adversarial_evidence_log = """=== FAILURES ===
+______ test_worker_crash ______
+    def test_worker_crash():
+>       assert False, "PRIMARY_FAILURE_ROOT_CAUSE"
+E       AssertionError: PRIMARY_FAILURE_ROOT_CAUSE
+----------------------------- Captured stdout call -----------------------------
+[WORKER_STDOUT] Initializing background task worker pool...
+E       RuntimeError: UNEXPECTED_SUBPROCESS_CRASH_IN_CAPTURED_STDOUT
 === short test summary info ===
-FAILED test_x.py::test_special_marker
+FAILED test_worker.py::test_worker_crash - AssertionError: PRIMARY_FAILURE_ROOT_CAUSE
 """
-    # Verify that normal processing preserves it
-    res_normal = filter_pytest_log(tricky_log)
-    assert "test_special_marker" in res_normal
+    # Verify Step 1: Demonstrate that unprotected block compression proposes a string that loses this line
+    target_evidence_line = "E       RuntimeError: UNEXPECTED_SUBPROCESS_CRASH_IN_CAPTURED_STDOUT"
+    # Run the exact block extractor logic to obtain the lossy proposed candidate
+    adv_lines = adversarial_evidence_log.splitlines()
+    adv_summary = [l for l in adv_lines if re.match(r'^(FAILED|ERROR)\s+', l.strip())]
+    adv_blocks, adv_curr = [], []
+    in_zone, in_cap = False, False
+    for l in adv_lines:
+        s = l.strip()
+        if re.search(r'^=+\s*(FAILURES|ERRORS)\s*=+', s): in_zone = True; continue
+        if not in_zone: continue
+        if re.search(r'^=+\s*short test summary info\s*=+', s):
+            if adv_curr: adv_blocks.append(adv_curr); adv_curr = []
+            break
+        if re.match(r'^_{3,}\s*.*?\s*_{3,}$', s):
+            if adv_curr: adv_blocks.append(adv_curr); adv_curr = []
+            adv_curr.append(l); in_cap = False; continue
+        if re.search(r'^-+\s*Captured (stdout|stderr)\s*', s):
+            in_cap = True; adv_curr.append('    --- [Captured output collapsed] ---'); continue
+        if in_cap:
+            if re.match(r'^(=|_|-){3,}', s) or re.match(r'^(FAILED|ERROR)\s+', s): in_cap = False
+            else: continue
+        if not re.match(r'^[=_-]{10,}$', s): adv_curr.append(l)
+    if adv_curr: adv_blocks.append(adv_curr)
+    
+    cand_header = adv_blocks[0][:1]
+    cand_body = [l for l in adv_blocks[0][1:] if l.strip().startswith(('>', 'E ', 'E\t')) and 'Captured output' not in l]
+    cand_comp = cand_header + cand_body + ['    --- [Captured output collapsed] ---']
+    proposed_lossy = '\n'.join(['\n'.join(cand_comp)] + adv_summary)
+    
+    # 1. Confirm that the proposed compression dropped the critical error line
+    assert target_evidence_line not in proposed_lossy, "Test precondition failed: proposed candidate did not drop line!"
+    
+    # 2. Confirm that the Counter-based evidence guard flags the loss
+    def count_diag(val):
+        return Counter(
+            line.strip() for line in val.splitlines()
+            if (line.lstrip().startswith(('E ', 'E\t', '> ', 'FAILED ', 'ERROR '))
+                or re.match(r'^[\w.]+(?:Error|Exception|Warning|Exit|Interrupt):', line.strip()))
+        )
+    orig_diag = count_diag(adversarial_evidence_log)
+    prop_diag = count_diag(proposed_lossy)
+    assert orig_diag[target_evidence_line] == 1
+    assert prop_diag[target_evidence_line] == 0
+    assert any(prop_diag[l] < c for l, c in orig_diag.items()), "Counter guard did not trip on proposed lossy text!"
+    
+    # 3. Confirm that filter_pytest_log activates fallback and returns the original log byte-for-byte
+    adv_res = filter_pytest_log(adversarial_evidence_log)
+    assert adv_res == adversarial_evidence_log, "Fallback failure: returned string differs from original log!"
+    assert adv_res.encode("utf-8") == adversarial_evidence_log.encode("utf-8"), "Fallback failure: byte-for-byte mismatch!"
+    assert len(adv_res) == len(adversarial_evidence_log), "Fallback failure: length mismatch!"
+    assert target_evidence_line in adv_res, "Fallback failure: target evidence line missing in returned log!"
+    
+    # Also verify positive control: when captured stdout contains no diagnostic errors, compression succeeds
+    clean_log = adversarial_evidence_log.replace(target_evidence_line, "[WORKER_STDOUT] Task completed cleanly")
+    clean_res = filter_pytest_log(clean_log)
+    assert clean_res != clean_log, "Clean control log should have compressed successfully!"
+    assert len(clean_res) < len(clean_log), "Clean compressed log must be smaller than raw log!"
+    assert "--- [Captured output collapsed] ---" in clean_res
+    
+    # Step 4: Adversarial header loss fallback test
+    adversarial_header_log = """platform linux -- Python 3.12
+________________________ test_pre_failure_header ________________________
+=== FAILURES ===
+______ test_case ______
+>       assert False
+E       AssertionError: primary_cause
+=== short test summary info ===
+FAILED test.py::test_case
+"""
+    adv_header_res = filter_pytest_log(adversarial_header_log)
+    assert adv_header_res == adversarial_header_log, "Header fallback failed: output differs from raw input!"
+    assert adv_header_res.encode("utf-8") == adversarial_header_log.encode("utf-8")
+    
     results["negative_controls"].append({
         "test": "neg8_internal_fallback_gate_validation",
-        "description": "filter_pytest_log internal Counter guard guarantees untruncated fallback if evidence drops",
+        "description": "filter_pytest_log Counter guard rejects proposed lossy compression and returns raw log byte-for-byte (verified for dropped evidence lines and headers)",
+        "evidence_loss_detected": True,
+        "byte_for_byte_fallback_verified": True,
         "status": "PASS"
     })
-    print("PASS: Negative Control 8 (internal Counter fallback gate verified)")
+    print("PASS: Negative Control 8 (internal Counter fallback gate verified with byte-for-byte raw log return)")
 
     # Save results to JSON
     json_path = EXPERIMENT_DIR / "benchmark_results.json"
