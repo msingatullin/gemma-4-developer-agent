@@ -1,5 +1,5 @@
 ============================= test session starts ==============================
-platform linux -- Python 3.12.3, pytest-8.4.2, pluggy-1.6.0
+platform linux -- Python 3.12.3, pytest-8.4.2, pluggy-1.7.0
 rootdir: /home/mikhail/gemma-4-developer-agent/paper/traceback_experiment
 collected 8 items
 
@@ -8,53 +8,53 @@ test_real_fixtures.py FFF.FFFF                                           [100%]
 =================================== FAILURES ===================================
 __________________________ test_single_verbose_stdout __________________________
 Traceback (most recent call last):
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 344, in from_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 344, in from_call
     result: TResult | None = func()
                              ^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 246, in <lambda>
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 246, in <lambda>
     lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 120, in _hookexec
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 167, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
     raise exception
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
     yield
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
     return (yield)
             ^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
     return (yield)
             ^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 121, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
     res = hook_impl.function(*args)
           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
     item.runtest()
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1671, in runtest
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1671, in runtest
     self.ihook.pytest_pyfunc_call(pyfuncitem=self)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 120, in _hookexec
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 167, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
     raise exception
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 121, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
     res = hook_impl.function(*args)
           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
     result = testfunction(**testargs)
              ^^^^^^^^^^^^^^^^^^^^^^^^
   File "/home/mikhail/gemma-4-developer-agent/paper/traceback_experiment/test_real_fixtures.py", line 8, in test_single_verbose_stdout
@@ -184,53 +184,53 @@ assert 42 == 99
 [STDOUT_BUFFER_LOG_NOISE_119] processing batch item 119 with metadata payload
 ________________________ test_multiline_assertion_diff _________________________
 Traceback (most recent call last):
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 344, in from_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 344, in from_call
     result: TResult | None = func()
                              ^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 246, in <lambda>
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 246, in <lambda>
     lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 120, in _hookexec
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 167, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
     raise exception
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
     yield
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
     return (yield)
             ^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
     return (yield)
             ^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 121, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
     res = hook_impl.function(*args)
           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
     item.runtest()
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1671, in runtest
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1671, in runtest
     self.ihook.pytest_pyfunc_call(pyfuncitem=self)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 120, in _hookexec
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 167, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
     raise exception
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 121, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
     res = hook_impl.function(*args)
           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
     result = testfunction(**testargs)
              ^^^^^^^^^^^^^^^^^^^^^^^^
   File "/home/mikhail/gemma-4-developer-agent/paper/traceback_experiment/test_real_fixtures.py", line 16, in test_multiline_assertion_diff
@@ -272,53 +272,53 @@ AssertionError: MULTILINE_HEADER_MARKER
 assert False
 _____ test_parametrized_cases[alpha_case-100-ALPHA_PARAMETRIZED_CAUSE_KEY] _____
 Traceback (most recent call last):
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 344, in from_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 344, in from_call
     result: TResult | None = func()
                              ^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 246, in <lambda>
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 246, in <lambda>
     lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 120, in _hookexec
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 167, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
     raise exception
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
     yield
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
     return (yield)
             ^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
     return (yield)
             ^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 121, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
     res = hook_impl.function(*args)
           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
     item.runtest()
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1671, in runtest
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1671, in runtest
     self.ihook.pytest_pyfunc_call(pyfuncitem=self)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 120, in _hookexec
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 167, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
     raise exception
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 121, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
     res = hook_impl.function(*args)
           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
     result = testfunction(**testargs)
              ^^^^^^^^^^^^^^^^^^^^^^^^
   File "/home/mikhail/gemma-4-developer-agent/paper/traceback_experiment/test_real_fixtures.py", line 28, in test_parametrized_cases
@@ -343,53 +343,53 @@ assert False
 [PARAM_BUFFER_alpha_case_14] debug message
 _____ test_parametrized_cases[gamma_case-300-GAMMA_PARAMETRIZED_CAUSE_KEY] _____
 Traceback (most recent call last):
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 344, in from_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 344, in from_call
     result: TResult | None = func()
                              ^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 246, in <lambda>
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 246, in <lambda>
     lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 120, in _hookexec
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 167, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
     raise exception
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
     yield
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
     return (yield)
             ^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
     return (yield)
             ^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 121, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
     res = hook_impl.function(*args)
           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
     item.runtest()
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1671, in runtest
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1671, in runtest
     self.ihook.pytest_pyfunc_call(pyfuncitem=self)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 120, in _hookexec
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 167, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
     raise exception
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 121, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
     res = hook_impl.function(*args)
           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
     result = testfunction(**testargs)
              ^^^^^^^^^^^^^^^^^^^^^^^^
   File "/home/mikhail/gemma-4-developer-agent/paper/traceback_experiment/test_real_fixtures.py", line 32, in test_parametrized_cases
@@ -413,53 +413,53 @@ ValueError: CRITICAL_EXCEPTION: GAMMA_PARAMETRIZED_CAUSE_KEY
 [PARAM_BUFFER_gamma_case_14] debug message
 __________________________ test_independent_cause_one __________________________
 Traceback (most recent call last):
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 344, in from_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 344, in from_call
     result: TResult | None = func()
                              ^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 246, in <lambda>
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 246, in <lambda>
     lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 120, in _hookexec
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 167, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
     raise exception
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
     yield
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
     return (yield)
             ^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
     return (yield)
             ^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 121, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
     res = hook_impl.function(*args)
           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
     item.runtest()
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1671, in runtest
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1671, in runtest
     self.ihook.pytest_pyfunc_call(pyfuncitem=self)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 120, in _hookexec
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 167, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
     raise exception
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 121, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
     res = hook_impl.function(*args)
           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
     result = testfunction(**testargs)
              ^^^^^^^^^^^^^^^^^^^^^^^^
   File "/home/mikhail/gemma-4-developer-agent/paper/traceback_experiment/test_real_fixtures.py", line 38, in test_independent_cause_one
@@ -494,53 +494,53 @@ assert False
 [LOG_CAUSE_1_24] initializing subsystem
 __________________________ test_independent_cause_two __________________________
 Traceback (most recent call last):
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 344, in from_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 344, in from_call
     result: TResult | None = func()
                              ^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 246, in <lambda>
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 246, in <lambda>
     lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 120, in _hookexec
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 167, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
     raise exception
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
     yield
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
     return (yield)
             ^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
     return (yield)
             ^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 121, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
     res = hook_impl.function(*args)
           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
     item.runtest()
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1671, in runtest
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1671, in runtest
     self.ihook.pytest_pyfunc_call(pyfuncitem=self)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 120, in _hookexec
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 167, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
     raise exception
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 121, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
     res = hook_impl.function(*args)
           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
     result = testfunction(**testargs)
              ^^^^^^^^^^^^^^^^^^^^^^^^
   File "/home/mikhail/gemma-4-developer-agent/paper/traceback_experiment/test_real_fixtures.py", line 44, in test_independent_cause_two
@@ -574,53 +574,53 @@ ValueError: INDEPENDENT_CAUSE_TWO_VALUE_ERROR_MARKER
 [LOG_CAUSE_2_24] validating schema
 _________________________ test_independent_cause_three _________________________
 Traceback (most recent call last):
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 344, in from_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 344, in from_call
     result: TResult | None = func()
                              ^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 246, in <lambda>
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 246, in <lambda>
     lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 120, in _hookexec
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 167, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
     raise exception
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
     yield
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
     return (yield)
             ^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 139, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
     teardown.throw(exception)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
     return (yield)
             ^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 121, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
     res = hook_impl.function(*args)
           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
     item.runtest()
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1671, in runtest
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1671, in runtest
     self.ihook.pytest_pyfunc_call(pyfuncitem=self)
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 120, in _hookexec
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 167, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
     raise exception
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/pluggy/_callers.py", line 121, in _multicall
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
     res = hook_impl.function(*args)
           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mikhail/youtube-channel-audit/.venv/lib/python3.12/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
+  File "/home/mikhail/gemma-4-developer-agent/.venv/lib/python3.12/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
     result = testfunction(**testargs)
              ^^^^^^^^^^^^^^^^^^^^^^^^
   File "/home/mikhail/gemma-4-developer-agent/paper/traceback_experiment/test_real_fixtures.py", line 50, in test_independent_cause_three
@@ -637,4 +637,4 @@ FAILED test_real_fixtures.py::test_parametrized_cases[gamma_case-300-GAMMA_PARAM
 FAILED test_real_fixtures.py::test_independent_cause_one - AssertionError: IN...
 FAILED test_real_fixtures.py::test_independent_cause_two - ValueError: INDEPE...
 FAILED test_real_fixtures.py::test_independent_cause_three - KeyError: 'missi...
-========================= 7 failed, 1 passed in 0.05s ==========================
+========================= 7 failed, 1 passed in 0.07s ==========================

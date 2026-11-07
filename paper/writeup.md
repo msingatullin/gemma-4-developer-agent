@@ -10,17 +10,17 @@
 
 ## 1. Abstract & Executive Summary
 
-Deploying autonomous software engineering (SWE) agents with quantized large language models—such as `google/gemma-4-31B-it-qat-w4a16-ct`—on edge-tier single-accelerator developer workstations (1× NVIDIA L4 24GB VRAM) reveals severe operational bottlenecks. Full-file reading across multi-thousand-line modules rapidly inflates prompt context, while unvalidated patches waste valuable container execution time on trivial syntax failures. Furthermore, multi-test failure logs flood context with hundreds of lines of irrelevant environment banners and captured stdout buffers.
+Deploying autonomous software engineering (SWE) agents with quantized large language models—such as `google/gemma-4-31B-it-qat-w4a16-ct`—on edge developer workstations (1× NVIDIA L4 24GB VRAM) exposes severe operational bottlenecks. Full-file reading across multi-thousand-line modules inflates prompt context, while unvalidated patches waste execution time on syntax failures. Furthermore, multi-test failure logs flood context with environment banners and captured stdout buffers.
 
-This work introduces the **AST-Guided Verification Suite**, an open-source, deterministic evaluation and execution framework engineered specifically for local SWE agents. The suite couples sub-millisecond abstract syntax tree (`ast.NodeVisitor`) symbol indexing, a native pre-flight syntax and compilation gate (`compile(mode='exec')`), and a multi-format, multi-failure assertion-preserving traceback compression engine that eliminates captured stdout pollution while strictly retaining diagnostic root causes across standard pytest formats (`--tb=auto`, `--tb=long`, `--tb=short`), native tracebacks (`--tb=native`), and standalone Python exception traces. Tested on the `ASTVerificationBenchmark` (a curated microbenchmark of 31 representative defect and diagnostic scenarios across FastAPI, Flask, Click, SymPy, Scikit-Learn, Django, and PyTest with strict ground-truth line, exception, and line-anchored multiline assertion oracles verified by hard executable assertions), the suite achieves an average **44.6% reduction in prompt token consumption on symbol-sliced modules** (reducing targeted context from 65.8 to 36.0 estimated tokens per extracted method), a **30.6% corpus-level volume reduction on traceback logs** (892 to 619 estimated tokens; 30.3% mean per-log reduction) while strictly preserving 100% of diagnostic root causes, line pointers, and multiline assertion details across single- and multi-failure test runs, and intercepts 100% of syntactically invalid patches in under 0.1 milliseconds (38.2 µs cloud / 58.0 µs local mean latency; 38.176 µs verified on Kaggle cloud v16). All token consumption metrics reported in this work are heuristic estimates computed via Python integer division `len(text) // 4` (matching standard BPE tokenizer subword approximations). The microbenchmark evaluates the deterministic components in isolation using strict ground-truth oracles verified by hard executable assertions, providing empirical foundations for autonomous SWE agent integration without external network or GPU dependencies.
+This work introduces the **AST-Guided Verification Suite**, an open-source, deterministic evaluation and execution framework engineered for local SWE agents. The suite couples sub-millisecond abstract syntax tree (`ast.NodeVisitor`) symbol indexing, a native pre-flight syntax gate (`compile(mode='exec')`), and a multi-format assertion-preserving traceback compression engine that eliminates stdout pollution while strictly retaining diagnostic root causes across standard pytest formats (`--tb=auto`, `--tb=long`, `--tb=short`), native tracebacks (`--tb=native`), and standalone Python exceptions. Evaluated on the `ASTVerificationBenchmark` (31 curated defect scenarios across FastAPI, Flask, Click, SymPy, Scikit-Learn, Django, and PyTest with ground-truth line, exception, and line-anchored multiline assertion oracles), the suite achieves an average **44.6% reduction in prompt token consumption on symbol-sliced modules** (65.8 to 36.0 estimated tokens per method), a **30.6% corpus-level volume reduction on traceback logs** (892 to 619 estimated tokens) while strictly preserving 100% of diagnostic root causes, line pointers, and multiline assertion details, and intercepts 100% of syntactically invalid patches in under 0.1 milliseconds (38.2 µs cloud / 58.0 µs local mean latency). All reported token consumption metrics are heuristic estimates computed via integer division `len(text) // 4` (matching BPE subword approximations). The microbenchmark evaluates deterministic components in isolation using strict executable oracles, establishing empirical foundations for autonomous SWE agent integration without external network or GPU dependencies.
 
 ---
 
 ## 2. Operating Constraints and Gemma 4 (31B QAT) Attention Mechanics
 
 ### Hardware Environments: Official Competition Runner vs. Edge Developer Deployments
-- **Official Competition Cluster:** As specified in `HARNESS_README.md` §3.1, the official evaluation environment operates on **4 × NVIDIA L4 GPUs (96 GB GDDR6 total) with Tensor Parallelism (TP=4)**, distributing model weights and KV cache across four accelerators.
-- **Edge Developer Workstation Deployment:** Individual researchers, private on-premise developers, and local continuous integration (CI) runners frequently operate on a **single edge accelerator (1 × NVIDIA L4 24GB or local workstation GPU)** without multi-GPU tensor-parallel orchestration. In this single-accelerator setting, memory headroom is strictly limited, making deterministic context management imperative.
+- **Official Competition Cluster:** 4 × NVIDIA L4 GPUs (96 GB GDDR6 total) with Tensor Parallelism (TP=4), distributing model weights and KV cache across four accelerators.
+- **Edge Developer Workstations:** Single accelerator (1 × NVIDIA L4 24GB or local workstation GPU) without multi-GPU orchestration. Memory headroom is strictly constrained, making deterministic context management imperative.
 
 ### Architectural Specifications of `google/gemma-4-31B-it-qat-w4a16-ct`:
 - **Weights:** INT4 pack-quantized weights (group size 32, FP16 activations), occupying $\approx 18.24$ GiB VRAM.
@@ -32,54 +32,54 @@ This work introduces the **AST-Guided Verification Suite**, an open-source, dete
 
 The KV cache memory footprints and Roofline decoding latencies in this section are analytical calculations based on theoretical memory bandwidth ($242.0 \times 10^9$ bytes/sec for NVIDIA L4) and INT4/FP16 cache layout under stated resident-memory assumptions; they are not empirical GPU runtime measurements and do not establish the actual memory headroom or token latency of a live serving runtime.
 
-For a context sequence of $T$ tokens stored in FP16 ($2$ bytes/scalar), memory allocation scales differently across sliding and global layers:
+For a context sequence of $T$ tokens stored in FP16 ($2$ bytes/scalar), memory allocation scales across sliding and global layers:
 
 1. **Sliding-Window Attention Layers (50 layers):**
-   Because sliding layers discard attention history beyond the active window $W = 1024$, their KV footprint saturates:
+   Sliding layers discard attention history beyond the active window $W = 1024$:
    $$M_{\text{KV,sliding}}(T) = 50 \times 2 \times H_{kv} \times d_k \times \min(T, 1024) \times 2 = 819,200 \times \min(T, 1024) \text{ bytes}$$
-   When $T \ge 1024$, sliding KV memory is strictly capped at $838,860,800$ bytes $\approx 0.839$ GB ($0.781$ GiB).
+   When $T \ge 1024$, sliding KV memory saturates at $838,860,800$ bytes $\approx 0.839$ GB ($0.781$ GiB).
 
 2. **Global Full-Attention Layers (10 layers):**
-   The 10 global layers maintain attention across the entire context depth $T$:
+   The 10 global layers maintain attention across full depth $T$:
    $$M_{\text{KV,global}}(T) = 10 \times 2 \times H_{kv,\text{global}} \times d_{k,\text{global}} \times T \times 2 = 81,920 \times T \text{ bytes} = 80.0 \times T \text{ KB}$$
 
 3. **Total KV Memory Footprint and Single-L4 Roofline Latency:**
    $$M_{\text{KV,total}}(T) = M_{\text{KV,sliding}}(T) + M_{\text{KV,global}}(T)$$
-   - At $T = 1,024$ tokens: Total KV $= 0.859$ GiB. Total VRAM $= 19.15$ GiB ($4.85$ GiB safety headroom on 1× L4).
-   - At $T = 8,192$ tokens (Deterministic AST bounded scope): Total KV $= 1.406$ GiB. Total VRAM $= 19.73$ GiB ($4.27$ GiB headroom).
-   - At $T = 24,576$ tokens (Unconstrained multi-file exploration): Total KV $= 2.656$ GiB. Total VRAM $= 21.06$ GiB ($2.94$ GiB headroom).
+   - At $T = 1,024$ tokens: Total KV $= 0.859$ GiB. Total VRAM $= 19.15$ GiB ($4.85$ GiB headroom on 1× L4).
+   - At $T = 8,192$ tokens (Deterministic AST scope): Total KV $= 1.406$ GiB. Total VRAM $= 19.73$ GiB ($4.27$ GiB headroom).
+   - At $T = 24,576$ tokens (Unconstrained file exploration): Total KV $= 2.656$ GiB. Total VRAM $= 21.06$ GiB ($2.94$ GiB headroom).
 
-Under the memory-bound autoregressive decoding regime (operational intensity $I \approx 1$ FLOP/byte), per-token generation latency follows:
+Under the memory-bound autoregressive decoding regime ($I \approx 1$ FLOP/byte), per-token generation latency follows:
 $$\tau(T) = \frac{(M_{\text{static}} + M_{\text{KV}}(T)) \times 1024^3}{\text{BW}_{\text{eff}} \times 10^9} \times 1000$$
-Converting binary GiB to bytes and decimal memory bandwidth ($242.0 \times 10^9$ bytes/sec) yields a modeled per-token generation latency of **87.2 ms/token at 8,192 tokens** versus **92.7 ms/token at 24,576 tokens** ($+6.36\%$ latency growth), while shrinking buffer headroom from 4.27 GiB to under 2.94 GiB on single-accelerator setups.
+At bandwidth $242.0 \times 10^9$ bytes/sec, modeled latency is **87.2 ms/token at 8,192 tokens** versus **92.7 ms/token at 24,576 tokens** ($+6.36\%$ latency growth), while shrinking buffer headroom from 4.27 GiB to 2.94 GiB on single-accelerator setups.
 
 ---
 
 ## 3. Related Work and Positioning Against Prior Art
 
-Autonomous software engineering agents have advanced rapidly across benchmark evaluations such as SWE-bench:
+Autonomous SWE agents have advanced rapidly across benchmarks like SWE-bench:
 
 - **Hierarchical Inspection and Repair (`Agentless`):**
-  Xia et al. (2024) demonstrated that complex multi-agent architectures often overcomplicate problem-solving, proposing a streamlined three-phase pipeline: localization $\rightarrow$ patch repair $\rightarrow$ patch validation. However, `Agentless` relies on multiple high-temperature LLM queries against frontier commercial models (GPT-4o, Claude 3.5 Sonnet) and multi-step file search heuristics. In an edge competition environment with zero external API access and an INT4 quantized local model, running multiple LLM-based filtering steps introduces fatal inference latency.
+  Xia et al. (2024) proposed a three-phase pipeline: localization $\rightarrow$ patch repair $\rightarrow$ patch validation. However, `Agentless` relies on multiple high-temperature LLM queries against frontier commercial models (GPT-4o, Claude 3.5 Sonnet) and multi-step file search heuristics. In an edge environment with zero external API access and an INT4 quantized local model, running multiple LLM filtering steps introduces fatal inference latency.
 
 - **Iterative ReAct Loops (`SWE-agent`):**
-  Yang et al. (2024) introduced dedicated Agent-Computer Interfaces (ACI) with file navigation commands (`search_file`, `scroll_down`). While effective with unconstrained context windows, these interfaces prompt local quantized models to perform continuous conversational reading, saturating context with redundant file bodies.
+  Yang et al. (2024) introduced Agent-Computer Interfaces (ACI) with commands like `search_file` and `scroll_down`. While effective with large context windows, these interfaces prompt local quantized models to perform continuous conversational reading, saturating context with redundant file bodies.
 
 - **Code Graphs and Semantic Retrieval (`RepoCoder`):**
-  Zhang et al. (2023) utilized cross-file semantic similarity and retrieval-augmented generation (RAG) for repository context. Building full repository code graphs on runtime containers requires heavy AST parsing and vector indexing libraries that frequently timeout during test suite execution.
+  Zhang et al. (2023) used cross-file semantic similarity and RAG for repository context. Building full repository code graphs on runtime containers requires heavy AST parsing and vector indexing libraries that frequently timeout during test suite execution.
 
 ### Architectural Novelty: The Deterministic Zero-Inference Stance
 
 In contrast to prior art, this suite introduces a **zero-inference, deterministic verification layer**:
 1. **Zero LLM Overhead for Localization:** Symbol discovery relies entirely on Python's built-in `ast` visitor, extracting precise function and class line ranges in sub-millisecond latency without consuming model generation tokens.
-2. **Native Pre-Flight Compilation Gate:** Catches syntax regressions, top-level return anomalies, and indentation corruptions in under 0.1 ms using Python's standard `compile(mode='exec')` before initiating expensive container test suites.
-3. **Multi-Format Traceback Compression:** Strips hundreds of lines of pytest session banners and captured stdout spam while strictly preserving all individual failing assertion lines (`E ...`), line pointers, and multiline exception messages across standard pytest (`--tb=auto`, `--tb=long`, `--tb=short`), native tracebacks (`--tb=native`), and standalone Python exception traces.
+2. **Native Pre-Flight Compilation Gate:** Catches syntax regressions, top-level return anomalies, and indentation corruptions in under 0.1 ms using Python's standard `compile(mode='exec')` before initiating container test suites.
+3. **Multi-Format Traceback Compression:** Strips hundreds of lines of pytest session banners and captured stdout spam while strictly preserving all individual failing assertion lines (`E ...`), line pointers, and multiline exception messages across standard pytest (`--tb=auto`, `--tb=long`, `--tb=short`), native tracebacks (`--tb=native`), and standalone Python exceptions.
 
 ---
 
 ## 4. Deterministic Component Evaluation: Executable Benchmark with Hardened Oracles
 
-We evaluated the deterministic components across the `ASTVerificationBenchmark`, a curated microbenchmark of 31 representative defect and context scenarios with strict ground-truth line, exception, and multiline assertion oracles enforced by executable assertions:
+We evaluated the deterministic components across the `ASTVerificationBenchmark`, a curated microbenchmark of 31 representative defect scenarios with ground-truth line, exception, and multiline assertion oracles enforced by executable assertions:
 
 | Category | Tasks | Mean Cloud CPU Latency (v16, µs) | Strict Oracle Accuracy | Mean Raw Tokens (Est.) | Mean Processed Tokens | Mean Token Reduction |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -88,11 +88,11 @@ We evaluated the deterministic components across the `ASTVerificationBenchmark`,
 | **Traceback Compression** | 8 | 159.3 µs | 100.0% (All details preserved) | 111.5 | 77.4 | **30.6%** (Corpus aggregate) |
 | **Valid Clean Patches** | 5 | 70.2 µs | 100.0% (Zero false rejections) | 15.2 | 15.2 | Gate pass (100%) |
 
-*Note on Token Estimation:* All token quantities reported above and throughout this evaluation are heuristic estimates computed via Python integer division `len(text) // 4` (matching standard OpenAI/BPE tokenizer subword byte approximations); they are not exact Gemma tokenizer outputs.
+*Note on Token Estimation:* All token quantities reported above are heuristic estimates computed via integer division `len(text) // 4` (matching standard BPE subword approximations); they are not exact Gemma tokenizer outputs.
 
-### Component Ablation Study and Comparison Against Naive SWE Baselines
+### Component Ablation Study and Comparison Against Naive Baselines
 
-To evaluate the isolated and synergistic contributions of each verification layer, we conducted an ablation study comparing the proposed framework against standard naive SWE agent patterns:
+To evaluate the isolated and synergistic contributions of each verification layer, we conducted an ablation study comparing the framework against standard naive SWE agent patterns:
 
 | Configuration / Mode | Symbol Context Reduction | Traceback Volume Reduction | Syntax Errors Caught Pre-Flight | Diagnostic Assertion Retention | Deterministic Verification Latency (CPU) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
@@ -104,58 +104,47 @@ To evaluate the isolated and synergistic contributions of each verification laye
 
 ### Empirical Traceback Validation on Real Pytest Execution Logs
 
-To verify the compressor on unmocked execution logs, we evaluated real test runs generated with `pytest 8.4.2` (`Python 3.12.3`) across verbose stdout logs (120 stdout lines), multiline assertion diffs (32 frames), parametrized tests, and multiple distinct exceptions (`AssertionError`, `ValueError`, `KeyError`):
+To evaluate the compressor on unmocked execution logs, we benchmarked real test runs executed with `pytest 8.4.2` (`Python 3.12.3`). Crucially, these test runs were generated by executing a purpose-built fixture test suite designed to evaluate compressor failure modes under heavy diagnostic load. The suite collects 8 test items yielding 7 distinct failures and 1 passing control across diverse failure typologies (120 lines of verbose stdout buffer noise, 32-frame multiline assertion diffs, parametrized test instances, and distinct exception types: `AssertionError`, `ValueError`, `KeyError`), rather than organic defect logs from external repositories.
 
-| Pytest Log Format / Configuration | Raw Volume (Chars / Est. Tokens) | Compressed Volume (Chars / Est. Tokens) | Prompt Volume Reduction | Diagnostic Retention (22 Markers) | Processing Latency |
+We benchmarked the canonical compressor implementation (`filter_pytest_log`, matching the public Kaggle notebook v16 cell 7):
+
+| Pytest Log Format / Configuration | Raw Volume (Chars / Est. Tokens) | Compressed Volume (Chars / Est. Tokens) | Prompt Volume Reduction | Diagnostic Retention (Categorized) | Processing Latency (CPU) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Standard Verbose (`-v`, `--tb=auto`)** | 21,555 chars / 5,388 tok | **5,813 chars / 1,453 tok** | **73.0%** | **100.0%** (22/22) | 5.48 ms |
-| **Short Traceback (`--tb=short`)** | 18,104 chars / 4,526 tok | **4,548 chars / 1,137 tok** | **74.9%** | **100.0%** (22/22) | 3.99 ms |
-| **Long Traceback (`--tb=long`)** | 20,828 chars / 5,207 tok | **5,813 chars / 1,453 tok** | **72.1%** | **100.0%** (22/22) | 5.18 ms |
-| **Native Traceback (`--tb=native`)** | 44,584 chars / 11,146 tok | 44,584 chars / 11,146 tok | Untruncated safe fallback | **100.0%** (22/22) | 0.05 ms |
-| **Baseline 1: Naive Tail-Cap (35 lines)** | 21,555 chars / 5,388 tok | 1,873 chars / 468 tok | 91.3% (Heuristic cutoff) | **63.6%** (Drops 8/22 markers) | 0.10 ms |
-| **Baseline 2: Naive E-Lines Only** | 21,555 chars / 5,388 tok | 3,500 chars / 875 tok | 83.8% (Strips headers/sites) | Drops code sites & fails native | 0.26 ms |
+| **Standard Verbose (`-v`, `--tb=auto`)** | 21,557 chars / 5,389 tok | **6,068 chars / 1,517 tok** | **71.9%** (72.8% lines) | **100.0%** (62/62 items) | 5.91 ms ± 0.13 ms |
+| **Short Traceback (`--tb=short`)** | 18,086 chars / 4,521 tok | **4,509 chars / 1,127 tok** | **75.1%** (75.5% lines) | **100.0%** (55/55 items) | 4.49 ms ± 0.03 ms |
+| **Long Traceback (`--tb=long`)** | 20,810 chars / 5,202 tok | **6,068 chars / 1,517 tok** | **70.8%** (72.2% lines) | **100.0%** (62/62 items) | 6.03 ms ± 0.20 ms |
+| **Native Traceback (`--tb=native`)** | 40,884 chars / 10,221 tok | 40,884 chars / 10,221 tok | Untruncated safe fallback | **100.0%** (55/55 items) | 0.05 ms ± 0.00 ms |
+| **Baseline 1: Naive Tail-Cap (35 lines)** | 21,557 chars / 5,389 tok | 1,873 chars / 468 tok | 91.3% (Heuristic cutoff) | **22.6%** (Drops 48/62 items) | 0.09 ms ± 0.00 ms |
+| **Baseline 2: Naive E-Lines Only** | 21,557 chars / 5,389 tok | 2,897 chars / 724 tok | 86.6% (Strips headers/sites) | **62.9%** (Drops 23/62 items) | 0.28 ms ± 0.01 ms |
 
-The experiment confirms that standard naive tail capping drops earlier test failures in multi-test runs (losing 36.4% of diagnostic evidence), while naive E-line extraction drops source code sites and fails entirely on native tracebacks. In contrast, the AST-Guided Suite achieves 73.0% volume reduction on verbose real logs while preserving 100% of diagnostic root causes, line pointers, and test section boundaries.
+#### Diagnostic Category Breakdown and Latency Trade-Off
+
+The categorized evaluation reveals the failure modes of naive compressors: **Naive Tail-Capping (35 lines)** achieves 91.3% reduction in 0.09 ms but drops 48 of 62 diagnostic items (retaining only 22.6% overall: 1/7 headers, 1/7 source sites, 0/32 multiline frames, 3/7 root causes) because stdout buffers displace earlier failures. **Naive E-Lines Only** strips all headers, summaries, source sites, and parametrized IDs (0/7 each, 62.9% overall retention) and fails entirely on native tracebacks. In contrast, the **AST-Guided Suite** executes in 4.5–6.0 ms on CPU (<0.1% of a single LLM turn), achieving 71.9% reduction while preserving 100% of all 62 diagnostic items across all categories. On native tracebacks, it activates an untruncated lossless fallback in 0.05 ms. All 8 negative control tests confirm that dropping any diagnostic item causes immediate hard `AssertionError` rejection in the verification oracle.
 
 ### Hardened Oracles and Methodological Rigor
-1. **Slicing Oracle Hardening:** In addition to validating expected start and end line coordinates (`s_line == expected_start and e_line == expected_end`), the oracle validates that the extracted slice is non-empty, contains the target symbol identifier, and matches the expected source lines (modulo normalized whitespace). Fault-injection tests confirming that empty slices with correct coordinates fail the oracle are verified in the test suite.
-2. **Line-Anchored Traceback Oracle:** In addition to verifying primary failure markers and `FAILED` summary lines, multiline exception fixtures (such as `TRC-08`) require that all 30 intermediate assertion detail lines (`detail-0` through `detail-29`) and boundary markers match via line-anchored regex patterns. This prevents substring false passes (such as `detail-1` matching inside `detail-10`) and ensures that the loss of any single diagnostic line triggers immediate oracle rejection.
-3. **Multi-Format Support & Safe Fallback:** The compressor supports standard pytest formats (`--tb=auto`, `--tb=long`, `--tb=short`), native tracebacks (`--tb=native`), standalone Python tracebacks, and provides an untruncated safe fallback that returns filtered logs without arbitrary line limits if a log cannot be partitioned into recognized failure blocks, ensuring zero loss of terminal exception diagnostics.
-4. **Sub-Millisecond Execution:** All four verification categories execute in aggregate under 6.1 ms on CPU for all 31 tasks combined (3.893 ms on Kaggle cloud CPU in v16).
-5. **Certified Test Gate:** The benchmark execution is permanently certified in the public notebook via an active hard assertion (`assert len(failed_cases) == 0`) that terminates execution with an exception if any ground-truth oracle fails.
+1. **Slicing Oracle:** Validates bounds, non-emptiness, target symbol ID, and normalized source lines; empty slices fail.
+2. **Line-Anchored Traceback Oracle:** Requires line-anchored regex matching for all intermediate assertion lines, preventing substring false passes.
+3. **Multi-Format Safe Fallback:** Supports standard, short, long, native, and standalone Python tracebacks, falling back untruncated if block parsing is ambiguous.
+4. **Sub-Millisecond Execution:** Deterministic components execute in 3.893 ms on Kaggle cloud CPU for all 31 benchmark tasks combined.
+5. **Certified Test Gate:** Hard assertions (`assert len(failed_cases) == 0`) certify benchmark execution in the public notebook.
 
 ---
 
 ## 5. SWE Agent Integration Architecture & Operational Design Principles
 
-The microbenchmark in Section 4 evaluates the deterministic CPU-based components in isolation. Full end-to-end multi-turn agent evaluations with live Gemma model inference remain prospective future work. In this section, we present the integration architecture and design principles for embedding these verified components into an autonomous agent loop.
+The microbenchmark in Section 4 evaluates deterministic CPU-based components in isolation; multi-turn agent evaluations with live Gemma model inference remain prospective future work. Here we outline the integration architecture for embedding these verified components into an autonomous agent loop.
 
 ### 5.1 Native Pre-Flight Compiler Gate
-When a candidate Python module contains a syntax error, a pre-flight compiler gate can reject it before the project test command is dispatched. Potentially avoided work includes sandbox invocation, test-runner startup and handling the resulting test traceback. These costs are unmeasured in this study; no numerical container or test-runner timing is claimed. A persistent sandbox may incur no per-attempt container startup cost. The net effect, including model correction turns, must be measured in the paired E2E study.
-
-The native pre-flight compiler gate invokes Python's compilation pipeline (`compile(patch_code, '<candidate_patch>', 'exec')`) before any sandbox command is dispatched. If syntax or indentation anomalies exist, the gate intercepts the patch in under 0.1 ms (38.2 µs cloud / 58.0 µs local mean latency; 38.176 µs verified on Kaggle cloud v16) and returns an actionable diagnostic feedback message directly to the model. The intended benefit is avoiding test execution on syntactically invalid modules; the effect on total latency, token use and task resolution has not been measured.
+When a candidate Python module contains a syntax error, a pre-flight compiler gate rejects it before the project test command is dispatched. The gate invokes Python's standard `compile(patch_code, '<candidate_patch>', 'exec')`, intercepting patches in under 0.1 ms (38.2 µs cloud / 58.0 µs local mean latency; 38.176 µs verified on Kaggle cloud v16) and returning actionable diagnostic feedback directly to the model.
 
 ### 5.2 Context Window Stability and Attention Mechanics
-The quantized `gemma-4-31B-it-qat-w4a16-ct` architecture utilizes hybrid attention, comprising 50 sliding-window layers with an effective window of $W = 1024$ tokens and 10 full-attention layers. Unconstrained file navigation—where agents read complete multi-thousand-line modules—rapidly expands context depth. In sliding-window attention layers, this expansion causes the earliest instructions and task definitions to slide outside the active window, degrading attention focus and causing reasoning drift.
-
-Deploying AST-guided symbol slicing (`ast_indexer`) targets function and class definitions (yielding 44.6% mean prompt token reduction on benchmark symbols). Combined with traceback compression (30.6% corpus volume reduction), these tools are designed to substantially mitigate context inflation. However, because full agent sessions accumulate multi-turn dialog history and symbol slicing does not impose a global token ceiling, their empirical impact on multi-turn attention stability, memory fragmentation, and overall agent solve rate remains to be established in future end-to-end model evaluations.
+The quantized `gemma-4-31B-it-qat-w4a16-ct` architecture utilizes hybrid attention (50 sliding-window layers with $W = 1024$ tokens, 10 full-attention layers). Unconstrained file reading rapidly expands context depth, causing early instructions to slide outside the active window and degrading attention focus. AST-guided symbol slicing (`ast_indexer`) targets function and class definitions (44.6% mean prompt token reduction), while traceback compression achieves 30.6% corpus volume reduction. Because full agent sessions accumulate multi-turn dialog history, their empirical impact on multi-turn attention stability and overall agent solve rate remains to be established in future end-to-end model evaluations.
 
 ### 5.3 Multi-Format Lossless Diagnostic Retention
-A primary hazard in log compression is the accidental suppression of critical diagnostic clues. In real pytest environments, test failures frequently produce:
-- Multiline exception messages spanning dozens of assertion details.
-- Parametrized tests where multiple distinct input fixtures fail with different root causes.
-- Plugin-level or framework configuration errors (`plugins: ...`).
-- Formats without `E ` prefixes, such as Python's native traceback mode (`--tb=native`) and standalone Python exceptions.
-
-The AST-guided traceback filter employs block-aware parsing. It isolates failing test blocks, collapses captured stdout noise, and strictly preserves:
-1. Every failing test header and file location (`.py:line: Error` or `File "...", line ..., in ...`).
-2. The failing source code line (`> assert ...`).
-3. Every single diagnostic assertion line prefixed with `E ` or `E\t` in standard pytest modes, and the full exception block in native traceback mode.
-4. All independent test failure blocks within parametrized suites.
-5. Untruncated logs for unrecognized formats without arbitrary line caps.
+To prevent accidental suppression of critical diagnostic clues across multiline assertion diffs, parametrized suites, and native exceptions, the AST-guided traceback filter employs block-aware parsing. It isolates failing test blocks, collapses captured stdout noise, and strictly preserves all failure headers, source code lines (`> assert ...`), assertion lines (`E ...`), and independent test failure blocks within parametrized suites.
 
 ### 5.4 Deterministic Loop Termination
-Autonomous agents frequently suffer from conversational over-generation—continuing to explain, apologize, or query after a task has been successfully solved. The agent system prompt instructs concise single-sentence completion upon resolving all failing tests, and the integration harness can enforce termination via deterministic test exit-code inspection, halting the loop immediately upon test suite pass.
+Autonomous agents frequently suffer from conversational over-generation upon task completion. The agent system prompt instructs concise single-sentence completion upon resolving all failing tests, and the integration harness enforces termination via deterministic test exit-code inspection, halting the loop immediately upon test suite pass.
 
 ### 5.5 Production ADK Specification
 The complete system is formalized as a Google Agent Development Kit (ADK) specification in `agent.yaml`:

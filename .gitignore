@@ -4,3 +4,4 @@ __pycache__/
 .ipynb_checkpoints/
 *.zip
 .pytest_cache/
+.venv/

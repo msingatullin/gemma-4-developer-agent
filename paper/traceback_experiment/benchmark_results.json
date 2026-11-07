@@ -1,194 +1,437 @@
-[
-  {
-    "format": "auto_standard",
-    "compressor": "Raw Uncompressed (Baseline 0)",
-    "lines": 364,
-    "chars": 21555,
-    "tokens_est": 5388,
-    "reduction_pct": 0.0,
-    "latency_us": 0.18,
-    "markers_preserved": 22,
-    "total_markers": 22,
-    "retention_pct": 100.0
+{
+  "meta": {
+    "compressor_file": "paper/traceback_compressor.py",
+    "compressor_sha256": "18c23de1b08d261f1e298463088ba5080445be01d301071513cb22679b0936e3",
+    "pytest_format_modes": [
+      "standard_verbose",
+      "short_traceback",
+      "long_traceback",
+      "native_traceback"
+    ],
+    "iterations_per_run": 50,
+    "independent_repeats": 3
   },
-  {
-    "format": "auto_standard",
-    "compressor": "Naive Tail-Cap (Baseline 1, 35 lines)",
-    "lines": 35,
-    "chars": 1873,
-    "tokens_est": 468,
-    "reduction_pct": 91.31,
-    "latency_us": 96.4,
-    "markers_preserved": 14,
-    "total_markers": 22,
-    "retention_pct": 63.64
+  "experiments": {
+    "standard_verbose": {
+      "raw_volume": {
+        "chars": 21557,
+        "lines": 364,
+        "heuristic_tokens": 5389
+      },
+      "compressed_volume": {
+        "chars": 6068,
+        "lines": 99,
+        "heuristic_tokens": 1517
+      },
+      "volume_reduction": {
+        "chars_pct": 71.85,
+        "lines_pct": 72.8
+      },
+      "timing_ms": {
+        "mean_latency_ms": 5.911,
+        "std_latency_ms": 0.128,
+        "min_latency_ms": 5.775,
+        "max_latency_ms": 6.082,
+        "repeats_ms": [
+          5.876,
+          6.082,
+          5.775
+        ]
+      },
+      "diagnostic_retention": {
+        "categories": {
+          "section_headers": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "failure_summaries": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "source_assertion_sites": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "multiline_assertion_frames": {
+            "retained": 32,
+            "total": 32,
+            "retention_pct": 100.0
+          },
+          "root_cause_exceptions": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "parametrized_node_ids": {
+            "retained": 2,
+            "total": 2,
+            "retention_pct": 100.0
+          }
+        },
+        "total_retained": 62,
+        "total_items": 62,
+        "overall_retention_pct": 100.0
+      }
+    },
+    "short_traceback": {
+      "raw_volume": {
+        "chars": 18104,
+        "lines": 290,
+        "heuristic_tokens": 4526
+      },
+      "compressed_volume": {
+        "chars": 4509,
+        "lines": 71,
+        "heuristic_tokens": 1127
+      },
+      "volume_reduction": {
+        "chars_pct": 75.09,
+        "lines_pct": 75.52
+      },
+      "timing_ms": {
+        "mean_latency_ms": 4.492,
+        "std_latency_ms": 0.028,
+        "min_latency_ms": 4.468,
+        "max_latency_ms": 4.531,
+        "repeats_ms": [
+          4.531,
+          4.468,
+          4.478
+        ]
+      },
+      "diagnostic_retention": {
+        "categories": {
+          "section_headers": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "failure_summaries": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "source_assertion_sites": {
+            "retained": 0,
+            "total": 0,
+            "retention_pct": 100.0,
+            "status": "NOT_PRESENT_IN_FORMAT"
+          },
+          "multiline_assertion_frames": {
+            "retained": 32,
+            "total": 32,
+            "retention_pct": 100.0
+          },
+          "root_cause_exceptions": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "parametrized_node_ids": {
+            "retained": 2,
+            "total": 2,
+            "retention_pct": 100.0
+          }
+        },
+        "total_retained": 55,
+        "total_items": 55,
+        "overall_retention_pct": 100.0
+      }
+    },
+    "long_traceback": {
+      "raw_volume": {
+        "chars": 20828,
+        "lines": 356,
+        "heuristic_tokens": 5207
+      },
+      "compressed_volume": {
+        "chars": 6068,
+        "lines": 99,
+        "heuristic_tokens": 1517
+      },
+      "volume_reduction": {
+        "chars_pct": 70.87,
+        "lines_pct": 72.19
+      },
+      "timing_ms": {
+        "mean_latency_ms": 6.031,
+        "std_latency_ms": 0.195,
+        "min_latency_ms": 5.861,
+        "max_latency_ms": 6.304,
+        "repeats_ms": [
+          6.304,
+          5.861,
+          5.928
+        ]
+      },
+      "diagnostic_retention": {
+        "categories": {
+          "section_headers": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "failure_summaries": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "source_assertion_sites": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "multiline_assertion_frames": {
+            "retained": 32,
+            "total": 32,
+            "retention_pct": 100.0
+          },
+          "root_cause_exceptions": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "parametrized_node_ids": {
+            "retained": 2,
+            "total": 2,
+            "retention_pct": 100.0
+          }
+        },
+        "total_retained": 62,
+        "total_items": 62,
+        "overall_retention_pct": 100.0
+      }
+    },
+    "native_traceback": {
+      "raw_volume": {
+        "chars": 43422,
+        "lines": 640,
+        "heuristic_tokens": 10855
+      },
+      "compressed_volume": {
+        "chars": 43422,
+        "lines": 640,
+        "heuristic_tokens": 10855
+      },
+      "volume_reduction": {
+        "chars_pct": 0.0,
+        "lines_pct": 0.0
+      },
+      "timing_ms": {
+        "mean_latency_ms": 0.058,
+        "std_latency_ms": 0.002,
+        "min_latency_ms": 0.055,
+        "max_latency_ms": 0.061,
+        "repeats_ms": [
+          0.061,
+          0.055,
+          0.057
+        ]
+      },
+      "diagnostic_retention": {
+        "categories": {
+          "section_headers": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "failure_summaries": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "source_assertion_sites": {
+            "retained": 0,
+            "total": 0,
+            "retention_pct": 100.0,
+            "status": "NOT_PRESENT_IN_FORMAT"
+          },
+          "multiline_assertion_frames": {
+            "retained": 32,
+            "total": 32,
+            "retention_pct": 100.0
+          },
+          "root_cause_exceptions": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "parametrized_node_ids": {
+            "retained": 2,
+            "total": 2,
+            "retention_pct": 100.0
+          }
+        },
+        "total_retained": 55,
+        "total_items": 55,
+        "overall_retention_pct": 100.0
+      }
+    }
   },
-  {
-    "format": "auto_standard",
-    "compressor": "Naive E-Lines Only (Baseline 2)",
-    "lines": 51,
-    "chars": 3500,
-    "tokens_est": 875,
-    "reduction_pct": 83.76,
-    "latency_us": 255.14,
-    "markers_preserved": 22,
-    "total_markers": 22,
-    "retention_pct": 100.0
+  "baselines_standard_log": {
+    "naive_tail_cap_35": {
+      "compressed_volume": {
+        "chars": 1873,
+        "lines": 35,
+        "heuristic_tokens": 468
+      },
+      "volume_reduction_chars_pct": 91.31,
+      "timing_ms": {
+        "mean_latency_ms": 0.093,
+        "std_latency_ms": 0.003,
+        "min_latency_ms": 0.09,
+        "max_latency_ms": 0.096,
+        "repeats_ms": [
+          0.096,
+          0.094,
+          0.09
+        ]
+      },
+      "diagnostic_retention": {
+        "categories": {
+          "section_headers": {
+            "retained": 1,
+            "total": 7,
+            "retention_pct": 14.29
+          },
+          "failure_summaries": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "source_assertion_sites": {
+            "retained": 1,
+            "total": 7,
+            "retention_pct": 14.29
+          },
+          "multiline_assertion_frames": {
+            "retained": 0,
+            "total": 32,
+            "retention_pct": 0.0
+          },
+          "root_cause_exceptions": {
+            "retained": 3,
+            "total": 7,
+            "retention_pct": 42.86
+          },
+          "parametrized_node_ids": {
+            "retained": 2,
+            "total": 2,
+            "retention_pct": 100.0
+          }
+        },
+        "total_retained": 14,
+        "total_items": 62,
+        "overall_retention_pct": 22.58
+      }
+    },
+    "naive_e_lines_only": {
+      "compressed_volume": {
+        "chars": 2897,
+        "lines": 44,
+        "heuristic_tokens": 724
+      },
+      "volume_reduction_chars_pct": 86.56,
+      "timing_ms": {
+        "mean_latency_ms": 0.278,
+        "std_latency_ms": 0.005,
+        "min_latency_ms": 0.271,
+        "max_latency_ms": 0.283,
+        "repeats_ms": [
+          0.281,
+          0.283,
+          0.271
+        ]
+      },
+      "diagnostic_retention": {
+        "categories": {
+          "section_headers": {
+            "retained": 0,
+            "total": 7,
+            "retention_pct": 0.0
+          },
+          "failure_summaries": {
+            "retained": 0,
+            "total": 7,
+            "retention_pct": 0.0
+          },
+          "source_assertion_sites": {
+            "retained": 0,
+            "total": 7,
+            "retention_pct": 0.0
+          },
+          "multiline_assertion_frames": {
+            "retained": 32,
+            "total": 32,
+            "retention_pct": 100.0
+          },
+          "root_cause_exceptions": {
+            "retained": 7,
+            "total": 7,
+            "retention_pct": 100.0
+          },
+          "parametrized_node_ids": {
+            "retained": 0,
+            "total": 2,
+            "retention_pct": 0.0
+          }
+        },
+        "total_retained": 39,
+        "total_items": 62,
+        "overall_retention_pct": 62.9
+      }
+    }
   },
-  {
-    "format": "auto_standard",
-    "compressor": "AST-Guided Verification Suite (Ours)",
-    "lines": 100,
-    "chars": 5813,
-    "tokens_est": 1453,
-    "reduction_pct": 73.03,
-    "latency_us": 5475.62,
-    "markers_preserved": 22,
-    "total_markers": 22,
-    "retention_pct": 100.0
-  },
-  {
-    "format": "tb_short",
-    "compressor": "Raw Uncompressed (Baseline 0)",
-    "lines": 290,
-    "chars": 18104,
-    "tokens_est": 4526,
-    "reduction_pct": 0.0,
-    "latency_us": 0.14,
-    "markers_preserved": 22,
-    "total_markers": 22,
-    "retention_pct": 100.0
-  },
-  {
-    "format": "tb_short",
-    "compressor": "Naive Tail-Cap (Baseline 1, 35 lines)",
-    "lines": 35,
-    "chars": 1883,
-    "tokens_est": 470,
-    "reduction_pct": 89.6,
-    "latency_us": 64.91,
-    "markers_preserved": 14,
-    "total_markers": 22,
-    "retention_pct": 63.64
-  },
-  {
-    "format": "tb_short",
-    "compressor": "Naive E-Lines Only (Baseline 2)",
-    "lines": 51,
-    "chars": 3312,
-    "tokens_est": 828,
-    "reduction_pct": 81.71,
-    "latency_us": 193.55,
-    "markers_preserved": 22,
-    "total_markers": 22,
-    "retention_pct": 100.0
-  },
-  {
-    "format": "tb_short",
-    "compressor": "AST-Guided Verification Suite (Ours)",
-    "lines": 79,
-    "chars": 4548,
-    "tokens_est": 1137,
-    "reduction_pct": 74.88,
-    "latency_us": 3985.02,
-    "markers_preserved": 22,
-    "total_markers": 22,
-    "retention_pct": 100.0
-  },
-  {
-    "format": "tb_long",
-    "compressor": "Raw Uncompressed (Baseline 0)",
-    "lines": 356,
-    "chars": 20828,
-    "tokens_est": 5207,
-    "reduction_pct": 0.0,
-    "latency_us": 0.13,
-    "markers_preserved": 22,
-    "total_markers": 22,
-    "retention_pct": 100.0
-  },
-  {
-    "format": "tb_long",
-    "compressor": "Naive Tail-Cap (Baseline 1, 35 lines)",
-    "lines": 35,
-    "chars": 1873,
-    "tokens_est": 468,
-    "reduction_pct": 91.01,
-    "latency_us": 76.86,
-    "markers_preserved": 14,
-    "total_markers": 22,
-    "retention_pct": 63.64
-  },
-  {
-    "format": "tb_long",
-    "compressor": "Naive E-Lines Only (Baseline 2)",
-    "lines": 51,
-    "chars": 3500,
-    "tokens_est": 875,
-    "reduction_pct": 83.2,
-    "latency_us": 247.97,
-    "markers_preserved": 22,
-    "total_markers": 22,
-    "retention_pct": 100.0
-  },
-  {
-    "format": "tb_long",
-    "compressor": "AST-Guided Verification Suite (Ours)",
-    "lines": 100,
-    "chars": 5813,
-    "tokens_est": 1453,
-    "reduction_pct": 72.09,
-    "latency_us": 5178.91,
-    "markers_preserved": 22,
-    "total_markers": 22,
-    "retention_pct": 100.0
-  },
-  {
-    "format": "tb_native",
-    "compressor": "Raw Uncompressed (Baseline 0)",
-    "lines": 640,
-    "chars": 44584,
-    "tokens_est": 11146,
-    "reduction_pct": 0.0,
-    "latency_us": 0.13,
-    "markers_preserved": 22,
-    "total_markers": 22,
-    "retention_pct": 100.0
-  },
-  {
-    "format": "tb_native",
-    "compressor": "Naive Tail-Cap (Baseline 1, 35 lines)",
-    "lines": 35,
-    "chars": 2712,
-    "tokens_est": 678,
-    "reduction_pct": 93.92,
-    "latency_us": 151.16,
-    "markers_preserved": 14,
-    "total_markers": 22,
-    "retention_pct": 63.64
-  },
-  {
-    "format": "tb_native",
-    "compressor": "Naive E-Lines Only (Baseline 2)",
-    "lines": 7,
-    "chars": 602,
-    "tokens_est": 150,
-    "reduction_pct": 98.65,
-    "latency_us": 523.2,
-    "markers_preserved": 13,
-    "total_markers": 22,
-    "retention_pct": 59.09
-  },
-  {
-    "format": "tb_native",
-    "compressor": "AST-Guided Verification Suite (Ours)",
-    "lines": 640,
-    "chars": 44584,
-    "tokens_est": 11146,
-    "reduction_pct": 0.0,
-    "latency_us": 50.75,
-    "markers_preserved": 22,
-    "total_markers": 22,
-    "retention_pct": 100.0
-  }
-]
+  "negative_controls": [
+    {
+      "test": "neg1_drop_section_header",
+      "description": "Mutant with dropped failure section header must trigger AssertionError in oracle",
+      "caught": true,
+      "status": "PASS"
+    },
+    {
+      "test": "neg2_drop_failure_summary",
+      "description": "Mutant with dropped failure summary line must trigger AssertionError in oracle",
+      "caught": true,
+      "status": "PASS"
+    },
+    {
+      "test": "neg3_drop_source_assertion_site",
+      "description": "Mutant with dropped source code assertion line must trigger AssertionError in oracle",
+      "caught": true,
+      "status": "PASS"
+    },
+    {
+      "test": "neg4_drop_multiline_diff_frame",
+      "description": "Mutant with dropped multiline detail frame must trigger AssertionError in oracle",
+      "caught": true,
+      "status": "PASS"
+    },
+    {
+      "test": "neg5_corrupted_root_cause_exception",
+      "description": "Mutant with corrupted root cause exception marker must trigger AssertionError in oracle",
+      "caught": true,
+      "status": "PASS"
+    },
+    {
+      "test": "neg6_naive_tail_cap_oracle_rejection",
+      "description": "Naive tail-cap output must be rejected by integrity oracle due to dropped headers/frames",
+      "caught": true,
+      "status": "PASS"
+    },
+    {
+      "test": "neg7_naive_e_lines_oracle_rejection",
+      "description": "Naive e-lines output must be rejected by integrity oracle due to dropped headers/code sites",
+      "caught": true,
+      "status": "PASS"
+    },
+    {
+      "test": "neg8_internal_fallback_gate_validation",
+      "description": "filter_pytest_log internal Counter guard guarantees untruncated fallback if evidence drops",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-"""Generate real pytest failure logs across single, parametrized, multiline, and multi-cause tests."""
+"""Generate real pytest failure logs across single, parametrized, multiline, and multi-cause tests.
+
+Completely portable: uses relative paths and automatically discovers the pytest runner.
+"""
 
 import os
 import sys
+import shutil
+import hashlib
 import subprocess
 from pathlib import Path
 
-EXPERIMENT_DIR = Path("/home/mikhail/gemma-4-developer-agent/paper/traceback_experiment")
-PYTEST_BIN = "/home/mikhail/youtube-channel-audit/.venv/bin/pytest"
-PYTHON_BIN = "/home/mikhail/youtube-channel-audit/.venv/bin/python"
+EXPERIMENT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = EXPERIMENT_DIR.parent.parent
 
 TEST_SUITE_CODE = '''# Real test suite designed to evaluate traceback compressor retention
 import pytest
@@ -62,29 +66,88 @@ def test_independent_cause_three():
     val = d["missing_route_target_INDEPENDENT_CAUSE_THREE_MARKER"]
 '''
 
+def find_pytest_cmd():
+    """Discover the pytest executable in a portable manner."""
+    if os.environ.get("PYTEST_CMD"):
+        return os.environ["PYTEST_CMD"].split()
+    if os.environ.get("PYTEST_BIN"):
+        return [os.environ["PYTEST_BIN"]]
+    
+    local_venv_pytest = REPO_ROOT / ".venv" / "bin" / "pytest"
+    if local_venv_pytest.exists() and os.access(local_venv_pytest, os.X_OK):
+        return [str(local_venv_pytest)]
+        
+    try:
+        import pytest
+        return [sys.executable, "-m", "pytest"]
+    except ImportError:
+        pass
+        
+    pytest_bin = shutil.which("pytest")
+    if pytest_bin:
+        return [pytest_bin]
+        
+    raise RuntimeError(
+        "Pytest executable not found. Set PYTEST_BIN or run within a virtual environment with pytest installed."
+    )
+
+def sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        while chunk := f.read(65536):
+            h.update(chunk)
+    return h.hexdigest()
+
 def main():
+    pytest_cmd = find_pytest_cmd()
+    print(f"Using pytest runner: {' '.join(pytest_cmd)}")
+
     EXPERIMENT_DIR.mkdir(parents=True, exist_ok=True)
     test_file = EXPERIMENT_DIR / "test_real_fixtures.py"
     with open(test_file, "w") as f:
         f.write(TEST_SUITE_CODE)
     print(f"Wrote test fixtures to {test_file}")
 
-    # Generate logs with different pytest flags
+    # Generate logs with 4 different pytest flags
     runs = [
-        ("auto_standard", [PYTEST_BIN, "-v", "test_real_fixtures.py"]),
-        ("tb_short", [PYTEST_BIN, "--tb=short", "test_real_fixtures.py"]),
-        ("tb_long", [PYTEST_BIN, "--tb=long", "test_real_fixtures.py"]),
-        ("tb_native", [PYTEST_BIN, "--tb=native", "test_real_fixtures.py"]),
+        ("auto_standard", pytest_cmd + ["-v", "test_real_fixtures.py"]),
+        ("tb_short", pytest_cmd + ["--tb=short", "test_real_fixtures.py"]),
+        ("tb_long", pytest_cmd + ["--tb=long", "test_real_fixtures.py"]),
+        ("tb_native", pytest_cmd + ["--tb=native", "test_real_fixtures.py"]),
     ]
 
+    checksums = {}
     for name, cmd in runs:
         out_file = EXPERIMENT_DIR / f"raw_log_{name}.txt"
-        res = subprocess.run(cmd, cwd=EXPERIMENT_DIR, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        res = subprocess.run(
+            cmd,
+            cwd=EXPERIMENT_DIR,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True
+        )
+        # Verify expected pytest exit code (1 = tests failed)
+        assert res.returncode == 1, f"Expected returncode 1, got {res.returncode}"
+        
+        # Verify collection and test outcome counts
+        assert "collected 8 items" in res.stdout, f"Expected 8 collected items in {name}"
+        assert "7 failed, 1 passed" in res.stdout, f"Expected '7 failed, 1 passed' in {name}"
+        
         with open(out_file, "w") as f:
             f.write(res.stdout)
+            
+        file_hash = sha256_file(out_file)
+        checksums[out_file.name] = file_hash
         lines = len(res.stdout.splitlines())
         chars = len(res.stdout)
-        print(f"Generated {out_file.name}: exit={res.returncode}, lines={lines}, chars={chars}")
+        print(f"Generated {out_file.name}: exit={res.returncode}, lines={lines}, chars={chars}, sha256={file_hash[:16]}...")
+
+    # Write checksums manifest
+    checksums_path = EXPERIMENT_DIR / "checksums.sha256"
+    with open(checksums_path, "w") as f:
+        for fname, fhash in sorted(checksums.items()):
+            f.write(f"{fhash}  {fname}\n")
+    print(f"Recorded SHA256 checksums to {checksums_path}")
 
 if __name__ == "__main__":
     main()
