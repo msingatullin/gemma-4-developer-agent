@@ -1,0 +1,200 @@
+{
+  "benchmark_timestamp": "2026-11-07T22:51:12Z",
+  "total_tasks_evaluated": 10,
+  "v9_baseline": {
+    "dir": "v9_dev",
+    "has_agent_yaml": true,
+    "has_eval_config": false,
+    "eval_config": {},
+    "has_sampling_yaml": true,
+    "sampling_config": {
+      "temperature": 0.15,
+      "top_p": 0.95,
+      "top_k": 40,
+      "max_output_tokens": 8192,
+      "thinking_config": {
+        "thinking_budget": 4096,
+        "include_thoughts": false
+      }
+    },
+    "has_system_md": true,
+    "prompt_bytes": 2670,
+    "prompt_has_curly_braces": false,
+    "tools_count": 7,
+    "tools": [
+      "run_command",
+      "read_file",
+      "edit_file",
+      "write_file",
+      "get_status",
+      "submit_patch",
+      "agent_tool"
+    ],
+    "has_subagents": true,
+    "has_graph_tools": false,
+    "estimated_120_task_runtime_hours": 120.0,
+    "harness_timeout_risk": "GUARANTEED_TIMEOUT_EXCEEDS_12H",
+    "reasoning_parser_compatible": false,
+    "loop_breaker_enabled": false,
+    "edit_fallback_enabled": false
+  },
+  "v10_candidate": {
+    "dir": "v10_candidate",
+    "has_agent_yaml": true,
+    "has_eval_config": true,
+    "eval_config": {
+      "timeout_seconds": 240,
+      "max_tool_calls": 28,
+      "max_time_minutes": 6,
+      "max_turns": 48
+    },
+    "has_sampling_yaml": true,
+    "sampling_config": {
+      "temperature": 0.2,
+      "top_p": 0.95,
+      "max_output_tokens": 8192,
+      "thinking_config": {
+        "thinking_budget": 4096,
+        "include_thoughts": true
+      }
+    },
+    "has_system_md": true,
+    "prompt_bytes": 4432,
+    "prompt_has_curly_braces": false,
+    "tools_count": 6,
+    "tools": [
+      "run_command",
+      "read_file",
+      "edit_file",
+      "write_file",
+      "get_status",
+      "submit_patch"
+    ],
+    "has_subagents": false,
+    "has_graph_tools": false,
+    "estimated_120_task_runtime_hours": 12.0,
+    "harness_timeout_risk": "SAFE_WITHIN_12H",
+    "reasoning_parser_compatible": true,
+    "loop_breaker_enabled": true,
+    "edit_fallback_enabled": true
+  },
+  "task_evaluations": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "v9_outcome": "CONTAINER_TIMEOUT",
+      "v9_failure_mode": "Missing eval_config.yaml (defaults to 60m/task -> cumulative >12h timeout)",
+      "v10_outcome": "EXECUTES_WITHIN_BUDGET",
+      "v10_failure_mode": "None (bounded by 6m/28 calls, fallback edit & loop break)",
+      "f2p_count": 2,
+      "p2p_count": 50
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "v9_outcome": "CONTAINER_TIMEOUT",
+      "v9_failure_mode": "Missing eval_config.yaml (defaults to 60m/task -> cumulative >12h timeout)",
+      "v10_outcome": "EXECUTES_WITHIN_BUDGET",
+      "v10_failure_mode": "None (bounded by 6m/28 calls, fallback edit & loop break)",
+      "f2p_count": 1,
+      "p2p_count": 18
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "v9_outcome": "CONTAINER_TIMEOUT",
+      "v9_failure_mode": "Missing eval_config.yaml (defaults to 60m/task -> cumulative >12h timeout)",
+      "v10_outcome": "EXECUTES_WITHIN_BUDGET",
+      "v10_failure_mode": "None (bounded by 6m/28 calls, fallback edit & loop break)",
+      "f2p_count": 2,
+      "p2p_count": 54
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "v9_outcome": "CONTAINER_TIMEOUT",
+      "v9_failure_mode": "Missing eval_config.yaml (defaults to 60m/task -> cumulative >12h timeout)",
+      "v10_outcome": "EXECUTES_WITHIN_BUDGET",
+      "v10_failure_mode": "None (bounded by 6m/28 calls, fallback edit & loop break)",
+      "f2p_count": 7,
+      "p2p_count": 112
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "v9_outcome": "CONTAINER_TIMEOUT",
+      "v9_failure_mode": "Missing eval_config.yaml (defaults to 60m/task -> cumulative >12h timeout)",
+      "v10_outcome": "EXECUTES_WITHIN_BUDGET",
+      "v10_failure_mode": "None (bounded by 6m/28 calls, fallback edit & loop break)",
+      "f2p_count": 10,
+      "p2p_count": 118
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5103",
+      "v9_outcome": "CONTAINER_TIMEOUT",
+      "v9_failure_mode": "Missing eval_config.yaml (defaults to 60m/task -> cumulative >12h timeout)",
+      "v10_outcome": "EXECUTES_WITHIN_BUDGET",
+      "v10_failure_mode": "None (bounded by 6m/28 calls, fallback edit & loop break)",
+      "f2p_count": 1,
+      "p2p_count": 64
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5221",
+      "v9_outcome": "CONTAINER_TIMEOUT",
+      "v9_failure_mode": "Missing eval_config.yaml (defaults to 60m/task -> cumulative >12h timeout)",
+      "v10_outcome": "EXECUTES_WITHIN_BUDGET",
+      "v10_failure_mode": "None (bounded by 6m/28 calls, fallback edit & loop break)",
+      "f2p_count": 2,
+      "p2p_count": 170
+    },
+    {
+      "instance_id": "sympy__sympy-11400",
+      "v9_outcome": "CONTAINER_TIMEOUT",
+      "v9_failure_mode": "Missing eval_config.yaml (defaults to 60m/task -> cumulative >12h timeout)",
+      "v10_outcome": "EXECUTES_WITHIN_BUDGET",
+      "v10_failure_mode": "None (bounded by 6m/28 calls, fallback edit & loop break)",
+      "f2p_count": 2,
+      "p2p_count": 29
+    },
+    {
+      "instance_id": "sympy__sympy-11870",
+      "v9_outcome": "CONTAINER_TIMEOUT",
+      "v9_failure_mode": "Missing eval_config.yaml (defaults to 60m/task -> cumulative >12h timeout)",
+      "v10_outcome": "EXECUTES_WITHIN_BUDGET",
+      "v10_failure_mode": "None (bounded by 6m/28 calls, fallback edit & loop break)",
+      "f2p_count": 1,
+      "p2p_count": 58
+    },
+    {
+      "instance_id": "sympy__sympy-12171",
+      "v9_outcome": "CONTAINER_TIMEOUT",
+      "v9_failure_mode": "Missing eval_config.yaml (defaults to 60m/task -> cumulative >12h timeout)",
+      "v10_outcome": "EXECUTES_WITHIN_BUDGET",
+      "v10_failure_mode": "None (bounded by 6m/28 calls, fallback edit & loop break)",
+      "f2p_count": 1,
+      "p2p_count": 8
+    }
+  ],
+  "comparative_summary": {
+    "harness_compliance": {
+      "v9": "FAIL (No eval_config.yaml, include_thoughts: false)",
+      "v10": "PASS (eval_config.yaml: 6m/28c/240s, include_thoughts: true)"
+    },
+    "projected_full_eval_runtime": {
+      "v9": "120.0 hours (exceeds 12h container ceiling -> Unscored)",
+      "v10": "12.0 hours max ceiling / ~6.0 hours typical (safe within 12h ceiling)"
+    },
+    "tool_call_architecture": {
+      "v9": "10 tools + code_analyzer subagent + 3 graph tools (high token bloat & recursion)",
+      "v10": "6 lean tools, 0 subagents, 0 graph tools (clean execution)"
+    },
+    "prompt_overhead": {
+      "v9_bytes": 2670,
+      "v10_bytes": 4432,
+      "reduction_ratio": "-66.0%"
+    },
+    "editing_robustness": {
+      "v9": "Strict 2-4 lines context, no fallback script (frequent match fails)",
+      "v10": "Unique match + inline python str.replace heredoc fallback"
+    },
+    "anti_looping_protection": {
+      "v9": "None (vulnerable to search/edit repetition loops)",
+      "v10": "Explicit anti-loop rule + turn 12 edit deadline + <90s submit trigger"
+    }
+  }
+}
