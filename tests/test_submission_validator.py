@@ -1,5 +1,7 @@
 """Regression tests for the static submission preflight. Run: python -m unittest discover -s tests -p 'test_submission_validator.py' -v"""
 import importlib.util
+import sys
+from unittest.mock import patch
 import tempfile
 import unittest
 import zipfile
@@ -95,9 +97,8 @@ class SubmissionValidatorTests(unittest.TestCase):
         archive = self.root / "malicious.zip"
         with zipfile.ZipFile(archive, "w") as zf:
             zf.writestr("../escape", "bad")
-        with zipfile.ZipFile(archive) as zf:
-            names = [i.filename for i in zf.infolist()]
-        self.assertTrue(any(".." in Path(name).parts for name in names))
+        with patch.object(sys, "argv", ["validate_submission.py", str(archive)]):
+            self.assertEqual(validator.main(), 1)
 
     def test_zip_valid_archive_round_trip(self):
         archive = self.root / "valid.zip"
