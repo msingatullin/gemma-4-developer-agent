@@ -99,7 +99,7 @@ def check_runpod_status() -> tuple:
     q = """query { myself { clientBalance currentSpendPerHr pods { id name desiredStatus costPerHr } } }"""
     r = requests.post(url, json={"query": q}, timeout=15).json()
     myself = r["data"]["myself"]
-    balance = myself["clientBalance"]
+    balance = float(myself.get("clientBalance") or 0.0)
     pods = myself["pods"] or []
     return balance, pods
 
