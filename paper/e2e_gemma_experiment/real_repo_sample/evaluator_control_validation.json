@@ -1,0 +1,30 @@
+[
+  {
+    "control_name": "POSITIVE_CONTROL_GOLD_PATCH",
+    "instance_id": "pallets__flask-4045",
+    "expected_verdict": "RESOLVED",
+    "actual_verdict": "RESOLVED",
+    "passed": true
+  },
+  {
+    "control_name": "NEGATIVE_CONTROL_UNCHANGED_BASE",
+    "instance_id": "pallets__flask-4045",
+    "expected_verdict": "FAILED_F2P",
+    "actual_verdict": "FAILED_F2P",
+    "passed": true
+  },
+  {
+    "control_name": "MALFORMED_CONTROL_SYNTAX_ERROR",
+    "instance_id": "pallets__flask-4992",
+    "expected_verdict": "SYNTAX_ERROR",
+    "actual_verdict": "SYNTAX_ERROR",
+    "passed": true
+  },
+  {
+    "control_name": "DELIBERATE_REGRESSION_CONTROL",
+    "instance_id": "pallets__flask-4045",
+    "expected_verdict": "REGRESSION",
+    "actual_verdict": "REGRESSION",
+    "passed": true
+  }
+]

@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
-Automated CPU Verification Gate for Authentic Upstream Repository Sample (Phase 1)
-Verifies:
+Automated CPU Verification Gate for Authentic Upstream Repository Sample (Phase 1 / P1.5)
+Strictly Verifies:
 1. Clean checkout of upstream repo at exact pinned base_commit.
 2. Isolated virtualenv per task with strictly pinned dependencies.
-3. Test patch application -> RED failure (asserts failure before fix).
-4. Gold patch application -> GREEN pass (asserts fix resolves failure with zero regressions).
-5. Detailed audit record logging to cpu_verification_results.jsonl.
+3. Test patch application -> RED failure with exact expected failure signature/type.
+4. Gold patch application -> GREEN pass (asserts fix resolves failure with 0 failures).
+5. Comprehensive regression suite pass (Flask: module suite; Requests: 43 verified offline P2P tests).
+6. Real network isolation enforced via Linux network namespace (unshare -rn).
+7. Detailed audit record logging to cpu_verification_results.jsonl.
 """
 
 import os
@@ -23,6 +25,12 @@ ARCHIVE_DIR = REPO_ROOT / "paper" / "e2e_gemma_experiment" / "real_repo_sample"
 WORK_DIR = Path("/tmp/real_tasks_cpu_eval")
 UPSTREAM_CACHE = Path("/home/mikhail/upstream_repos")
 
+# Load verified offline P2P test list for Requests
+REQUESTS_OFFLINE_TESTS_FILE = ARCHIVE_DIR / "requests_offline_p2p_tests.json"
+assert REQUESTS_OFFLINE_TESTS_FILE.exists(), f"Missing offline tests file: {REQUESTS_OFFLINE_TESTS_FILE}"
+REQUESTS_OFFLINE_TESTS = json.loads(REQUESTS_OFFLINE_TESTS_FILE.read_text(encoding="utf-8"))
+REQUESTS_OFFLINE_FILTER = " or ".join(REQUESTS_OFFLINE_TESTS)
+
 TASKS_SPEC = [
     {
         "instance_id": "pallets__flask-4045",
@@ -37,7 +45,12 @@ TASKS_SPEC = [
             "tests/test_blueprints.py::test_dotted_name_not_allowed",
             "tests/test_blueprints.py::test_route_decorator_custom_endpoint_with_dots"
         ],
-        "regression_suite": "tests/test_blueprints.py",
+        "expected_red_signatures": [
+            "DID NOT RAISE <class 'ValueError'>",
+            "AssertionError: Blueprint endpoints should not contain dots"
+        ],
+        "expected_f2p_count": 2,
+        "regression_args": ["tests/test_blueprints.py"],
         "pinned_pkgs": ["werkzeug==2.0.1", "pytest==6.2.5", "setuptools==57.5.0"]
     },
     {
@@ -52,7 +65,11 @@ TASKS_SPEC = [
         "f2p_tests": [
             "tests/test_config.py::test_config_from_file_toml"
         ],
-        "regression_suite": "tests/test_config.py",
+        "expected_red_signatures": [
+            "TypeError: Config.from_file() got an unexpected keyword argument 'text'"
+        ],
+        "expected_f2p_count": 1,
+        "regression_args": ["tests/test_config.py"],
         "pinned_pkgs": ["pytest==7.4.4", "werkzeug==2.3.8"]
     },
     {
@@ -68,7 +85,12 @@ TASKS_SPEC = [
             "tests/test_cli.py::TestRoutes::test_subdomain",
             "tests/test_cli.py::TestRoutes::test_host"
         ],
-        "regression_suite": "tests/test_cli.py -k TestRoutes",
+        "expected_red_signatures": [
+            "AssertionError: assert 'Subdomain' in",
+            "AssertionError: assert 'Host' in"
+        ],
+        "expected_f2p_count": 2,
+        "regression_args": ["tests/test_cli.py", "-k", "TestRoutes"],
         "pinned_pkgs": ["pytest==7.4.4", "werkzeug==2.3.8", "blinker==1.9.0"]
     },
     {
@@ -83,7 +105,11 @@ TASKS_SPEC = [
         "f2p_tests": [
             "test_requests.py::TestRedirects::test_requests_are_updated_each_time"
         ],
-        "regression_suite": "test_requests.py -k test_requests_are_updated_each_time",
+        "expected_red_signatures": [
+            "AssertionError: assert 'POST' == 'GET'"
+        ],
+        "expected_f2p_count": 1,
+        "regression_args": ["test_requests.py", "-k", REQUESTS_OFFLINE_FILTER],
         "pinned_pkgs": ["pytest==6.2.5"]
     },
     {
@@ -98,7 +124,11 @@ TASKS_SPEC = [
         "f2p_tests": [
             "test_requests.py::RequestsTestCase::test_iter_content_handles_socket_error"
         ],
-        "regression_suite": "test_requests.py -k test_iter_content_handles_socket_error",
+        "expected_red_signatures": [
+            "OSError"
+        ],
+        "expected_f2p_count": 1,
+        "regression_args": ["test_requests.py", "-k", REQUESTS_OFFLINE_FILTER],
         "pinned_pkgs": ["pytest==6.2.5"]
     }
 ]
@@ -108,7 +138,12 @@ def sha256_file(path: Path) -> str:
     h.update(path.read_bytes())
     return h.hexdigest()
 
-def run_task_verification(spec: dict) -> dict:
+def run_isolated_command(cmd: list, cwd: str) -> subprocess.CompletedProcess:
+    """Run command with Linux network namespace isolation (unshare -rn)."""
+    wrapped_cmd = ["unshare", "-rn"] + cmd
+    return subprocess.run(wrapped_cmd, capture_output=True, text=True, cwd=cwd)
+
+def run_task_verification(spec: dict) -> tuple:
     iid = spec["instance_id"]
     print(f"\n=======================================================")
     print(f"[*] Starting CPU Verification for {iid}")
@@ -160,18 +195,27 @@ def run_task_verification(spec: dict) -> dict:
     )
     assert patch_apply_test.returncode == 0, f"Failed to apply test patch: {patch_apply_test.stderr.decode()}"
 
-    # Run pytest to assert failure
+    # Run pytest under network namespace isolation (unshare -rn) to assert failure
     test_cmd = [str(pytest_bin), str(task_work / spec["test_file"]), "-k", spec["test_filter"], "-v"]
     t0 = time.time()
-    red_run = subprocess.run(test_cmd, capture_output=True, text=True, cwd=str(task_work))
+    red_run = run_isolated_command(test_cmd, cwd=str(task_work))
     red_time = time.time() - t0
 
-    print(f"[-] Base commit with test patch (RED): Exit Code {red_run.returncode} (expected != 0)")
-    is_red_verified = (red_run.returncode != 0)
-    assert is_red_verified, f"Red test did not fail for {iid}!"
-
-    # Save raw test failure output
     raw_traceback = red_run.stdout + ("\n" + red_run.stderr if red_run.stderr else "")
+    
+    # Verify RED exit code and specific error signatures
+    is_red_exit = (red_run.returncode != 0)
+    assert is_red_exit, f"Red test did not fail for {iid}! (Exit code: {red_run.returncode})"
+
+    missing_signatures = []
+    for sig in spec["expected_red_signatures"]:
+        if sig not in raw_traceback:
+            missing_signatures.append(sig)
+
+    assert len(missing_signatures) == 0, f"Missing expected RED signatures in {iid}: {missing_signatures}\nOutput:\n{raw_traceback[:500]}"
+    print(f"[-] Base commit with test patch (RED): Exit Code {red_run.returncode} (expected != 0)")
+    print(f"    Verified RED error signatures: {spec['expected_red_signatures']}")
+
     raw_trace_file = task_work / "raw_failure_traceback.txt"
     raw_trace_file.write_text(raw_traceback, encoding="utf-8")
 
@@ -184,18 +228,22 @@ def run_task_verification(spec: dict) -> dict:
     assert patch_apply_gold.returncode == 0, f"Failed to apply gold patch: {patch_apply_gold.stderr.decode()}"
 
     t1 = time.time()
-    green_run = subprocess.run(test_cmd, capture_output=True, text=True, cwd=str(task_work))
+    green_run = run_isolated_command(test_cmd, cwd=str(task_work))
     green_time = time.time() - t1
 
+    is_green_verified = (green_run.returncode == 0) and ("failed" not in green_run.stdout.lower() or "0 failed" in green_run.stdout.lower())
+    assert is_green_verified, f"Green test failed to pass with gold patch for {iid}!\nOutput:\n{green_run.stdout}"
     print(f"[+] With Gold Patch (GREEN): Exit Code {green_run.returncode} (expected == 0)")
-    is_green_verified = (green_run.returncode == 0)
-    assert is_green_verified, f"Green test failed to pass with gold patch for {iid}!"
 
-    # 5. Run full regression suite for module
-    reg_cmd = [str(pytest_bin)] + spec["regression_suite"].split()
-    reg_run = subprocess.run(reg_cmd, capture_output=True, text=True, cwd=str(task_work))
-    is_regression_clean = (reg_run.returncode == 0)
-    print(f"[+] Regression Suite: Exit Code {reg_run.returncode} (expected == 0)")
+    # 5. Run full regression suite for module under network isolation
+    reg_cmd = [str(pytest_bin)] + spec["regression_args"] + ["-q"]
+    t2 = time.time()
+    reg_run = run_isolated_command(reg_cmd, cwd=str(task_work))
+    reg_time = time.time() - t2
+    
+    is_regression_clean = (reg_run.returncode == 0) and ("failed" not in reg_run.stdout.lower() or "0 failed" in reg_run.stdout.lower())
+    assert is_regression_clean, f"Regression detected for {iid}!\nOutput:\n{reg_run.stdout}\n{reg_run.stderr}"
+    print(f"[+] Regression Suite: Exit Code {reg_run.returncode} (expected == 0, clean zero regressions in {round(reg_time, 2)}s)")
 
     record = {
         "instance_id": iid,
@@ -210,6 +258,7 @@ def run_task_verification(spec: dict) -> dict:
         "red_test": {
             "exit_code": red_run.returncode,
             "status": "FAIL_VERIFIED",
+            "verified_red_signatures": spec["expected_red_signatures"],
             "elapsed_seconds": round(red_time, 3),
             "traceback_lines": len(raw_traceback.splitlines()),
             "traceback_chars": len(raw_traceback)
@@ -221,16 +270,18 @@ def run_task_verification(spec: dict) -> dict:
         },
         "regression_check": {
             "exit_code": reg_run.returncode,
-            "status": "CLEAN_ZERO_REGRESSIONS" if is_regression_clean else "REGRESSION_DETECTED"
+            "status": "CLEAN_ZERO_REGRESSIONS",
+            "elapsed_seconds": round(reg_time, 3),
+            "regression_suite": spec["regression_args"]
         },
-        "offline_status": "100% OFFLINE_VERIFIED (0 network calls)",
+        "network_isolation": "Linux network namespace isolation (unshare -rn) verified; Requests suite restricted to 43 verified offline P2P tests; 0 external network dependencies.",
         "cpu_eligibility_verdict": "ELIGIBLE_FOR_INFERENCE"
     }
 
     return record, raw_traceback
 
 def main():
-    print("[*] Launching CPU Eligibility & Verification Gate for Real Repos...")
+    print("[*] Launching CPU Eligibility & Verification Gate for Real Repos (P1.5)...")
     WORK_DIR.mkdir(parents=True, exist_ok=True)
     results = []
     tracebacks = {}

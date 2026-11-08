@@ -29,7 +29,7 @@ requests/models.py:637: in generate
     for chunk in self.raw.stream(chunk_size, decode_content=True):
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <test_requests.RequestsTestCase.test_iter_content_handles_socket_error.<locals>.RawMock object at 0x7796106f3550>
+self = <test_requests.RequestsTestCase.test_iter_content_handles_socket_error.<locals>.RawMock object at 0x76e572d204c0>
 chunk_size = 1, decode_content = True
 
     def stream(self, chunk_size, decode_content=None):
@@ -46,4 +46,4 @@ requests/packages/urllib3/_collections.py:1
 -- Docs: https://docs.pytest.org/en/stable/warnings.html
 =========================== short test summary info ============================
 FAILED test_requests.py::RequestsTestCase::test_iter_content_handles_socket_error
-================ 1 failed, 132 deselected, 2 warnings in 1.02s =================
+================ 1 failed, 132 deselected, 2 warnings in 1.05s =================

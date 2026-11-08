@@ -9,7 +9,7 @@ test_requests.py::TestRedirects::test_requests_are_updated_each_time FAILED [100
 =================================== FAILURES ===================================
 ______________ TestRedirects.test_requests_are_updated_each_time _______________
 
-self = <test_requests.TestRedirects object at 0x740544bda220>
+self = <test_requests.TestRedirects object at 0x77f46454b190>
 
     def test_requests_are_updated_each_time(self):
         session = RedirectSession([303, 307])
@@ -41,4 +41,4 @@ test_requests.py::TestRedirects::test_requests_are_updated_each_time
 -- Docs: https://docs.pytest.org/en/stable/warnings.html
 =========================== short test summary info ============================
 FAILED test_requests.py::TestRedirects::test_requests_are_updated_each_time
-================ 1 failed, 120 deselected, 3 warnings in 0.86s =================
+================ 1 failed, 120 deselected, 3 warnings in 0.88s =================

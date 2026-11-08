@@ -11,8 +11,8 @@ tests/test_cli.py::TestRoutes::test_host FAILED                          [100%]
 =================================== FAILURES ===================================
 __________________________ TestRoutes.test_subdomain ___________________________
 
-self = <test_cli.TestRoutes object at 0x7f7d16c60a10>
-runner = <click.testing.CliRunner object at 0x7f7d16e0a5d0>
+self = <test_cli.TestRoutes object at 0x7d4b7ff5c8d0>
+runner = <click.testing.CliRunner object at 0x7d4b8010be10>
 
     def test_subdomain(self, runner):
         app = Flask(__name__, static_folder=None)
@@ -28,8 +28,8 @@ E        +  where 'Endpoint  Methods  Rule\n--------  -------  ----\na         G
 tests/test_cli.py:495: AssertionError
 _____________________________ TestRoutes.test_host _____________________________
 
-self = <test_cli.TestRoutes object at 0x7f7d16c61350>
-runner = <click.testing.CliRunner object at 0x7f7d16c44650>
+self = <test_cli.TestRoutes object at 0x7d4b7ff5d210>
+runner = <click.testing.CliRunner object at 0x7d4b80111a90>
 
     def test_host(self, runner):
         app = Flask(__name__, static_folder=None, host_matching=True)
@@ -46,4 +46,4 @@ tests/test_cli.py:504: AssertionError
 =========================== short test summary info ============================
 FAILED tests/test_cli.py::TestRoutes::test_subdomain - AssertionError: assert...
 FAILED tests/test_cli.py::TestRoutes::test_host - AssertionError: assert 'Hos...
-======================= 2 failed, 55 deselected in 0.33s =======================
+======================= 2 failed, 55 deselected in 0.30s =======================
