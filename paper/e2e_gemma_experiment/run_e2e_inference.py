@@ -23,8 +23,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 PROMPTS_DIR = BASE_DIR / "frozen_prompts"
 TASKS_DIR = BASE_DIR / "tasks"
-CHECKPOINT_FILE = BASE_DIR / "experiment_checkpoint.jsonl"
-PAIRED_ANALYSIS_FILE = BASE_DIR / "paired_statistical_analysis.json"
+DEFAULT_CHECKPOINT_FILE = BASE_DIR / "experiment_checkpoint.jsonl"
+DEFAULT_PAIRED_ANALYSIS_FILE = BASE_DIR / "paired_statistical_analysis.json"
 
 sys.path.insert(0, str(BASE_DIR))
 from evaluator import evaluate_response
@@ -36,7 +36,7 @@ def check_endpoint_health(endpoint: str, model_name: str) -> dict:
     """Verify endpoint is responsive and returns model info. Aborts if unreachable."""
     url = f"{endpoint.rstrip('/')}/v1/models"
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": "GemmaEvaluation/1.0"})
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"})
         with urllib.request.urlopen(req, timeout=15) as resp:
             data = json.loads(resp.read().decode("utf-8"))
             available_models = [m.get("id") for m in data.get("data", [])]
@@ -56,9 +56,9 @@ def call_vllm_api(
     seed: int,
     max_tokens: int = 1536,
     temp: float = 0.2,
-    max_retries: int = 3
+    max_retries: int = 6
 ) -> tuple[str, str, float, int]:
-    """Call an OpenAI-compatible vLLM endpoint with retry logic and finish_reason check."""
+    """Call an OpenAI-compatible vLLM endpoint with robust retry logic and finish_reason check."""
     url = f"{endpoint.rstrip('/')}/v1/chat/completions"
     payload = {
         "model": model_name,
@@ -71,6 +71,7 @@ def call_vllm_api(
         "seed": seed
     }
     data = json.dumps(payload).encode("utf-8")
+    retry_delays = [3, 8, 15, 25, 40, 60]
     
     last_err = None
     for attempt in range(max_retries):
@@ -78,10 +79,10 @@ def call_vllm_api(
             req = urllib.request.Request(
                 url,
                 data=data,
-                headers={"Content-Type": "application/json", "User-Agent": "GemmaEvaluation/1.0"}
+                headers={"Content-Type": "application/json", "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"}
             )
             t0 = time.perf_counter()
-            with urllib.request.urlopen(req, timeout=180) as resp:
+            with urllib.request.urlopen(req, timeout=120) as resp:
                 res_data = json.loads(resp.read().decode("utf-8"))
             latency = time.perf_counter() - t0
             
@@ -92,17 +93,17 @@ def call_vllm_api(
             return resp_text, finish_reason, latency, usage
         except Exception as e:
             last_err = e
-            wait_time = 2 ** (attempt + 1)
+            wait_time = retry_delays[min(attempt, len(retry_delays) - 1)]
             print(f"  [API Retry {attempt+1}/{max_retries}] error: {e}, waiting {wait_time}s...")
             time.sleep(wait_time)
             
     raise RuntimeError(f"API call failed after {max_retries} attempts: {last_err}")
 
-def load_completed_checkpoints() -> dict:
+def load_completed_checkpoints(checkpoint_file: Path) -> dict:
     """Load existing checkpoints from JSONL file."""
     completed = {}
-    if CHECKPOINT_FILE.exists():
-        with open(CHECKPOINT_FILE, "r", encoding="utf-8") as f:
+    if checkpoint_file.exists():
+        with open(checkpoint_file, "r", encoding="utf-8") as f:
             for line in f:
                 if line.strip():
                     try:
@@ -113,9 +114,10 @@ def load_completed_checkpoints() -> dict:
                         pass
     return completed
 
-def append_checkpoint(record: dict):
+def append_checkpoint(record: dict, checkpoint_file: Path):
     """Atomically append a single execution record to checkpoint JSONL."""
-    with open(CHECKPOINT_FILE, "a", encoding="utf-8") as f:
+    checkpoint_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(checkpoint_file, "a", encoding="utf-8") as f:
         f.write(json.dumps(record) + "\n")
 
 def run_experiment(
@@ -123,13 +125,15 @@ def run_experiment(
     model_name: str,
     seeds: list[int],
     dry_run: bool = False,
-    collect_only: bool = True
+    collect_only: bool = True,
+    checkpoint_file: Path = DEFAULT_CHECKPOINT_FILE,
+    analysis_file: Path = DEFAULT_PAIRED_ANALYSIS_FILE
 ):
     manifest_p = BASE_DIR / "task_manifest.json"
     tasks = json.loads(manifest_p.read_text(encoding="utf-8"))
     
-    completed_checkpoints = load_completed_checkpoints()
-    print(f"Loaded {len(completed_checkpoints)} existing records from {CHECKPOINT_FILE}")
+    completed_checkpoints = load_completed_checkpoints(checkpoint_file)
+    print(f"Loaded {len(completed_checkpoints)} existing records from {checkpoint_file}")
     
     if not dry_run:
         check_endpoint_health(endpoint, model_name)
@@ -216,7 +220,7 @@ def run_experiment(
                 }
                 
                 # Checkpoint immediately to disk
-                append_checkpoint(record)
+                append_checkpoint(record, checkpoint_file)
                 completed_checkpoints[ckey] = record
                 records_in_memory.append(record)
                 
@@ -226,9 +230,9 @@ def run_experiment(
                       f"({latency:.2f}s, finish: {finish_reason})")
 
     # Strict completeness check & task-clustered paired statistical bootstrap analysis
-    run_paired_analysis(records_in_memory)
+    run_paired_analysis(records_in_memory, analysis_file)
 
-def run_paired_analysis(results: list[dict]):
+def run_paired_analysis(results: list[dict], analysis_file: Path = DEFAULT_PAIRED_ANALYSIS_FILE):
     """Execute strict integrity check and task-clustered paired statistical bootstrap."""
     metrics = [
         "objective_diagnostic_pass",
@@ -265,7 +269,8 @@ def run_paired_analysis(results: list[dict]):
         if integrity["duplicates"]:
             print(f"  Duplicates: {integrity['duplicates'][:5]}")
         print("Silent zero-substitution prohibited. Paired statistical analysis cannot proceed.")
-        PAIRED_ANALYSIS_FILE.write_text(json.dumps(full_analysis, indent=2), encoding="utf-8")
+        analysis_file.parent.mkdir(parents=True, exist_ok=True)
+        analysis_file.write_text(json.dumps(full_analysis, indent=2), encoding="utf-8")
         return
         
     print("\n" + "="*70)
@@ -284,8 +289,9 @@ def run_paired_analysis(results: list[dict]):
         else:
             print(f"  Status: {stats.get('status')} - {stats.get('error', stats.get('message'))}")
             
-    PAIRED_ANALYSIS_FILE.write_text(json.dumps(full_analysis, indent=2), encoding="utf-8")
-    print(f"\nFull paired analysis saved to {PAIRED_ANALYSIS_FILE}")
+    analysis_file.parent.mkdir(parents=True, exist_ok=True)
+    analysis_file.write_text(json.dumps(full_analysis, indent=2), encoding="utf-8")
+    print(f"\nFull paired analysis saved to {analysis_file}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Gemma 4 E2E Inference Runner")
@@ -293,6 +299,9 @@ if __name__ == "__main__":
     parser.add_argument("--model", default="google/gemma-4-31B-it-qat-w4a16-ct", help="Model name")
     parser.add_argument("--seeds", default="42,100", help="Comma-separated random seeds")
     parser.add_argument("--dry-run", action="store_true", help="Run local deterministic dry run without network")
+    parser.add_argument("--output-dir", default=None, help="Output directory for checkpoints and analysis")
+    parser.add_argument("--checkpoint-file", default=None, help="Explicit checkpoint JSONL path")
+    parser.add_argument("--analysis-file", default=None, help="Explicit analysis JSON path")
     parser.add_argument("--execute-candidate-code", action="store_true", default=False,
                         help="DANGEROUS: Opt-in to execute candidate code in sandbox. By default, collect_only mode is enforced.")
     args = parser.parse_args()
@@ -300,10 +309,21 @@ if __name__ == "__main__":
     seeds = [int(s.strip()) for s in args.seeds.split(",")]
     collect_only = not args.execute_candidate_code
     
+    if args.output_dir:
+        out_p = Path(args.output_dir).resolve()
+        out_p.mkdir(parents=True, exist_ok=True)
+        ckpt_p = out_p / "real_experiment_checkpoint.jsonl" if not args.checkpoint_file else Path(args.checkpoint_file).resolve()
+        an_p = out_p / "real_paired_statistical_analysis.json" if not args.analysis_file else Path(args.analysis_file).resolve()
+    else:
+        ckpt_p = Path(args.checkpoint_file).resolve() if args.checkpoint_file else DEFAULT_CHECKPOINT_FILE
+        an_p = Path(args.analysis_file).resolve() if args.analysis_file else DEFAULT_PAIRED_ANALYSIS_FILE
+    
     run_experiment(
         endpoint=args.endpoint,
         model_name=args.model,
         seeds=seeds,
         dry_run=args.dry_run,
-        collect_only=collect_only
+        collect_only=collect_only,
+        checkpoint_file=ckpt_p,
+        analysis_file=an_p
     )

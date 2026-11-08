@@ -7,3 +7,4 @@ __pycache__/
 .venv/
 *checkpoint.jsonl
 experiment_checkpoint.jsonl
+!paper/e2e_gemma_experiment/real_run_20261108/*.jsonl
