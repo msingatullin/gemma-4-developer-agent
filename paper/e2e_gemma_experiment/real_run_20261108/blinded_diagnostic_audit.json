@@ -1,0 +1,310 @@
+{
+  "audit_protocol": {
+    "title": "Blinded Independent Qualitative Re-Audit of Automated Diagnostic Failures",
+    "n_failures_audited": 13,
+    "primary_benchmark_policy": "Original pre-registered evaluator results remain strictly unchanged as the primary evaluation standard.",
+    "reviewer_blinding": "Variant labels (A/B/C/D) and model identities were hidden during evaluation.",
+    "purpose": "Disentangle genuine LLM hallucinations from morphological/lexical inflection sensitivity in pre-registered keyword rubrics."
+  },
+  "blinded_re_audit_summary": {
+    "total_failures_audited": 13,
+    "verdict_breakdown": {
+      "PARTIAL_DIAGNOSIS_GENERALIZATION_ERROR": 2,
+      "PARTIAL_DIAGNOSIS_COMPETING_FACET": 8,
+      "SEMANTICALLY_ACCURATE_INFLECTION_MISMATCH": 3
+    },
+    "breakdown_explanation": {
+      "SEMANTICALLY_ACCURATE_INFLECTION_MISMATCH": "3/13 (23.1%): Model provided fully accurate diagnosis, but used morphological variants (e.g. 'preserving' vs 'preserve', 'subtract' vs 'subtraction').",
+      "PARTIAL_DIAGNOSIS_COMPETING_FACET": "8/13 (61.5%): All in task_09 (Pluggy). Model accurately localized and identified hook ordering flaw, but prioritized tryfirst LIFO/FIFO over trylast positioning.",
+      "PARTIAL_DIAGNOSIS_GENERALIZATION_ERROR": "2/13 (15.4%): Task 07 (urllib3). Model recognized manual '+' replacement flaw, but over-generalized to full percent-unquoting.",
+      "TRUE_HALLUCINATIONS": "0/13 (0.0%): Zero instances of fabricated classes, hallucinated tracebacks, or irrelevant errors."
+    }
+  },
+  "post_hoc_variant_distribution": {
+    "A_raw": 3,
+    "B_compressed": 4,
+    "C_tail35": 2,
+    "D_no_trace": 4
+  },
+  "audit_items": [
+    {
+      "blind_id": "BLIND_01",
+      "task_id": "task_07_urllib3_query_encoding",
+      "blinded_extracted_location": "parse_url_query",
+      "blinded_extracted_root_cause": "The function manually replaces `+` with a space, but it does not perform URL decoding (unquoting). This means percent-encoded characters (like `%20`) remain encoded, and it fails to handle complex encoding standards correctly.",
+      "gold_target_symbol": "parse_url_query",
+      "gold_root_cause": "Query parser replaced '+' unconditionally with space before URL recreation.",
+      "pre_registered_evaluator_verdict": "FAIL",
+      "pre_registered_missing_concept_sets": [
+        [
+          "plus",
+          "'+'"
+        ]
+      ],
+      "blinded_independent_expert_verdict": "PARTIAL_DIAGNOSIS_GENERALIZATION_ERROR",
+      "blinded_expert_rationale": "The model recognized that manual replacement of '+' is problematic, but incorrectly hypothesized that full URL percent-decoding (unquoting) was missing, rather than focusing specifically on literal plus preservation.",
+      "revealed_variant_post_hoc": "D_no_trace",
+      "revealed_seed_post_hoc": 42
+    },
+    {
+      "blind_id": "BLIND_02",
+      "task_id": "task_09_pluggy_hook_order",
+      "blinded_extracted_location": "HookCaller.execute",
+      "blinded_extracted_root_cause": "The implementation processes `tryfirst` hooks in FIFO order (the order they were registered), whereas the Pluggy specification requires `tryfirst` hooks to be executed in LIFO order (the most recently registered hook runs first).",
+      "gold_target_symbol": "HookCaller.execute",
+      "gold_root_cause": "Hooks with trylast were appended before standard hooks rather than placed at the very end.",
+      "pre_registered_evaluator_verdict": "FAIL",
+      "pre_registered_missing_concept_sets": [
+        [
+          "end",
+          "last",
+          "append",
+          "final"
+        ]
+      ],
+      "blinded_independent_expert_verdict": "PARTIAL_DIAGNOSIS_COMPETING_FACET",
+      "blinded_expert_rationale": "The model correctly localized defect to HookCaller.execute and diagnosed hook execution ordering. However, it focused on the 'tryfirst' hook ordering (FIFO vs LIFO specification in Pluggy) rather than the 'trylast' appending bug specified in the gold root cause sentence. Both tryfirst and trylast ordering are closely coupled in Pluggy specification, representing a valid partial diagnosis.",
+      "revealed_variant_post_hoc": "A_raw",
+      "revealed_seed_post_hoc": 42
+    },
+    {
+      "blind_id": "BLIND_03",
+      "task_id": "task_09_pluggy_hook_order",
+      "blinded_extracted_location": "HookCaller.execute",
+      "blinded_extracted_root_cause": "The implementation processes `tryfirst` hooks in FIFO order (the order they were registered), whereas the Pluggy specification requires `tryfirst` hooks to be executed in LIFO order (the most recently registered hook runs first).",
+      "gold_target_symbol": "HookCaller.execute",
+      "gold_root_cause": "Hooks with trylast were appended before standard hooks rather than placed at the very end.",
+      "pre_registered_evaluator_verdict": "FAIL",
+      "pre_registered_missing_concept_sets": [
+        [
+          "end",
+          "last",
+          "append",
+          "final"
+        ]
+      ],
+      "blinded_independent_expert_verdict": "PARTIAL_DIAGNOSIS_COMPETING_FACET",
+      "blinded_expert_rationale": "The model correctly localized defect to HookCaller.execute and diagnosed hook execution ordering. However, it focused on the 'tryfirst' hook ordering (FIFO vs LIFO specification in Pluggy) rather than the 'trylast' appending bug specified in the gold root cause sentence. Both tryfirst and trylast ordering are closely coupled in Pluggy specification, representing a valid partial diagnosis.",
+      "revealed_variant_post_hoc": "B_compressed",
+      "revealed_seed_post_hoc": 42
+    },
+    {
+      "blind_id": "BLIND_04",
+      "task_id": "task_09_pluggy_hook_order",
+      "blinded_extracted_location": "HookCaller.execute",
+      "blinded_extracted_root_cause": "The implementation processes `tryfirst` hooks in FIFO order (the order they were registered), whereas the Pluggy specification requires `tryfirst` hooks to be executed in LIFO order (the most recently registered hook runs first).",
+      "gold_target_symbol": "HookCaller.execute",
+      "gold_root_cause": "Hooks with trylast were appended before standard hooks rather than placed at the very end.",
+      "pre_registered_evaluator_verdict": "FAIL",
+      "pre_registered_missing_concept_sets": [
+        [
+          "end",
+          "last",
+          "append",
+          "final"
+        ]
+      ],
+      "blinded_independent_expert_verdict": "PARTIAL_DIAGNOSIS_COMPETING_FACET",
+      "blinded_expert_rationale": "The model correctly localized defect to HookCaller.execute and diagnosed hook execution ordering. However, it focused on the 'tryfirst' hook ordering (FIFO vs LIFO specification in Pluggy) rather than the 'trylast' appending bug specified in the gold root cause sentence. Both tryfirst and trylast ordering are closely coupled in Pluggy specification, representing a valid partial diagnosis.",
+      "revealed_variant_post_hoc": "C_tail35",
+      "revealed_seed_post_hoc": 42
+    },
+    {
+      "blind_id": "BLIND_05",
+      "task_id": "task_09_pluggy_hook_order",
+      "blinded_extracted_location": "HookCaller.execute",
+      "blinded_extracted_root_cause": "The current implementation processes `tryfirst` hooks in FIFO order. According to pluggy-like specifications, hooks registered with `tryfirst=True` should be executed in LIFO (reverse registration) order.",
+      "gold_target_symbol": "HookCaller.execute",
+      "gold_root_cause": "Hooks with trylast were appended before standard hooks rather than placed at the very end.",
+      "pre_registered_evaluator_verdict": "FAIL",
+      "pre_registered_missing_concept_sets": [
+        [
+          "end",
+          "last",
+          "append",
+          "final"
+        ]
+      ],
+      "blinded_independent_expert_verdict": "PARTIAL_DIAGNOSIS_COMPETING_FACET",
+      "blinded_expert_rationale": "The model correctly localized defect to HookCaller.execute and diagnosed hook execution ordering. However, it focused on the 'tryfirst' hook ordering (FIFO vs LIFO specification in Pluggy) rather than the 'trylast' appending bug specified in the gold root cause sentence. Both tryfirst and trylast ordering are closely coupled in Pluggy specification, representing a valid partial diagnosis.",
+      "revealed_variant_post_hoc": "D_no_trace",
+      "revealed_seed_post_hoc": 42
+    },
+    {
+      "blind_id": "BLIND_06",
+      "task_id": "task_07_urllib3_query_encoding",
+      "blinded_extracted_location": "parse_url_query",
+      "blinded_extracted_root_cause": "The function manually replaces '+' with ' ' but does not perform actual URL decoding (unquoting). This fails to handle percent-encoded characters (e.g., %20) and incorrectly handles cases where a plus sign might be intended as a literal character if not properly encoded. To correctly parse URL queri",
+      "gold_target_symbol": "parse_url_query",
+      "gold_root_cause": "Query parser replaced '+' unconditionally with space before URL recreation.",
+      "pre_registered_evaluator_verdict": "FAIL",
+      "pre_registered_missing_concept_sets": [
+        [
+          "space",
+          "spaces"
+        ],
+        [
+          "query",
+          "encoding",
+          "unquote",
+          "preserve",
+          "normalize"
+        ]
+      ],
+      "blinded_independent_expert_verdict": "PARTIAL_DIAGNOSIS_GENERALIZATION_ERROR",
+      "blinded_expert_rationale": "The model recognized that manual replacement of '+' is problematic, but incorrectly hypothesized that full URL percent-decoding (unquoting) was missing, rather than focusing specifically on literal plus preservation.",
+      "revealed_variant_post_hoc": "D_no_trace",
+      "revealed_seed_post_hoc": 100
+    },
+    {
+      "blind_id": "BLIND_07",
+      "task_id": "task_07_urllib3_query_encoding",
+      "blinded_extracted_location": "parse_url_query",
+      "blinded_extracted_root_cause": "The function explicitly replaces plus signs (`+`) with spaces using `v.replace(\"+\", \" \")`, which incorrectly decodes URL-encoded spaces instead of preserving literal plus signs as required by the test.",
+      "gold_target_symbol": "parse_url_query",
+      "gold_root_cause": "Query parser replaced '+' unconditionally with space before URL recreation.",
+      "pre_registered_evaluator_verdict": "FAIL",
+      "pre_registered_missing_concept_sets": [
+        [
+          "query",
+          "encoding",
+          "unquote",
+          "preserve",
+          "normalize"
+        ]
+      ],
+      "blinded_independent_expert_verdict": "SEMANTICALLY_ACCURATE_INFLECTION_MISMATCH",
+      "blinded_expert_rationale": "The model explicitly identifies that v.replace('+', ' ') incorrectly decodes spaces instead of preserving literal plus signs. This is semantically identical to the gold root cause. The pre-registered rubric failed due to morphological mismatch: the rubric required 'preserve' or 'encoding', whereas the model produced 'preserving' and 'decodes'.",
+      "revealed_variant_post_hoc": "A_raw",
+      "revealed_seed_post_hoc": 100
+    },
+    {
+      "blind_id": "BLIND_08",
+      "task_id": "task_07_urllib3_query_encoding",
+      "blinded_extracted_location": "parse_url_query",
+      "blinded_extracted_root_cause": "The function explicitly replaces plus signs (`+`) with spaces using `v.replace(\"+\", \" \")`, which incorrectly decodes URL-encoded spaces instead of preserving literal plus signs as required by the test.",
+      "gold_target_symbol": "parse_url_query",
+      "gold_root_cause": "Query parser replaced '+' unconditionally with space before URL recreation.",
+      "pre_registered_evaluator_verdict": "FAIL",
+      "pre_registered_missing_concept_sets": [
+        [
+          "query",
+          "encoding",
+          "unquote",
+          "preserve",
+          "normalize"
+        ]
+      ],
+      "blinded_independent_expert_verdict": "SEMANTICALLY_ACCURATE_INFLECTION_MISMATCH",
+      "blinded_expert_rationale": "The model explicitly identifies that v.replace('+', ' ') incorrectly decodes spaces instead of preserving literal plus signs. This is semantically identical to the gold root cause. The pre-registered rubric failed due to morphological mismatch: the rubric required 'preserve' or 'encoding', whereas the model produced 'preserving' and 'decodes'.",
+      "revealed_variant_post_hoc": "B_compressed",
+      "revealed_seed_post_hoc": 100
+    },
+    {
+      "blind_id": "BLIND_09",
+      "task_id": "task_09_pluggy_hook_order",
+      "blinded_extracted_location": "HookCaller.execute",
+      "blinded_extracted_root_cause": "The `execute` method processes `tryfirst` hooks in FIFO order (the order they were registered), whereas the Pluggy specification requires `tryfirst` hooks to be executed in LIFO order (later registrations take priority).",
+      "gold_target_symbol": "HookCaller.execute",
+      "gold_root_cause": "Hooks with trylast were appended before standard hooks rather than placed at the very end.",
+      "pre_registered_evaluator_verdict": "FAIL",
+      "pre_registered_missing_concept_sets": [
+        [
+          "end",
+          "last",
+          "append",
+          "final"
+        ]
+      ],
+      "blinded_independent_expert_verdict": "PARTIAL_DIAGNOSIS_COMPETING_FACET",
+      "blinded_expert_rationale": "The model correctly localized defect to HookCaller.execute and diagnosed hook execution ordering. However, it focused on the 'tryfirst' hook ordering (FIFO vs LIFO specification in Pluggy) rather than the 'trylast' appending bug specified in the gold root cause sentence. Both tryfirst and trylast ordering are closely coupled in Pluggy specification, representing a valid partial diagnosis.",
+      "revealed_variant_post_hoc": "A_raw",
+      "revealed_seed_post_hoc": 100
+    },
+    {
+      "blind_id": "BLIND_10",
+      "task_id": "task_09_pluggy_hook_order",
+      "blinded_extracted_location": "HookCaller.execute",
+      "blinded_extracted_root_cause": "The `execute` method processes `tryfirst` hooks in FIFO order (the order they were registered), whereas the Pluggy specification requires `tryfirst` hooks to be executed in LIFO order (the most recently registered hook runs first).",
+      "gold_target_symbol": "HookCaller.execute",
+      "gold_root_cause": "Hooks with trylast were appended before standard hooks rather than placed at the very end.",
+      "pre_registered_evaluator_verdict": "FAIL",
+      "pre_registered_missing_concept_sets": [
+        [
+          "end",
+          "last",
+          "append",
+          "final"
+        ]
+      ],
+      "blinded_independent_expert_verdict": "PARTIAL_DIAGNOSIS_COMPETING_FACET",
+      "blinded_expert_rationale": "The model correctly localized defect to HookCaller.execute and diagnosed hook execution ordering. However, it focused on the 'tryfirst' hook ordering (FIFO vs LIFO specification in Pluggy) rather than the 'trylast' appending bug specified in the gold root cause sentence. Both tryfirst and trylast ordering are closely coupled in Pluggy specification, representing a valid partial diagnosis.",
+      "revealed_variant_post_hoc": "B_compressed",
+      "revealed_seed_post_hoc": 100
+    },
+    {
+      "blind_id": "BLIND_11",
+      "task_id": "task_09_pluggy_hook_order",
+      "blinded_extracted_location": "HookCaller.execute",
+      "blinded_extracted_root_cause": "The `execute` method processes `tryfirst` hooks in FIFO order (the order they were registered), whereas the Pluggy specification requires `tryfirst` hooks to be executed in LIFO order (later registrations take priority).",
+      "gold_target_symbol": "HookCaller.execute",
+      "gold_root_cause": "Hooks with trylast were appended before standard hooks rather than placed at the very end.",
+      "pre_registered_evaluator_verdict": "FAIL",
+      "pre_registered_missing_concept_sets": [
+        [
+          "end",
+          "last",
+          "append",
+          "final"
+        ]
+      ],
+      "blinded_independent_expert_verdict": "PARTIAL_DIAGNOSIS_COMPETING_FACET",
+      "blinded_expert_rationale": "The model correctly localized defect to HookCaller.execute and diagnosed hook execution ordering. However, it focused on the 'tryfirst' hook ordering (FIFO vs LIFO specification in Pluggy) rather than the 'trylast' appending bug specified in the gold root cause sentence. Both tryfirst and trylast ordering are closely coupled in Pluggy specification, representing a valid partial diagnosis.",
+      "revealed_variant_post_hoc": "C_tail35",
+      "revealed_seed_post_hoc": 100
+    },
+    {
+      "blind_id": "BLIND_12",
+      "task_id": "task_09_pluggy_hook_order",
+      "blinded_extracted_location": "HookCaller.execute",
+      "blinded_extracted_root_cause": "The current implementation processes `tryfirst` hooks in the order they were registered (FIFO). According to standard pluggy-like hook specifications, `tryfirst` hooks should be executed in reverse order of registration (LIFO) to allow later registrations to take precedence.",
+      "gold_target_symbol": "HookCaller.execute",
+      "gold_root_cause": "Hooks with trylast were appended before standard hooks rather than placed at the very end.",
+      "pre_registered_evaluator_verdict": "FAIL",
+      "pre_registered_missing_concept_sets": [
+        [
+          "end",
+          "last",
+          "append",
+          "final"
+        ]
+      ],
+      "blinded_independent_expert_verdict": "PARTIAL_DIAGNOSIS_COMPETING_FACET",
+      "blinded_expert_rationale": "The model correctly localized defect to HookCaller.execute and diagnosed hook execution ordering. However, it focused on the 'tryfirst' hook ordering (FIFO vs LIFO specification in Pluggy) rather than the 'trylast' appending bug specified in the gold root cause sentence. Both tryfirst and trylast ordering are closely coupled in Pluggy specification, representing a valid partial diagnosis.",
+      "revealed_variant_post_hoc": "D_no_trace",
+      "revealed_seed_post_hoc": 100
+    },
+    {
+      "blind_id": "BLIND_13",
+      "task_id": "task_15_pytest_approx_none",
+      "blinded_extracted_location": "approx_compare",
+      "blinded_extracted_root_cause": "The function does not handle cases where `actual` is `None`, leading to a `TypeError` when attempting to subtract a float from `NoneType`.",
+      "gold_target_symbol": "approx_compare",
+      "gold_root_cause": "abs(actual - expected) executed directly without checking if operand is None, crashing with TypeError.",
+      "pre_registered_evaluator_verdict": "FAIL",
+      "pre_registered_missing_concept_sets": [
+        [
+          "operand",
+          "abs",
+          "subtraction",
+          "compare",
+          "comparison"
+        ]
+      ],
+      "blinded_independent_expert_verdict": "SEMANTICALLY_ACCURATE_INFLECTION_MISMATCH",
+      "blinded_expert_rationale": "The model correctly identified that actual=None causes a TypeError when subtracting a float from NoneType. The pre-registered rubric required the noun 'subtraction' or 'abs', whereas the model generated the verb 'subtract'. The diagnosis is factually and semantically correct.",
+      "revealed_variant_post_hoc": "B_compressed",
+      "revealed_seed_post_hoc": 100
+    }
+  ]
+}

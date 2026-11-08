@@ -12,14 +12,14 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from playwright.sync_api import sync_playwright
 
 WRITEUP_MD_PATH = "/home/mikhail/gemma-4-developer-agent/paper/writeup.md"
-TARGET_URL = "https://www.kaggle.com/competitions/gemma-4-developer-agent-paper/writeups/ast-guided-deterministic-gemma4-agent"
-COOKIES_DB = "/tmp/chrome_cookies.db"
+TARGET_URL = "https://www.kaggle.com/competitions/gemma-4-developer-agent-paper/writeups"
+COOKIES_DB = "file:/home/mikhail/.config/yandex-browser/Default/Cookies?mode=ro"
 
 def get_cookies():
     bus = dbus.SessionBus()
     service = bus.get_object("org.freedesktop.secrets", "/org/freedesktop/secrets")
     session = dbus.Interface(service, "org.freedesktop.Secret.Service").OpenSession("plain", "")[1]
-    item = bus.get_object("org.freedesktop.secrets", "/org/freedesktop/secrets/collection/login/6")
+    item = bus.get_object("org.freedesktop.secrets", "/org/freedesktop/secrets/collection/login/4")
     secret_bytes = bytes(dbus.Interface(item, "org.freedesktop.Secret.Item").GetSecret(session)[2])
 
     key = hashlib.pbkdf2_hmac("sha1", secret_bytes, b"saltysalt", 1, 16)
@@ -33,7 +33,7 @@ def get_cookies():
         raw = dec[:-pad]
         return raw[32:].decode("utf-8", errors="ignore")
 
-    conn = sqlite3.connect(COOKIES_DB)
+    conn = sqlite3.connect(COOKIES_DB, uri=True)
     c = conn.cursor()
     c.execute("SELECT host_key, name, encrypted_value FROM cookies WHERE host_key LIKE '%kaggle%'")
 
@@ -46,12 +46,14 @@ def get_cookies():
     return pw_cookies
 
 def main():
-    with open(WRITEUP_MD_PATH) as f:
+    with open(WRITEUP_MD_PATH, "r", encoding="utf-8") as f:
         writeup_text = f.read()
 
     words = len(writeup_text.split())
     chars = len(writeup_text)
     print(f"Loaded academic writeup: {chars} characters, {words} words.")
+    if words >= 3000:
+        raise ValueError(f"Word count {words} exceeds Kaggle limit of 3000 words!")
 
     pw_cookies = get_cookies()
     print(f"Extracted {len(pw_cookies)} authenticated Kaggle cookies.")
@@ -69,35 +71,46 @@ def main():
                 network_logs.append(f"{response.request.method} {response.url} -> HTTP {response.status}")
         page.on("response", on_response)
 
-        print(f"Navigating to {TARGET_URL}...")
+        print(f"Navigating to competition writeups list: {TARGET_URL}...")
         page.goto(TARGET_URL, wait_until="domcontentloaded")
+        page.wait_for_timeout(5000)
+
+        print("Navigating to our writeup card detail page...")
+        card = page.locator("text='AST-Guided Loops: Deterministic Verification for Gemma 4 SWE Agents'").first
+        if not card.is_visible():
+            print("ERROR: Writeup card not found on competition page!")
+            sys.exit(1)
+        card.click()
+        page.wait_for_timeout(5000)
+
+        print(f"Writeup detail page loaded: {page.url}")
+        print("Clicking Edit button...")
+        edit_btn = page.locator("button:has-text('Edit')").first
+        if not edit_btn.is_visible():
+            print("ERROR: Edit button not found on detail page!")
+            sys.exit(1)
+        edit_btn.click()
         page.wait_for_timeout(4000)
 
-        print("Clicking Edit button...")
-        clicked = page.evaluate("""() => {
-            const btns = Array.from(document.querySelectorAll("button"));
-            const editBtn = btns.find(b => b.innerText.trim() === "Edit");
-            if (editBtn) {
-                editBtn.click();
-                return true;
-            }
-            return false;
-        }""")
-        if not clicked:
-            print("ERROR: Edit button not found or not clickable!")
+        # Locate the article textarea (the one with the largest content)
+        textareas = page.locator("textarea").all()
+        target_ta = None
+        for ta in textareas:
+            val = ta.input_value()
+            if len(val) > 1000:
+                target_ta = ta
+                print(f"Target writeup textarea located with old length: {len(val)} characters.")
+                break
+
+        if not target_ta:
+            print("ERROR: Writeup textarea not located!")
             sys.exit(1)
 
-        page.wait_for_timeout(4000)
-
-        ta = page.locator("textarea.sc-fpQesT__input").first
-        old_val = ta.input_value()
-        print(f"Textarea located. Old text length: {len(old_val)} characters.")
-
-        print("Filling textarea with updated academic text...")
-        ta.fill(writeup_text)
+        print("Filling textarea with updated academic writeup text...")
+        target_ta.fill(writeup_text)
         page.wait_for_timeout(1000)
 
-        new_val = ta.input_value()
+        new_val = target_ta.input_value()
         print(f"Textarea updated. New text length: {len(new_val)} characters.")
 
         update_btn = page.locator("button:has-text('Update Submission')").first
@@ -108,26 +121,24 @@ def main():
         print("Clicking 'Update Submission' button...")
         update_btn.click()
 
-        print("Waiting 12 seconds for server processing and re-render...")
-        page.wait_for_timeout(12000)
+        print("Waiting 14 seconds for server processing and re-render...")
+        page.wait_for_timeout(14000)
 
         page.screenshot(path="/tmp/kaggle_published_updated.png")
         print("Screenshot saved to /tmp/kaggle_published_updated.png")
 
         content = page.content()
-        with open("/tmp/kaggle_updated_page.html", "w") as f:
+        with open("/tmp/kaggle_updated_page.html", "w", encoding="utf-8") as f:
             f.write(content)
 
         print("\n=== VERIFICATION CHECKS ===")
-        print("Old '18.2%' in page:", "18.2%" in content)
-        print("Old '39.4%' in page:", "39.4%" in content)
-        print("Old '66.5%' in page:", "66.5%" in content)
-        print("New '44.6%' in page:", "44.6%" in content)
-        print("New '30.6%' in page:", "30.6%" in content)
-        print("New '38.2' in page:", "38.2" in content)
-        print("New '3.893 ms' in page:", "3.893 ms" in content)
-        print("New 'Component Ablation Study' in page:", "Component Ablation Study" in content)
-        print("Title 'AST-Guided Verification Suite' in page:", "AST-Guided Verification Suite" in content)
+        print("Presence of '31.52%':", "31.52%" in content)
+        print("Presence of '56.86%':", "56.86%" in content)
+        print("Presence of 'Patch Test Pass Rate':", "Patch Test Pass Rate" in content)
+        print("Presence of '120 live inference calls':", "120 live inference calls" in content)
+        print("Presence of '0.2539':", "0.2539" in content)
+        print("Presence of 'Submitted':", "Submitted" in content)
+        print("Presence of 'AST-Guided Verification Suite':", "AST-Guided Verification Suite" in content)
 
         browser.close()
 
