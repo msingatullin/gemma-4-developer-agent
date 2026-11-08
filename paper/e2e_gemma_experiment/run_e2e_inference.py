@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
 Robust, Resilient E2E Inference Runner for Gemma 4 Evaluation:
-- Incremental checkpointing: appends to JSONL after EVERY call
-- Safe resumption: skips already completed (task_id, variant, seed) keys without duplicating
-- Truncation / finish_reason validation
-- Balanced Latin-Square variant ordering across tasks to prevent sequence bias
-- Full model and environment metadata recording
-- Task-clustered paired statistical bootstrap analysis (Task as unit of analysis)
+- Safe collect_only mode by DEFAULT: Calls model, collects response and diagnostics, NO candidate execution.
+- Strict completeness validation (15 tasks x 4 variants x 2 seeds = 120 unique records).
+- Two-tier diagnostic evaluation: Tier 1 Objective Rubric + Tier 2 Lexical Proxy.
+- Per-call incremental checkpointing with JSONL recovery and deduplication.
+- Strict endpoint health verification: aborts immediately if model endpoint is unreachable.
+- Explicit finish_reason and truncation accounting.
+- Latin-Square balanced variant ordering per task.
+- Task-clustered paired statistical bootstrap analysis (no silent zero substitution).
 """
 import os
 import sys
@@ -26,24 +28,36 @@ PAIRED_ANALYSIS_FILE = BASE_DIR / "paired_statistical_analysis.json"
 
 sys.path.insert(0, str(BASE_DIR))
 from evaluator import evaluate_response
-from statistics import compute_task_clustered_paired_stats
+from statistics import compute_task_clustered_paired_stats, validate_dataset_integrity
 
 VARIANTS = ["A_raw", "B_compressed", "C_tail35", "D_no_trace"]
 
 def check_endpoint_health(endpoint: str, model_name: str) -> dict:
-    """Verify endpoint is responsive and returns model info."""
+    """Verify endpoint is responsive and returns model info. Aborts if unreachable."""
     url = f"{endpoint.rstrip('/')}/v1/models"
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "GemmaEvaluation/1.0"})
-        with urllib.request.urlopen(req, timeout=10) as resp:
+        with urllib.request.urlopen(req, timeout=15) as resp:
             data = json.loads(resp.read().decode("utf-8"))
-            print(f"Endpoint health check PASSED. Available models: {[m.get('id') for m in data.get('data', [])]}")
-            return {"status": "ok", "models": data}
+            available_models = [m.get("id") for m in data.get("data", [])]
+            print(f"Endpoint health check PASSED. Available models: {available_models}")
+            if model_name not in available_models and not any(model_name in m for m in available_models):
+                print(f"WARNING: Requested model '{model_name}' not in reported list {available_models}")
+            return {"status": "ok", "models": available_models}
     except Exception as e:
-        print(f"Warning: Endpoint health check query to {url} failed: {e}")
-        return {"status": "unreachable", "error": str(e)}
+        print(f"FATAL: Endpoint health check query to {url} failed: {e}")
+        raise ConnectionError(f"Cannot reach inference endpoint at {url}: {e}")
 
-def call_vllm_api(endpoint: str, model_name: str, system_prompt: str, user_prompt: str, seed: int, max_tokens: int = 1024, temp: float = 0.2, max_retries: int = 3) -> tuple[str, str, float, int]:
+def call_vllm_api(
+    endpoint: str,
+    model_name: str,
+    system_prompt: str,
+    user_prompt: str,
+    seed: int,
+    max_tokens: int = 1536,
+    temp: float = 0.2,
+    max_retries: int = 3
+) -> tuple[str, str, float, int]:
     """Call an OpenAI-compatible vLLM endpoint with retry logic and finish_reason check."""
     url = f"{endpoint.rstrip('/')}/v1/chat/completions"
     payload = {
@@ -61,7 +75,11 @@ def call_vllm_api(endpoint: str, model_name: str, system_prompt: str, user_promp
     last_err = None
     for attempt in range(max_retries):
         try:
-            req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+            req = urllib.request.Request(
+                url,
+                data=data,
+                headers={"Content-Type": "application/json", "User-Agent": "GemmaEvaluation/1.0"}
+            )
             t0 = time.perf_counter()
             with urllib.request.urlopen(req, timeout=180) as resp:
                 res_data = json.loads(resp.read().decode("utf-8"))
@@ -74,9 +92,11 @@ def call_vllm_api(endpoint: str, model_name: str, system_prompt: str, user_promp
             return resp_text, finish_reason, latency, usage
         except Exception as e:
             last_err = e
-            time.sleep(2 ** attempt)
+            wait_time = 2 ** (attempt + 1)
+            print(f"  [API Retry {attempt+1}/{max_retries}] error: {e}, waiting {wait_time}s...")
+            time.sleep(wait_time)
             
-    raise RuntimeError(f"Failed after {max_retries} attempts: {last_err}")
+    raise RuntimeError(f"API call failed after {max_retries} attempts: {last_err}")
 
 def load_completed_checkpoints() -> dict:
     """Load existing checkpoints from JSONL file."""
@@ -98,23 +118,32 @@ def append_checkpoint(record: dict):
     with open(CHECKPOINT_FILE, "a", encoding="utf-8") as f:
         f.write(json.dumps(record) + "\n")
 
-def run_experiment(endpoint: str, model_name: str, seeds: list[int], dry_run: bool = False):
+def run_experiment(
+    endpoint: str,
+    model_name: str,
+    seeds: list[int],
+    dry_run: bool = False,
+    collect_only: bool = True
+):
     manifest_p = BASE_DIR / "task_manifest.json"
     tasks = json.loads(manifest_p.read_text(encoding="utf-8"))
     
     completed_checkpoints = load_completed_checkpoints()
-    print(f"Loaded {len(completed_checkpoints)} already completed records from {CHECKPOINT_FILE}")
+    print(f"Loaded {len(completed_checkpoints)} existing records from {CHECKPOINT_FILE}")
     
     if not dry_run:
         check_endpoint_health(endpoint, model_name)
         
     total_planned = len(tasks) * len(VARIANTS) * len(seeds)
-    print(f"\nStarting Gemma 4 E2E Benchmark:")
+    print(f"\n=======================================================")
+    print(f"Gemma 4 Evaluation Experiment Configuration:")
     print(f"  Model: {model_name}")
-    print(f"  Tasks: {len(tasks)} tasks")
-    print(f"  Variants: {VARIANTS} (balanced Latin-square ordering)")
+    print(f"  Execution Mode: {'COLLECT_ONLY (Candidate execution DISABLED)' if collect_only else 'DANGEROUS: SANDBOX EXECUTION ENABLED'}")
+    print(f"  Tasks: {len(tasks)} synthetic reproduction tasks")
+    print(f"  Variants: {VARIANTS} (Latin-Square balanced)")
     print(f"  Seeds: {seeds}")
-    print(f"  Total planned inference calls: {total_planned}")
+    print(f"  Planned Inference Calls: {total_planned}")
+    print(f"=======================================================\n")
     
     records_in_memory = list(completed_checkpoints.values())
     call_idx = len(completed_checkpoints)
@@ -124,7 +153,7 @@ def run_experiment(endpoint: str, model_name: str, seeds: list[int], dry_run: bo
         for task_idx, t in enumerate(tasks):
             tid = t["id"]
             
-            # Balanced Latin-Square rotation of variant order per task to remove order bias
+            # Latin-Square rotation of variant ordering per task
             rotated_variants = VARIANTS[task_idx % len(VARIANTS):] + VARIANTS[:task_idx % len(VARIANTS)]
             
             for var in rotated_variants:
@@ -143,10 +172,15 @@ def run_experiment(endpoint: str, model_name: str, seeds: list[int], dry_run: bo
                 if dry_run:
                     # Deterministic mock dry run for testing execution pipeline
                     time.sleep(0.01)
-                    resp_text = f"DEFECT_LOCATION: {t['target_symbol']}\nROOT_CAUSE: {t['root_cause']}\nPROPOSED_CODE:\n```python\n# dry run mock\npass\n```"
+                    # Produce answer satisfying objective rubric for task_01, task_02 etc.
+                    resp_text = (
+                        f"DEFECT_LOCATION: {t['target_symbol']}\n"
+                        f"ROOT_CAUSE: {t['root_cause']}\n"
+                        f"PROPOSED_CODE:\n```python\n# dry run mock\npass\n```"
+                    )
                     finish_reason = "stop"
                     latency = 0.01
-                    tokens = 150
+                    tokens = 120
                 else:
                     resp_text, finish_reason, latency, tokens = call_vllm_api(
                         endpoint=endpoint,
@@ -156,8 +190,13 @@ def run_experiment(endpoint: str, model_name: str, seeds: list[int], dry_run: bo
                         seed=seed
                     )
                     
-                # Blinded & sandboxed evaluation
-                eval_res = evaluate_response(tid, resp_text, t)
+                # Two-tier evaluation (execute_candidate=False in collect_only mode)
+                eval_res = evaluate_response(
+                    task_id=tid,
+                    response_text=resp_text,
+                    meta=t,
+                    execute_candidate=(not collect_only)
+                )
                 is_truncated = (finish_reason == "length")
                 
                 record = {
@@ -181,46 +220,90 @@ def run_experiment(endpoint: str, model_name: str, seeds: list[int], dry_run: bo
                 completed_checkpoints[ckey] = record
                 records_in_memory.append(record)
                 
-                print(f"Loc: {'PASS' if eval_res['blinded_localization_pass'] else 'FAIL'} | "
-                      f"Syntax: {'PASS' if eval_res['preflight_syntax_pass'] else 'FAIL'} | "
-                      f"Test: {'PASS' if eval_res['test_suite_pass'] else 'FAIL'} ({latency:.2f}s, finish: {finish_reason})")
+                print(f"ObjDiag: {'PASS' if eval_res['objective_diagnostic_pass'] else 'FAIL'} | "
+                      f"LexProxy: {'PASS' if eval_res['heuristic_lexical_root_cause_pass'] else 'FAIL'} | "
+                      f"Syntax: {'PASS' if eval_res['preflight_syntax_pass'] else 'FAIL'} "
+                      f"({latency:.2f}s, finish: {finish_reason})")
 
-    # Perform full task-clustered paired statistical bootstrap analysis
+    # Strict completeness check & task-clustered paired statistical bootstrap analysis
     run_paired_analysis(records_in_memory)
 
 def run_paired_analysis(results: list[dict]):
-    """Execute task-clustered paired statistical bootstrap across multiple metrics."""
-    metrics = ["test_suite_pass", "blinded_localization_pass", "preflight_syntax_pass"]
+    """Execute strict integrity check and task-clustered paired statistical bootstrap."""
+    metrics = [
+        "objective_diagnostic_pass",
+        "objective_localization_pass",
+        "objective_root_cause_pass",
+        "heuristic_lexical_localization_pass",
+        "heuristic_lexical_root_cause_pass",
+        "preflight_syntax_pass"
+    ]
+    
+    # Check integrity first
+    integrity = validate_dataset_integrity(results)
     
     full_analysis = {
         "analysis_timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-        "total_records": len(results),
+        "integrity_report": integrity,
         "metrics_evaluated": {}
     }
     
+    print("\n" + "="*70)
+    print("DATASET INTEGRITY & COMPLETENESS REPORT")
+    print("="*70)
+    print(f"  Total records: {integrity['total_records']} (Expected: {integrity['expected_total_records']})")
+    print(f"  Unique cells: {integrity['unique_cells_count']}")
+    print(f"  Missing cells: {integrity['missing_count']}")
+    print(f"  Duplicates: {integrity['duplicate_count']}")
+    print(f"  Truncated responses (finish_reason=length): {integrity['truncated_count']}")
+    print(f"  Integrity status: {'VALID & COMPLETE' if integrity['is_complete'] else 'VIOLATION / INCOMPLETE'}")
+    
+    if not integrity["is_complete"]:
+        print(f"\nFATAL: Dataset fails strict completeness criteria!")
+        if integrity["missing_keys"]:
+            print(f"  Missing: {integrity['missing_keys'][:5]} (total {integrity['missing_count']})")
+        if integrity["duplicates"]:
+            print(f"  Duplicates: {integrity['duplicates'][:5]}")
+        print("Silent zero-substitution prohibited. Paired statistical analysis cannot proceed.")
+        PAIRED_ANALYSIS_FILE.write_text(json.dumps(full_analysis, indent=2), encoding="utf-8")
+        return
+        
     print("\n" + "="*70)
     print("TASK-CLUSTERED PAIRED STATISTICAL BOOTSTRAP ANALYSIS (N=10,000 resamples)")
     print("Sampling unit: Task ID (Seeds averaged within task)")
     print("="*70)
     
     for m in metrics:
-        stats = compute_task_clustered_paired_stats(results, metric_key=m, n_bootstrap=10000)
+        stats = compute_task_clustered_paired_stats(results, metric_key=m, n_bootstrap=10000, strict_completeness=True)
         full_analysis["metrics_evaluated"][m] = stats
         
         print(f"\nMetric: {m.upper()}")
-        for comp_name, comp in stats.get("paired_comparisons", {}).items():
-            print(f"  {comp_name:20s}: Δ = {comp['mean_delta']:+.4f} (95% CI: [{comp['ci_95_lower']:+.4f}, {comp['ci_95_upper']:+.4f}], p = {comp['p_value_permutation']:.4f})")
+        if stats.get("status") == "OK":
+            for comp_name, comp in stats.get("paired_comparisons", {}).items():
+                print(f"  {comp_name:20s}: Δ = {comp['mean_delta']:+.4f} (95% CI: [{comp['ci_95_lower']:+.4f}, {comp['ci_95_upper']:+.4f}], p = {comp['p_value_permutation']:.4f})")
+        else:
+            print(f"  Status: {stats.get('status')} - {stats.get('error', stats.get('message'))}")
             
     PAIRED_ANALYSIS_FILE.write_text(json.dumps(full_analysis, indent=2), encoding="utf-8")
     print(f"\nFull paired analysis saved to {PAIRED_ANALYSIS_FILE}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--endpoint", default="http://localhost:8000")
-    parser.add_argument("--model", default="google/gemma-4-31B-it-qat-w4a16-ct")
-    parser.add_argument("--seeds", default="42,100")
-    parser.add_argument("--dry-run", action="store_true")
+    parser = argparse.ArgumentParser(description="Gemma 4 E2E Inference Runner")
+    parser.add_argument("--endpoint", default="http://localhost:8000", help="vLLM OpenAI-compatible endpoint")
+    parser.add_argument("--model", default="google/gemma-4-31B-it-qat-w4a16-ct", help="Model name")
+    parser.add_argument("--seeds", default="42,100", help="Comma-separated random seeds")
+    parser.add_argument("--dry-run", action="store_true", help="Run local deterministic dry run without network")
+    parser.add_argument("--execute-candidate-code", action="store_true", default=False,
+                        help="DANGEROUS: Opt-in to execute candidate code in sandbox. By default, collect_only mode is enforced.")
     args = parser.parse_args()
     
     seeds = [int(s.strip()) for s in args.seeds.split(",")]
-    run_experiment(args.endpoint, args.model, seeds, dry_run=args.dry_run)
+    collect_only = not args.execute_candidate_code
+    
+    run_experiment(
+        endpoint=args.endpoint,
+        model_name=args.model,
+        seeds=seeds,
+        dry_run=args.dry_run,
+        collect_only=collect_only
+    )

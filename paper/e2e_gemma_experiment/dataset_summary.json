@@ -1,6 +1,31 @@
 {
   "dataset_name": "Synthetic Reproductions Inspired by Open-Source Bugs",
-  "provenance_note": "15 self-contained synthetic reproductions inspired by open-source bug patterns. Used for isolated CPU component ablation, distinct from full SWE-bench repo checkouts.",
+  "provenance_note": "15 self-contained synthetic reproductions inspired by open-source bug patterns. Evaluated by the runner across 4 variants x 2 seeds (120 calls) in collect_only mode. Distinct from full SWE-bench repo checkouts.",
+  "unexecuted_upstream_archive_note": "The 5 upstream repository instances in real_repo_sample/ are an unexecuted curated benchmark archive with pinned git commits and official patches. They have NOT been evaluated by the model runner.",
+  "evaluated_suite": {
+    "suite_name": "Synthetic Reproduction Ablation Suite",
+    "status": "EVALUATED_BY_RUNNER",
+    "task_count": 15,
+    "prompt_count": 60,
+    "variants": [
+      "A_raw",
+      "B_compressed",
+      "C_tail35",
+      "D_no_trace"
+    ]
+  },
+  "unexecuted_upstream_archive": {
+    "archive_name": "Authentic Public Repository Defects Sample",
+    "status": "CURATED_RESOURCE_NOT_EXECUTED_BY_RUNNER",
+    "instance_count": 5,
+    "instances": [
+      "pallets__flask-4045",
+      "pallets__flask-4992",
+      "pallets__flask-5063",
+      "psf__requests-1963",
+      "psf__requests-2148"
+    ]
+  },
   "total_tasks": 15,
   "total_prompts": 60,
   "variants": [

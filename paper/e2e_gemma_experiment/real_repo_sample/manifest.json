@@ -11,7 +11,9 @@
     ],
     "pass_to_pass_count": 50,
     "gold_patch_sha256": "6c4055e1cb35cf9c5d50bbba639af1787d6f5d5146f9539cedc364a43d01c687",
-    "test_patch_sha256": "def1da53a3857f67b571f108abde6fcdac61da5c7820c0749fa7c487fe87a62a"
+    "test_patch_sha256": "def1da53a3857f67b571f108abde6fcdac61da5c7820c0749fa7c487fe87a62a",
+    "execution_status": "ARCHIVED_NOT_EXECUTED_BY_RUNNER",
+    "evaluation_scope": "curated_reference_archive"
   },
   {
     "instance_id": "pallets__flask-4992",
@@ -24,7 +26,9 @@
     ],
     "pass_to_pass_count": 18,
     "gold_patch_sha256": "db912cc1331807c9b0715766eb45a5fac8c4036a99dd54c9ce998b675d0d8697",
-    "test_patch_sha256": "851c94393511592a1e3b65ea1d909b73b342ef55388819c6bd9632edb71ad304"
+    "test_patch_sha256": "851c94393511592a1e3b65ea1d909b73b342ef55388819c6bd9632edb71ad304",
+    "execution_status": "ARCHIVED_NOT_EXECUTED_BY_RUNNER",
+    "evaluation_scope": "curated_reference_archive"
   },
   {
     "instance_id": "pallets__flask-5063",
@@ -38,7 +42,9 @@
     ],
     "pass_to_pass_count": 54,
     "gold_patch_sha256": "f9c1ef426acac91e34d551f80f34dfe27fc124ac316af71d70eec1764b4a6497",
-    "test_patch_sha256": "e5b1124e11d391cc01f7d9d03ada6ccd629a817a3334d5980884ed276237bf96"
+    "test_patch_sha256": "e5b1124e11d391cc01f7d9d03ada6ccd629a817a3334d5980884ed276237bf96",
+    "execution_status": "ARCHIVED_NOT_EXECUTED_BY_RUNNER",
+    "evaluation_scope": "curated_reference_archive"
   },
   {
     "instance_id": "psf__requests-1963",
@@ -57,7 +63,9 @@
     ],
     "pass_to_pass_count": 112,
     "gold_patch_sha256": "deb8b9018ea0271b2b9dc2d883bf5fb0ca9a721ecc9a93718065926fbec4ed74",
-    "test_patch_sha256": "d54962cb131f871dcfb26c9d5b4518da0c701fd998915837bec0b3d80d9492a0"
+    "test_patch_sha256": "d54962cb131f871dcfb26c9d5b4518da0c701fd998915837bec0b3d80d9492a0",
+    "execution_status": "ARCHIVED_NOT_EXECUTED_BY_RUNNER",
+    "evaluation_scope": "curated_reference_archive"
   },
   {
     "instance_id": "psf__requests-2148",
@@ -79,6 +87,8 @@
     ],
     "pass_to_pass_count": 118,
     "gold_patch_sha256": "0c773284a62e168b99a78a22c778e4366861e5dac37e7ffb4ae85a680843fab5",
-    "test_patch_sha256": "ad6a641480a841a4e54349518842cde8e7562813178057e5cd8b44e9e8af8e27"
+    "test_patch_sha256": "ad6a641480a841a4e54349518842cde8e7562813178057e5cd8b44e9e8af8e27",
+    "execution_status": "ARCHIVED_NOT_EXECUTED_BY_RUNNER",
+    "evaluation_scope": "curated_reference_archive"
   }
 ]

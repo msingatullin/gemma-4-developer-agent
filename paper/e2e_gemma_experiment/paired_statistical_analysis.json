@@ -1,11 +1,35 @@
 {
-  "analysis_timestamp": "2026-11-08T08:56:05.731536+00:00",
-  "total_records": 120,
+  "analysis_timestamp": "2026-11-08T09:16:01.029178+00:00",
+  "integrity_report": {
+    "is_complete": true,
+    "total_records": 120,
+    "expected_total_records": 120,
+    "unique_cells_count": 120,
+    "missing_count": 0,
+    "missing_keys": [],
+    "duplicate_count": 0,
+    "duplicates": [],
+    "truncated_count": 0,
+    "truncated_keys": []
+  },
   "metrics_evaluated": {
-    "test_suite_pass": {
+    "objective_diagnostic_pass": {
+      "status": "OK",
       "n_tasks": 15,
-      "metric_evaluated": "test_suite_pass",
+      "metric_evaluated": "objective_diagnostic_pass",
       "n_bootstrap": 10000,
+      "integrity_report": {
+        "is_complete": true,
+        "total_records": 120,
+        "expected_total_records": 120,
+        "unique_cells_count": 120,
+        "missing_count": 0,
+        "missing_keys": [],
+        "duplicate_count": 0,
+        "duplicates": [],
+        "truncated_count": 0,
+        "truncated_keys": []
+      },
       "paired_comparisons": {
         "delta_B_minus_A": {
           "v1": "B_compressed",
@@ -84,10 +108,308 @@
         }
       }
     },
-    "blinded_localization_pass": {
+    "objective_localization_pass": {
+      "status": "OK",
       "n_tasks": 15,
-      "metric_evaluated": "blinded_localization_pass",
+      "metric_evaluated": "objective_localization_pass",
       "n_bootstrap": 10000,
+      "integrity_report": {
+        "is_complete": true,
+        "total_records": 120,
+        "expected_total_records": 120,
+        "unique_cells_count": 120,
+        "missing_count": 0,
+        "missing_keys": [],
+        "duplicate_count": 0,
+        "duplicates": [],
+        "truncated_count": 0,
+        "truncated_keys": []
+      },
+      "paired_comparisons": {
+        "delta_B_minus_A": {
+          "v1": "B_compressed",
+          "v2": "A_raw",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        },
+        "delta_B_minus_C": {
+          "v1": "B_compressed",
+          "v2": "C_tail35",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        },
+        "delta_B_minus_D": {
+          "v1": "B_compressed",
+          "v2": "D_no_trace",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        }
+      }
+    },
+    "objective_root_cause_pass": {
+      "status": "OK",
+      "n_tasks": 15,
+      "metric_evaluated": "objective_root_cause_pass",
+      "n_bootstrap": 10000,
+      "integrity_report": {
+        "is_complete": true,
+        "total_records": 120,
+        "expected_total_records": 120,
+        "unique_cells_count": 120,
+        "missing_count": 0,
+        "missing_keys": [],
+        "duplicate_count": 0,
+        "duplicates": [],
+        "truncated_count": 0,
+        "truncated_keys": []
+      },
+      "paired_comparisons": {
+        "delta_B_minus_A": {
+          "v1": "B_compressed",
+          "v2": "A_raw",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        },
+        "delta_B_minus_C": {
+          "v1": "B_compressed",
+          "v2": "C_tail35",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        },
+        "delta_B_minus_D": {
+          "v1": "B_compressed",
+          "v2": "D_no_trace",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        }
+      }
+    },
+    "heuristic_lexical_localization_pass": {
+      "status": "OK",
+      "n_tasks": 15,
+      "metric_evaluated": "heuristic_lexical_localization_pass",
+      "n_bootstrap": 10000,
+      "integrity_report": {
+        "is_complete": true,
+        "total_records": 120,
+        "expected_total_records": 120,
+        "unique_cells_count": 120,
+        "missing_count": 0,
+        "missing_keys": [],
+        "duplicate_count": 0,
+        "duplicates": [],
+        "truncated_count": 0,
+        "truncated_keys": []
+      },
+      "paired_comparisons": {
+        "delta_B_minus_A": {
+          "v1": "B_compressed",
+          "v2": "A_raw",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        },
+        "delta_B_minus_C": {
+          "v1": "B_compressed",
+          "v2": "C_tail35",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        },
+        "delta_B_minus_D": {
+          "v1": "B_compressed",
+          "v2": "D_no_trace",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        }
+      }
+    },
+    "heuristic_lexical_root_cause_pass": {
+      "status": "OK",
+      "n_tasks": 15,
+      "metric_evaluated": "heuristic_lexical_root_cause_pass",
+      "n_bootstrap": 10000,
+      "integrity_report": {
+        "is_complete": true,
+        "total_records": 120,
+        "expected_total_records": 120,
+        "unique_cells_count": 120,
+        "missing_count": 0,
+        "missing_keys": [],
+        "duplicate_count": 0,
+        "duplicates": [],
+        "truncated_count": 0,
+        "truncated_keys": []
+      },
       "paired_comparisons": {
         "delta_B_minus_A": {
           "v1": "B_compressed",
@@ -167,9 +489,22 @@
       }
     },
     "preflight_syntax_pass": {
+      "status": "OK",
       "n_tasks": 15,
       "metric_evaluated": "preflight_syntax_pass",
       "n_bootstrap": 10000,
+      "integrity_report": {
+        "is_complete": true,
+        "total_records": 120,
+        "expected_total_records": 120,
+        "unique_cells_count": 120,
+        "missing_count": 0,
+        "missing_keys": [],
+        "duplicate_count": 0,
+        "duplicates": [],
+        "truncated_count": 0,
+        "truncated_keys": []
+      },
       "paired_comparisons": {
         "delta_B_minus_A": {
           "v1": "B_compressed",
@@ -248,5 +583,7 @@
         }
       }
     }
-  }
+  },
+  "data_status": "MOCK_DRY_RUN_SYNTHETIC_TEST_NO_REAL_MODEL_EVIDENCE",
+  "scientific_disclaimer": "This artifact was produced by local CPU dry-run unit tests to verify data pipeline schemas. It contains ZERO real Gemma 4 outputs and must NEVER be reported as empirical results."
 }
