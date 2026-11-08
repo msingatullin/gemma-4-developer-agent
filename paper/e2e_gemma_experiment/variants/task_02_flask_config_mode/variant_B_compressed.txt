@@ -1,5 +1,5 @@
 __________________________ test_from_file_binary_mode __________________________
-tmp_path = PosixPath('/tmp/pytest-of-mikhail/pytest-12/test_from_file_binary_mode0')
+tmp_path = PosixPath('/tmp/pytest-of-mikhail/pytest-17/test_from_file_binary_mode0')
     def test_from_file_binary_mode(tmp_path):
     ... [intermediate frames omitted] ...
 >       cfg.from_file(str(p), binary_loader, mode="rb")

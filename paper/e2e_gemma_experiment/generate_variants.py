@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """
-Generate the 3 test failure traceback variants (A: Raw, B: AST-Compressed, C: Naive Tail)
-for all 15 software tasks, and build the frozen input prompts for Gemma 4 evaluation.
+Generate the 4 test failure traceback variants:
+- A_raw: Full original pytest output
+- B_compressed: AST-guided canonical compressor
+- C_tail35: Naive 35-line tail cap
+- D_no_trace: Control baseline with no traceback provided
+and build the frozen, blinded evaluation prompts without answer-leaking symbols.
 """
 import sys
 import json
@@ -20,11 +24,15 @@ VARIANTS_DIR = Path(__file__).parent / "variants"
 PROMPTS_DIR = Path(__file__).parent / "frozen_prompts"
 
 SYSTEM_PROMPT = """You are an expert autonomous software engineer working with Gemma 4.
-Your goal is to inspect the source code and the test failure traceback, determine the exact root cause of the defect, and provide the minimal correct code fix for source.py.
+Your goal is to inspect the source code and the test failure traceback, determine the exact location and root cause of the defect, and provide the minimal correct code fix for source.py.
 
-Respond with:
-1. ROOT_CAUSE: A concise 1-3 sentence explanation of the defect and why the test failed.
-2. PATCH: The complete revised implementation of the target function/class inside a python markdown code block."""
+Respond strictly in the following format:
+DEFECT_LOCATION: <exact function, method, or class name where the defect resides>
+ROOT_CAUSE: <a concise 1-3 sentence explanation of the defect and why the test failed>
+PROPOSED_CODE:
+```python
+<complete revised implementation of the target function or file>
+```"""
 
 def main():
     VARIANTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -37,6 +45,9 @@ def main():
     frozen_records = []
     
     print(f"Generating traceback variants for {len(tasks)} tasks...")
+    total_raw_chars = 0
+    total_comp_chars = 0
+    
     for t in tasks:
         tid = t["id"]
         tdir = TASKS_DIR / tid
@@ -48,14 +59,15 @@ def main():
         res = subprocess.run(cmd, cwd=tdir, capture_output=True, text=True)
         raw_output = res.stdout + ("\n" + res.stderr if res.stderr else "")
         
-        # 2. Compute Variant A (Raw)
+        # Compute variants
         var_a = raw_output
-        
-        # 3. Compute Variant B (AST-Guided Canonical Compressor)
         var_b = filter_pytest_log(raw_output)
-        
-        # 4. Compute Variant C (Naive 35-line tail cap)
         var_c = naive_tail_cap(raw_output, 35)
+        var_d = "No test traceback provided. Locate the defect by analyzing the source code against the specification."
+        
+        # Track statistics
+        total_raw_chars += len(var_a)
+        total_comp_chars += len(var_b)
         
         # Save variant text files
         t_var_dir = VARIANTS_DIR / tid
@@ -63,13 +75,21 @@ def main():
         (t_var_dir / "variant_A_raw.txt").write_text(var_a, encoding="utf-8")
         (t_var_dir / "variant_B_compressed.txt").write_text(var_b, encoding="utf-8")
         (t_var_dir / "variant_C_tail35.txt").write_text(var_c, encoding="utf-8")
+        (t_var_dir / "variant_D_no_trace.txt").write_text(var_d, encoding="utf-8")
         
         source_code = source_p.read_text(encoding="utf-8")
         
-        # Prepare frozen prompts for A, B, C
-        for variant_name, trace_text in [("A_raw", var_a), ("B_compressed", var_b), ("C_tail35", var_c)]:
-            user_prompt = f"""# Task: {t['id']} ({t['repo']})
-## Issue Description:
+        # Prepare frozen prompts for A, B, C, D (BLINDED: NO TARGET SYMBOL LEAKED)
+        variants = [
+            ("A_raw", var_a),
+            ("B_compressed", var_b),
+            ("C_tail35", var_c),
+            ("D_no_trace", var_d)
+        ]
+        
+        for variant_name, trace_text in variants:
+            user_prompt = f"""# Task: {t['id']}
+## Problem Statement:
 {t['issue']}
 
 ## Source Code (`source.py`):
@@ -82,15 +102,12 @@ def main():
 {trace_text}
 ```
 
-Analyze the failure, identify the root cause in `{t['target_symbol']}`, and provide the corrected implementation.
+Analyze the failure and traceback, identify the exact defect location, explain the root cause, and provide the corrected Python code for source.py.
 """
             prompt_record = {
                 "task_id": tid,
                 "variant": variant_name,
-                "repo": t["repo"],
-                "target_symbol": t["target_symbol"],
-                "expected_exception": t["expected_exception"],
-                "root_cause_gold": t["root_cause"],
+                "repo_inspiration": t["repo_inspiration"],
                 "system_prompt": SYSTEM_PROMPT,
                 "user_prompt": user_prompt,
                 "prompt_char_len": len(user_prompt),
@@ -102,6 +119,7 @@ Analyze the failure, identify the root cause in `{t['target_symbol']}`, and prov
             p_file = PROMPTS_DIR / f"{tid}__{variant_name}.json"
             p_file.write_text(json.dumps(prompt_record, indent=2), encoding="utf-8")
             
+        red_pct = (1 - len(var_b) / len(var_a)) * 100
         row_stat = {
             "task_id": tid,
             "raw_chars": len(var_a),
@@ -110,21 +128,46 @@ Analyze the failure, identify the root cause in `{t['target_symbol']}`, and prov
             "compressed_lines": len(var_b.splitlines()),
             "tail_chars": len(var_c),
             "tail_lines": len(var_c.splitlines()),
-            "compression_ratio": (1 - len(var_b) / len(var_a)) * 100
+            "reduction_pct": round(red_pct, 2),
+            "is_safe_fallback_zero_reduction": len(var_b) == len(var_a)
         }
         stats.append(row_stat)
-        print(f"  {tid}: Raw={len(var_a)}c -> Comp={len(var_b)}c (-{row_stat['compression_ratio']:.1f}%), Tail={len(var_c)}c")
-        
-    summary_p = Path(__file__).parent / "dataset_summary.json"
-    summary_p.write_text(json.dumps({
+        print(f"  {tid}: Raw={len(var_a)}c -> Comp={len(var_b)}c ({red_pct:.1f}% reduction), Fallback={row_stat['is_safe_fallback_zero_reduction']}")
+
+    weighted_reduction = (1 - total_comp_chars / total_raw_chars) * 100
+    unweighted_reduction = sum(s["reduction_pct"] for s in stats) / len(stats)
+    fallback_count = sum(1 for s in stats if s["is_safe_fallback_zero_reduction"])
+    compressed_subset = [s["reduction_pct"] for s in stats if not s["is_safe_fallback_zero_reduction"]]
+    active_compression_mean = sum(compressed_subset) / len(compressed_subset) if compressed_subset else 0.0
+    
+    summary_data = {
+        "dataset_name": "Synthetic Reproductions Inspired by Open-Source Bugs",
+        "provenance_note": "15 self-contained synthetic reproductions inspired by open-source bug patterns. Used for isolated CPU component ablation, distinct from full SWE-bench repo checkouts.",
         "total_tasks": len(tasks),
         "total_prompts": len(frozen_records),
-        "variants": ["A_raw", "B_compressed", "C_tail35"],
-        "task_stats": stats
-    }, indent=2), encoding="utf-8")
+        "variants": ["A_raw", "B_compressed", "C_tail35", "D_no_trace"],
+        "metrics": {
+            "total_raw_chars": total_raw_chars,
+            "total_compressed_chars": total_comp_chars,
+            "weighted_reduction_pct": round(weighted_reduction, 2),
+            "unweighted_mean_reduction_pct": round(unweighted_reduction, 2),
+            "zero_reduction_fallback_tasks_count": fallback_count,
+            "zero_reduction_fallback_tasks_pct": round(fallback_count / len(tasks) * 100, 2),
+            "active_compression_subset_count": len(compressed_subset),
+            "active_compression_mean_reduction_pct": round(active_compression_mean, 2)
+        },
+        "task_breakdown": stats
+    }
     
-    print(f"\nAll 45 frozen evaluation prompts generated and saved to {PROMPTS_DIR}!")
-    print(f"Summary saved to {summary_p}")
+    summary_p = Path(__file__).parent / "dataset_summary.json"
+    summary_p.write_text(json.dumps(summary_data, indent=2), encoding="utf-8")
+    
+    print(f"\nSummary generated successfully!")
+    print(f"  Weighted Reduction: {weighted_reduction:.2f}% (Total chars: {total_raw_chars} -> {total_comp_chars})")
+    print(f"  Unweighted Mean Reduction: {unweighted_reduction:.2f}%")
+    print(f"  Safe Fallbacks (0% reduction): {fallback_count}/{len(tasks)} ({fallback_count/len(tasks)*100:.1f}%)")
+    print(f"  Active Compression Subset (11 tasks): {active_compression_mean:.2f}% mean reduction")
+    print(f"  All {len(frozen_records)} frozen blinded prompts saved to {PROMPTS_DIR}")
 
 if __name__ == "__main__":
     main()

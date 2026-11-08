@@ -32,4 +32,4 @@ test_task.py:10: AssertionError
 [CONSOLE_MARKUP_LOG_11] rendering token stream
 =========================== short test summary info ============================
 FAILED test_task.py::test_escape_isolated_bracket - AssertionError: assert '\...
-============================== 1 failed in 0.04s ===============================
+============================== 1 failed in 0.05s ===============================

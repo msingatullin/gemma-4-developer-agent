@@ -714,7 +714,8 @@ def main():
         # Meta
         meta = {
             "id": tid,
-            "repo": spec["repo"],
+            "provenance": "synthetic reproduction inspired by open-source bug pattern",
+            "repo_inspiration": spec["repo"],
             "issue": spec["issue"],
             "target_symbol": spec["target_symbol"],
             "root_cause": spec["root_cause"],
@@ -724,16 +725,18 @@ def main():
         manifest.append(meta)
         
         # Verify reproduction: pytest should FAIL on buggy code
-        res_fail = subprocess.run([sys.executable, "-m", "pytest", str(test_p), "-q"], cwd=tdir, capture_output=True, text=True)
+        res_fail = subprocess.run([sys.executable, "-B", "-m", "pytest", str(test_p), "-q"], cwd=tdir, capture_output=True, text=True)
         assert res_fail.returncode != 0, f"Task {tid} did not fail on buggy source!"
         
         # Verify fix: applying fixed code should PASS
         source_p.write_text(spec["fixed_code"], encoding="utf-8")
-        res_pass = subprocess.run([sys.executable, "-m", "pytest", str(test_p), "-q"], cwd=tdir, capture_output=True, text=True)
+        shutil.rmtree(tdir / "__pycache__", ignore_errors=True)
+        res_pass = subprocess.run([sys.executable, "-B", "-m", "pytest", str(test_p), "-q"], cwd=tdir, capture_output=True, text=True)
         assert res_pass.returncode == 0, f"Task {tid} did not pass on fixed source! Stderr: {res_pass.stderr}\nStdout: {res_pass.stdout}"
         
         # Reset to buggy code
         source_p.write_text(spec["buggy_code"], encoding="utf-8")
+        shutil.rmtree(tdir / "__pycache__", ignore_errors=True)
         print(f"  [VERIFIED] {tid} -> FAIL on buggy, PASS on gold patch.")
 
     manifest_p = Path(__file__).parent / "task_manifest.json"

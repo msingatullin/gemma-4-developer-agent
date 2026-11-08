@@ -1,0 +1,14 @@
+{
+  "instance_id": "pallets__flask-5063",
+  "repo": "pallets/flask",
+  "repo_url": "https://github.com/pallets/flask",
+  "base_commit": "182ce3dd15dfa3537391c3efaf9c3ff407d134d4",
+  "created_at": "2023-04-14T16:36:54Z",
+  "fail_to_pass": [
+    "tests/test_cli.py::TestRoutes::test_subdomain",
+    "tests/test_cli.py::TestRoutes::test_host"
+  ],
+  "pass_to_pass_count": 54,
+  "gold_patch_sha256": "f9c1ef426acac91e34d551f80f34dfe27fc124ac316af71d70eec1764b4a6497",
+  "test_patch_sha256": "e5b1124e11d391cc01f7d9d03ada6ccd629a817a3334d5980884ed276237bf96"
+}

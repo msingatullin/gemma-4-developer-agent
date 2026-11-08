@@ -1,6 +1,7 @@
 {
   "id": "task_01_flask_blueprint_dot",
-  "repo": "pallets/flask",
+  "provenance": "synthetic reproduction inspired by open-source bug pattern",
+  "repo_inspiration": "pallets/flask",
   "issue": "Raise error when blueprint name contains a dot (#4045)",
   "target_symbol": "Blueprint.__init__",
   "root_cause": "Blueprint names containing dots cause collision in nested blueprint endpoint resolution.",

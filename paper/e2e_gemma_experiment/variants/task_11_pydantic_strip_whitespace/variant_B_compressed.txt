@@ -1,7 +1,10 @@
-============================= test session starts ==============================
-cachedir: .pytest_cache
-collecting ... collected 1 item
-
-test_task.py::test_validate_str_with_none PASSED                         [100%]
-
-============================== 1 passed in 0.01s ===============================
+_________________________ test_validate_str_with_none __________________________
+    def test_validate_str_with_none():
+        for i in range(12):
+    ... [intermediate frames omitted] ...
+>           validate_str(None, strip_whitespace=True)
+>           value = value.strip()
+E           AttributeError: 'NoneType' object has no attribute 'strip'
+source.py:3: AttributeError
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_validate_str_with_none - AttributeError: 'NoneType'...

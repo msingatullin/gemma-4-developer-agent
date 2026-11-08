@@ -1,6 +1,7 @@
 {
   "id": "task_15_pytest_approx_none",
-  "repo": "pytest-dev/pytest",
+  "provenance": "synthetic reproduction inspired by open-source bug pattern",
+  "repo_inspiration": "pytest-dev/pytest",
   "issue": "approx() comparison with None raises TypeError instead of returning False (#5221)",
   "target_symbol": "approx_compare",
   "root_cause": "abs(actual - expected) executed directly without checking if operand is None, crashing with TypeError.",

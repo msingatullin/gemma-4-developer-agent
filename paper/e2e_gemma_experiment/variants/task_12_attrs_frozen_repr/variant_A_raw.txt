@@ -20,7 +20,7 @@ __________________________ test_frozen_mutation_error __________________________
 test_task.py:9: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <source.FrozenModel object at 0x7775a3cc33b0>, key = 'x', value = 99
+self = <source.FrozenModel object at 0x75ddfa5d81d0>, key = 'x', value = 99
 
     def __setattr__(self, key, value):
         if self.__dict__.get("_frozen"):
@@ -46,4 +46,4 @@ source.py:13: AttributeError
 [ATTRS_DESCRIPTOR_GUARD_14] inspecting attribute setter
 =========================== short test summary info ============================
 FAILED test_task.py::test_frozen_mutation_error - AttributeError: Cannot assi...
-============================== 1 failed in 0.05s ===============================
+============================== 1 failed in 0.06s ===============================

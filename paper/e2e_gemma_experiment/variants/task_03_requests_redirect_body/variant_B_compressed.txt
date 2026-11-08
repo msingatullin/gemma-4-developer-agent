@@ -41,4 +41,4 @@ test_task.py:10: AssertionError
 [HTTP_REDIRECT_DEBUG_14] status=303 target=/new-url
 =========================== short test summary info ============================
 FAILED test_task.py::test_redirect_303_strips_body - AssertionError: Expected...
-============================== 1 failed in 0.04s ===============================
+============================== 1 failed in 0.05s ===============================

@@ -4,6 +4,42 @@ cachedir: .pytest_cache
 rootdir: /home/mikhail/gemma-4-developer-agent/paper/e2e_gemma_experiment/tasks/task_11_pydantic_strip_whitespace
 collecting ... collected 1 item
 
-test_task.py::test_validate_str_with_none PASSED                         [100%]
+test_task.py::test_validate_str_with_none FAILED                         [100%]
 
-============================== 1 passed in 0.01s ===============================
+=================================== FAILURES ===================================
+_________________________ test_validate_str_with_none __________________________
+
+    def test_validate_str_with_none():
+        for i in range(12):
+            print(f"[PYDANTIC_CORE_VALIDATOR_{i}] resolving type constraint")
+        with pytest.raises(TypeError, match="Input must be a valid string"):
+>           validate_str(None, strip_whitespace=True)
+
+test_task.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = None, strip_whitespace = True
+
+    def validate_str(value, strip_whitespace: bool = True):
+        if strip_whitespace:
+>           value = value.strip()
+                    ^^^^^^^^^^^
+E           AttributeError: 'NoneType' object has no attribute 'strip'
+
+source.py:3: AttributeError
+----------------------------- Captured stdout call -----------------------------
+[PYDANTIC_CORE_VALIDATOR_0] resolving type constraint
+[PYDANTIC_CORE_VALIDATOR_1] resolving type constraint
+[PYDANTIC_CORE_VALIDATOR_2] resolving type constraint
+[PYDANTIC_CORE_VALIDATOR_3] resolving type constraint
+[PYDANTIC_CORE_VALIDATOR_4] resolving type constraint
+[PYDANTIC_CORE_VALIDATOR_5] resolving type constraint
+[PYDANTIC_CORE_VALIDATOR_6] resolving type constraint
+[PYDANTIC_CORE_VALIDATOR_7] resolving type constraint
+[PYDANTIC_CORE_VALIDATOR_8] resolving type constraint
+[PYDANTIC_CORE_VALIDATOR_9] resolving type constraint
+[PYDANTIC_CORE_VALIDATOR_10] resolving type constraint
+[PYDANTIC_CORE_VALIDATOR_11] resolving type constraint
+=========================== short test summary info ============================
+FAILED test_task.py::test_validate_str_with_none - AttributeError: 'NoneType'...
+============================== 1 failed in 0.05s ===============================

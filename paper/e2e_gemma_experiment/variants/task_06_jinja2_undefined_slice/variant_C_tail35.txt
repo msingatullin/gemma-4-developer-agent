@@ -32,4 +32,4 @@ test_task.py:8: Failed
 [JINJA_AST_EVAL_17] evaluating AST subscript node
 =========================== short test summary info ============================
 FAILED test_task.py::test_strict_undefined_slice - Failed: DID NOT RAISE <cla...
-============================== 1 failed in 0.04s ===============================
+============================== 1 failed in 0.05s ===============================

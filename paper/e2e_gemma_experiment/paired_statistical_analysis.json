@@ -1,0 +1,252 @@
+{
+  "analysis_timestamp": "2026-11-08T08:56:05.731536+00:00",
+  "total_records": 120,
+  "metrics_evaluated": {
+    "test_suite_pass": {
+      "n_tasks": 15,
+      "metric_evaluated": "test_suite_pass",
+      "n_bootstrap": 10000,
+      "paired_comparisons": {
+        "delta_B_minus_A": {
+          "v1": "B_compressed",
+          "v2": "A_raw",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        },
+        "delta_B_minus_C": {
+          "v1": "B_compressed",
+          "v2": "C_tail35",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        },
+        "delta_B_minus_D": {
+          "v1": "B_compressed",
+          "v2": "D_no_trace",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        }
+      }
+    },
+    "blinded_localization_pass": {
+      "n_tasks": 15,
+      "metric_evaluated": "blinded_localization_pass",
+      "n_bootstrap": 10000,
+      "paired_comparisons": {
+        "delta_B_minus_A": {
+          "v1": "B_compressed",
+          "v2": "A_raw",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        },
+        "delta_B_minus_C": {
+          "v1": "B_compressed",
+          "v2": "C_tail35",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        },
+        "delta_B_minus_D": {
+          "v1": "B_compressed",
+          "v2": "D_no_trace",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        }
+      }
+    },
+    "preflight_syntax_pass": {
+      "n_tasks": 15,
+      "metric_evaluated": "preflight_syntax_pass",
+      "n_bootstrap": 10000,
+      "paired_comparisons": {
+        "delta_B_minus_A": {
+          "v1": "B_compressed",
+          "v2": "A_raw",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        },
+        "delta_B_minus_C": {
+          "v1": "B_compressed",
+          "v2": "C_tail35",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        },
+        "delta_B_minus_D": {
+          "v1": "B_compressed",
+          "v2": "D_no_trace",
+          "mean_delta": 0.0,
+          "ci_95_lower": 0.0,
+          "ci_95_upper": 0.0,
+          "p_value_permutation": 1.0,
+          "task_deltas": {
+            "task_01_flask_blueprint_dot": 0.0,
+            "task_02_flask_config_mode": 0.0,
+            "task_03_requests_redirect_body": 0.0,
+            "task_04_requests_socket_error": 0.0,
+            "task_05_click_choice_case": 0.0,
+            "task_06_jinja2_undefined_slice": 0.0,
+            "task_07_urllib3_query_encoding": 0.0,
+            "task_08_rich_markup_escape": 0.0,
+            "task_09_pluggy_hook_order": 0.0,
+            "task_10_marshmallow_empty_str": 0.0,
+            "task_11_pydantic_strip_whitespace": 0.0,
+            "task_12_attrs_frozen_repr": 0.0,
+            "task_13_itsdangerous_expired": 0.0,
+            "task_14_werkzeug_cookie_quote": 0.0,
+            "task_15_pytest_approx_none": 0.0
+          }
+        }
+      }
+    }
+  }
+}

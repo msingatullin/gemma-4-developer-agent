@@ -52,4 +52,4 @@ test_task.py:15: AssertionError
 [PLUGGY_DISPATCH_DIAG_14] running plugin hook wrappers
 =========================== short test summary info ============================
 FAILED test_task.py::test_hook_order_lifo_for_tryfirst - AssertionError: Unex...
-============================== 1 failed in 0.04s ===============================
+============================== 1 failed in 0.05s ===============================

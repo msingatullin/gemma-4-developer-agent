@@ -1,6 +1,7 @@
 {
   "id": "task_05_click_choice_case",
-  "repo": "pallets/click",
+  "provenance": "synthetic reproduction inspired by open-source bug pattern",
+  "repo_inspiration": "pallets/click",
   "issue": "Support case_sensitive parameter in click.Choice",
   "target_symbol": "Choice.convert",
   "root_cause": "Choice validation only performed exact string lookup, ignoring case_sensitive=False setting.",

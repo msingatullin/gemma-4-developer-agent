@@ -43,4 +43,4 @@ source.py:3: TypeError
 [FLOAT_PRECISION_ANALYZER_11] computing tolerance boundaries
 =========================== short test summary info ============================
 FAILED test_task.py::test_approx_none_safe_comparison - TypeError: unsupporte...
-============================== 1 failed in 0.04s ===============================
+============================== 1 failed in 0.05s ===============================

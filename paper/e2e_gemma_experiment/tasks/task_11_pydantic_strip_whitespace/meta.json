@@ -1,6 +1,7 @@
 {
   "id": "task_11_pydantic_strip_whitespace",
-  "repo": "pydantic/pydantic",
+  "provenance": "synthetic reproduction inspired by open-source bug pattern",
+  "repo_inspiration": "pydantic/pydantic",
   "issue": "str_strip_whitespace=True drops None validation error",
   "target_symbol": "validate_str",
   "root_cause": "Attribute error when calling .strip() on None input before type check.",

@@ -4,8 +4,8 @@
 test_task.py:11: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <source.TimestampSigner object at 0x7902dbc10500>
-token = 'valid_payload', ts = 1794126333.3976264
+self = <source.TimestampSigner object at 0x7970c34d0ad0>
+token = 'valid_payload', ts = 1794127912.623879
 
     def unsign(self, token: str, ts: float) -> str:
         age = time.time() - ts
@@ -32,4 +32,4 @@ source.py:19: BadTimeSignature
 [SECURITY_SIGNATURE_VERIFIER_14] validating crypto timestamp
 =========================== short test summary info ============================
 FAILED test_task.py::test_expired_signature_distinction - source.BadTimeSigna...
-============================== 1 failed in 0.04s ===============================
+============================== 1 failed in 0.05s ===============================

@@ -1,6 +1,7 @@
 {
   "id": "task_02_flask_config_mode",
-  "repo": "pallets/flask",
+  "provenance": "synthetic reproduction inspired by open-source bug pattern",
+  "repo_inspiration": "pallets/flask",
   "issue": "Add mode parameter to Config.from_file() (#4992)",
   "target_symbol": "Config.from_file",
   "root_cause": "from_file hardcoded text mode 'r', breaking binary load formats like tomllib or pickle.",

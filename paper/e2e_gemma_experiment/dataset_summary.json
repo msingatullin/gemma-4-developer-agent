@@ -1,12 +1,25 @@
 {
+  "dataset_name": "Synthetic Reproductions Inspired by Open-Source Bugs",
+  "provenance_note": "15 self-contained synthetic reproductions inspired by open-source bug patterns. Used for isolated CPU component ablation, distinct from full SWE-bench repo checkouts.",
   "total_tasks": 15,
-  "total_prompts": 45,
+  "total_prompts": 60,
   "variants": [
     "A_raw",
     "B_compressed",
-    "C_tail35"
+    "C_tail35",
+    "D_no_trace"
   ],
-  "task_stats": [
+  "metrics": {
+    "total_raw_chars": 34711,
+    "total_compressed_chars": 14973,
+    "weighted_reduction_pct": 56.86,
+    "unweighted_mean_reduction_pct": 56.86,
+    "zero_reduction_fallback_tasks_count": 4,
+    "zero_reduction_fallback_tasks_pct": 26.67,
+    "active_compression_subset_count": 11,
+    "active_compression_mean_reduction_pct": 77.54
+  },
+  "task_breakdown": [
     {
       "task_id": "task_01_flask_blueprint_dot",
       "raw_chars": 2533,
@@ -15,7 +28,8 @@
       "compressed_lines": 8,
       "tail_chars": 2006,
       "tail_lines": 35,
-      "compression_ratio": 79.43150414528228
+      "reduction_pct": 79.43,
+      "is_safe_fallback_zero_reduction": false
     },
     {
       "task_id": "task_02_flask_config_mode",
@@ -25,7 +39,8 @@
       "compressed_lines": 8,
       "tail_chars": 1672,
       "tail_lines": 33,
-      "compression_ratio": 70.2928870292887
+      "reduction_pct": 70.29,
+      "is_safe_fallback_zero_reduction": false
     },
     {
       "task_id": "task_03_requests_redirect_body",
@@ -35,7 +50,8 @@
       "compressed_lines": 44,
       "tail_chars": 1710,
       "tail_lines": 35,
-      "compression_ratio": 0.0
+      "reduction_pct": 0.0,
+      "is_safe_fallback_zero_reduction": true
     },
     {
       "task_id": "task_04_requests_socket_error",
@@ -45,7 +61,8 @@
       "compressed_lines": 10,
       "tail_chars": 1944,
       "tail_lines": 35,
-      "compression_ratio": 80.95580309019044
+      "reduction_pct": 80.96,
+      "is_safe_fallback_zero_reduction": false
     },
     {
       "task_id": "task_05_click_choice_case",
@@ -55,7 +72,8 @@
       "compressed_lines": 10,
       "tail_chars": 1696,
       "tail_lines": 35,
-      "compression_ratio": 77.01342281879194
+      "reduction_pct": 77.01,
+      "is_safe_fallback_zero_reduction": false
     },
     {
       "task_id": "task_06_jinja2_undefined_slice",
@@ -65,7 +83,8 @@
       "compressed_lines": 8,
       "tail_chars": 1794,
       "tail_lines": 35,
-      "compression_ratio": 78.95467160037003
+      "reduction_pct": 78.95,
+      "is_safe_fallback_zero_reduction": false
     },
     {
       "task_id": "task_07_urllib3_query_encoding",
@@ -75,7 +94,8 @@
       "compressed_lines": 46,
       "tail_chars": 1564,
       "tail_lines": 35,
-      "compression_ratio": 0.0
+      "reduction_pct": 0.0,
+      "is_safe_fallback_zero_reduction": true
     },
     {
       "task_id": "task_08_rich_markup_escape",
@@ -85,7 +105,8 @@
       "compressed_lines": 9,
       "tail_chars": 1705,
       "tail_lines": 35,
-      "compression_ratio": 75.43307086614173
+      "reduction_pct": 75.43,
+      "is_safe_fallback_zero_reduction": false
     },
     {
       "task_id": "task_09_pluggy_hook_order",
@@ -95,7 +116,8 @@
       "compressed_lines": 55,
       "tail_chars": 1781,
       "tail_lines": 35,
-      "compression_ratio": 0.0
+      "reduction_pct": 0.0,
+      "is_safe_fallback_zero_reduction": true
     },
     {
       "task_id": "task_10_marshmallow_empty_str",
@@ -105,17 +127,19 @@
       "compressed_lines": 10,
       "tail_chars": 1771,
       "tail_lines": 35,
-      "compression_ratio": 73.76966007102995
+      "reduction_pct": 73.77,
+      "is_safe_fallback_zero_reduction": false
     },
     {
       "task_id": "task_11_pydantic_strip_whitespace",
-      "raw_chars": 532,
-      "raw_lines": 9,
-      "compressed_chars": 299,
-      "compressed_lines": 7,
-      "tail_chars": 531,
-      "tail_lines": 9,
-      "compression_ratio": 43.79699248120301
+      "raw_chars": 2258,
+      "raw_lines": 45,
+      "compressed_chars": 497,
+      "compressed_lines": 10,
+      "tail_chars": 1644,
+      "tail_lines": 35,
+      "reduction_pct": 77.99,
+      "is_safe_fallback_zero_reduction": false
     },
     {
       "task_id": "task_12_attrs_frozen_repr",
@@ -125,17 +149,19 @@
       "compressed_lines": 10,
       "tail_chars": 1779,
       "tail_lines": 35,
-      "compression_ratio": 79.82315112540192
+      "reduction_pct": 79.82,
+      "is_safe_fallback_zero_reduction": false
     },
     {
       "task_id": "task_13_itsdangerous_expired",
-      "raw_chars": 2714,
+      "raw_chars": 2713,
       "raw_lines": 51,
       "compressed_chars": 541,
       "compressed_lines": 9,
-      "tail_chars": 1866,
+      "tail_chars": 1865,
       "tail_lines": 35,
-      "compression_ratio": 80.06632277081798
+      "reduction_pct": 80.06,
+      "is_safe_fallback_zero_reduction": false
     },
     {
       "task_id": "task_14_werkzeug_cookie_quote",
@@ -145,7 +171,8 @@
       "compressed_lines": 40,
       "tail_chars": 1841,
       "tail_lines": 35,
-      "compression_ratio": 0.0
+      "reduction_pct": 0.0,
+      "is_safe_fallback_zero_reduction": true
     },
     {
       "task_id": "task_15_pytest_approx_none",
@@ -155,7 +182,8 @@
       "compressed_lines": 10,
       "tail_chars": 1846,
       "tail_lines": 35,
-      "compression_ratio": 79.21760391198043
+      "reduction_pct": 79.22,
+      "is_safe_fallback_zero_reduction": false
     }
   ]
 }

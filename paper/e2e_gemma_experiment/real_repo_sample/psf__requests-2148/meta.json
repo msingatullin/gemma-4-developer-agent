@@ -1,0 +1,22 @@
+{
+  "instance_id": "psf__requests-2148",
+  "repo": "psf/requests",
+  "repo_url": "https://github.com/psf/requests",
+  "base_commit": "fe693c492242ae532211e0c173324f09ca8cf227",
+  "created_at": "2014-07-24T21:03:03Z",
+  "fail_to_pass": [
+    "test_requests.py::RequestsTestCase::test_DIGEST_AUTH_RETURNS_COOKIE",
+    "test_requests.py::RequestsTestCase::test_HTTP_200_OK_GET_ALTERNATIVE",
+    "test_requests.py::RequestsTestCase::test_HTTP_200_OK_HEAD",
+    "test_requests.py::RequestsTestCase::test_POSTBIN_GET_POST_FILES",
+    "test_requests.py::RequestsTestCase::test_auth_is_stripped_on_redirect_off_host",
+    "test_requests.py::RequestsTestCase::test_basicauth_with_netrc",
+    "test_requests.py::RequestsTestCase::test_cookie_quote_wrapped",
+    "test_requests.py::RequestsTestCase::test_generic_cookiejar_works",
+    "test_requests.py::RequestsTestCase::test_iter_content_handles_socket_error",
+    "test_requests.py::RequestsTestCase::test_unicode_multipart_post"
+  ],
+  "pass_to_pass_count": 118,
+  "gold_patch_sha256": "0c773284a62e168b99a78a22c778e4366861e5dac37e7ffb4ae85a680843fab5",
+  "test_patch_sha256": "ad6a641480a841a4e54349518842cde8e7562813178057e5cd8b44e9e8af8e27"
+}

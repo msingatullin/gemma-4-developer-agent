@@ -1,6 +1,7 @@
 {
   "id": "task_12_attrs_frozen_repr",
-  "repo": "python-attrs/attrs",
+  "provenance": "synthetic reproduction inspired by open-source bug pattern",
+  "repo_inspiration": "python-attrs/attrs",
   "issue": "Frozen dataclass __setattr__ raises AttributeError instead of FrozenInstanceError",
   "target_symbol": "FrozenModel.__setattr__",
   "root_cause": "Improper exception type raised when setting attributes on frozen model.",

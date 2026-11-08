@@ -43,4 +43,4 @@ test_task.py:10: AssertionError
 [QUERY_TOKENIZER_14] scanning component
 =========================== short test summary info ============================
 FAILED test_task.py::test_preserve_plus_in_query - AssertionError: Expected c...
-============================== 1 failed in 0.04s ===============================
+============================== 1 failed in 0.05s ===============================
