@@ -1,0 +1,44 @@
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-6.2.5, py-1.11.0, pluggy-1.6.0 -- /tmp/real_tasks_cpu_eval/psf__requests-1963/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /tmp/real_tasks_cpu_eval/psf__requests-1963
+collecting ... collected 121 items / 120 deselected / 1 selected
+
+test_requests.py::TestRedirects::test_requests_are_updated_each_time FAILED [100%]
+
+=================================== FAILURES ===================================
+______________ TestRedirects.test_requests_are_updated_each_time _______________
+
+self = <test_requests.TestRedirects object at 0x740544bda220>
+
+    def test_requests_are_updated_each_time(self):
+        session = RedirectSession([303, 307])
+        prep = requests.Request('POST', 'http://httpbin.org/post').prepare()
+        r0 = session.send(prep)
+        assert r0.request.method == 'POST'
+        assert session.calls[-1] == SendCall((r0.request,), {})
+        redirect_generator = session.resolve_redirects(r0, prep)
+        for response in redirect_generator:
+>           assert response.request.method == 'GET'
+E           AssertionError: assert 'POST' == 'GET'
+E             - GET
+E             + POST
+
+test_requests.py:1245: AssertionError
+=============================== warnings summary ===============================
+requests/packages/urllib3/_collections.py:7
+  /tmp/real_tasks_cpu_eval/psf__requests-1963/requests/packages/urllib3/_collections.py:7: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
+    from collections import MutableMapping
+
+requests/sessions.py:12
+  /tmp/real_tasks_cpu_eval/psf__requests-1963/requests/sessions.py:12: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
+    from collections import Mapping
+
+test_requests.py::TestRedirects::test_requests_are_updated_each_time
+  /tmp/real_tasks_cpu_eval/psf__requests-1963/requests/models.py:164: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
+    if isinstance(hook, collections.Callable):
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+=========================== short test summary info ============================
+FAILED test_requests.py::TestRedirects::test_requests_are_updated_each_time
+================ 1 failed, 120 deselected, 3 warnings in 0.86s =================

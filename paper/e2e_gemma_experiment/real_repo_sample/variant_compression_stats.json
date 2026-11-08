@@ -1,0 +1,52 @@
+[
+  {
+    "instance_id": "pallets__flask-4045",
+    "raw_chars": 2705,
+    "raw_lines": 58,
+    "b2_chars": 1223,
+    "b2_lines": 22,
+    "c_chars": 1583,
+    "c_lines": 35,
+    "b2_char_reduction_pct": 54.79
+  },
+  {
+    "instance_id": "pallets__flask-4992",
+    "raw_chars": 1327,
+    "raw_lines": 25,
+    "b2_chars": 530,
+    "b2_lines": 9,
+    "c_chars": 1327,
+    "c_lines": 25,
+    "b2_char_reduction_pct": 60.06
+  },
+  {
+    "instance_id": "pallets__flask-5063",
+    "raw_chars": 2750,
+    "raw_lines": 49,
+    "b2_chars": 1399,
+    "b2_lines": 20,
+    "c_chars": 1996,
+    "c_lines": 35,
+    "b2_char_reduction_pct": 49.13
+  },
+  {
+    "instance_id": "psf__requests-1963",
+    "raw_chars": 2645,
+    "raw_lines": 44,
+    "b2_chars": 596,
+    "b2_lines": 12,
+    "c_chars": 2121,
+    "c_lines": 35,
+    "b2_char_reduction_pct": 77.47
+  },
+  {
+    "instance_id": "psf__requests-2148",
+    "raw_chars": 2418,
+    "raw_lines": 49,
+    "b2_chars": 537,
+    "b2_lines": 13,
+    "c_chars": 1661,
+    "c_lines": 35,
+    "b2_char_reduction_pct": 77.79
+  }
+]

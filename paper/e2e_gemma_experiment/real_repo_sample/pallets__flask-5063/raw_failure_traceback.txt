@@ -1,0 +1,49 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.14, pytest-7.4.4, pluggy-1.7.0 -- /tmp/real_tasks_cpu_eval/pallets__flask-5063/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /tmp/real_tasks_cpu_eval/pallets__flask-5063
+configfile: pyproject.toml
+collecting ... collected 57 items / 55 deselected / 2 selected
+
+tests/test_cli.py::TestRoutes::test_subdomain FAILED                     [ 50%]
+tests/test_cli.py::TestRoutes::test_host FAILED                          [100%]
+
+=================================== FAILURES ===================================
+__________________________ TestRoutes.test_subdomain ___________________________
+
+self = <test_cli.TestRoutes object at 0x7f7d16c60a10>
+runner = <click.testing.CliRunner object at 0x7f7d16e0a5d0>
+
+    def test_subdomain(self, runner):
+        app = Flask(__name__, static_folder=None)
+        app.add_url_rule("/a", subdomain="a", endpoint="a")
+        app.add_url_rule("/b", subdomain="b", endpoint="b")
+        cli = FlaskGroup(create_app=lambda: app)
+        result = runner.invoke(cli, ["routes"])
+        assert result.exit_code == 0
+>       assert "Subdomain" in result.output
+E       AssertionError: assert 'Subdomain' in 'Endpoint  Methods  Rule\n--------  -------  ----\na         GET      /a\nb         GET      /b\n'
+E        +  where 'Endpoint  Methods  Rule\n--------  -------  ----\na         GET      /a\nb         GET      /b\n' = <Result okay>.output
+
+tests/test_cli.py:495: AssertionError
+_____________________________ TestRoutes.test_host _____________________________
+
+self = <test_cli.TestRoutes object at 0x7f7d16c61350>
+runner = <click.testing.CliRunner object at 0x7f7d16c44650>
+
+    def test_host(self, runner):
+        app = Flask(__name__, static_folder=None, host_matching=True)
+        app.add_url_rule("/a", host="a", endpoint="a")
+        app.add_url_rule("/b", host="b", endpoint="b")
+        cli = FlaskGroup(create_app=lambda: app)
+        result = runner.invoke(cli, ["routes"])
+        assert result.exit_code == 0
+>       assert "Host" in result.output
+E       AssertionError: assert 'Host' in 'Endpoint  Methods  Rule\n--------  -------  ----\na         GET      /a\nb         GET      /b\n'
+E        +  where 'Endpoint  Methods  Rule\n--------  -------  ----\na         GET      /a\nb         GET      /b\n' = <Result okay>.output
+
+tests/test_cli.py:504: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_cli.py::TestRoutes::test_subdomain - AssertionError: assert...
+FAILED tests/test_cli.py::TestRoutes::test_host - AssertionError: assert 'Hos...
+======================= 2 failed, 55 deselected in 0.33s =======================

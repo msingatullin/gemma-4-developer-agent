@@ -1,0 +1,58 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.19, pytest-6.2.5, py-1.11.0, pluggy-1.7.0 -- /tmp/real_tasks_cpu_eval/pallets__flask-4045/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /tmp/real_tasks_cpu_eval/pallets__flask-4045, configfile: setup.cfg
+collecting ... collected 49 items / 47 deselected / 2 selected
+
+tests/test_blueprints.py::test_dotted_name_not_allowed FAILED            [ 50%]
+tests/test_blueprints.py::test_route_decorator_custom_endpoint_with_dots FAILED [100%]
+
+=================================== FAILURES ===================================
+_________________________ test_dotted_name_not_allowed _________________________
+
+app = <Flask 'flask_test'>, client = <FlaskClient <Flask 'flask_test'>>
+
+    def test_dotted_name_not_allowed(app, client):
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_blueprints.py:255: Failed
+________________ test_route_decorator_custom_endpoint_with_dots ________________
+
+app = <Flask 'flask_test'>, client = <FlaskClient <Flask 'flask_test'>>
+
+    def test_route_decorator_custom_endpoint_with_dots(app, client):
+        bp = flask.Blueprint("bp", __name__)
+    
+        with pytest.raises(ValueError):
+>           bp.route("/", endpoint="a.b")(lambda: "")
+
+tests/test_blueprints.py:326: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/flask/scaffold.py:433: in decorator
+    self.add_url_rule(rule, endpoint, f, **options)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Blueprint 'bp'>, rule = '/', endpoint = 'a.b'
+view_func = <function test_route_decorator_custom_endpoint_with_dots.<locals>.<lambda> at 0x7fcf0101c820>
+options = {}
+
+    def add_url_rule(
+        self,
+        rule: str,
+        endpoint: t.Optional[str] = None,
+        view_func: t.Optional[t.Callable] = None,
+        **options: t.Any,
+    ) -> None:
+        """Like :meth:`Flask.add_url_rule` but for a blueprint.  The endpoint for
+        the :func:`url_for` function is prefixed with the name of the blueprint.
+        """
+        if endpoint:
+>           assert "." not in endpoint, "Blueprint endpoints should not contain dots"
+E           AssertionError: Blueprint endpoints should not contain dots
+
+src/flask/blueprints.py:364: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_blueprints.py::test_dotted_name_not_allowed - Failed: DID N...
+FAILED tests/test_blueprints.py::test_route_decorator_custom_endpoint_with_dots
+======================= 2 failed, 47 deselected in 0.34s =======================

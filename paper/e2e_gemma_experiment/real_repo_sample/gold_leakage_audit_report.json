@@ -1,0 +1,122 @@
+[
+  {
+    "prompt_file": "pallets__flask-4045__A_raw.json",
+    "instance_id": "pallets__flask-4045",
+    "variant": "A_raw",
+    "checked_gold_lines_count": 6,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  },
+  {
+    "prompt_file": "pallets__flask-4045__B2_assertion_aware.json",
+    "instance_id": "pallets__flask-4045",
+    "variant": "B2_assertion_aware",
+    "checked_gold_lines_count": 6,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  },
+  {
+    "prompt_file": "pallets__flask-4045__C_tail35.json",
+    "instance_id": "pallets__flask-4045",
+    "variant": "C_tail35",
+    "checked_gold_lines_count": 6,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  },
+  {
+    "prompt_file": "pallets__flask-4992__A_raw.json",
+    "instance_id": "pallets__flask-4992",
+    "variant": "A_raw",
+    "checked_gold_lines_count": 7,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  },
+  {
+    "prompt_file": "pallets__flask-4992__B2_assertion_aware.json",
+    "instance_id": "pallets__flask-4992",
+    "variant": "B2_assertion_aware",
+    "checked_gold_lines_count": 7,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  },
+  {
+    "prompt_file": "pallets__flask-4992__C_tail35.json",
+    "instance_id": "pallets__flask-4992",
+    "variant": "C_tail35",
+    "checked_gold_lines_count": 7,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  },
+  {
+    "prompt_file": "pallets__flask-5063__A_raw.json",
+    "instance_id": "pallets__flask-5063",
+    "variant": "A_raw",
+    "checked_gold_lines_count": 31,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  },
+  {
+    "prompt_file": "pallets__flask-5063__B2_assertion_aware.json",
+    "instance_id": "pallets__flask-5063",
+    "variant": "B2_assertion_aware",
+    "checked_gold_lines_count": 31,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  },
+  {
+    "prompt_file": "pallets__flask-5063__C_tail35.json",
+    "instance_id": "pallets__flask-5063",
+    "variant": "C_tail35",
+    "checked_gold_lines_count": 31,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  },
+  {
+    "prompt_file": "psf__requests-1963__A_raw.json",
+    "instance_id": "psf__requests-1963",
+    "variant": "A_raw",
+    "checked_gold_lines_count": 1,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  },
+  {
+    "prompt_file": "psf__requests-1963__B2_assertion_aware.json",
+    "instance_id": "psf__requests-1963",
+    "variant": "B2_assertion_aware",
+    "checked_gold_lines_count": 1,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  },
+  {
+    "prompt_file": "psf__requests-1963__C_tail35.json",
+    "instance_id": "psf__requests-1963",
+    "variant": "C_tail35",
+    "checked_gold_lines_count": 1,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  },
+  {
+    "prompt_file": "psf__requests-2148__A_raw.json",
+    "instance_id": "psf__requests-2148",
+    "variant": "A_raw",
+    "checked_gold_lines_count": 4,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  },
+  {
+    "prompt_file": "psf__requests-2148__B2_assertion_aware.json",
+    "instance_id": "psf__requests-2148",
+    "variant": "B2_assertion_aware",
+    "checked_gold_lines_count": 4,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  },
+  {
+    "prompt_file": "psf__requests-2148__C_tail35.json",
+    "instance_id": "psf__requests-2148",
+    "variant": "C_tail35",
+    "checked_gold_lines_count": 4,
+    "leaked_lines": [],
+    "zero_leakage_certified": true
+  }
+]
