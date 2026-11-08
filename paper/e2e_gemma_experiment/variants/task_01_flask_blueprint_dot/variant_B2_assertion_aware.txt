@@ -1,0 +1,9 @@
+____________________ test_dotted_blueprint_name_not_allowed ____________________
+        """Dots in blueprint names must raise ValueError to prevent nesting collisions."""
+        for i in range(20):
+            print(f"[TRACE_NOISE_{i}] loading blueprint registration context")
+>       with pytest.raises(ValueError, match="Blueprint names may not contain dots"):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+test_task.py:12: Failed
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_dotted_blueprint_name_not_allowed - Failed: DID NOT...

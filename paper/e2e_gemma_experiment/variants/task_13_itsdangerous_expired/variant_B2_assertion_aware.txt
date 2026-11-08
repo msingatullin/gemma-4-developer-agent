@@ -1,0 +1,15 @@
+______________________ test_expired_signature_distinction ______________________
+    ... [intermediate frames omitted] ...
+            print(f"[SECURITY_SIGNATURE_VERIFIER_{i}] validating crypto timestamp")
+        old_ts = time.time() - 100
+        with pytest.raises(SignatureExpired, match="Signature has expired"):
+>           signer.unsign("valid_payload", old_ts)
+test_task.py:11: 
+    def unsign(self, token: str, ts: float) -> str:
+        age = time.time() - ts
+        if age > self.max_age:
+>           raise BadTimeSignature(f"Signature is expired by {age - self.max_age:.1f}s")
+E           source.BadTimeSignature: Signature is expired by 90.0s
+source.py:19: BadTimeSignature
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_expired_signature_distinction - source.BadTimeSigna...

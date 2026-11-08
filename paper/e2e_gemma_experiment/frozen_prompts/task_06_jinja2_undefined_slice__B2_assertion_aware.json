@@ -1,0 +1,10 @@
+{
+  "task_id": "task_06_jinja2_undefined_slice",
+  "variant": "B2_assertion_aware",
+  "repo_inspiration": "pallets/jinja",
+  "system_prompt": "You are an expert autonomous software engineer working with Gemma 4.\nYour goal is to inspect the source code and the test failure traceback, determine the exact location and root cause of the defect, and provide the minimal correct code fix for source.py.\n\nRespond strictly in the following format:\nDEFECT_LOCATION: <exact function, method, or class name where the defect resides>\nROOT_CAUSE: <a concise 1-3 sentence explanation of the defect and why the test failed>\nPROPOSED_CODE:\n```python\n<complete revised implementation of the target function or file>\n```",
+  "user_prompt": "# Task: task_06_jinja2_undefined_slice\n## Problem Statement:\nStrictUndefined slice operation raises TypeError instead of UndefinedError\n\n## Source Code (`source.py`):\n```python\nclass UndefinedError(Exception):\n    pass\n\nclass StrictUndefined:\n    def __init__(self, name: str):\n        self._name = name\n\n    def __getitem__(self, item):\n        if isinstance(item, slice):\n            return []\n        raise UndefinedError(f\"'{self._name}' is undefined\")\n\n```\n\n## Test Failure Traceback (B2_assertion_aware):\n```text\n_________________________ test_strict_undefined_slice __________________________\n        u = StrictUndefined(\"items\")\n        for i in range(18):\n            print(f\"[JINJA_AST_EVAL_{i}] evaluating AST subscript node\")\n>       with pytest.raises(UndefinedError, match=\"'items' is undefined\"):\nE       Failed: DID NOT RAISE <class 'source.UndefinedError'>\ntest_task.py:8: Failed\n    --- [Captured output collapsed] ---\nFAILED test_task.py::test_strict_undefined_slice - Failed: DID NOT RAISE <cla...\n```\n\nAnalyze the failure and traceback, identify the exact defect location, explain the root cause, and provide the corrected Python code for source.py.\n",
+  "prompt_char_len": 1171,
+  "trace_char_len": 498,
+  "trace_line_count": 9
+}

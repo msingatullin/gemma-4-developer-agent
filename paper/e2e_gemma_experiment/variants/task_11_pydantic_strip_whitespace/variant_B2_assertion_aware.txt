@@ -1,0 +1,15 @@
+_________________________ test_validate_str_with_none __________________________
+    ... [intermediate frames omitted] ...
+        for i in range(12):
+            print(f"[PYDANTIC_CORE_VALIDATOR_{i}] resolving type constraint")
+        with pytest.raises(TypeError, match="Input must be a valid string"):
+>           validate_str(None, strip_whitespace=True)
+test_task.py:8: 
+    def validate_str(value, strip_whitespace: bool = True):
+        if strip_whitespace:
+>           value = value.strip()
+                    ^^^^^^^^^^^
+E           AttributeError: 'NoneType' object has no attribute 'strip'
+source.py:3: AttributeError
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_validate_str_with_none - AttributeError: 'NoneType'...

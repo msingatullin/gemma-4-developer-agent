@@ -1,0 +1,14 @@
+________________________ test_redirect_303_strips_body _________________________
+    ... [intermediate frames omitted] ...
+        for k in range(15):
+            print(f"[HTTP_REDIRECT_DEBUG_{k}] status=303 target=/new-url")
+        redir = session.resolve_redirects(resp, "POST", b"payload_data")
+>       assert redir["method"] == "GET", f"Expected GET on 303, got {redir['method']}"
+E       AssertionError: Expected GET on 303, got POST
+E       assert 'POST' == 'GET'
+E         
+E         - GET
+E         + POST
+test_task.py:10: AssertionError
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_redirect_303_strips_body - AssertionError: Expected...

@@ -1,0 +1,10 @@
+_________________________ test_escape_isolated_bracket _________________________
+    ... [intermediate frames omitted] ...
+            print(f"[CONSOLE_MARKUP_LOG_{i}] rendering token stream")
+        escaped = escape(text)
+        assert r"\[error\]" in escaped or r"\[error]" in escaped
+>       assert r"\[0" in escaped
+E       AssertionError: assert '\\[0' in 'Status: \\[error\\] at index [0'
+test_task.py:10: AssertionError
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_escape_isolated_bracket - AssertionError: assert '\...

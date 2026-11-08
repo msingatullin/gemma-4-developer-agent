@@ -1,0 +1,221 @@
+{
+  "variant": "B2_assertion_aware",
+  "description": "AST-guided assertion-aware traceback compressor (Post-hoc exploratory)",
+  "total_calls": 30,
+  "passed_tests": 29,
+  "pass_rate_pct": 96.67,
+  "total_api_tokens": 21181,
+  "mean_api_tokens_per_call": 706.0,
+  "tasks_detail": [
+    {
+      "task_id": "task_01_flask_blueprint_dot",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_02_flask_config_mode",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_03_requests_redirect_body",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_04_requests_socket_error",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_05_click_choice_case",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_06_jinja2_undefined_slice",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_07_urllib3_query_encoding",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_08_rich_markup_escape",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_09_pluggy_hook_order",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_10_marshmallow_empty_str",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_11_pydantic_strip_whitespace",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_12_attrs_frozen_repr",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_13_itsdangerous_expired",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_14_werkzeug_cookie_quote",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_15_pytest_approx_none",
+      "seed": 42,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_01_flask_blueprint_dot",
+      "seed": 100,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_02_flask_config_mode",
+      "seed": 100,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_03_requests_redirect_body",
+      "seed": 100,
+      "passed": false,
+      "failure_category": "ASSERTION_ERROR",
+      "failure_reason": "E       AssertionError: Body must be stripped on 303 redirect"
+    },
+    {
+      "task_id": "task_04_requests_socket_error",
+      "seed": 100,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_05_click_choice_case",
+      "seed": 100,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_06_jinja2_undefined_slice",
+      "seed": 100,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_07_urllib3_query_encoding",
+      "seed": 100,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_08_rich_markup_escape",
+      "seed": 100,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_09_pluggy_hook_order",
+      "seed": 100,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_10_marshmallow_empty_str",
+      "seed": 100,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_11_pydantic_strip_whitespace",
+      "seed": 100,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_12_attrs_frozen_repr",
+      "seed": 100,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_13_itsdangerous_expired",
+      "seed": 100,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_14_werkzeug_cookie_quote",
+      "seed": 100,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    },
+    {
+      "task_id": "task_15_pytest_approx_none",
+      "seed": 100,
+      "passed": true,
+      "failure_category": "NONE",
+      "failure_reason": ""
+    }
+  ]
+}

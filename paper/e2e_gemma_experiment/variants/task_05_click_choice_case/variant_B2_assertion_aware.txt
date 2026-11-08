@@ -1,0 +1,16 @@
+_________________________ test_choice_case_insensitive _________________________
+    ... [intermediate frames omitted] ...
+        c = Choice(["red", "green", "blue"], case_sensitive=False)
+        for i in range(12):
+            print(f"[CLICK_PARSER_DIAG_{i}] evaluating token against grammar")
+>       assert c.convert("RED") == "red"
+               ^^^^^^^^^^^^^^^^
+test_task.py:12: 
+    def convert(self, value: str) -> str:
+        if value in self.choices:
+            return value
+>       raise ValueError(f"'{value}' is not one of {self.choices}")
+E       ValueError: 'RED' is not one of ['red', 'green', 'blue']
+source.py:9: ValueError
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_choice_case_insensitive - ValueError: 'RED' is not ...

@@ -1,0 +1,15 @@
+__________________________ test_frozen_mutation_error __________________________
+    ... [intermediate frames omitted] ...
+        for i in range(15):
+            print(f"[ATTRS_DESCRIPTOR_GUARD_{i}] inspecting attribute setter")
+        with pytest.raises(FrozenInstanceError, match="Cannot assign to frozen model"):
+>           m.x = 99
+            ^^^
+test_task.py:9: 
+    def __setattr__(self, key, value):
+        if self.__dict__.get("_frozen"):
+>           raise AttributeError(f"Cannot assign to frozen model: {key}")
+E           AttributeError: Cannot assign to frozen model: x
+source.py:13: AttributeError
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_frozen_mutation_error - AttributeError: Cannot assi...

@@ -1,0 +1,19 @@
+______________________ test_hook_order_lifo_for_tryfirst _______________________
+    ... [intermediate frames omitted] ...
+        res = caller.execute()
+        # Pluggy specification: later tryfirst hooks take higher priority (LIFO)
+>       assert res == ["first_2", "first_1", "standard"], f"Unexpected hook order: {res}"
+E       AssertionError: Unexpected hook order: ['first_1', 'first_2', 'standard']
+E       assert ['first_1', '...', 'standard'] == ['first_2', '...', 'standard']
+E         
+E         At index 0 diff: 'first_1' != 'first_2'
+E         
+E         Full diff:
+E           [
+E         +     'first_1',
+E               'first_2',...
+E         
+E         ...Full output truncated (3 lines hidden), use '-vv' to show
+test_task.py:15: AssertionError
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_hook_order_lifo_for_tryfirst - AssertionError: Unex...

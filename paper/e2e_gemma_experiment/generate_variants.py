@@ -15,9 +15,12 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 TRACEBACK_EXP_DIR = REPO_ROOT / "paper" / "traceback_experiment"
+PAPER_DIR = REPO_ROOT / "paper"
+sys.path.insert(0, str(PAPER_DIR))
 sys.path.insert(0, str(TRACEBACK_EXP_DIR))
 
 from real_traceback_benchmark import filter_pytest_log, naive_tail_cap
+from traceback_compressor import filter_pytest_log_v2
 
 TASKS_DIR = Path(__file__).parent / "tasks"
 VARIANTS_DIR = Path(__file__).parent / "variants"
@@ -54,14 +57,24 @@ def main():
         source_p = tdir / "source.py"
         test_p = tdir / "test_task.py"
         
-        # 1. Run pytest to capture raw failing log
-        cmd = [sys.executable, "-m", "pytest", str(test_p), "-v", "--tb=auto"]
-        res = subprocess.run(cmd, cwd=tdir, capture_output=True, text=True)
-        raw_output = res.stdout + ("\n" + res.stderr if res.stderr else "")
+        t_var_dir = VARIANTS_DIR / tid
+        t_var_dir.mkdir(parents=True, exist_ok=True)
+        raw_p = t_var_dir / "variant_A_raw.txt"
+
+        if raw_p.exists():
+            raw_output = raw_p.read_text(encoding="utf-8")
+        else:
+            python_bin = REPO_ROOT / ".venv" / "bin" / "python"
+            if not python_bin.exists():
+                python_bin = sys.executable
+            cmd = [str(python_bin), "-m", "pytest", str(test_p), "-v", "--tb=auto"]
+            res = subprocess.run(cmd, cwd=tdir, capture_output=True, text=True)
+            raw_output = res.stdout + ("\n" + res.stderr if res.stderr else "")
         
         # Compute variants
         var_a = raw_output
         var_b = filter_pytest_log(raw_output)
+        var_b2 = filter_pytest_log_v2(raw_output)
         var_c = naive_tail_cap(raw_output, 35)
         var_d = "No test traceback provided. Locate the defect by analyzing the source code against the specification."
         
@@ -70,19 +83,19 @@ def main():
         total_comp_chars += len(var_b)
         
         # Save variant text files
-        t_var_dir = VARIANTS_DIR / tid
-        t_var_dir.mkdir(parents=True, exist_ok=True)
         (t_var_dir / "variant_A_raw.txt").write_text(var_a, encoding="utf-8")
         (t_var_dir / "variant_B_compressed.txt").write_text(var_b, encoding="utf-8")
+        (t_var_dir / "variant_B2_assertion_aware.txt").write_text(var_b2, encoding="utf-8")
         (t_var_dir / "variant_C_tail35.txt").write_text(var_c, encoding="utf-8")
         (t_var_dir / "variant_D_no_trace.txt").write_text(var_d, encoding="utf-8")
         
         source_code = source_p.read_text(encoding="utf-8")
         
-        # Prepare frozen prompts for A, B, C, D (BLINDED: NO TARGET SYMBOL LEAKED)
+        # Prepare frozen prompts for A, B, B2, C, D (BLINDED: NO TARGET SYMBOL LEAKED)
         variants = [
             ("A_raw", var_a),
             ("B_compressed", var_b),
+            ("B2_assertion_aware", var_b2),
             ("C_tail35", var_c),
             ("D_no_trace", var_d)
         ]

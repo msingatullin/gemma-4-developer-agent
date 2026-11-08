@@ -1,0 +1,14 @@
+________________________ test_dump_cookie_quotes_commas ________________________
+        for i in range(12):
+            print(f"[HTTP_COOKIE_SERIALIZER_{i}] encoding header string")
+        res = dump_cookie("session_tags", "admin,user,editor")
+>       assert res == 'session_tags="admin,user,editor"; Path=/', f"Expected quoted value, got {res}"
+E       AssertionError: Expected quoted value, got session_tags=admin,user,editor; Path=/
+E       assert 'session_tags...ditor; Path=/' == 'session_tags...itor"; Path=/'
+E         
+E         - session_tags="admin,user,editor"; Path=/
+E         ?              -                 -
+E         + session_tags=admin,user,editor; Path=/
+test_task.py:8: AssertionError
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_dump_cookie_quotes_commas - AssertionError: Expecte...

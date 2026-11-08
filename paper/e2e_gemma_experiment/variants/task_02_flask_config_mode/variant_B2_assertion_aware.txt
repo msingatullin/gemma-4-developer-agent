@@ -1,0 +1,9 @@
+__________________________ test_from_file_binary_mode __________________________
+    ... [intermediate frames omitted] ...
+        """Config.from_file must support mode='rb' for binary deserializers."""
+            import json
+            return json.loads(data.decode())
+>       cfg.from_file(str(p), binary_loader, mode="rb")
+E       TypeError: Config.from_file() got an unexpected keyword argument 'mode'
+test_task.py:25: TypeError
+FAILED test_task.py::test_from_file_binary_mode - TypeError: Config.from_file...

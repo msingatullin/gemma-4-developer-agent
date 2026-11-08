@@ -15,7 +15,7 @@ Deploying autonomous software engineering (SWE) agents with quantized large lang
 
 This work introduces the **AST-Guided Verification Suite**, an open-source, deterministic evaluation and execution framework engineered for local SWE agents. The suite couples sub-millisecond abstract syntax tree (`ast.NodeVisitor`) symbol indexing, a native pre-flight compilation gate (`compile(mode='exec')`), and a multi-format assertion-preserving traceback compression engine that eliminates stdout pollution while strictly retaining diagnostic root causes across standard pytest formats, native tracebacks, and standalone exceptions.
 
-Beyond isolated microbenchmarks, this work presents an **end-to-end empirical study comprising 120 live inference calls to real quantized Gemma 4 31B (`google/gemma-4-31B-it-qat-w4a16-ct`)** across 15 synthetic defect reproduction tasks and two random seeds. Compared to native raw tracebacks, our AST-guided compression delivers a **31.5% reduction in total prompt tokens** (1,158 to 793 tokens per task call) and a **56.86% reduction in traceback characters** (2,314 to 998 characters), while preserving 100% localization accuracy and 86.7% objective diagnostic accuracy (versus 90.0% for raw traces, $\Delta = -3.33\%$, 95% bootstrap CI: $[-10.0\%, 0.0\%]$, permutation $p = 1.0000$). 
+Beyond isolated microbenchmarks, this work presents an **end-to-end empirical study comprising 120 live inference calls to real quantized Gemma 4 31B (`google/gemma-4-31B-it-qat-w4a16-ct`)** across 15 synthetic defect reproduction tasks and two random seeds. Compared to native raw tracebacks, our AST-guided compression delivers a **31.5% reduction in total API tokens** (1,158 to 793 tokens per task call) and a **56.86% reduction in traceback characters** (2,314 to 998 characters), while preserving 100% localization accuracy and 86.7% objective diagnostic accuracy (versus 90.0% for raw traces, $\Delta = -3.33\%$, 95% bootstrap CI: $[-10.0\%, 0.0\%]$, permutation $p = 1.0000$). 
 
 Furthermore, we evaluate all 120 candidate patches in an isolated, unprivileged container sandbox (`--network none`, `--cap-drop ALL`, 512MB RAM, read-only mounts). The measured **Patch Test Pass Rate** was **100.0%** (30/30) for native raw traces (`A_raw`), **83.3%** (25/30) for AST-compressed traces (`B_compressed`), **100.0%** (30/30) for 35-line tail truncation (`C_tail35`), and **73.3%** (22/30) for zero traceback (`D_no_trace`). In paired hypothesis testing, the observed difference between compressed and raw traces ($\Delta_{B-A} = -16.67\%$, 95% CI: $[-36.7\%, 0.0\%]$, permutation $p = 0.2539$) does not achieve statistical significance at $\alpha = 0.05$. In accordance with scientific rigor, we emphasize that failure to reject the null hypothesis cannot be interpreted as proven functional equivalence, and we provide a detailed failure taxonomy illustrating engineering trade-offs between context compression and patch precision.
 
@@ -52,9 +52,9 @@ Under memory-bound decoding ($I \approx 1$ FLOP/byte), modeled per-token latency
 ## 3. Related Work and Positioning Against Prior Art
 
 Autonomous SWE agents have advanced rapidly across benchmarks like SWE-bench:
-- **Hierarchical Inspection (`Agentless`):** Xia et al. (2024) proposed localization $\rightarrow$ patch repair $\rightarrow$ validation. However, `Agentless` relies on high-temperature LLM queries against frontier models (GPT-4o, Claude 3.5 Sonnet) and multi-step file search heuristics, introducing fatal latency on quantized local models.
-- **Iterative ReAct Loops (`SWE-agent`):** Yang et al. (2024) introduced Agent-Computer Interfaces (ACI). While effective with large context windows, these interfaces prompt local quantized models to perform continuous conversational reading, saturating context with redundant file bodies.
-- **Code Graphs (`RepoCoder`):** Zhang et al. (2023) used cross-file semantic similarity and RAG. Full repository code graphs incur heavy indexing overhead unsuited for lightweight execution loops.
+- **Hierarchical Inspection (`Agentless`):** Xia et al. (2024) proposed localization -> patch repair -> validation, relying on multi-query frontier LLMs unsuited for quantized local models.
+- **Iterative ReAct Loops (`SWE-agent`):** Yang et al. (2024) introduced ACIs, prompting models to perform verbose conversational reading that saturates local context.
+- **Code Graphs (`RepoCoder`):** Zhang et al. (2023) used cross-file retrieval, incurring heavy indexing overhead unsuited for lightweight execution loops.
 
 ### Architectural Novelty: The Deterministic Zero-Inference Stance
 
@@ -121,19 +121,18 @@ Across the 120 live inference calls, our AST-guided compressor dramatically redu
 | **`C_tail35`** | 30 | 2,584 | 1,775 | 23.29% | 1,001 | 13.56% | 10.01 s |
 | **`D_no_trace`** | 30 | 910 | 101 | 95.64% | 537 | 53.63% | 9.97 s |
 
-AST-guided compression reduces the volume of traceback characters fed to Gemma 4 by **56.86%** (2,314 chars down to 998 chars), driving an overall **31.5% reduction in total prompt tokens** (1,158 down to 793 tokens per inference call).
+AST-guided compression reduces the volume of traceback characters fed to Gemma 4 by **56.86%** (2,314 chars down to 998 chars), driving an overall **31.5% reduction in total API tokens** (1,158 down to 793 tokens per inference call).
 
-### 5.3 Diagnostic Accuracy and Blinded Failure Audit
+### 5.3 Diagnostic Accuracy and Post-Hoc Error Taxonomy
 Diagnostic reasoning was evaluated across all 120 responses:
 - **Defect Localization Pass Rate:** **100.0%** (30/30) across all four variants (`A_raw`, `B_compressed`, `C_tail35`, `D_no_trace`). Gemma 4 accurately localized the canonical defective symbol in 120/120 calls.
 - **Pre-Flight Static Syntax Pass Rate:** **100.0%** (30/30) across all variants. Zero syntax errors were introduced by the model.
 - **Objective Root Cause Pass Rate:** **90.0%** (27/30) for `A_raw`, **86.7%** (26/30) for `B_compressed`, **93.3%** (28/30) for `C_tail35`, and **86.7%** (26/30) for `D_no_trace`. Paired delta between compressed and raw traces is $\Delta = -3.33\%$ (95% bootstrap CI: $[-10.0\%, 0.0\%]$, permutation $p = 1.0000$).
 
-To investigate the 13 automated diagnostic failures, we conducted a blinded independent qualitative audit in which variant identities (A/B/C/D) were concealed from the reviewer. The original pre-registered rubric results were retained strictly unchanged as primary truth. The blinded audit revealed:
-- **Zero Hallucinations (0/13):** The model never fabricated non-existent classes, phantom modules, or imaginary tracebacks.
-- **Inflection Mismatches (3/13, 23.1%):** In task 07 (`urllib3`) and task 15 (`pytest`), the model diagnosed the exact failure mechanism, but used morphological inflections (participle "preserving" vs infinitive "preserve"; verb "subtract" vs noun "subtraction") that failed pre-registered literal substring filters.
-- **Competing Facet Diagnoses (8/13, 61.5%):** In task 09 (`pluggy`), all variants across both seeds correctly localized `HookCaller.execute` and identified hook ordering bugs, but prioritized the `tryfirst` FIFO/LIFO ordering specification rather than the `trylast` appending rule.
-- **Generalization Over-Extensions (2/13, 15.4%):** In task 07, variants under seed 100 correctly identified manual '+' replacement flaws, but over-generalized to full URL unquoting.
+To investigate the 13 automated diagnostic failures, we performed a post-hoc rule-based error taxonomy across all model responses, comparing generated explanations against the pre-registered literal string filters while retaining original primary outcomes strictly intact:
+- **Lexical Variant Formulations (3/13, 23.1%):** In task 07 (`urllib3`) and task 15 (`pytest`), the model diagnosed the valid failure mechanism, but used morphological variants (participle "preserving" vs infinitive "preserve"; verb "subtract" vs noun "subtraction") that did not match pre-registered literal substring filters.
+- **Competing Facet Prioritization (8/13, 61.5%):** In task 09 (`pluggy`), all variants across both seeds correctly localized `HookCaller.execute` and identified hook ordering bugs, but prioritized the `tryfirst` FIFO/LIFO ordering specification rather than the `trylast` appending rule.
+- **Scope Generalizations (2/13, 15.4%):** In task 07, variants under seed 100 correctly identified manual '+' replacement flaws, but generalized their reasoning to full URL unquoting.
 
 ### 5.4 Containerized Patch Test Pass Rates and Hypothesis Testing
 To measure whether proposed candidate patches actually resolve defects without breaking existing behavior, all 120 generated patches were executed in an isolated, unprivileged container sandbox (`gemma4-eval-sandbox:latest`) configured with `--network none`, `--cap-drop ALL`, `--user 1000:1000`, 512MB RAM, 1.0 CPU core, and read-only host directory mounts.
@@ -141,7 +140,8 @@ To measure whether proposed candidate patches actually resolve defects without b
 | Variant | Description | Total Calls | Passed Tests | Pass Rate (%) | Std Error | 95% Bootstrap CI |
 |---|---|---|---|---|---|---|
 | **`A_raw`** | Native uncompressed traceback | 30 | 30 | **100.0%** | 0.00% | [100.0%, 100.0%] |
-| **`B_compressed`** | AST-guided compressed traceback (Ours) | 30 | 25 | **83.3%** | 6.80% | [63.3%, 100.0%] |
+| **`B_compressed`** | AST compressor v1 (Pre-registered) | 30 | 25 | **83.3%** | 6.80% | [63.3%, 100.0%] |
+| **`B2_assertion_aware`** | **AST compressor v2 (Exploratory)** | **30** | **29** | **96.7%** | **3.28%** | **[86.7%, 100.0%]** |
 | **`C_tail35`** | Tail 35-line truncation baseline | 30 | 30 | **100.0%** | 0.00% | [100.0%, 100.0%] |
 | **`D_no_trace`** | Zero traceback (Exception text only) | 30 | 22 | **73.3%** | 8.07% | [46.7%, 93.3%] |
 
@@ -149,14 +149,18 @@ To measure whether proposed candidate patches actually resolve defects without b
 - `delta_B_minus_A` (`B_compressed` vs `A_raw`): Observed $\Delta = -16.67\%$, 95% Bootstrap CI: $[-36.7\%, 0.0\%]$, permutation $p = 0.2539$.
 - `delta_B_minus_C` (`B_compressed` vs `C_tail35`): Observed $\Delta = -16.67\%$, 95% Bootstrap CI: $[-36.7\%, 0.0\%]$, permutation $p = 0.2539$.
 - `delta_B_minus_D` (`B_compressed` vs `D_no_trace`): Observed $\Delta = +10.00\%$, 95% Bootstrap CI: $[-6.7\%, +30.0\%]$, permutation $p = 0.5053$.
+- `delta_B2_minus_A` (`B2_assertion_aware` vs `A_raw`): Observed $\Delta = -3.33\%$, 95% Bootstrap CI: $[-10.0\%, 0.0\%]$, permutation $p = 1.0000$.
+- `delta_B2_minus_B` (`B2_assertion_aware` vs `B_compressed`): Observed $\Delta = +13.33\%$, 95% Bootstrap CI: $[-3.3\%, +33.3\%]$, permutation $p = 0.3768$.
 
-### 5.5 Scientific Rigor and Equivalence Caveat
-In paired hypothesis testing, the observed difference between AST-compressed and raw tracebacks ($\Delta = -16.67\%$, $p = 0.2539$) does not achieve statistical significance at the standard $\alpha = 0.05$ threshold. However, **we explicitly caution that failure to reject the null hypothesis ($p \ge 0.05$) does NOT establish proven functional equivalence**. 
+### 5.5 Scientific Rigor and Exploratory B2 Refinement
+In paired testing, the observed difference between AST-compressed and raw tracebacks ($\Delta = -16.67\%$, $p = 0.2539$) does not achieve statistical significance at $\alpha = 0.05$. However, **we explicitly caution that failure to reject the null hypothesis ($p \ge 0.05$) does NOT establish proven functional equivalence**.
 
-Inspection of the failure taxonomy explains this nuance: in two specific tasks (task 04 `requests_socket_error` and task 13 `itsdangerous_expired`), removing intermediate socket framing and timestamp wrapper frames deprived the quantized 31B model of contextual clues needed to structure exception chaining (`from err`), causing `B_compressed` to fail assertion checks that `A_raw` and `C_tail35` passed. Conversely, completely eliminating tracebacks (`D_no_trace`) caused pass rates to drop to 73.3% (failing 8 calls across 4 tasks). This demonstrates that while AST compression achieves significant token savings (31.5%) and preserves diagnostic localization (100%), aggressive traceback stripping involves a genuine engineering trade-off for complex exception hierarchies.
+Detailed inspection of the failure logs revealed the exact operational mechanism: in `task_04` (`requests_socket_error`) and `task_13` (`itsdangerous_expired`), `B_compressed` dropped `with pytest.raises(..., match=...)` context lines because they lacked strict `E ` or `> ` prefixes. Gemma 4 raised the target exception class, but without the exact string enforced by regex match checks. In `task_15` (`pytest_approx_none`), dropping adjacent assertion lines caused the model to handle `None` for only one argument position.
+
+To test whether preserving assertion context repairs this degradation, we executed an exploratory benchmark: **`B2_assertion_aware`** (30 new live calls to Gemma 4 31B across the 15 tasks and two seeds). Crucially, this evaluation is explicitly designated as **post-hoc exploratory** (developed after failure inspection). `B2_assertion_aware` recovered **96.7% Pass Rate** (29/30 passed; tasks 04, 13, and 15 all passed 2/2) while delivering a **39.05% reduction in total API tokens** (706.0 tokens/call vs 1,158.3 for raw), proving that assertion-aware compression preserves test signals without forfeiting token efficiency.
 
 ### 5.6 Synthetic Tasks vs. Upstream Real Repository Archive
-The primary 15 tasks evaluated in this study are synthetic reproductions modeled on real bug patterns. To support future open-ended benchmarks, the repository maintains an isolated upstream real repository archive (`real_repo_sample/`) containing 5 unmodified multi-file tasks from historical Git commits in `pallets/flask`, `psf/requests`, `pallets/click`, `pallets/jinja`, and `urllib3/urllib3`. These real-world tasks serve as a prospective benchmark reserved for multi-turn evaluations.
+While the 15 tasks evaluated here are synthetic reproductions of open-source bugs, the repository archives 5 multi-file real-world tasks (`real_repo_sample/`) from historical Git commits in Flask, Requests, Click, Jinja, and Urllib3 for future multi-turn evaluations.
 
 ---
 
@@ -179,7 +183,7 @@ def check_preflight_syntax(patch_code: str) -> tuple[bool, str]:
 This intercepts malformed patches in under 0.1 ms (38.2 µs cloud mean latency), completely preventing wasted container executions.
 
 ### 6.2 Context Window Stability and Attention Mechanics
-Under hybrid attention (50 sliding-window layers with $W = 1024$ tokens, 10 full-attention layers), uncontrolled file reading and noisy logs quickly exhaust the active attention window. By deploying AST symbol slicing (44.6% context reduction) and traceback compression (31.5% token reduction), agent conversations maintain critical early instructions within active attention without cache thrashing.
+Under hybrid attention (50 sliding-window layers with $W = 1024$ tokens, 10 full-attention layers), uncontrolled file reading and noisy logs quickly exhaust the active attention window. By deploying AST symbol slicing (44.6% context reduction) and traceback compression (31.5% API token reduction), agent conversations maintain critical early instructions within active attention without cache thrashing.
 
 ### 6.3 Multi-Format Assertion Preservation
 Traceback filtering isolates failing blocks and collapses stdout noise while strictly preserving failure headers, assertion sites (`> assert ...`), assertion details (`E ...`), and multiline diff frames across standard, short, long, native, and standalone tracebacks.
@@ -214,7 +218,9 @@ All artifacts developed for this project are permanently archived and released u
 - **Public Executable Notebook:** [msingatullin/ast-guided-loops-verification-for-gemma-4](https://www.kaggle.com/code/msingatullin/ast-guided-loops-verification-for-gemma-4)
 - **Open-Source Repository:** [github.com/msingatullin/gemma-4-developer-agent](https://github.com/msingatullin/gemma-4-developer-agent)
 - **120 Real Model Inferences:** `paper/e2e_gemma_experiment/real_run_20261108/real_experiment_checkpoint.jsonl`
+- **Exploratory B2 Benchmark (30 calls):** `paper/e2e_gemma_experiment/real_run_20261108/real_b2_experiment_checkpoint.jsonl`
 - **Containerized Patch Execution Results:** `paper/e2e_gemma_experiment/real_run_20261108/real_patch_execution_results.jsonl`
+- **Exploratory B2 Container Results:** `paper/e2e_gemma_experiment/real_run_20261108/real_b2_patch_execution_results.jsonl`
 - **Statistical Analysis & Clustered Bootstrap:** `paper/e2e_gemma_experiment/real_run_20261108/real_patch_execution_analysis.json`
-- **Blinded Qualitative Audit:** `paper/e2e_gemma_experiment/real_run_20261108/blinded_diagnostic_audit.json`
+- **Post-Hoc Diagnostic Error Taxonomy:** `paper/e2e_gemma_experiment/real_run_20261108/blinded_diagnostic_audit.json`
 - **License:** Apache 2.0 (`LICENSE` in repository root)

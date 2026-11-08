@@ -1,0 +1,16 @@
+_______________________ test_approx_none_safe_comparison _______________________
+    ... [intermediate frames omitted] ...
+        for i in range(12):
+            print(f"[FLOAT_PRECISION_ANALYZER_{i}] computing tolerance boundaries")
+        # Comparison of None against float must safely return False without TypeError
+>       assert approx_compare(None, 1.0) is False
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+test_task.py:8: 
+    def approx_compare(actual, expected: float, tol: float = 1e-6) -> bool:
+        """Compares numeric values within relative tolerance."""
+>       return abs(actual - expected) <= tol
+                   ^^^^^^^^^^^^^^^^^
+E       TypeError: unsupported operand type(s) for -: 'NoneType' and 'float'
+source.py:3: TypeError
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_approx_none_safe_comparison - TypeError: unsupporte...

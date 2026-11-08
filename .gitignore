@@ -8,3 +8,9 @@ __pycache__/
 *checkpoint.jsonl
 experiment_checkpoint.jsonl
 !paper/e2e_gemma_experiment/real_run_20261108/*.jsonl
+scripts/update_kaggle_writeup.py
+*storage_state*.json
+*cookie*.json
+v15_small_model/
+v16_small_model/
+

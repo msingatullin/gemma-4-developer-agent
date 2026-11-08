@@ -1,0 +1,9 @@
+_________________________ test_strict_undefined_slice __________________________
+        u = StrictUndefined("items")
+        for i in range(18):
+            print(f"[JINJA_AST_EVAL_{i}] evaluating AST subscript node")
+>       with pytest.raises(UndefinedError, match="'items' is undefined"):
+E       Failed: DID NOT RAISE <class 'source.UndefinedError'>
+test_task.py:8: Failed
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_strict_undefined_slice - Failed: DID NOT RAISE <cla...
