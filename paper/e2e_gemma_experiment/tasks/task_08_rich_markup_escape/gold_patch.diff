@@ -1,0 +1,10 @@
+--- a/source.py
++++ b/source.py
+@@ -1,5 +1,3 @@
+-import re
+-
+ def escape(text: str) -> str:
+-    """Escapes markup tags in Rich text."""
+-    return re.sub(r"\[([a-z]+)\]", r"\[\1\]", text)
++    """Escapes opening and closing brackets so markup parser treats text as literal."""
++    return text.replace("[", r"\[").replace("]", r"\]")

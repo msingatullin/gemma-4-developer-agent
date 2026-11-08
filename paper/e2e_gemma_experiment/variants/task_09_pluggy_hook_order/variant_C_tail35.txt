@@ -1,0 +1,35 @@
+        res = caller.execute()
+        # Pluggy specification: later tryfirst hooks take higher priority (LIFO)
+>       assert res == ["first_2", "first_1", "standard"], f"Unexpected hook order: {res}"
+E       AssertionError: Unexpected hook order: ['first_1', 'first_2', 'standard']
+E       assert ['first_1', '...', 'standard'] == ['first_2', '...', 'standard']
+E         
+E         At index 0 diff: 'first_1' != 'first_2'
+E         
+E         Full diff:
+E           [
+E         +     'first_1',
+E               'first_2',...
+E         
+E         ...Full output truncated (3 lines hidden), use '-vv' to show
+
+test_task.py:15: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[PLUGGY_DISPATCH_DIAG_0] running plugin hook wrappers
+[PLUGGY_DISPATCH_DIAG_1] running plugin hook wrappers
+[PLUGGY_DISPATCH_DIAG_2] running plugin hook wrappers
+[PLUGGY_DISPATCH_DIAG_3] running plugin hook wrappers
+[PLUGGY_DISPATCH_DIAG_4] running plugin hook wrappers
+[PLUGGY_DISPATCH_DIAG_5] running plugin hook wrappers
+[PLUGGY_DISPATCH_DIAG_6] running plugin hook wrappers
+[PLUGGY_DISPATCH_DIAG_7] running plugin hook wrappers
+[PLUGGY_DISPATCH_DIAG_8] running plugin hook wrappers
+[PLUGGY_DISPATCH_DIAG_9] running plugin hook wrappers
+[PLUGGY_DISPATCH_DIAG_10] running plugin hook wrappers
+[PLUGGY_DISPATCH_DIAG_11] running plugin hook wrappers
+[PLUGGY_DISPATCH_DIAG_12] running plugin hook wrappers
+[PLUGGY_DISPATCH_DIAG_13] running plugin hook wrappers
+[PLUGGY_DISPATCH_DIAG_14] running plugin hook wrappers
+=========================== short test summary info ============================
+FAILED test_task.py::test_hook_order_lifo_for_tryfirst - AssertionError: Unex...
+============================== 1 failed in 0.04s ===============================

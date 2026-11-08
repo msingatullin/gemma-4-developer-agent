@@ -1,0 +1,10 @@
+_______________________ test_approx_none_safe_comparison _______________________
+    def test_approx_none_safe_comparison():
+        for i in range(12):
+    ... [intermediate frames omitted] ...
+>       assert approx_compare(None, 1.0) is False
+>       return abs(actual - expected) <= tol
+E       TypeError: unsupported operand type(s) for -: 'NoneType' and 'float'
+source.py:3: TypeError
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_approx_none_safe_comparison - TypeError: unsupporte...

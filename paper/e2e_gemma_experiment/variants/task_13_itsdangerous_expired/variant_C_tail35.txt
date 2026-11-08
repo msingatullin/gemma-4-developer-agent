@@ -1,0 +1,35 @@
+        with pytest.raises(SignatureExpired, match="Signature has expired"):
+>           signer.unsign("valid_payload", old_ts)
+
+test_task.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <source.TimestampSigner object at 0x7902dbc10500>
+token = 'valid_payload', ts = 1794126333.3976264
+
+    def unsign(self, token: str, ts: float) -> str:
+        age = time.time() - ts
+        if age > self.max_age:
+>           raise BadTimeSignature(f"Signature is expired by {age - self.max_age:.1f}s")
+E           source.BadTimeSignature: Signature is expired by 90.0s
+
+source.py:19: BadTimeSignature
+----------------------------- Captured stdout call -----------------------------
+[SECURITY_SIGNATURE_VERIFIER_0] validating crypto timestamp
+[SECURITY_SIGNATURE_VERIFIER_1] validating crypto timestamp
+[SECURITY_SIGNATURE_VERIFIER_2] validating crypto timestamp
+[SECURITY_SIGNATURE_VERIFIER_3] validating crypto timestamp
+[SECURITY_SIGNATURE_VERIFIER_4] validating crypto timestamp
+[SECURITY_SIGNATURE_VERIFIER_5] validating crypto timestamp
+[SECURITY_SIGNATURE_VERIFIER_6] validating crypto timestamp
+[SECURITY_SIGNATURE_VERIFIER_7] validating crypto timestamp
+[SECURITY_SIGNATURE_VERIFIER_8] validating crypto timestamp
+[SECURITY_SIGNATURE_VERIFIER_9] validating crypto timestamp
+[SECURITY_SIGNATURE_VERIFIER_10] validating crypto timestamp
+[SECURITY_SIGNATURE_VERIFIER_11] validating crypto timestamp
+[SECURITY_SIGNATURE_VERIFIER_12] validating crypto timestamp
+[SECURITY_SIGNATURE_VERIFIER_13] validating crypto timestamp
+[SECURITY_SIGNATURE_VERIFIER_14] validating crypto timestamp
+=========================== short test summary info ============================
+FAILED test_task.py::test_expired_signature_distinction - source.BadTimeSigna...
+============================== 1 failed in 0.04s ===============================

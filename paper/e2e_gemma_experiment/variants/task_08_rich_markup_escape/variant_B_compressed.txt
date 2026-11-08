@@ -1,0 +1,9 @@
+_________________________ test_escape_isolated_bracket _________________________
+    def test_escape_isolated_bracket():
+        text = "Status: [error] at index [0"
+    ... [intermediate frames omitted] ...
+>       assert r"\[0" in escaped
+E       AssertionError: assert '\\[0' in 'Status: \\[error\\] at index [0'
+test_task.py:10: AssertionError
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_escape_isolated_bracket - AssertionError: assert '\...

@@ -1,0 +1,8 @@
+{
+  "id": "task_09_pluggy_hook_order",
+  "repo": "pytest-dev/pluggy",
+  "issue": "Pluggy hook execution order violation when tryfirst and trylast coexist",
+  "target_symbol": "HookCaller.execute",
+  "root_cause": "Hooks with trylast were appended before standard hooks rather than placed at the very end.",
+  "expected_exception": "AssertionError"
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "id": "task_01_flask_blueprint_dot",
+    "repo": "pallets/flask",
+    "issue": "Raise error when blueprint name contains a dot (#4045)",
+    "target_symbol": "Blueprint.__init__",
+    "root_cause": "Blueprint names containing dots cause collision in nested blueprint endpoint resolution.",
+    "expected_exception": "ValueError"
+  },
+  {
+    "id": "task_02_flask_config_mode",
+    "repo": "pallets/flask",
+    "issue": "Add mode parameter to Config.from_file() (#4992)",
+    "target_symbol": "Config.from_file",
+    "root_cause": "from_file hardcoded text mode 'r', breaking binary load formats like tomllib or pickle.",
+    "expected_exception": "TypeError"
+  },
+  {
+    "id": "task_03_requests_redirect_body",
+    "repo": "psf/requests",
+    "issue": "Session.resolve_redirects copies original request body on 303 redirect (#1963)",
+    "target_symbol": "Session.resolve_redirects",
+    "root_cause": "On HTTP 303 See Other, the method should change to GET and the request body must be dropped.",
+    "expected_exception": "AssertionError"
+  },
+  {
+    "id": "task_04_requests_socket_error",
+    "repo": "psf/requests",
+    "issue": "socket.error not wrapped in requests.ConnectionError (#2148)",
+    "target_symbol": "send_http_request",
+    "root_cause": "Low-level socket.error escapes abstraction boundary instead of being wrapped in ConnectionError.",
+    "expected_exception": "requests.ConnectionError"
+  },
+  {
+    "id": "task_05_click_choice_case",
+    "repo": "pallets/click",
+    "issue": "Support case_sensitive parameter in click.Choice",
+    "target_symbol": "Choice.convert",
+    "root_cause": "Choice validation only performed exact string lookup, ignoring case_sensitive=False setting.",
+    "expected_exception": "ValueError"
+  },
+  {
+    "id": "task_06_jinja2_undefined_slice",
+    "repo": "pallets/jinja",
+    "issue": "StrictUndefined slice operation raises TypeError instead of UndefinedError",
+    "target_symbol": "StrictUndefined.__getitem__",
+    "root_cause": "Slicing an undefined variable returned empty list instead of failing loudly under strict mode.",
+    "expected_exception": "UndefinedError"
+  },
+  {
+    "id": "task_07_urllib3_query_encoding",
+    "repo": "urllib3/urllib3",
+    "issue": "parse_url normalizes spaces to empty instead of preserving plus signs",
+    "target_symbol": "parse_url_query",
+    "root_cause": "Query parser replaced '+' unconditionally with space before URL recreation.",
+    "expected_exception": "AssertionError"
+  },
+  {
+    "id": "task_08_rich_markup_escape",
+    "repo": "Textualize/rich",
+    "issue": "Markup escape() fails to escape single unclosed brackets",
+    "target_symbol": "escape",
+    "root_cause": "escape() only replaced balanced tags, leaving unescaped brackets in logging messages.",
+    "expected_exception": "AssertionError"
+  },
+  {
+    "id": "task_09_pluggy_hook_order",
+    "repo": "pytest-dev/pluggy",
+    "issue": "Pluggy hook execution order violation when tryfirst and trylast coexist",
+    "target_symbol": "HookCaller.execute",
+    "root_cause": "Hooks with trylast were appended before standard hooks rather than placed at the very end.",
+    "expected_exception": "AssertionError"
+  },
+  {
+    "id": "task_10_marshmallow_empty_str",
+    "repo": "marshmallow-code/marshmallow",
+    "issue": "String field deserialize converts empty string to None when allow_none=True",
+    "target_symbol": "StringField.deserialize",
+    "root_cause": "Empty string check was falsy (if not value: return None), overriding explicit empty string.",
+    "expected_exception": "AssertionError"
+  },
+  {
+    "id": "task_11_pydantic_strip_whitespace",
+    "repo": "pydantic/pydantic",
+    "issue": "str_strip_whitespace=True drops None validation error",
+    "target_symbol": "validate_str",
+    "root_cause": "Attribute error when calling .strip() on None input before type check.",
+    "expected_exception": "TypeError"
+  },
+  {
+    "id": "task_12_attrs_frozen_repr",
+    "repo": "python-attrs/attrs",
+    "issue": "Frozen dataclass __setattr__ raises AttributeError instead of FrozenInstanceError",
+    "target_symbol": "FrozenModel.__setattr__",
+    "root_cause": "Improper exception type raised when setting attributes on frozen model.",
+    "expected_exception": "FrozenInstanceError"
+  },
+  {
+    "id": "task_13_itsdangerous_expired",
+    "repo": "pallets/itsdangerous",
+    "issue": "TimestampSigner raises BadTimeSignature instead of SignatureExpired",
+    "target_symbol": "TimestampSigner.unsign",
+    "root_cause": "Expired tokens raised generic BadTimeSignature instead of specific SignatureExpired.",
+    "expected_exception": "SignatureExpired"
+  },
+  {
+    "id": "task_14_werkzeug_cookie_quote",
+    "repo": "pallets/werkzeug",
+    "issue": "dump_cookie omits quotes when cookie value contains commas",
+    "target_symbol": "dump_cookie",
+    "root_cause": "Commas were not included in the quote-trigger character set for RFC 6265 cookie dumping.",
+    "expected_exception": "AssertionError"
+  },
+  {
+    "id": "task_15_pytest_approx_none",
+    "repo": "pytest-dev/pytest",
+    "issue": "approx() comparison with None raises TypeError instead of returning False (#5221)",
+    "target_symbol": "approx_compare",
+    "root_cause": "abs(actual - expected) executed directly without checking if operand is None, crashing with TypeError.",
+    "expected_exception": "TypeError"
+  }
+]

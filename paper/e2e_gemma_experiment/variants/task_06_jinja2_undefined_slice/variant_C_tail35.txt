@@ -1,0 +1,35 @@
+test_task.py::test_strict_undefined_slice FAILED                         [100%]
+
+=================================== FAILURES ===================================
+_________________________ test_strict_undefined_slice __________________________
+
+    def test_strict_undefined_slice():
+        u = StrictUndefined("items")
+        for i in range(18):
+            print(f"[JINJA_AST_EVAL_{i}] evaluating AST subscript node")
+>       with pytest.raises(UndefinedError, match="'items' is undefined"):
+E       Failed: DID NOT RAISE <class 'source.UndefinedError'>
+
+test_task.py:8: Failed
+----------------------------- Captured stdout call -----------------------------
+[JINJA_AST_EVAL_0] evaluating AST subscript node
+[JINJA_AST_EVAL_1] evaluating AST subscript node
+[JINJA_AST_EVAL_2] evaluating AST subscript node
+[JINJA_AST_EVAL_3] evaluating AST subscript node
+[JINJA_AST_EVAL_4] evaluating AST subscript node
+[JINJA_AST_EVAL_5] evaluating AST subscript node
+[JINJA_AST_EVAL_6] evaluating AST subscript node
+[JINJA_AST_EVAL_7] evaluating AST subscript node
+[JINJA_AST_EVAL_8] evaluating AST subscript node
+[JINJA_AST_EVAL_9] evaluating AST subscript node
+[JINJA_AST_EVAL_10] evaluating AST subscript node
+[JINJA_AST_EVAL_11] evaluating AST subscript node
+[JINJA_AST_EVAL_12] evaluating AST subscript node
+[JINJA_AST_EVAL_13] evaluating AST subscript node
+[JINJA_AST_EVAL_14] evaluating AST subscript node
+[JINJA_AST_EVAL_15] evaluating AST subscript node
+[JINJA_AST_EVAL_16] evaluating AST subscript node
+[JINJA_AST_EVAL_17] evaluating AST subscript node
+=========================== short test summary info ============================
+FAILED test_task.py::test_strict_undefined_slice - Failed: DID NOT RAISE <cla...
+============================== 1 failed in 0.04s ===============================

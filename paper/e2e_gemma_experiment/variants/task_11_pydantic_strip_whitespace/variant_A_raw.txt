@@ -1,0 +1,9 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.2, pluggy-1.7.0 -- /home/mikhail/gemma-4-developer-agent/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/mikhail/gemma-4-developer-agent/paper/e2e_gemma_experiment/tasks/task_11_pydantic_strip_whitespace
+collecting ... collected 1 item
+
+test_task.py::test_validate_str_with_none PASSED                         [100%]
+
+============================== 1 passed in 0.01s ===============================

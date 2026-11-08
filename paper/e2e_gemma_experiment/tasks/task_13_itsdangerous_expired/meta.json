@@ -1,0 +1,8 @@
+{
+  "id": "task_13_itsdangerous_expired",
+  "repo": "pallets/itsdangerous",
+  "issue": "TimestampSigner raises BadTimeSignature instead of SignatureExpired",
+  "target_symbol": "TimestampSigner.unsign",
+  "root_cause": "Expired tokens raised generic BadTimeSignature instead of specific SignatureExpired.",
+  "expected_exception": "SignatureExpired"
+}

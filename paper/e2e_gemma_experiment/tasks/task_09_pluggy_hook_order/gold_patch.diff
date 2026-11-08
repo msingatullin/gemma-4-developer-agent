@@ -1,0 +1,13 @@
+--- a/source.py
++++ b/source.py
+@@ -7,8 +7,8 @@
+         self.hooks.append({"fn": fn, "tryfirst": tryfirst, "trylast": trylast})
+ 
+     def execute(self) -> list:
+-        # Buggy implementation: preserves FIFO for tryfirst instead of LIFO specification
+-        first = [h["fn"]() for h in self.hooks if h["tryfirst"]]
++        # Fixed: later tryfirst hooks run first (LIFO order per pluggy spec)
++        first = [h["fn"]() for h in reversed(self.hooks) if h["tryfirst"]]
+         middle = [h["fn"]() for h in self.hooks if not h["tryfirst"] and not h["trylast"]]
+         last = [h["fn"]() for h in self.hooks if h["trylast"]]
+         return first + middle + last

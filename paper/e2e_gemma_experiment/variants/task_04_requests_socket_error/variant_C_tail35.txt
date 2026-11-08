@@ -1,0 +1,35 @@
+        with pytest.raises(ConnectionError, match="Failed to establish connection"):
+>           send_http_request("127.0.0.1", 1)
+
+test_task.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+host = '127.0.0.1', port = 1
+
+    def send_http_request(host: str, port: int):
+        """Dispatches raw socket connection without wrapping socket.error."""
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(0.001)
+>       s.connect((host, port))
+E       ConnectionRefusedError: [Errno 111] Connection refused
+
+source.py:13: ConnectionRefusedError
+----------------------------- Captured stdout call -----------------------------
+[SOCKET_TRANSPORT_LOG_0] attempting connection to unreachable port
+[SOCKET_TRANSPORT_LOG_1] attempting connection to unreachable port
+[SOCKET_TRANSPORT_LOG_2] attempting connection to unreachable port
+[SOCKET_TRANSPORT_LOG_3] attempting connection to unreachable port
+[SOCKET_TRANSPORT_LOG_4] attempting connection to unreachable port
+[SOCKET_TRANSPORT_LOG_5] attempting connection to unreachable port
+[SOCKET_TRANSPORT_LOG_6] attempting connection to unreachable port
+[SOCKET_TRANSPORT_LOG_7] attempting connection to unreachable port
+[SOCKET_TRANSPORT_LOG_8] attempting connection to unreachable port
+[SOCKET_TRANSPORT_LOG_9] attempting connection to unreachable port
+[SOCKET_TRANSPORT_LOG_10] attempting connection to unreachable port
+[SOCKET_TRANSPORT_LOG_11] attempting connection to unreachable port
+[SOCKET_TRANSPORT_LOG_12] attempting connection to unreachable port
+[SOCKET_TRANSPORT_LOG_13] attempting connection to unreachable port
+[SOCKET_TRANSPORT_LOG_14] attempting connection to unreachable port
+=========================== short test summary info ============================
+FAILED test_task.py::test_socket_error_wrapped - ConnectionRefusedError: [Err...
+============================== 1 failed in 0.04s ===============================

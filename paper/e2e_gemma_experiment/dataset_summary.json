@@ -1,0 +1,161 @@
+{
+  "total_tasks": 15,
+  "total_prompts": 45,
+  "variants": [
+    "A_raw",
+    "B_compressed",
+    "C_tail35"
+  ],
+  "task_stats": [
+    {
+      "task_id": "task_01_flask_blueprint_dot",
+      "raw_chars": 2533,
+      "raw_lines": 44,
+      "compressed_chars": 521,
+      "compressed_lines": 8,
+      "tail_chars": 2006,
+      "tail_lines": 35,
+      "compression_ratio": 79.43150414528228
+    },
+    {
+      "task_id": "task_02_flask_config_mode",
+      "raw_chars": 1673,
+      "raw_lines": 33,
+      "compressed_chars": 497,
+      "compressed_lines": 8,
+      "tail_chars": 1672,
+      "tail_lines": 33,
+      "compression_ratio": 70.2928870292887
+    },
+    {
+      "task_id": "task_03_requests_redirect_body",
+      "raw_chars": 2240,
+      "raw_lines": 44,
+      "compressed_chars": 2240,
+      "compressed_lines": 44,
+      "tail_chars": 1710,
+      "tail_lines": 35,
+      "compression_ratio": 0.0
+    },
+    {
+      "task_id": "task_04_requests_socket_error",
+      "raw_chars": 2783,
+      "raw_lines": 50,
+      "compressed_chars": 530,
+      "compressed_lines": 10,
+      "tail_chars": 1944,
+      "tail_lines": 35,
+      "compression_ratio": 80.95580309019044
+    },
+    {
+      "task_id": "task_05_click_choice_case",
+      "raw_chars": 2384,
+      "raw_lines": 47,
+      "compressed_chars": 548,
+      "compressed_lines": 10,
+      "tail_chars": 1696,
+      "tail_lines": 35,
+      "compression_ratio": 77.01342281879194
+    },
+    {
+      "task_id": "task_06_jinja2_undefined_slice",
+      "raw_chars": 2162,
+      "raw_lines": 41,
+      "compressed_chars": 455,
+      "compressed_lines": 8,
+      "tail_chars": 1794,
+      "tail_lines": 35,
+      "compression_ratio": 78.95467160037003
+    },
+    {
+      "task_id": "task_07_urllib3_query_encoding",
+      "raw_chars": 2176,
+      "raw_lines": 46,
+      "compressed_chars": 2176,
+      "compressed_lines": 46,
+      "tail_chars": 1564,
+      "tail_lines": 35,
+      "compression_ratio": 0.0
+    },
+    {
+      "task_id": "task_08_rich_markup_escape",
+      "raw_chars": 1905,
+      "raw_lines": 37,
+      "compressed_chars": 468,
+      "compressed_lines": 9,
+      "tail_chars": 1705,
+      "tail_lines": 35,
+      "compression_ratio": 75.43307086614173
+    },
+    {
+      "task_id": "task_09_pluggy_hook_order",
+      "raw_chars": 2764,
+      "raw_lines": 55,
+      "compressed_chars": 2764,
+      "compressed_lines": 55,
+      "tail_chars": 1781,
+      "tail_lines": 35,
+      "compression_ratio": 0.0
+    },
+    {
+      "task_id": "task_10_marshmallow_empty_str",
+      "raw_chars": 1971,
+      "raw_lines": 37,
+      "compressed_chars": 517,
+      "compressed_lines": 10,
+      "tail_chars": 1771,
+      "tail_lines": 35,
+      "compression_ratio": 73.76966007102995
+    },
+    {
+      "task_id": "task_11_pydantic_strip_whitespace",
+      "raw_chars": 532,
+      "raw_lines": 9,
+      "compressed_chars": 299,
+      "compressed_lines": 7,
+      "tail_chars": 531,
+      "tail_lines": 9,
+      "compression_ratio": 43.79699248120301
+    },
+    {
+      "task_id": "task_12_attrs_frozen_repr",
+      "raw_chars": 2488,
+      "raw_lines": 49,
+      "compressed_chars": 502,
+      "compressed_lines": 10,
+      "tail_chars": 1779,
+      "tail_lines": 35,
+      "compression_ratio": 79.82315112540192
+    },
+    {
+      "task_id": "task_13_itsdangerous_expired",
+      "raw_chars": 2714,
+      "raw_lines": 51,
+      "compressed_chars": 541,
+      "compressed_lines": 9,
+      "tail_chars": 1866,
+      "tail_lines": 35,
+      "compression_ratio": 80.06632277081798
+    },
+    {
+      "task_id": "task_14_werkzeug_cookie_quote",
+      "raw_chars": 2207,
+      "raw_lines": 40,
+      "compressed_chars": 2207,
+      "compressed_lines": 40,
+      "tail_chars": 1841,
+      "tail_lines": 35,
+      "compression_ratio": 0.0
+    },
+    {
+      "task_id": "task_15_pytest_approx_none",
+      "raw_chars": 2454,
+      "raw_lines": 46,
+      "compressed_chars": 510,
+      "compressed_lines": 10,
+      "tail_chars": 1846,
+      "tail_lines": 35,
+      "compression_ratio": 79.21760391198043
+    }
+  ]
+}

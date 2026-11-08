@@ -1,0 +1,35 @@
+    def test_preserve_plus_in_query():
+        """Literal plus signs in query strings must be preserved rather than replaced by spaces."""
+        q = "search=c+plus+plus&filter=active"
+        for i in range(15):
+            print(f"[QUERY_TOKENIZER_{i}] scanning component")
+        parsed = parse_url_query(q)
+>       assert parsed["search"] == "c+plus+plus", f"Expected c+plus+plus, got {parsed['search']}"
+E       AssertionError: Expected c+plus+plus, got c plus plus
+E       assert 'c plus plus' == 'c+plus+plus'
+E         
+E         - c+plus+plus
+E         ?  ^    ^
+E         + c plus plus
+E         ?  ^    ^
+
+test_task.py:10: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[QUERY_TOKENIZER_0] scanning component
+[QUERY_TOKENIZER_1] scanning component
+[QUERY_TOKENIZER_2] scanning component
+[QUERY_TOKENIZER_3] scanning component
+[QUERY_TOKENIZER_4] scanning component
+[QUERY_TOKENIZER_5] scanning component
+[QUERY_TOKENIZER_6] scanning component
+[QUERY_TOKENIZER_7] scanning component
+[QUERY_TOKENIZER_8] scanning component
+[QUERY_TOKENIZER_9] scanning component
+[QUERY_TOKENIZER_10] scanning component
+[QUERY_TOKENIZER_11] scanning component
+[QUERY_TOKENIZER_12] scanning component
+[QUERY_TOKENIZER_13] scanning component
+[QUERY_TOKENIZER_14] scanning component
+=========================== short test summary info ============================
+FAILED test_task.py::test_preserve_plus_in_query - AssertionError: Expected c...
+============================== 1 failed in 0.04s ===============================

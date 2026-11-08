@@ -1,0 +1,13 @@
+{
+  "task_id": "task_10_marshmallow_empty_str",
+  "variant": "B_compressed",
+  "repo": "marshmallow-code/marshmallow",
+  "target_symbol": "StringField.deserialize",
+  "expected_exception": "AssertionError",
+  "root_cause_gold": "Empty string check was falsy (if not value: return None), overriding explicit empty string.",
+  "system_prompt": "You are an expert autonomous software engineer working with Gemma 4.\nYour goal is to inspect the source code and the test failure traceback, determine the exact root cause of the defect, and provide the minimal correct code fix for source.py.\n\nRespond with:\n1. ROOT_CAUSE: A concise 1-3 sentence explanation of the defect and why the test failed.\n2. PATCH: The complete revised implementation of the target function/class inside a python markdown code block.",
+  "user_prompt": "# Task: task_10_marshmallow_empty_str (marshmallow-code/marshmallow)\n## Issue Description:\nString field deserialize converts empty string to None when allow_none=True\n\n## Source Code (`source.py`):\n```python\nclass StringField:\n    def __init__(self, allow_none: bool = False):\n        self.allow_none = allow_none\n\n    def deserialize(self, value):\n        if not value:\n            if self.allow_none:\n                return None\n            return \"\"\n        return str(value)\n\n```\n\n## Test Failure Traceback (B_compressed):\n```text\n____________________ test_deserialize_empty_string_retained ____________________\n    def test_deserialize_empty_string_retained():\n        f = StringField(allow_none=True)\n    ... [intermediate frames omitted] ...\n>       assert res == \"\", f\"Expected empty string '', got {res!r}\"\nE       AssertionError: Expected empty string '', got None\nE       assert None == ''\ntest_task.py:9: AssertionError\n    --- [Captured output collapsed] ---\nFAILED test_task.py::test_deserialize_empty_string_retained - AssertionError:...\n```\n\nAnalyze the failure, identify the root cause in `StringField.deserialize`, and provide the corrected implementation.\n",
+  "prompt_char_len": 1175,
+  "trace_char_len": 517,
+  "trace_line_count": 10
+}

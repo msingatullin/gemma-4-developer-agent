@@ -1,0 +1,10 @@
+--- a/source.py
++++ b/source.py
+@@ -1,5 +1,7 @@
+ class Blueprint:
+     def __init__(self, name: str, import_name: str, url_prefix: str = None):
++        if "." in name:
++            raise ValueError(f"Blueprint names may not contain dots: '{name}'")
+         self.name = name
+         self.import_name = import_name
+         self.url_prefix = url_prefix

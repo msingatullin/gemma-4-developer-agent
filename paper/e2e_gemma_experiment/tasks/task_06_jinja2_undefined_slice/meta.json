@@ -1,0 +1,8 @@
+{
+  "id": "task_06_jinja2_undefined_slice",
+  "repo": "pallets/jinja",
+  "issue": "StrictUndefined slice operation raises TypeError instead of UndefinedError",
+  "target_symbol": "StrictUndefined.__getitem__",
+  "root_cause": "Slicing an undefined variable returned empty list instead of failing loudly under strict mode.",
+  "expected_exception": "UndefinedError"
+}

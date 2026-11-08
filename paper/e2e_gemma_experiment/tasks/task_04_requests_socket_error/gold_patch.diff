@@ -1,0 +1,16 @@
+--- a/source.py
++++ b/source.py
+@@ -7,8 +7,11 @@
+     pass
+ 
+ def send_http_request(host: str, port: int):
+-    """Dispatches raw socket connection without wrapping socket.error."""
++    """Dispatches socket connection wrapping socket.error in ConnectionError."""
+     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+     s.settimeout(0.001)
+-    s.connect((host, port))
++    try:
++        s.connect((host, port))
++    except (socket.error, OSError) as err:
++        raise ConnectionError(f"Failed to establish connection to {host}:{port}: {err}") from err
+     return b"HTTP/1.1 200 OK"

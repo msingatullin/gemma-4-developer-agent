@@ -1,0 +1,13 @@
+{
+  "task_id": "task_13_itsdangerous_expired",
+  "variant": "B_compressed",
+  "repo": "pallets/itsdangerous",
+  "target_symbol": "TimestampSigner.unsign",
+  "expected_exception": "SignatureExpired",
+  "root_cause_gold": "Expired tokens raised generic BadTimeSignature instead of specific SignatureExpired.",
+  "system_prompt": "You are an expert autonomous software engineer working with Gemma 4.\nYour goal is to inspect the source code and the test failure traceback, determine the exact root cause of the defect, and provide the minimal correct code fix for source.py.\n\nRespond with:\n1. ROOT_CAUSE: A concise 1-3 sentence explanation of the defect and why the test failed.\n2. PATCH: The complete revised implementation of the target function/class inside a python markdown code block.",
+  "user_prompt": "# Task: task_13_itsdangerous_expired (pallets/itsdangerous)\n## Issue Description:\nTimestampSigner raises BadTimeSignature instead of SignatureExpired\n\n## Source Code (`source.py`):\n```python\nimport time\n\nclass BadSignature(Exception):\n    pass\n\nclass BadTimeSignature(BadSignature):\n    pass\n\nclass SignatureExpired(BadTimeSignature):\n    pass\n\nclass TimestampSigner:\n    def __init__(self, max_age: int = 3600):\n        self.max_age = max_age\n\n    def unsign(self, token: str, ts: float) -> str:\n        age = time.time() - ts\n        if age > self.max_age:\n            raise BadTimeSignature(f\"Signature is expired by {age - self.max_age:.1f}s\")\n        return token\n\n```\n\n## Test Failure Traceback (B_compressed):\n```text\n______________________ test_expired_signature_distinction ______________________\n    def test_expired_signature_distinction():\n        signer = TimestampSigner(max_age=10)\n    ... [intermediate frames omitted] ...\n>           signer.unsign(\"valid_payload\", old_ts)\n>           raise BadTimeSignature(f\"Signature is expired by {age - self.max_age:.1f}s\")\nE           source.BadTimeSignature: Signature is expired by 90.0s\n    --- [Captured output collapsed] ---\nFAILED test_task.py::test_expired_signature_distinction - source.BadTimeSigna...\n```\n\nAnalyze the failure, identify the root cause in `TimestampSigner.unsign`, and provide the corrected implementation.\n",
+  "prompt_char_len": 1388,
+  "trace_char_len": 541,
+  "trace_line_count": 9
+}

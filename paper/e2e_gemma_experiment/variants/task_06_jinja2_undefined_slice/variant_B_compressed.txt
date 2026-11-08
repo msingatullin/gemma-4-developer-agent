@@ -1,0 +1,8 @@
+_________________________ test_strict_undefined_slice __________________________
+    def test_strict_undefined_slice():
+        u = StrictUndefined("items")
+    ... [intermediate frames omitted] ...
+>       with pytest.raises(UndefinedError, match="'items' is undefined"):
+E       Failed: DID NOT RAISE <class 'source.UndefinedError'>
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_strict_undefined_slice - Failed: DID NOT RAISE <cla...

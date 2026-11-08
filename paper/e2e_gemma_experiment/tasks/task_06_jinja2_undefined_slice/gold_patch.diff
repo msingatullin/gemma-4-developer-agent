@@ -1,0 +1,9 @@
+--- a/source.py
++++ b/source.py
+@@ -6,6 +6,4 @@
+         self._name = name
+ 
+     def __getitem__(self, item):
+-        if isinstance(item, slice):
+-            return []
+         raise UndefinedError(f"'{self._name}' is undefined")

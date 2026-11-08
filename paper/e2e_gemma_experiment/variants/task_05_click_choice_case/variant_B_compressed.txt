@@ -1,0 +1,10 @@
+_________________________ test_choice_case_insensitive _________________________
+    def test_choice_case_insensitive():
+        c = Choice(["red", "green", "blue"], case_sensitive=False)
+    ... [intermediate frames omitted] ...
+>       assert c.convert("RED") == "red"
+>       raise ValueError(f"'{value}' is not one of {self.choices}")
+E       ValueError: 'RED' is not one of ['red', 'green', 'blue']
+source.py:9: ValueError
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_choice_case_insensitive - ValueError: 'RED' is not ...

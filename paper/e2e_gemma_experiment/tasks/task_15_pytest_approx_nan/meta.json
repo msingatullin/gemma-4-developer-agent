@@ -1,0 +1,8 @@
+{
+  "id": "task_15_pytest_approx_nan",
+  "repo": "pytest-dev/pytest",
+  "issue": "approx() comparison with float('nan') raises TypeError instead of returning False",
+  "target_symbol": "approx_compare",
+  "root_cause": "math.isnan check was omitted before relative difference calculation, causing floating point invalid error.",
+  "expected_exception": "AssertionError"
+}

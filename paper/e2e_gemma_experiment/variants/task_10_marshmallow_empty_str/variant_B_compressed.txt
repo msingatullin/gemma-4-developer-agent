@@ -1,0 +1,10 @@
+____________________ test_deserialize_empty_string_retained ____________________
+    def test_deserialize_empty_string_retained():
+        f = StringField(allow_none=True)
+    ... [intermediate frames omitted] ...
+>       assert res == "", f"Expected empty string '', got {res!r}"
+E       AssertionError: Expected empty string '', got None
+E       assert None == ''
+test_task.py:9: AssertionError
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_deserialize_empty_string_retained - AssertionError:...

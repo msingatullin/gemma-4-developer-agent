@@ -1,0 +1,13 @@
+--- a/source.py
++++ b/source.py
+@@ -3,8 +3,8 @@
+         self.allow_none = allow_none
+ 
+     def deserialize(self, value):
+-        if not value:
++        if value is None:
+             if self.allow_none:
+                 return None
+-            return ""
++            raise ValueError("Field cannot be null")
+         return str(value)

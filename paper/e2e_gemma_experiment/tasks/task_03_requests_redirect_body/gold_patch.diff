@@ -1,0 +1,19 @@
+--- a/source.py
++++ b/source.py
+@@ -5,8 +5,14 @@
+ 
+ class Session:
+     def resolve_redirects(self, resp: Response, req_method: str, req_body: bytes) -> dict:
+-        """Resolve redirect preserving body inappropriately."""
+-        if resp.status_code in (301, 302, 303, 307):
++        """Resolve redirect with HTTP spec compliance."""
++        if resp.status_code == 303:
++            return {
++                "method": "GET",
++                "body": None,
++                "url": resp.headers.get("location")
++            }
++        elif resp.status_code in (301, 302, 307):
+             return {
+                 "method": req_method,
+                 "body": req_body,

@@ -1,0 +1,15 @@
+--- a/source.py
++++ b/source.py
+@@ -2,9 +2,9 @@
+ from pathlib import Path
+ 
+ class Config(dict):
+-    def from_file(self, filename: str, load_func):
+-        """Loads configuration from file in text mode only."""
+-        with open(filename, "r") as f:
++    def from_file(self, filename: str, load_func, mode: str = "r"):
++        """Loads configuration from file supporting both text and binary modes."""
++        with open(filename, mode) as f:
+             obj = load_func(f)
+         if obj:
+             self.update(obj)

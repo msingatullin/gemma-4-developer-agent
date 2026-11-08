@@ -1,0 +1,8 @@
+{
+  "id": "task_10_marshmallow_empty_str",
+  "repo": "marshmallow-code/marshmallow",
+  "issue": "String field deserialize converts empty string to None when allow_none=True",
+  "target_symbol": "StringField.deserialize",
+  "root_cause": "Empty string check was falsy (if not value: return None), overriding explicit empty string.",
+  "expected_exception": "AssertionError"
+}

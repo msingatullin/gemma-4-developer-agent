@@ -1,0 +1,13 @@
+--- a/source.py
++++ b/source.py
+@@ -1,7 +1,9 @@
+ import math
+ 
+ def approx_compare(actual: float, expected: float, tol: float = 1e-6) -> bool:
+-    """Compares floating point values within relative tolerance."""
++    """Compares floating point values returning False on NaN."""
++    if math.isnan(actual) or math.isnan(expected):
++        return False
+     diff = abs(actual - expected)
+     if diff <= tol:
+         return True

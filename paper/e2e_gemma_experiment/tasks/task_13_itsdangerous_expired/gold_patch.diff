@@ -1,0 +1,9 @@
+--- a/source.py
++++ b/source.py
+@@ -16,5 +16,5 @@
+     def unsign(self, token: str, ts: float) -> str:
+         age = time.time() - ts
+         if age > self.max_age:
+-            raise BadTimeSignature(f"Signature is expired by {age - self.max_age:.1f}s")
++            raise SignatureExpired(f"Signature has expired by {age - self.max_age:.1f}s")
+         return token

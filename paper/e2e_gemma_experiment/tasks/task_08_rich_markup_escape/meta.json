@@ -1,0 +1,8 @@
+{
+  "id": "task_08_rich_markup_escape",
+  "repo": "Textualize/rich",
+  "issue": "Markup escape() fails to escape single unclosed brackets",
+  "target_symbol": "escape",
+  "root_cause": "escape() only replaced balanced tags, leaving unescaped brackets in logging messages.",
+  "expected_exception": "AssertionError"
+}

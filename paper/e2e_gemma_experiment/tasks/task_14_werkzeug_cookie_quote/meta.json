@@ -1,0 +1,8 @@
+{
+  "id": "task_14_werkzeug_cookie_quote",
+  "repo": "pallets/werkzeug",
+  "issue": "dump_cookie omits quotes when cookie value contains commas",
+  "target_symbol": "dump_cookie",
+  "root_cause": "Commas were not included in the quote-trigger character set for RFC 6265 cookie dumping.",
+  "expected_exception": "AssertionError"
+}

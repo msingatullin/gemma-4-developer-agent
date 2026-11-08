@@ -1,0 +1,10 @@
+__________________________ test_frozen_mutation_error __________________________
+    def test_frozen_mutation_error():
+        m = FrozenModel(x=10, y=20)
+    ... [intermediate frames omitted] ...
+>           m.x = 99
+>           raise AttributeError(f"Cannot assign to frozen model: {key}")
+E           AttributeError: Cannot assign to frozen model: x
+source.py:13: AttributeError
+    --- [Captured output collapsed] ---
+FAILED test_task.py::test_frozen_mutation_error - AttributeError: Cannot assi...

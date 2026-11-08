@@ -1,0 +1,7 @@
+============================= test session starts ==============================
+cachedir: .pytest_cache
+collecting ... collected 1 item
+
+test_task.py::test_validate_str_with_none PASSED                         [100%]
+
+============================== 1 passed in 0.01s ===============================

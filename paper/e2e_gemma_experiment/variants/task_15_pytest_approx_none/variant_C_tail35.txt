@@ -1,0 +1,35 @@
+    def test_approx_none_safe_comparison():
+        for i in range(12):
+            print(f"[FLOAT_PRECISION_ANALYZER_{i}] computing tolerance boundaries")
+        # Comparison of None against float must safely return False without TypeError
+>       assert approx_compare(None, 1.0) is False
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_task.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+actual = None, expected = 1.0, tol = 1e-06
+
+    def approx_compare(actual, expected: float, tol: float = 1e-6) -> bool:
+        """Compares numeric values within relative tolerance."""
+>       return abs(actual - expected) <= tol
+                   ^^^^^^^^^^^^^^^^^
+E       TypeError: unsupported operand type(s) for -: 'NoneType' and 'float'
+
+source.py:3: TypeError
+----------------------------- Captured stdout call -----------------------------
+[FLOAT_PRECISION_ANALYZER_0] computing tolerance boundaries
+[FLOAT_PRECISION_ANALYZER_1] computing tolerance boundaries
+[FLOAT_PRECISION_ANALYZER_2] computing tolerance boundaries
+[FLOAT_PRECISION_ANALYZER_3] computing tolerance boundaries
+[FLOAT_PRECISION_ANALYZER_4] computing tolerance boundaries
+[FLOAT_PRECISION_ANALYZER_5] computing tolerance boundaries
+[FLOAT_PRECISION_ANALYZER_6] computing tolerance boundaries
+[FLOAT_PRECISION_ANALYZER_7] computing tolerance boundaries
+[FLOAT_PRECISION_ANALYZER_8] computing tolerance boundaries
+[FLOAT_PRECISION_ANALYZER_9] computing tolerance boundaries
+[FLOAT_PRECISION_ANALYZER_10] computing tolerance boundaries
+[FLOAT_PRECISION_ANALYZER_11] computing tolerance boundaries
+=========================== short test summary info ============================
+FAILED test_task.py::test_approx_none_safe_comparison - TypeError: unsupporte...
+============================== 1 failed in 0.04s ===============================

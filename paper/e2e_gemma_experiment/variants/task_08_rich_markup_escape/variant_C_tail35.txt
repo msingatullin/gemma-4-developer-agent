@@ -1,0 +1,35 @@
+cachedir: .pytest_cache
+rootdir: /home/mikhail/gemma-4-developer-agent/paper/e2e_gemma_experiment/tasks/task_08_rich_markup_escape
+collecting ... collected 1 item
+
+test_task.py::test_escape_isolated_bracket FAILED                        [100%]
+
+=================================== FAILURES ===================================
+_________________________ test_escape_isolated_bracket _________________________
+
+    def test_escape_isolated_bracket():
+        text = "Status: [error] at index [0"
+        for i in range(12):
+            print(f"[CONSOLE_MARKUP_LOG_{i}] rendering token stream")
+        escaped = escape(text)
+        assert r"\[error\]" in escaped or r"\[error]" in escaped
+>       assert r"\[0" in escaped
+E       AssertionError: assert '\\[0' in 'Status: \\[error\\] at index [0'
+
+test_task.py:10: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[CONSOLE_MARKUP_LOG_0] rendering token stream
+[CONSOLE_MARKUP_LOG_1] rendering token stream
+[CONSOLE_MARKUP_LOG_2] rendering token stream
+[CONSOLE_MARKUP_LOG_3] rendering token stream
+[CONSOLE_MARKUP_LOG_4] rendering token stream
+[CONSOLE_MARKUP_LOG_5] rendering token stream
+[CONSOLE_MARKUP_LOG_6] rendering token stream
+[CONSOLE_MARKUP_LOG_7] rendering token stream
+[CONSOLE_MARKUP_LOG_8] rendering token stream
+[CONSOLE_MARKUP_LOG_9] rendering token stream
+[CONSOLE_MARKUP_LOG_10] rendering token stream
+[CONSOLE_MARKUP_LOG_11] rendering token stream
+=========================== short test summary info ============================
+FAILED test_task.py::test_escape_isolated_bracket - AssertionError: assert '\...
+============================== 1 failed in 0.04s ===============================

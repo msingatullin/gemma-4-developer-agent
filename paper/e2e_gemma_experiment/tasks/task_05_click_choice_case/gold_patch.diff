@@ -1,0 +1,16 @@
+--- a/source.py
++++ b/source.py
+@@ -4,6 +4,11 @@
+         self.case_sensitive = case_sensitive
+ 
+     def convert(self, value: str) -> str:
+-        if value in self.choices:
+-            return value
++        if self.case_sensitive:
++            if value in self.choices:
++                return value
++        else:
++            lower_map = {c.lower(): c for c in self.choices}
++            if value.lower() in lower_map:
++                return lower_map[value.lower()]
+         raise ValueError(f"'{value}' is not one of {self.choices}")

@@ -1,0 +1,35 @@
+
+test_task.py::test_dump_cookie_quotes_commas FAILED                      [100%]
+
+=================================== FAILURES ===================================
+________________________ test_dump_cookie_quotes_commas ________________________
+
+    def test_dump_cookie_quotes_commas():
+        for i in range(12):
+            print(f"[HTTP_COOKIE_SERIALIZER_{i}] encoding header string")
+        res = dump_cookie("session_tags", "admin,user,editor")
+>       assert res == 'session_tags="admin,user,editor"; Path=/', f"Expected quoted value, got {res}"
+E       AssertionError: Expected quoted value, got session_tags=admin,user,editor; Path=/
+E       assert 'session_tags...ditor; Path=/' == 'session_tags...itor"; Path=/'
+E         
+E         - session_tags="admin,user,editor"; Path=/
+E         ?              -                 -
+E         + session_tags=admin,user,editor; Path=/
+
+test_task.py:8: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[HTTP_COOKIE_SERIALIZER_0] encoding header string
+[HTTP_COOKIE_SERIALIZER_1] encoding header string
+[HTTP_COOKIE_SERIALIZER_2] encoding header string
+[HTTP_COOKIE_SERIALIZER_3] encoding header string
+[HTTP_COOKIE_SERIALIZER_4] encoding header string
+[HTTP_COOKIE_SERIALIZER_5] encoding header string
+[HTTP_COOKIE_SERIALIZER_6] encoding header string
+[HTTP_COOKIE_SERIALIZER_7] encoding header string
+[HTTP_COOKIE_SERIALIZER_8] encoding header string
+[HTTP_COOKIE_SERIALIZER_9] encoding header string
+[HTTP_COOKIE_SERIALIZER_10] encoding header string
+[HTTP_COOKIE_SERIALIZER_11] encoding header string
+=========================== short test summary info ============================
+FAILED test_task.py::test_dump_cookie_quotes_commas - AssertionError: Expecte...
+============================== 1 failed in 0.04s ===============================

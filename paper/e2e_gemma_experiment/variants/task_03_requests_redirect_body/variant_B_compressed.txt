@@ -1,0 +1,44 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.2, pluggy-1.7.0 -- /home/mikhail/gemma-4-developer-agent/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/mikhail/gemma-4-developer-agent/paper/e2e_gemma_experiment/tasks/task_03_requests_redirect_body
+collecting ... collected 1 item
+
+test_task.py::test_redirect_303_strips_body FAILED                       [100%]
+
+=================================== FAILURES ===================================
+________________________ test_redirect_303_strips_body _________________________
+
+    def test_redirect_303_strips_body():
+        session = Session()
+        resp = Response(303, "/new-url")
+        for k in range(15):
+            print(f"[HTTP_REDIRECT_DEBUG_{k}] status=303 target=/new-url")
+        redir = session.resolve_redirects(resp, "POST", b"payload_data")
+>       assert redir["method"] == "GET", f"Expected GET on 303, got {redir['method']}"
+E       AssertionError: Expected GET on 303, got POST
+E       assert 'POST' == 'GET'
+E         
+E         - GET
+E         + POST
+
+test_task.py:10: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[HTTP_REDIRECT_DEBUG_0] status=303 target=/new-url
+[HTTP_REDIRECT_DEBUG_1] status=303 target=/new-url
+[HTTP_REDIRECT_DEBUG_2] status=303 target=/new-url
+[HTTP_REDIRECT_DEBUG_3] status=303 target=/new-url
+[HTTP_REDIRECT_DEBUG_4] status=303 target=/new-url
+[HTTP_REDIRECT_DEBUG_5] status=303 target=/new-url
+[HTTP_REDIRECT_DEBUG_6] status=303 target=/new-url
+[HTTP_REDIRECT_DEBUG_7] status=303 target=/new-url
+[HTTP_REDIRECT_DEBUG_8] status=303 target=/new-url
+[HTTP_REDIRECT_DEBUG_9] status=303 target=/new-url
+[HTTP_REDIRECT_DEBUG_10] status=303 target=/new-url
+[HTTP_REDIRECT_DEBUG_11] status=303 target=/new-url
+[HTTP_REDIRECT_DEBUG_12] status=303 target=/new-url
+[HTTP_REDIRECT_DEBUG_13] status=303 target=/new-url
+[HTTP_REDIRECT_DEBUG_14] status=303 target=/new-url
+=========================== short test summary info ============================
+FAILED test_task.py::test_redirect_303_strips_body - AssertionError: Expected...
+============================== 1 failed in 0.04s ===============================

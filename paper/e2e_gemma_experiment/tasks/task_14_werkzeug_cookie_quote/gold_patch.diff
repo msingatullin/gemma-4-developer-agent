@@ -1,0 +1,11 @@
+--- a/source.py
++++ b/source.py
+@@ -1,6 +1,5 @@
+ def dump_cookie(key: str, value: str) -> str:
+-    """Serializes cookie key-value pair."""
+-    # Bug: only quotes when space is present, ignores comma and semicolon
+-    if " " in value:
++    """Serializes cookie key-value pair quoting commas and semicolons."""
++    if any(c in value for c in [" ", ",", ";"]):
+         value = f'"{value}"'
+     return f"{key}={value}; Path=/"

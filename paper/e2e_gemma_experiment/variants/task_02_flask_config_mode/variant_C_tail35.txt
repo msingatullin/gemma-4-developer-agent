@@ -1,0 +1,33 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.2, pluggy-1.7.0 -- /home/mikhail/gemma-4-developer-agent/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/mikhail/gemma-4-developer-agent/paper/e2e_gemma_experiment/tasks/task_02_flask_config_mode
+collecting ... collected 2 items
+
+test_task.py::test_from_file_text_default PASSED                         [ 50%]
+test_task.py::test_from_file_binary_mode FAILED                          [100%]
+
+=================================== FAILURES ===================================
+__________________________ test_from_file_binary_mode __________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-mikhail/pytest-12/test_from_file_binary_mode0')
+
+    def test_from_file_binary_mode(tmp_path):
+        """Config.from_file must support mode='rb' for binary deserializers."""
+        p = tmp_path / "cfg.bin"
+        p.write_bytes(b'{"SECRET_KEY": "secure_bytes"}')
+        cfg = Config()
+        def binary_loader(f):
+            data = f.read()
+            if not isinstance(data, bytes):
+                raise TypeError(f"Expected bytes, got {type(data).__name__}")
+            import json
+            return json.loads(data.decode())
+    
+>       cfg.from_file(str(p), binary_loader, mode="rb")
+E       TypeError: Config.from_file() got an unexpected keyword argument 'mode'
+
+test_task.py:25: TypeError
+=========================== short test summary info ============================
+FAILED test_task.py::test_from_file_binary_mode - TypeError: Config.from_file...
+========================= 1 failed, 1 passed in 0.05s ==========================

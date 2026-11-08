@@ -1,0 +1,8 @@
+{
+  "id": "task_04_requests_socket_error",
+  "repo": "psf/requests",
+  "issue": "socket.error not wrapped in requests.ConnectionError (#2148)",
+  "target_symbol": "send_http_request",
+  "root_cause": "Low-level socket.error escapes abstraction boundary instead of being wrapped in ConnectionError.",
+  "expected_exception": "requests.ConnectionError"
+}

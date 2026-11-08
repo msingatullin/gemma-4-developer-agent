@@ -1,0 +1,8 @@
+{
+  "id": "task_03_requests_redirect_body",
+  "repo": "psf/requests",
+  "issue": "Session.resolve_redirects copies original request body on 303 redirect (#1963)",
+  "target_symbol": "Session.resolve_redirects",
+  "root_cause": "On HTTP 303 See Other, the method should change to GET and the request body must be dropped.",
+  "expected_exception": "AssertionError"
+}

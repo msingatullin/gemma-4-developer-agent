@@ -1,0 +1,47 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.2, pluggy-1.7.0 -- /home/mikhail/gemma-4-developer-agent/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/mikhail/gemma-4-developer-agent/paper/e2e_gemma_experiment/tasks/task_05_click_choice_case
+collecting ... collected 2 items
+
+test_task.py::test_choice_exact_match PASSED                             [ 50%]
+test_task.py::test_choice_case_insensitive FAILED                        [100%]
+
+=================================== FAILURES ===================================
+_________________________ test_choice_case_insensitive _________________________
+
+    def test_choice_case_insensitive():
+        c = Choice(["red", "green", "blue"], case_sensitive=False)
+        for i in range(12):
+            print(f"[CLICK_PARSER_DIAG_{i}] evaluating token against grammar")
+>       assert c.convert("RED") == "red"
+               ^^^^^^^^^^^^^^^^
+
+test_task.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <source.Choice object at 0x72daedb73560>, value = 'RED'
+
+    def convert(self, value: str) -> str:
+        if value in self.choices:
+            return value
+>       raise ValueError(f"'{value}' is not one of {self.choices}")
+E       ValueError: 'RED' is not one of ['red', 'green', 'blue']
+
+source.py:9: ValueError
+----------------------------- Captured stdout call -----------------------------
+[CLICK_PARSER_DIAG_0] evaluating token against grammar
+[CLICK_PARSER_DIAG_1] evaluating token against grammar
+[CLICK_PARSER_DIAG_2] evaluating token against grammar
+[CLICK_PARSER_DIAG_3] evaluating token against grammar
+[CLICK_PARSER_DIAG_4] evaluating token against grammar
+[CLICK_PARSER_DIAG_5] evaluating token against grammar
+[CLICK_PARSER_DIAG_6] evaluating token against grammar
+[CLICK_PARSER_DIAG_7] evaluating token against grammar
+[CLICK_PARSER_DIAG_8] evaluating token against grammar
+[CLICK_PARSER_DIAG_9] evaluating token against grammar
+[CLICK_PARSER_DIAG_10] evaluating token against grammar
+[CLICK_PARSER_DIAG_11] evaluating token against grammar
+=========================== short test summary info ============================
+FAILED test_task.py::test_choice_case_insensitive - ValueError: 'RED' is not ...
+========================= 1 failed, 1 passed in 0.04s ==========================

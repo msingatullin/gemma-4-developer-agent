@@ -1,0 +1,44 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.2, pluggy-1.7.0 -- /home/mikhail/gemma-4-developer-agent/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/mikhail/gemma-4-developer-agent/paper/e2e_gemma_experiment/tasks/task_01_flask_blueprint_dot
+collecting ... collected 2 items
+
+test_task.py::test_valid_blueprint PASSED                                [ 50%]
+test_task.py::test_dotted_blueprint_name_not_allowed FAILED              [100%]
+
+=================================== FAILURES ===================================
+____________________ test_dotted_blueprint_name_not_allowed ____________________
+
+    def test_dotted_blueprint_name_not_allowed():
+        """Dots in blueprint names must raise ValueError to prevent nesting collisions."""
+        for i in range(20):
+            print(f"[TRACE_NOISE_{i}] loading blueprint registration context")
+>       with pytest.raises(ValueError, match="Blueprint names may not contain dots"):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+test_task.py:12: Failed
+----------------------------- Captured stdout call -----------------------------
+[TRACE_NOISE_0] loading blueprint registration context
+[TRACE_NOISE_1] loading blueprint registration context
+[TRACE_NOISE_2] loading blueprint registration context
+[TRACE_NOISE_3] loading blueprint registration context
+[TRACE_NOISE_4] loading blueprint registration context
+[TRACE_NOISE_5] loading blueprint registration context
+[TRACE_NOISE_6] loading blueprint registration context
+[TRACE_NOISE_7] loading blueprint registration context
+[TRACE_NOISE_8] loading blueprint registration context
+[TRACE_NOISE_9] loading blueprint registration context
+[TRACE_NOISE_10] loading blueprint registration context
+[TRACE_NOISE_11] loading blueprint registration context
+[TRACE_NOISE_12] loading blueprint registration context
+[TRACE_NOISE_13] loading blueprint registration context
+[TRACE_NOISE_14] loading blueprint registration context
+[TRACE_NOISE_15] loading blueprint registration context
+[TRACE_NOISE_16] loading blueprint registration context
+[TRACE_NOISE_17] loading blueprint registration context
+[TRACE_NOISE_18] loading blueprint registration context
+[TRACE_NOISE_19] loading blueprint registration context
+=========================== short test summary info ============================
+FAILED test_task.py::test_dotted_blueprint_name_not_allowed - Failed: DID NOT...
+========================= 1 failed, 1 passed in 0.04s ==========================
