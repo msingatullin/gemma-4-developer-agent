@@ -1,0 +1,174 @@
+{
+  "model_id": "google/gemma-4-31B-it-qat-w4a16-ct",
+  "generation_reserve_tokens": 2048,
+  "max_input_tokens": 10609,
+  "max_required_context": 12657,
+  "recommended_max_model_len": 16384,
+  "measurements": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "variant": "A_raw",
+      "prompt_file": "pallets__flask-4045__A_raw.json",
+      "prompt_file_sha256": "6490c8402f8b9d23ad947c0077074da99370c25cada65088bdde7dcc215710af",
+      "user_prompt_sha256": "2275acfb890626f596544cb391308a5978709e86c5e5be8f4e4358d4b7c1bd13",
+      "char_length": 25241,
+      "input_tokens": 6516,
+      "generation_reserve": 2048,
+      "required_context": 8564
+    },
+    {
+      "instance_id": "pallets__flask-4045",
+      "variant": "B2_assertion_aware",
+      "prompt_file": "pallets__flask-4045__B2_assertion_aware.json",
+      "prompt_file_sha256": "53dadeed41bb6492e7f99603b16f3c2573685f6693c08e8c09dff241c3148255",
+      "user_prompt_sha256": "f2125d4a6fb93f445e8315294c424cd4b055bc68f84766802627f5a041daf17d",
+      "char_length": 23772,
+      "input_tokens": 6017,
+      "generation_reserve": 2048,
+      "required_context": 8065
+    },
+    {
+      "instance_id": "pallets__flask-4045",
+      "variant": "C_tail35",
+      "prompt_file": "pallets__flask-4045__C_tail35.json",
+      "prompt_file_sha256": "1bbe7dc8a83db3d3b3da4a94fcbe666e49302447539b24683a46dbfa4a01fa01",
+      "user_prompt_sha256": "0d4d3d8792a309228169addea67a07d0de4ab9a4bff04a1275b08019716740c5",
+      "char_length": 24122,
+      "input_tokens": 6182,
+      "generation_reserve": 2048,
+      "required_context": 8230
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "variant": "A_raw",
+      "prompt_file": "pallets__flask-4992__A_raw.json",
+      "prompt_file_sha256": "bb13dd48b8641cd56ae72563d8fc0c01ccfcaa03078393035b820ea2ab1eb862",
+      "user_prompt_sha256": "1301b6e4f0b069bca4f2251472be50152e61e4c629e9f9d794ab63b851fda8c3",
+      "char_length": 16075,
+      "input_tokens": 4050,
+      "generation_reserve": 2048,
+      "required_context": 6098
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "variant": "B2_assertion_aware",
+      "prompt_file": "pallets__flask-4992__B2_assertion_aware.json",
+      "prompt_file_sha256": "7ee4fcb343a0ae44711c96db81f7af307272fb1704468a106666a73cc98de2ab",
+      "user_prompt_sha256": "a4621269076dd1e2171a32e623fc31ca7bb68c3623e5d1f79c6b6e86cbd59368",
+      "char_length": 15291,
+      "input_tokens": 3825,
+      "generation_reserve": 2048,
+      "required_context": 5873
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "variant": "C_tail35",
+      "prompt_file": "pallets__flask-4992__C_tail35.json",
+      "prompt_file_sha256": "f9a8bf0d30edc56ff7e8352cb50e4c5fca97f37a6aa8fabe638d30ec9d303ffc",
+      "user_prompt_sha256": "d545e9d7d92d35dff01714dd95252fc83ca25afacac90f91c8e5c1db2afc11f6",
+      "char_length": 16078,
+      "input_tokens": 4052,
+      "generation_reserve": 2048,
+      "required_context": 6100
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "variant": "A_raw",
+      "prompt_file": "pallets__flask-5063__A_raw.json",
+      "prompt_file_sha256": "96bc5ce992033ad463687d97d52e648a35cc41bde03d862290ee045d4b28e23c",
+      "user_prompt_sha256": "2dadc3f9fe13b87afb9423a0a1c57bcca50d7a592e6285e9d3f150cd2835716f",
+      "char_length": 39324,
+      "input_tokens": 10609,
+      "generation_reserve": 2048,
+      "required_context": 12657
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "variant": "B2_assertion_aware",
+      "prompt_file": "pallets__flask-5063__B2_assertion_aware.json",
+      "prompt_file_sha256": "6519db27e4514e10f878563842e2055546e12312ac49e97cfe276ee797ee3c52",
+      "user_prompt_sha256": "d4554607527c8e06e09d0c191bef767a8f53e452f86b64a6eabf3a73ed93cc2e",
+      "char_length": 37986,
+      "input_tokens": 10167,
+      "generation_reserve": 2048,
+      "required_context": 12215
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "variant": "C_tail35",
+      "prompt_file": "pallets__flask-5063__C_tail35.json",
+      "prompt_file_sha256": "0ea437e9d5a9b554c5476fcac11c2516afcca3fb9bcea80e80352255a5a705e8",
+      "user_prompt_sha256": "4ffc8dd35096b93e72a23067b9a14d11c413671ce6c77034b271c81c555090cd",
+      "char_length": 38573,
+      "input_tokens": 10388,
+      "generation_reserve": 2048,
+      "required_context": 12436
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "variant": "A_raw",
+      "prompt_file": "psf__requests-1963__A_raw.json",
+      "prompt_file_sha256": "821deee8cf3345a414d1128b5adc2a346598349a01de3b1e779c65caf1360268",
+      "user_prompt_sha256": "0bb096d2786e78533e4e288e43da323ee16f3641c7cd8c6c38bf11d573280652",
+      "char_length": 24373,
+      "input_tokens": 6275,
+      "generation_reserve": 2048,
+      "required_context": 8323
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "variant": "B2_assertion_aware",
+      "prompt_file": "psf__requests-1963__B2_assertion_aware.json",
+      "prompt_file_sha256": "c5c3f3798c9f07f4197ea999afa8192b2f7de2640f69afd5ef768cbde2f9c97a",
+      "user_prompt_sha256": "9b8d7a4929bac828960a7b908cf68cca8c939c09edc1835b5694ed432f4fc634",
+      "char_length": 22337,
+      "input_tokens": 5668,
+      "generation_reserve": 2048,
+      "required_context": 7716
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "variant": "C_tail35",
+      "prompt_file": "psf__requests-1963__C_tail35.json",
+      "prompt_file_sha256": "0b9e90e327e83e4d5f072e883b35e41d4d9404a631f5ac3893f09dea9df86feb",
+      "user_prompt_sha256": "0f93e78c791a9e19728440e2f950010daafd1815b44f600911e78e50c9ccd338",
+      "char_length": 23852,
+      "input_tokens": 6111,
+      "generation_reserve": 2048,
+      "required_context": 8159
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "variant": "A_raw",
+      "prompt_file": "psf__requests-2148__A_raw.json",
+      "prompt_file_sha256": "58c840943b38ccf638ae36c975edf6e88146781eafbc66bc08d0b1bf35d79d63",
+      "user_prompt_sha256": "fb40b444d7dfc8405552ecc461f40b0f52c0dbc097b426e75f02327ec7460f85",
+      "char_length": 32722,
+      "input_tokens": 8649,
+      "generation_reserve": 2048,
+      "required_context": 10697
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "variant": "B2_assertion_aware",
+      "prompt_file": "psf__requests-2148__B2_assertion_aware.json",
+      "prompt_file_sha256": "12625258f49998ddc1ccb82e8dbba071f4d74a41c68610110f6feabf0ab15a85",
+      "user_prompt_sha256": "ed930b263e3ce22b46df30d5589075d0c6bc8db9f58abfca222f5a8eb190125d",
+      "char_length": 30854,
+      "input_tokens": 8078,
+      "generation_reserve": 2048,
+      "required_context": 10126
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "variant": "C_tail35",
+      "prompt_file": "psf__requests-2148__C_tail35.json",
+      "prompt_file_sha256": "3b5334e0e049a70845ebfee6c9370f788e329e64a06ba1aea06d8be8571b1931",
+      "user_prompt_sha256": "6afe0de2188b1fc9c50d4aac8c19c5f3087027ceff72f43205f748d766b7dcf5",
+      "char_length": 31968,
+      "input_tokens": 8427,
+      "generation_reserve": 2048,
+      "required_context": 10475
+    }
+  ]
+}

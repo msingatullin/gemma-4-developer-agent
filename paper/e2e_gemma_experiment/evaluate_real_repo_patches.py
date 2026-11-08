@@ -448,53 +448,65 @@ def evaluate_patch_on_task(instance_id: str, candidate_output: str, run_id: str 
 
 def run_evaluator_validation_controls() -> list:
     """
-    Executes the 4 mandatory validation controls across real repositories:
-    1. Positive Control: Reference Gold Patch -> Must return RESOLVED.
-    2. Negative Control: Base unmodified code -> Must return FAILED_F2P.
+    Executes mandatory validation controls across real repositories:
+    1. Positive Controls: Reference Gold Patches on ALL 5 tasks -> Must return RESOLVED.
+    2. Negative Controls: Base unmodified code on ALL 5 tasks -> Must return FAILED_F2P.
     3. Malformed Control: Code with invalid Python syntax -> Must return SYNTAX_ERROR.
     4. Deliberate Regression Control: Code breaking another test -> Must return REGRESSION.
     """
     print("\n" + "="*80)
-    print("[*] Running Evaluator Pre-Flight Validation Controls...")
+    print("[*] Running Comprehensive Evaluator Pre-Flight Validation Controls...")
     print("="*80)
 
     controls = []
 
-    # 1. POSITIVE CONTROL: Gold patch for pallets__flask-4045
-    print("\n[Control 1/4] Positive Control (Gold patch on pallets__flask-4045)...")
-    gold_patch_text = (ARCHIVE_DIR / "pallets__flask-4045" / "gold_patch.diff").read_text()
-    pos_res = evaluate_patch_on_task("pallets__flask-4045", f"PROPOSED_CODE:\n```diff\n{gold_patch_text}\n```", run_id="pos_ctrl")
-    print(f"  Result: {pos_res['verdict']} (expected RESOLVED)")
-    assert pos_res["verdict"] == "RESOLVED", f"Positive control failed: {pos_res}"
-    controls.append({
-        "control_name": "POSITIVE_CONTROL_GOLD_PATCH",
-        "instance_id": "pallets__flask-4045",
-        "expected_verdict": "RESOLVED",
-        "actual_verdict": pos_res["verdict"],
-        "passed": pos_res["verdict"] == "RESOLVED"
-    })
+    # 1. POSITIVE CONTROLS: Gold patches for all 5 tasks
+    print("\n--- 1. POSITIVE CONTROLS (Gold Patch -> RESOLVED) across all 5 tasks ---")
+    for task_id in TASKS_MAP:
+        print(f"[*] Testing Positive Control on {task_id}...")
+        gold_patch_text = (ARCHIVE_DIR / task_id / "gold_patch.diff").read_text()
+        pos_res = evaluate_patch_on_task(task_id, f"PROPOSED_CODE:\n```diff\n{gold_patch_text}\n```", run_id="pos_ctrl")
+        print(f"  Result: {pos_res['verdict']} (expected RESOLVED, F2P={pos_res.get('f2p_pass')}, P2P={pos_res.get('p2p_pass')})")
+        assert pos_res["verdict"] == "RESOLVED", f"Positive control failed on {task_id}: {pos_res}"
+        controls.append({
+            "control_type": "POSITIVE_CONTROL_GOLD_PATCH",
+            "instance_id": task_id,
+            "expected_verdict": "RESOLVED",
+            "actual_verdict": pos_res["verdict"],
+            "f2p_pass": pos_res.get("f2p_pass"),
+            "p2p_pass": pos_res.get("p2p_pass"),
+            "passed": pos_res["verdict"] == "RESOLVED"
+        })
 
-    # 2. NEGATIVE CONTROL: Unchanged / empty code on pallets__flask-4045
-    print("\n[Control 2/4] Negative Control (Empty code on pallets__flask-4045)...")
-    neg_res = evaluate_patch_on_task("pallets__flask-4045", "", run_id="neg_ctrl")
-    print(f"  Result: {neg_res['verdict']} (expected FAILED_F2P)")
-    assert neg_res["verdict"] == "FAILED_F2P", f"Negative control failed: {neg_res}"
-    controls.append({
-        "control_name": "NEGATIVE_CONTROL_UNCHANGED_BASE",
-        "instance_id": "pallets__flask-4045",
-        "expected_verdict": "FAILED_F2P",
-        "actual_verdict": neg_res["verdict"],
-        "passed": neg_res["verdict"] == "FAILED_F2P"
-    })
+    # 2. NEGATIVE CONTROLS: Unchanged base source across all 5 tasks
+    print("\n--- 2. NEGATIVE CONTROLS (Unmodified Base Code -> FAILED_F2P) across all 5 tasks ---")
+    for task_id, spec in TASKS_MAP.items():
+        print(f"[*] Testing Negative Control on {task_id}...")
+        base_src = subprocess.run(
+            ["git", f"--git-dir={spec['repo_bare']}", "show", f"{spec['base_commit']}:{spec['target_file']}"],
+            capture_output=True, text=True, check=True
+        ).stdout
+        neg_res = evaluate_patch_on_task(task_id, f"PROPOSED_CODE:\n```python\n{base_src}\n```", run_id="neg_ctrl")
+        print(f"  Result: {neg_res['verdict']} (expected FAILED_F2P, F2P={neg_res.get('f2p_pass')})")
+        assert neg_res["verdict"] == "FAILED_F2P", f"Negative control failed on {task_id}: {neg_res}"
+        controls.append({
+            "control_type": "NEGATIVE_CONTROL_UNCHANGED_BASE",
+            "instance_id": task_id,
+            "expected_verdict": "FAILED_F2P",
+            "actual_verdict": neg_res["verdict"],
+            "f2p_pass": neg_res.get("f2p_pass"),
+            "p2p_pass": neg_res.get("p2p_pass"),
+            "passed": neg_res["verdict"] == "FAILED_F2P"
+        })
 
     # 3. MALFORMED CONTROL: Syntax error on pallets__flask-4992
-    print("\n[Control 3/4] Malformed Control (Syntax error on pallets__flask-4992)...")
+    print("\n--- 3. MALFORMED CONTROL (Syntax error -> SYNTAX_ERROR) ---")
     malformed_code = "PROPOSED_CODE:\n```python\ndef from_file(::: broken syntax !!\n```"
     mal_res = evaluate_patch_on_task("pallets__flask-4992", malformed_code, run_id="mal_ctrl")
     print(f"  Result: {mal_res['verdict']} (expected SYNTAX_ERROR)")
     assert mal_res["verdict"] == "SYNTAX_ERROR", f"Malformed control failed: {mal_res}"
     controls.append({
-        "control_name": "MALFORMED_CONTROL_SYNTAX_ERROR",
+        "control_type": "MALFORMED_CONTROL_SYNTAX_ERROR",
         "instance_id": "pallets__flask-4992",
         "expected_verdict": "SYNTAX_ERROR",
         "actual_verdict": mal_res["verdict"],
@@ -502,7 +514,7 @@ def run_evaluator_validation_controls() -> list:
     })
 
     # 4. DELIBERATE REGRESSION CONTROL: Breaks existing Blueprint test on pallets__flask-4045
-    print("\n[Control 4/4] Deliberate Regression Control (Breaks regression test while passing F2P)...")
+    print("\n--- 4. DELIBERATE REGRESSION CONTROL (F2P passes, P2P fails -> REGRESSION) ---")
     base_file = UPSTREAM_CACHE / "flask.git"
     base_source = subprocess.run(
         ["git", f"--git-dir={base_file}", "show", "d8c37f43724cd9fb0870f77877b7c4c7e38a19e0:src/flask/blueprints.py"],
@@ -526,7 +538,7 @@ def run_evaluator_validation_controls() -> list:
     print(f"  Result: {reg_res['verdict']} (expected REGRESSION)")
     assert reg_res["verdict"] == "REGRESSION", f"Deliberate regression failed: {reg_res}"
     controls.append({
-        "control_name": "DELIBERATE_REGRESSION_CONTROL",
+        "control_type": "DELIBERATE_REGRESSION_CONTROL",
         "instance_id": "pallets__flask-4045",
         "expected_verdict": "REGRESSION",
         "actual_verdict": reg_res["verdict"],
@@ -536,7 +548,7 @@ def run_evaluator_validation_controls() -> list:
     # Save control validation report
     ctrl_file = ARCHIVE_DIR / "evaluator_control_validation.json"
     ctrl_file.write_text(json.dumps(controls, indent=2), encoding="utf-8")
-    print(f"\n[✓] All 4 Evaluator Controls Passed! Saved to {ctrl_file.name}")
+    print(f"\n[✓] All {len(controls)} Evaluator Controls Passed! Saved to {ctrl_file.name}")
     return controls
 
 def main():

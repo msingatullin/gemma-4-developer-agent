@@ -1,27 +1,103 @@
 [
   {
-    "control_name": "POSITIVE_CONTROL_GOLD_PATCH",
+    "control_type": "POSITIVE_CONTROL_GOLD_PATCH",
     "instance_id": "pallets__flask-4045",
     "expected_verdict": "RESOLVED",
     "actual_verdict": "RESOLVED",
+    "f2p_pass": true,
+    "p2p_pass": true,
     "passed": true
   },
   {
-    "control_name": "NEGATIVE_CONTROL_UNCHANGED_BASE",
+    "control_type": "POSITIVE_CONTROL_GOLD_PATCH",
+    "instance_id": "pallets__flask-4992",
+    "expected_verdict": "RESOLVED",
+    "actual_verdict": "RESOLVED",
+    "f2p_pass": true,
+    "p2p_pass": true,
+    "passed": true
+  },
+  {
+    "control_type": "POSITIVE_CONTROL_GOLD_PATCH",
+    "instance_id": "pallets__flask-5063",
+    "expected_verdict": "RESOLVED",
+    "actual_verdict": "RESOLVED",
+    "f2p_pass": true,
+    "p2p_pass": true,
+    "passed": true
+  },
+  {
+    "control_type": "POSITIVE_CONTROL_GOLD_PATCH",
+    "instance_id": "psf__requests-1963",
+    "expected_verdict": "RESOLVED",
+    "actual_verdict": "RESOLVED",
+    "f2p_pass": true,
+    "p2p_pass": true,
+    "passed": true
+  },
+  {
+    "control_type": "POSITIVE_CONTROL_GOLD_PATCH",
+    "instance_id": "psf__requests-2148",
+    "expected_verdict": "RESOLVED",
+    "actual_verdict": "RESOLVED",
+    "f2p_pass": true,
+    "p2p_pass": true,
+    "passed": true
+  },
+  {
+    "control_type": "NEGATIVE_CONTROL_UNCHANGED_BASE",
     "instance_id": "pallets__flask-4045",
     "expected_verdict": "FAILED_F2P",
     "actual_verdict": "FAILED_F2P",
+    "f2p_pass": false,
+    "p2p_pass": false,
     "passed": true
   },
   {
-    "control_name": "MALFORMED_CONTROL_SYNTAX_ERROR",
+    "control_type": "NEGATIVE_CONTROL_UNCHANGED_BASE",
+    "instance_id": "pallets__flask-4992",
+    "expected_verdict": "FAILED_F2P",
+    "actual_verdict": "FAILED_F2P",
+    "f2p_pass": false,
+    "p2p_pass": false,
+    "passed": true
+  },
+  {
+    "control_type": "NEGATIVE_CONTROL_UNCHANGED_BASE",
+    "instance_id": "pallets__flask-5063",
+    "expected_verdict": "FAILED_F2P",
+    "actual_verdict": "FAILED_F2P",
+    "f2p_pass": false,
+    "p2p_pass": false,
+    "passed": true
+  },
+  {
+    "control_type": "NEGATIVE_CONTROL_UNCHANGED_BASE",
+    "instance_id": "psf__requests-1963",
+    "expected_verdict": "FAILED_F2P",
+    "actual_verdict": "FAILED_F2P",
+    "f2p_pass": false,
+    "p2p_pass": false,
+    "passed": true
+  },
+  {
+    "control_type": "NEGATIVE_CONTROL_UNCHANGED_BASE",
+    "instance_id": "psf__requests-2148",
+    "expected_verdict": "FAILED_F2P",
+    "actual_verdict": "FAILED_F2P",
+    "f2p_pass": false,
+    "p2p_pass": false,
+    "passed": true
+  },
+  {
+    "control_type": "MALFORMED_CONTROL_SYNTAX_ERROR",
     "instance_id": "pallets__flask-4992",
     "expected_verdict": "SYNTAX_ERROR",
     "actual_verdict": "SYNTAX_ERROR",
     "passed": true
   },
   {
-    "control_name": "DELIBERATE_REGRESSION_CONTROL",
+    "control_type": "DELIBERATE_REGRESSION_CONTROL",
     "instance_id": "pallets__flask-4045",
     "expected_verdict": "REGRESSION",
     "actual_verdict": "REGRESSION",
