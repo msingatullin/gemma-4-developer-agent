@@ -1,4 +1,11 @@
 {
+  "metadata": {
+    "experiment_type": "deterministic_cpu_oracle_simulation",
+    "is_real_neural_inference": false,
+    "audit_status": "CORRECTED_PER_CHATGPT_AUDIT_20261109",
+    "real_inference_status": "BLOCKED — REAL INFERENCE NOT EXECUTED",
+    "notes": "Results reflect heuristic oracle simulations, NOT authentic Gemma 4 E4B solve rates."
+  },
   "summary": {
     "total_tasks": 6,
     "v15_baseline": {

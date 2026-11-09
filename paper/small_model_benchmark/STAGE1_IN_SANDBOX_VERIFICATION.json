@@ -1,8 +1,12 @@
 {
-  "status": "PASS",
+  "stage": 1,
+  "verification_type": "in_sandbox_locator_contract",
+  "host_pre_copying": false,
+  "all_passed": true,
   "results": [
     {
       "instance_id": "pallets__flask-4045",
+      "repo": "pallets/flask",
       "target_file": "src/flask/blueprints.py",
       "top_files": [
         "src/flask/blueprints.py",
@@ -11,10 +15,49 @@
       ],
       "target_in_top3": true,
       "clean_git_status": true,
-      "latency_sec": 0.808
+      "clean_git_diff": true,
+      "zero_gold_leakage": true,
+      "latency_sec": 0.754,
+      "delivery_method": "self_contained_bash_heredoc_to_tmp",
+      "host_pre_copying_used": false
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "repo": "pallets/flask",
+      "target_file": "src/flask/config.py",
+      "top_files": [
+        "src/flask/config.py",
+        "src/flask/helpers.py",
+        "src/flask/app.py"
+      ],
+      "target_in_top3": true,
+      "clean_git_status": true,
+      "clean_git_diff": true,
+      "zero_gold_leakage": true,
+      "latency_sec": 0.806,
+      "delivery_method": "self_contained_bash_heredoc_to_tmp",
+      "host_pre_copying_used": false
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "repo": "psf/requests",
+      "target_file": "requests/sessions.py",
+      "top_files": [
+        "requests/sessions.py",
+        "requests/packages/urllib3/request.py",
+        "requests/packages/urllib3/util.py"
+      ],
+      "target_in_top3": true,
+      "clean_git_status": true,
+      "clean_git_diff": true,
+      "zero_gold_leakage": true,
+      "latency_sec": 1.224,
+      "delivery_method": "self_contained_bash_heredoc_to_tmp",
+      "host_pre_copying_used": false
     },
     {
       "instance_id": "psf__requests-2148",
+      "repo": "psf/requests",
       "target_file": "requests/models.py",
       "top_files": [
         "requests/models.py",
@@ -23,10 +66,15 @@
       ],
       "target_in_top3": true,
       "clean_git_status": true,
-      "latency_sec": 1.292
+      "clean_git_diff": true,
+      "zero_gold_leakage": true,
+      "latency_sec": 1.308,
+      "delivery_method": "self_contained_bash_heredoc_to_tmp",
+      "host_pre_copying_used": false
     },
     {
       "instance_id": "pytest-dev__pytest-5103",
+      "repo": "pytest-dev/pytest",
       "target_file": "src/_pytest/assertion/rewrite.py",
       "top_files": [
         "src/_pytest/assertion/rewrite.py",
@@ -35,7 +83,28 @@
       ],
       "target_in_top3": true,
       "clean_git_status": true,
-      "latency_sec": 2.441
+      "clean_git_diff": true,
+      "zero_gold_leakage": true,
+      "latency_sec": 2.162,
+      "delivery_method": "self_contained_bash_heredoc_to_tmp",
+      "host_pre_copying_used": false
+    },
+    {
+      "instance_id": "sympy__sympy-11400",
+      "repo": "sympy/sympy",
+      "target_file": "sympy/printing/ccode.py",
+      "top_files": [
+        "sympy/printing/ccode.py",
+        "sympy/interactive/printing.py",
+        "sympy/functions/elementary/piecewise.py"
+      ],
+      "target_in_top3": true,
+      "clean_git_status": true,
+      "clean_git_diff": true,
+      "zero_gold_leakage": true,
+      "latency_sec": 25.176,
+      "delivery_method": "self_contained_bash_heredoc_to_tmp",
+      "host_pre_copying_used": false
     }
   ]
 }

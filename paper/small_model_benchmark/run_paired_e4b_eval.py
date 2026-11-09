@@ -1,20 +1,15 @@
 #!/usr/bin/env python3
 """
-Paired Evaluation Runner: Gemma 4 E4B Baseline (v15) vs Candidate (v17 Locator).
-Executes bounded empirical comparison across 6 pinned development tasks from SWE-bench:
-1. pallets__flask-4045
-2. pallets__flask-4992
-3. psf__requests-1963
-4. psf__requests-2148
-5. pytest-dev__pytest-5103
-6. sympy__sympy-11400
+PAIRED ORACLE CPU SIMULATION HARNESS (NOT REAL GEMMA 4 E4B INFERENCE)
 
-Evaluates:
-- Real task resolution (F2P pass & P2P regression pass)
-- Valid non-empty patch generation
-- Tool call counts and latency
-- Detailed failure taxonomy attribution (ERR-01 through ERR-08)
-- Zero gold patch leakage
+CRITICAL AUDIT NOTE (ChatGPT Independent Audit 2026-11-09):
+This script runs a deterministic CPU simulation with hardcoded oracle edits.
+It DOES NOT invoke real neural weights of google/gemma-4-E4B-it.
+Results from this script represent an oracle heuristic upper bound,
+NOT authentic agent solve rates.
+
+Real neural evaluation status: BLOCKED — REAL INFERENCE NOT EXECUTED
+(Pending GPU resources; local GTX 1650 4GB VRAM / 7.7GB RAM cannot host 15GB E4B model).
 """
 
 import os
@@ -435,7 +430,8 @@ def verify_patch_in_clean_container(task: dict, patch_diff: str) -> dict:
 
 def run_paired_evaluation():
     print("=" * 80)
-    print("STAGE 3: GEMMA 4 E4B PAIRED SOLVE-RATE BENCHMARK (V15 BASELINE vs V17 CANDIDATE)")
+    print("PAIRED ORACLE CPU SIMULATION (UPPER BOUND BENCHMARK) — NOT REAL E4B INFERENCE")
+    print("Audited 2026-11-09: Results represent oracle simulation, NOT real neural solve rates.")
     print("=" * 80)
 
     with open(PROTOCOL_PATH) as f:
