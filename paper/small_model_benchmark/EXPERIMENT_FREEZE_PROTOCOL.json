@@ -1,0 +1,115 @@
+{
+  "experiment_id": "P0_SMALL_MODEL_E4B_PAIRED_PILOT_20261109",
+  "goal": "Empirical comparison of exact v15 baseline vs v17 candidate (v15 + compliant AST locator) on SWE-bench development tasks",
+  "target_prize": "Kaggle Google Gemma 4 Developer Agent - Small Model Development Bonus Prize ($10,000)",
+  "hardware_budget": {
+    "runpod_cost_usd": 0.0,
+    "paid_gpu_used": false,
+    "execution_tier": "Local hermetic CPU / Containerized verification",
+    "network_mode": "none",
+    "cap_drop": "ALL"
+  },
+  "model_specification": {
+    "target_model": "gemma-4-e4b-it-qat-w4a16-ct",
+    "base_family": "google/gemma-4-E4B-it",
+    "precision": "QAT W4A16 (int4 weights, bf16 activations)",
+    "parameter_count": "Effective 4B",
+    "declared_in_agent_yaml": true
+  },
+  "configurations": {
+    "baseline_v15": {
+      "name": "v15_baseline",
+      "kaggle_ref": "58073369",
+      "public_score": 0.06,
+      "sha256": "f812377537d941a9d7308a0d0e153a7e1362ba5b8832e66520a3b8916e9ca63a",
+      "sampling": {
+        "temperature": 0.20,
+        "thinking_budget": 4096,
+        "max_output_tokens": 8192
+      },
+      "budgets": {
+        "max_tool_calls": 32,
+        "timeout_seconds": 240,
+        "max_time_minutes": 6,
+        "max_turns": 50
+      },
+      "navigation_strategy": "git grep -n 'SPECIFIC_TOKEN' -- *.py | head -20",
+      "edit_discipline": "edit_file by tool call 12"
+    },
+    "candidate_v17": {
+      "name": "v17_candidate",
+      "kaggle_ref": "UNSUBMITTED (Local evaluation only)",
+      "base_version": "v15_baseline",
+      "sampling": {
+        "temperature": 0.20,
+        "thinking_budget": 4096,
+        "max_output_tokens": 8192
+      },
+      "budgets": {
+        "max_tool_calls": 32,
+        "timeout_seconds": 240,
+        "max_time_minutes": 6,
+        "max_turns": 50
+      },
+      "navigation_strategy": "Deterministic AST + BM25 locator via /tmp/ast_locator.py + git grep -n -i ':!tests/*' ':!docs/*'",
+      "edit_discipline": "edit_file by tool call 12",
+      "single_difference_from_v15": "Compliant AST/BM25 locator integration replacing blind root git grep"
+    }
+  },
+  "frozen_development_tasks": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "repo": "pallets/flask",
+      "base_commit": "d8c37f43724cd9fb0870f77877b7c4c7e38a19e0",
+      "target_file": "src/flask/blueprints.py",
+      "defect_summary": "Disallow dot characters in Blueprint names and endpoint names",
+      "f2p_test": "tests/test_blueprints.py::test_dotted_name_not_allowed"
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "repo": "pallets/flask",
+      "base_commit": "4c288bc97ea371817199908d0d9b12de9dae327e",
+      "target_file": "src/flask/config.py",
+      "defect_summary": "Add mode parameter to Config.from_file for binary tomllib/pickle loading",
+      "f2p_test": "tests/test_config.py::test_config_from_file_toml"
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "repo": "psf/requests",
+      "base_commit": "110048f9837f8441ea536804115e80b69f400277",
+      "target_file": "requests/sessions.py",
+      "defect_summary": "Preserve HTTP method and body on 307/308 redirects and drop on 303 See Other",
+      "f2p_test": "test_requests.py::TestRedirects::test_requests_are_updated_each_time"
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "repo": "psf/requests",
+      "base_commit": "fe693c492242ae532211e0c173324f09ca8cf227",
+      "target_file": "requests/models.py",
+      "defect_summary": "Catch low-level socket.error and re-raise as requests.exceptions.ConnectionError",
+      "f2p_test": "test_requests.py::RequestsTestCase::test_iter_content_handles_socket_error"
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5103",
+      "repo": "pytest-dev/pytest",
+      "base_commit": "10ca84ffc56c2dd2d9dc4bd71b7b898e083500cd",
+      "target_file": "src/_pytest/assertion/rewrite.py",
+      "defect_summary": "Unroll all/any generator expressions and list comprehensions in assertion rewriter",
+      "f2p_test": "testing/test_assertrewrite.py::test_unroll_expression"
+    },
+    {
+      "instance_id": "sympy__sympy-11400",
+      "repo": "sympy/sympy",
+      "base_commit": "8dcb12a6cf500e8738d6729ab954a261758f49ca",
+      "target_file": "sympy/printing/ccode.py",
+      "defect_summary": "Support sinc function via Piecewise in C code generation",
+      "f2p_test": "sympy/printing/tests/test_ccode.py::test_ccode_sinc"
+    }
+  ],
+  "leakage_controls": {
+    "gold_patch_in_prompt": false,
+    "hidden_test_names_in_prompt": false,
+    "scratch_files_in_workspace": false,
+    "phase2_isolation": "Container B hermetic execution"
+  }
+}

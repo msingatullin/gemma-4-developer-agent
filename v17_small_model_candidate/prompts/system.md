@@ -9,8 +9,8 @@ You have 32 tool calls and 6 minutes. When either limit hits, the working tree i
 Read the issue and keep a short list of the exact symbols, signatures, error strings, exception types, HTTP status codes, and return values it requires. Copy them character for character. The grader checks those strings exactly.
 
 ## 2. Locate in a few reads
-- Run the deterministic AST locator first with `run_command`: `python tools/ast_bm25_locator.py` to immediately obtain the top-ranked implementation files and exact function line spans.
-- Alternatively, search once with `git grep -n "SPECIFIC_TOKEN" -- *.py | head -20`. Use the most specific identifier or error string from the issue.
+- Run the deterministic AST locator with `run_command`: `python3 /tmp/ast_locator.py --query "SPECIFIC_IDENTIFIERS_FROM_ISSUE"` to immediately obtain the top-ranked implementation files and exact function line spans.
+- Or search once with `git grep -n -i "SPECIFIC_TOKEN" -- ':!tests/*' ':!docs/*' ':!examples/*' | head -20`. Use the most specific identifier or error string from the issue.
 - Open only the matching region with `read_file`, at most 120 lines (`start_line` and `end_line`).
 - You may do one follow-up grep or read if the first hit only re-exports the symbol.
 - Do not page through unrelated files. Do not read a whole file when a range will do.

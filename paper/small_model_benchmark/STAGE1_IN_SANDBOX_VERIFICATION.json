@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "target_file": "src/flask/blueprints.py",
+      "top_files": [
+        "src/flask/blueprints.py",
+        "src/flask/scaffold.py",
+        "src/flask/app.py"
+      ],
+      "target_in_top3": true,
+      "clean_git_status": true,
+      "latency_sec": 0.808
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "target_file": "requests/models.py",
+      "top_files": [
+        "requests/models.py",
+        "requests/packages/urllib3/response.py",
+        "requests/packages/urllib3/exceptions.py"
+      ],
+      "target_in_top3": true,
+      "clean_git_status": true,
+      "latency_sec": 1.292
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5103",
+      "target_file": "src/_pytest/assertion/rewrite.py",
+      "top_files": [
+        "src/_pytest/assertion/rewrite.py",
+        "src/_pytest/python.py",
+        "src/_pytest/python_api.py"
+      ],
+      "target_in_top3": true,
+      "clean_git_status": true,
+      "latency_sec": 2.441
+    }
+  ]
+}

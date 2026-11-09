@@ -284,3 +284,31 @@ def format_locator_hint(locator_result: dict) -> str:
         else:
             lines.append(f"{i}. `{f}`")
     return "\n".join(lines)
+
+if __name__ == "__main__":
+    import argparse, sys
+    parser = argparse.ArgumentParser(description="Deterministic AST + BM25 Repository Locator")
+    parser.add_argument("--repo", default=".", help="Repository root path")
+    parser.add_argument("--query", default="", help="Problem statement or query text")
+    parser.add_argument("--query-file", default="", help="Path to file containing query text")
+    parser.add_argument("--top-k", type=int, default=5, help="Number of files to return")
+    args = parser.parse_args()
+
+    q_text = args.query
+    if not q_text and args.query_file and os.path.isfile(args.query_file):
+        q_text = Path(args.query_file).read_text(encoding="utf-8", errors="replace")
+    elif not q_text:
+        # Check standard scratch / temp locations
+        for candidate in ["/tmp/problem_statement.txt", "problem_statement.txt"]:
+            if os.path.isfile(candidate):
+                q_text = Path(candidate).read_text(encoding="utf-8", errors="replace")
+                break
+
+    if not q_text and not sys.stdin.isatty():
+        q_text = sys.stdin.read()
+
+    indexer = ASTRepoIndexer(Path(args.repo))
+    indexer.index()
+    locator = BM25Locator(indexer)
+    res = locator.query(q_text, top_k_files=args.top_k)
+    print(format_locator_hint(res))
