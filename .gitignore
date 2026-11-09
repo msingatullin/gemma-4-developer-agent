@@ -12,6 +12,5 @@ scripts/update_kaggle_writeup.py
 *storage_state*.json
 *cookie*.json
 !paper/e2e_gemma_experiment/frozen_prompts/task_14_werkzeug_cookie_quote__B2_assertion_aware.json
-v15_small_model/
-v16_small_model/
+paper/small_model_benchmark/checkpoints/
 
