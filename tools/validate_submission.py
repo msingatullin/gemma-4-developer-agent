@@ -23,6 +23,10 @@ ALLOWED_TOOLS = {
     "agent_tool",
 }
 
+ALLOWED_MODELS = {
+    "gemma-4-31b-it-qat-w4a16-ct",
+    "gemma-4-e4b-it-qat-w4a16-ct",
+}
 EXPECTED_MODEL = "gemma-4-31b-it-qat-w4a16-ct"
 
 
@@ -46,8 +50,8 @@ def validate_submission(submission_dir: Path) -> bool:
     content = agent_yaml_path.read_text(encoding="utf-8")
 
     # Check model
-    if f"model: {EXPECTED_MODEL}" not in content:
-        errors.append(f"agent.yaml does not declare required model: '{EXPECTED_MODEL}'")
+    if not any(f"model: {m}" in content for m in ALLOWED_MODELS):
+        errors.append(f"agent.yaml does not declare an allowed competition model: {ALLOWED_MODELS}")
 
     # Check skills format
     skills_dir = submission_dir / "skills"
