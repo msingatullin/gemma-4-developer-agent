@@ -1,0 +1,920 @@
+{
+  "summary": {
+    "overall": {
+      "count": 42,
+      "recall_at_1": 0.4762,
+      "recall_at_3": 0.5952,
+      "recall_at_5": 0.6429,
+      "mrr": 0.5459,
+      "avg_latency_sec": 11.587
+    },
+    "dev_split": {
+      "count": 21,
+      "recall_at_1": 0.4762,
+      "recall_at_3": 0.5238,
+      "recall_at_5": 0.5714,
+      "mrr": 0.5163,
+      "avg_latency_sec": 11.96
+    },
+    "heldout_split": {
+      "count": 21,
+      "recall_at_1": 0.4762,
+      "recall_at_3": 0.6667,
+      "recall_at_5": 0.7143,
+      "mrr": 0.5754,
+      "avg_latency_sec": 11.213
+    },
+    "by_repo": {
+      "pallets/flask": {
+        "count": 4,
+        "recall_at_1": 0.75,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 0.875,
+        "avg_latency_sec": 0.623
+      },
+      "psf/requests": {
+        "count": 6,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.6667,
+        "recall_at_5": 0.8333,
+        "mrr": 0.5972,
+        "avg_latency_sec": 1.321
+      },
+      "pytest-dev/pytest": {
+        "count": 8,
+        "recall_at_1": 0.375,
+        "recall_at_3": 0.5,
+        "recall_at_5": 0.5,
+        "mrr": 0.4583,
+        "avg_latency_sec": 2.155
+      },
+      "pylint-dev/pylint": {
+        "count": 2,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.5,
+        "recall_at_5": 0.5,
+        "mrr": 0.25,
+        "avg_latency_sec": 3.38
+      },
+      "django/django": {
+        "count": 12,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.5833,
+        "recall_at_5": 0.5833,
+        "mrr": 0.5278,
+        "avg_latency_sec": 15.447
+      },
+      "sympy/sympy": {
+        "count": 10,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.5,
+        "recall_at_5": 0.6,
+        "mrr": 0.5343,
+        "avg_latency_sec": 26.685
+      }
+    }
+  },
+  "tasks": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "repo": "pallets/flask",
+      "split": "dev",
+      "ground_truth_files": [
+        "src/flask/blueprints.py"
+      ],
+      "top_3_predictions": [
+        "src/flask/blueprints.py",
+        "src/flask/scaffold.py",
+        "src/flask/app.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 74,
+      "latency_sec": 0.607
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "repo": "pallets/flask",
+      "split": "dev",
+      "ground_truth_files": [
+        "src/flask/config.py"
+      ],
+      "top_3_predictions": [
+        "src/flask/config.py",
+        "src/flask/helpers.py",
+        "src/flask/app.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 79,
+      "latency_sec": 0.639
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "repo": "pallets/flask",
+      "split": "heldout",
+      "ground_truth_files": [
+        "src/flask/cli.py"
+      ],
+      "top_3_predictions": [
+        "src/flask/blueprints.py",
+        "src/flask/cli.py",
+        "src/flask/app.py"
+      ],
+      "first_rank": 2,
+      "recall_at_1": false,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 0.5,
+      "corpus_files": 79,
+      "latency_sec": 0.622
+    },
+    {
+      "instance_id": "pallets__flask-5014",
+      "repo": "pallets/flask",
+      "split": "heldout",
+      "ground_truth_files": [
+        "src/flask/blueprints.py"
+      ],
+      "top_3_predictions": [
+        "src/flask/blueprints.py",
+        "src/flask/app.py",
+        "src/flask/helpers.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 79,
+      "latency_sec": 0.626
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "repo": "psf/requests",
+      "split": "dev",
+      "ground_truth_files": [
+        "requests/sessions.py"
+      ],
+      "top_3_predictions": [
+        "requests/sessions.py",
+        "requests/packages/urllib3/request.py",
+        "requests/packages/urllib3/util.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 74,
+      "latency_sec": 1.079
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "repo": "psf/requests",
+      "split": "dev",
+      "ground_truth_files": [
+        "requests/models.py"
+      ],
+      "top_3_predictions": [
+        "requests/models.py",
+        "requests/packages/urllib3/response.py",
+        "requests/packages/urllib3/exceptions.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 81,
+      "latency_sec": 1.13
+    },
+    {
+      "instance_id": "psf__requests-2317",
+      "repo": "psf/requests",
+      "split": "dev",
+      "ground_truth_files": [
+        "requests/sessions.py"
+      ],
+      "top_3_predictions": [
+        "requests/sessions.py",
+        "requests/utils.py",
+        "requests/packages/urllib3/request.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 81,
+      "latency_sec": 1.119
+    },
+    {
+      "instance_id": "psf__requests-2674",
+      "repo": "psf/requests",
+      "split": "heldout",
+      "ground_truth_files": [
+        "requests/adapters.py"
+      ],
+      "top_3_predictions": [
+        "requests/packages/urllib3/exceptions.py",
+        "requests/packages/urllib3/util/timeout.py",
+        "requests/exceptions.py"
+      ],
+      "first_rank": null,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.0,
+      "corpus_files": 81,
+      "latency_sec": 1.23
+    },
+    {
+      "instance_id": "psf__requests-3362",
+      "repo": "psf/requests",
+      "split": "heldout",
+      "ground_truth_files": [
+        "requests/utils.py"
+      ],
+      "top_3_predictions": [
+        "requests/models.py",
+        "requests/packages/urllib3/request.py",
+        "requests/utils.py"
+      ],
+      "first_rank": 3,
+      "recall_at_1": false,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 0.3333333333333333,
+      "corpus_files": 96,
+      "latency_sec": 1.265
+    },
+    {
+      "instance_id": "psf__requests-863",
+      "repo": "psf/requests",
+      "split": "heldout",
+      "ground_truth_files": [
+        "requests/models.py"
+      ],
+      "top_3_predictions": [
+        "requests/cookies.py",
+        "requests/sessions.py",
+        "requests/packages/urllib3/request.py"
+      ],
+      "first_rank": 4,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": true,
+      "mrr": 0.25,
+      "corpus_files": 123,
+      "latency_sec": 2.102
+    },
+    {
+      "instance_id": "pytest-dev__pytest-11143",
+      "repo": "pytest-dev/pytest",
+      "split": "dev",
+      "ground_truth_files": [
+        "src/_pytest/assertion/rewrite.py"
+      ],
+      "top_3_predictions": [
+        "src/_pytest/assertion/rewrite.py",
+        "src/_pytest/python.py",
+        "setup.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 230,
+      "latency_sec": 2.851
+    },
+    {
+      "instance_id": "pytest-dev__pytest-11148",
+      "repo": "pytest-dev/pytest",
+      "split": "dev",
+      "ground_truth_files": [
+        "src/_pytest/pathlib.py"
+      ],
+      "top_3_predictions": [
+        "setup.py",
+        "scripts/towncrier-draft-to-file.py",
+        "src/_pytest/logging.py"
+      ],
+      "first_rank": null,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.0,
+      "corpus_files": 230,
+      "latency_sec": 3.081
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5103",
+      "repo": "pytest-dev/pytest",
+      "split": "dev",
+      "ground_truth_files": [
+        "src/_pytest/assertion/rewrite.py"
+      ],
+      "top_3_predictions": [
+        "src/_pytest/assertion/rewrite.py",
+        "src/_pytest/python.py",
+        "src/_pytest/python_api.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 176,
+      "latency_sec": 1.906
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5221",
+      "repo": "pytest-dev/pytest",
+      "split": "dev",
+      "ground_truth_files": [
+        "src/_pytest/python.py"
+      ],
+      "top_3_predictions": [
+        "scripts/release.py",
+        "testing/python/fixtures.py",
+        "src/_pytest/fixtures.py"
+      ],
+      "first_rank": 6,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.16666666666666666,
+      "corpus_files": 176,
+      "latency_sec": 1.887
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5227",
+      "repo": "pytest-dev/pytest",
+      "split": "heldout",
+      "ground_truth_files": [
+        "src/_pytest/logging.py"
+      ],
+      "top_3_predictions": [
+        "src/_pytest/_code/code.py",
+        "src/_pytest/capture.py",
+        "src/_pytest/logging.py"
+      ],
+      "first_rank": 3,
+      "recall_at_1": false,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 0.3333333333333333,
+      "corpus_files": 176,
+      "latency_sec": 1.867
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5413",
+      "repo": "pytest-dev/pytest",
+      "split": "heldout",
+      "ground_truth_files": [
+        "src/_pytest/_code/code.py"
+      ],
+      "top_3_predictions": [
+        "src/_pytest/python_api.py",
+        "src/_pytest/python.py",
+        "src/_pytest/fixtures.py"
+      ],
+      "first_rank": 6,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.16666666666666666,
+      "corpus_files": 175,
+      "latency_sec": 1.876
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5495",
+      "repo": "pytest-dev/pytest",
+      "split": "heldout",
+      "ground_truth_files": [
+        "src/_pytest/assertion/util.py"
+      ],
+      "top_3_predictions": [
+        "testing/test_assertion.py",
+        "testing/test_assertrewrite.py",
+        "src/_pytest/assertion/rewrite.py"
+      ],
+      "first_rank": null,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.0,
+      "corpus_files": 178,
+      "latency_sec": 1.852
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5692",
+      "repo": "pytest-dev/pytest",
+      "split": "heldout",
+      "ground_truth_files": [
+        "src/_pytest/junitxml.py"
+      ],
+      "top_3_predictions": [
+        "src/_pytest/junitxml.py",
+        "src/_pytest/reports.py",
+        "scripts/release.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 178,
+      "latency_sec": 1.924
+    },
+    {
+      "instance_id": "sympy__sympy-11400",
+      "repo": "sympy/sympy",
+      "split": "dev",
+      "ground_truth_files": [
+        "sympy/printing/ccode.py"
+      ],
+      "top_3_predictions": [
+        "sympy/printing/ccode.py",
+        "sympy/interactive/printing.py",
+        "sympy/functions/elementary/piecewise.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 1092,
+      "latency_sec": 23.364
+    },
+    {
+      "instance_id": "sympy__sympy-11870",
+      "repo": "sympy/sympy",
+      "split": "dev",
+      "ground_truth_files": [
+        "sympy/functions/elementary/trigonometric.py"
+      ],
+      "top_3_predictions": [
+        "sympy/simplify/trigsimp.py",
+        "sympy/functions/elementary/exponential.py",
+        "sympy/simplify/simplify.py"
+      ],
+      "first_rank": 7,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.14285714285714285,
+      "corpus_files": 1172,
+      "latency_sec": 45.844
+    },
+    {
+      "instance_id": "sympy__sympy-11897",
+      "repo": "sympy/sympy",
+      "split": "dev",
+      "ground_truth_files": [
+        "sympy/printing/latex.py"
+      ],
+      "top_3_predictions": [
+        "sympy/printing/latex.py",
+        "sympy/interactive/printing.py",
+        "sympy/physics/vector/printing.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 1099,
+      "latency_sec": 24.125
+    },
+    {
+      "instance_id": "sympy__sympy-12171",
+      "repo": "sympy/sympy",
+      "split": "dev",
+      "ground_truth_files": [
+        "sympy/printing/mathematica.py"
+      ],
+      "top_3_predictions": [
+        "sympy/core/expr.py",
+        "sympy/printing/printer.py",
+        "sympy/physics/vector/printing.py"
+      ],
+      "first_rank": 5,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": true,
+      "mrr": 0.2,
+      "corpus_files": 1102,
+      "latency_sec": 24.049
+    },
+    {
+      "instance_id": "sympy__sympy-12236",
+      "repo": "sympy/sympy",
+      "split": "dev",
+      "ground_truth_files": [
+        "sympy/polys/domains/polynomialring.py"
+      ],
+      "top_3_predictions": [
+        "sympy/core/symbol.py",
+        "sympy/physics/mechanics/system.py",
+        "sympy/solvers/solvers.py"
+      ],
+      "first_rank": null,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.0,
+      "corpus_files": 1102,
+      "latency_sec": 24.463
+    },
+    {
+      "instance_id": "sympy__sympy-12419",
+      "repo": "sympy/sympy",
+      "split": "heldout",
+      "ground_truth_files": [
+        "sympy/matrices/expressions/matexpr.py"
+      ],
+      "top_3_predictions": [
+        "sympy/assumptions/ask.py",
+        "sympy/core/basic.py",
+        "sympy/core/symbol.py"
+      ],
+      "first_rank": null,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.0,
+      "corpus_files": 1109,
+      "latency_sec": 24.535
+    },
+    {
+      "instance_id": "sympy__sympy-12454",
+      "repo": "sympy/sympy",
+      "split": "heldout",
+      "ground_truth_files": [
+        "sympy/matrices/matrices.py"
+      ],
+      "top_3_predictions": [
+        "sympy/matrices/matrices.py",
+        "sympy/matrices/dense.py",
+        "sympy/assumptions/handlers/matrices.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 1108,
+      "latency_sec": 24.569
+    },
+    {
+      "instance_id": "sympy__sympy-12481",
+      "repo": "sympy/sympy",
+      "split": "heldout",
+      "ground_truth_files": [
+        "sympy/combinatorics/permutations.py"
+      ],
+      "top_3_predictions": [
+        "sympy/combinatorics/permutations.py",
+        "sympy/utilities/iterables.py",
+        "sympy/core/compatibility.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 1108,
+      "latency_sec": 25.496
+    },
+    {
+      "instance_id": "sympy__sympy-13031",
+      "repo": "sympy/sympy",
+      "split": "heldout",
+      "ground_truth_files": [
+        "sympy/matrices/sparse.py"
+      ],
+      "top_3_predictions": [
+        "sympy/solvers/diophantine.py",
+        "sympy/matrices/common.py",
+        "sympy/tensor/tensor.py"
+      ],
+      "first_rank": null,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.0,
+      "corpus_files": 1120,
+      "latency_sec": 25.256
+    },
+    {
+      "instance_id": "sympy__sympy-13043",
+      "repo": "sympy/sympy",
+      "split": "heldout",
+      "ground_truth_files": [
+        "sympy/integrals/intpoly.py"
+      ],
+      "top_3_predictions": [
+        "sympy/integrals/intpoly.py",
+        "sympy/core/function.py",
+        "sympy/core/basic.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 1129,
+      "latency_sec": 25.15
+    },
+    {
+      "instance_id": "django__django-10914",
+      "repo": "django/django",
+      "split": "dev",
+      "ground_truth_files": [
+        "django/conf/global_settings.py"
+      ],
+      "top_3_predictions": [
+        "django/core/files/storage.py",
+        "django/core/files/uploadedfile.py",
+        "django/core/files/uploadhandler.py"
+      ],
+      "first_rank": null,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.0,
+      "corpus_files": 2532,
+      "latency_sec": 15.178
+    },
+    {
+      "instance_id": "django__django-10924",
+      "repo": "django/django",
+      "split": "dev",
+      "ground_truth_files": [
+        "django/db/models/fields/__init__.py"
+      ],
+      "top_3_predictions": [
+        "django/contrib/auth/models.py",
+        "django/db/migrations/migration.py",
+        "django/forms/fields.py"
+      ],
+      "first_rank": null,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.0,
+      "corpus_files": 2545,
+      "latency_sec": 15.212
+    },
+    {
+      "instance_id": "django__django-11001",
+      "repo": "django/django",
+      "split": "dev",
+      "ground_truth_files": [
+        "django/db/models/sql/compiler.py"
+      ],
+      "top_3_predictions": [
+        "django/db/models/sql/query.py",
+        "django/db/models/expressions.py",
+        "django/db/models/sql/compiler.py"
+      ],
+      "first_rank": 3,
+      "recall_at_1": false,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 0.3333333333333333,
+      "corpus_files": 2546,
+      "latency_sec": 15.346
+    },
+    {
+      "instance_id": "django__django-11019",
+      "repo": "django/django",
+      "split": "dev",
+      "ground_truth_files": [
+        "django/forms/widgets.py"
+      ],
+      "top_3_predictions": [
+        "django/forms/widgets.py",
+        "django/contrib/admin/widgets.py",
+        "django/contrib/gis/forms/widgets.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 2535,
+      "latency_sec": 14.971
+    },
+    {
+      "instance_id": "django__django-11039",
+      "repo": "django/django",
+      "split": "dev",
+      "ground_truth_files": [
+        "django/core/management/commands/sqlmigrate.py"
+      ],
+      "top_3_predictions": [
+        "django/db/transaction.py",
+        "django/db/backends/sqlite3/schema.py",
+        "django/db/backends/base/base.py"
+      ],
+      "first_rank": null,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.0,
+      "corpus_files": 2535,
+      "latency_sec": 15.178
+    },
+    {
+      "instance_id": "django__django-11049",
+      "repo": "django/django",
+      "split": "dev",
+      "ground_truth_files": [
+        "django/db/models/fields/__init__.py"
+      ],
+      "top_3_predictions": [
+        "django/utils/dateformat.py",
+        "django/utils/timesince.py",
+        "django/core/mail/message.py"
+      ],
+      "first_rank": null,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.0,
+      "corpus_files": 2535,
+      "latency_sec": 15.733
+    },
+    {
+      "instance_id": "django__django-11099",
+      "repo": "django/django",
+      "split": "heldout",
+      "ground_truth_files": [
+        "django/contrib/auth/validators.py"
+      ],
+      "top_3_predictions": [
+        "django/contrib/auth/validators.py",
+        "django/contrib/auth/forms.py",
+        "django/core/validators.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 2546,
+      "latency_sec": 15.978
+    },
+    {
+      "instance_id": "django__django-11133",
+      "repo": "django/django",
+      "split": "heldout",
+      "ground_truth_files": [
+        "django/http/response.py"
+      ],
+      "top_3_predictions": [
+        "django/http/response.py",
+        "django/template/response.py",
+        "django/contrib/contenttypes/fields.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 2543,
+      "latency_sec": 15.283
+    },
+    {
+      "instance_id": "django__django-11179",
+      "repo": "django/django",
+      "split": "heldout",
+      "ground_truth_files": [
+        "django/db/models/deletion.py"
+      ],
+      "top_3_predictions": [
+        "django/db/models/deletion.py",
+        "django/forms/models.py",
+        "django/contrib/auth/models.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 2543,
+      "latency_sec": 15.432
+    },
+    {
+      "instance_id": "django__django-11283",
+      "repo": "django/django",
+      "split": "heldout",
+      "ground_truth_files": [
+        "django/contrib/auth/migrations/0011_update_proxy_permissions.py"
+      ],
+      "top_3_predictions": [
+        "django/contrib/auth/migrations/0011_update_proxy_permissions.py",
+        "django/contrib/auth/models.py",
+        "django/forms/models.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 2545,
+      "latency_sec": 15.74
+    },
+    {
+      "instance_id": "django__django-11422",
+      "repo": "django/django",
+      "split": "heldout",
+      "ground_truth_files": [
+        "django/utils/autoreload.py"
+      ],
+      "top_3_predictions": [
+        "django/utils/autoreload.py",
+        "django/utils/translation/reloader.py",
+        "django/core/management/commands/runserver.py"
+      ],
+      "first_rank": 1,
+      "recall_at_1": true,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 1.0,
+      "corpus_files": 2546,
+      "latency_sec": 15.718
+    },
+    {
+      "instance_id": "django__django-11564",
+      "repo": "django/django",
+      "split": "heldout",
+      "ground_truth_files": [
+        "django/conf/__init__.py"
+      ],
+      "top_3_predictions": [
+        "django/core/files/storage.py",
+        "django/contrib/staticfiles/storage.py",
+        "django/templatetags/static.py"
+      ],
+      "first_rank": null,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.0,
+      "corpus_files": 2570,
+      "latency_sec": 15.595
+    },
+    {
+      "instance_id": "pylint-dev__pylint-5859",
+      "repo": "pylint-dev/pylint",
+      "split": "dev",
+      "ground_truth_files": [
+        "pylint/checkers/misc.py"
+      ],
+      "top_3_predictions": [
+        "pylint/epylint.py",
+        "pylint/config/option.py",
+        "pylint/pyreverse/main.py"
+      ],
+      "first_rank": null,
+      "recall_at_1": false,
+      "recall_at_3": false,
+      "recall_at_5": false,
+      "mrr": 0.0,
+      "corpus_files": 1092,
+      "latency_sec": 3.408
+    },
+    {
+      "instance_id": "pylint-dev__pylint-6506",
+      "repo": "pylint-dev/pylint",
+      "split": "heldout",
+      "ground_truth_files": [
+        "pylint/config/config_initialization.py"
+      ],
+      "top_3_predictions": [
+        "pylint/__init__.py",
+        "pylint/config/config_initialization.py",
+        "pylint/config/exceptions.py"
+      ],
+      "first_rank": 2,
+      "recall_at_1": false,
+      "recall_at_3": true,
+      "recall_at_5": true,
+      "mrr": 0.5,
+      "corpus_files": 1214,
+      "latency_sec": 3.351
+    }
+  ]
+}
