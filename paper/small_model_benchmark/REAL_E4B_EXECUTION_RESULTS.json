@@ -1,0 +1,28 @@
+{
+  "audit_timestamp": "2026-11-09T16:54:38Z",
+  "status": "BLOCKED \u2014 REAL INFERENCE NOT EXECUTED",
+  "reason": "Insufficient VRAM: detected 3.13 GB available. Gemma 4 E4B requires minimum 5.5 GB (Q4_0) or 15.2 GB (FP16) + KV cache. Executing local inference will trigger immediate Linux OOMKilled.",
+  "hardware_diagnostics": {
+    "has_cuda": true,
+    "device_count": 1,
+    "devices": [
+      {
+        "name": "NVIDIA GeForce GTX 1650",
+        "total_vram_gb": 4.0,
+        "free_vram_gb": 3.13
+      }
+    ],
+    "total_vram_gb": 4.0,
+    "available_vram_gb": 3.13,
+    "host_ram_available_gb": 0.0,
+    "inference_eligible": false,
+    "blocker_reason": "Insufficient VRAM: detected 3.13 GB available. Gemma 4 E4B requires minimum 5.5 GB (Q4_0) or 15.2 GB (FP16) + KV cache. Executing local inference will trigger immediate Linux OOMKilled."
+  },
+  "api_base": "http://localhost:8000/v1",
+  "cloud_spend": "$0.00",
+  "verified_candidates": [
+    "v15",
+    "v17_grep_only",
+    "v17_ast_bm25"
+  ]
+}

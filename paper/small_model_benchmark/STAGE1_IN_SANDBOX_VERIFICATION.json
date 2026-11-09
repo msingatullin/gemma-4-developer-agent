@@ -17,7 +17,7 @@
       "clean_git_status": true,
       "clean_git_diff": true,
       "zero_gold_leakage": true,
-      "latency_sec": 0.754,
+      "latency_sec": 0.787,
       "delivery_method": "self_contained_bash_heredoc_to_tmp",
       "host_pre_copying_used": false
     },
@@ -34,7 +34,7 @@
       "clean_git_status": true,
       "clean_git_diff": true,
       "zero_gold_leakage": true,
-      "latency_sec": 0.806,
+      "latency_sec": 0.815,
       "delivery_method": "self_contained_bash_heredoc_to_tmp",
       "host_pre_copying_used": false
     },
@@ -51,7 +51,7 @@
       "clean_git_status": true,
       "clean_git_diff": true,
       "zero_gold_leakage": true,
-      "latency_sec": 1.224,
+      "latency_sec": 1.27,
       "delivery_method": "self_contained_bash_heredoc_to_tmp",
       "host_pre_copying_used": false
     },
@@ -68,7 +68,7 @@
       "clean_git_status": true,
       "clean_git_diff": true,
       "zero_gold_leakage": true,
-      "latency_sec": 1.308,
+      "latency_sec": 1.282,
       "delivery_method": "self_contained_bash_heredoc_to_tmp",
       "host_pre_copying_used": false
     },
@@ -85,7 +85,7 @@
       "clean_git_status": true,
       "clean_git_diff": true,
       "zero_gold_leakage": true,
-      "latency_sec": 2.162,
+      "latency_sec": 2.115,
       "delivery_method": "self_contained_bash_heredoc_to_tmp",
       "host_pre_copying_used": false
     },
@@ -102,7 +102,7 @@
       "clean_git_status": true,
       "clean_git_diff": true,
       "zero_gold_leakage": true,
-      "latency_sec": 25.176,
+      "latency_sec": 24.869,
       "delivery_method": "self_contained_bash_heredoc_to_tmp",
       "host_pre_copying_used": false
     }
