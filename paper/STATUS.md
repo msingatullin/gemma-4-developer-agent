@@ -65,3 +65,20 @@ Additional known contenders include Mark Whiteley (192 recorded episodes claimed
 **Competitive gap:** our 150 calls cover only 15 synthetic tasks and B2 is post-hoc. A_raw and C_tail35 had 30/30 patch tests while B2 had 29/30; cannot claim proven raw-equivalent quality. Our strongest defensible advantage is a small, readily auditable assertion-aware diagnostic preservation tool with raw data, fixed prompts and sandbox evaluation. Immediate best zero-cost improvement: concise manuscript coherence and evidence links; CPU-only heldout validation if safely runnable. DO NOT claim rivals are eligible submissions or compute a fake winning probability.
 
 **Next checkpoint:** verify direct Writeup links for top contenders if Kaggle exposes them; prioritize Toeda, xxsyrbest, maroofiums and Jared; monitor new notebooks such as Kevon and Mobassir. No spending or Kaggle submission changes authorized.
+
+## CPU-only harness hardening checkpoint — 2026-11-10
+
+Authorization: owner approved free harness development and audit; **NO GPU**, no paid compute and no Kaggle submission/publication changes.
+
+### Implemented and verified by GitHub read-back
+- Commit 4efbde57b2ab3cac0e6203c5f42219fd8dab2505 modified `paper/e2e_gemma_experiment/evaluate_real_repo_patches.py`: added `validate_candidate_diff_paths()` requiring a single allowlisted target source file for unified diffs, rejecting traversal, absolute paths, changed test targets, deletion/rename/copy/binary patches and missing hunks; `patch` now runs noninteractively with `--fuzz=0`; evaluator run_id restricted to safe ASCII path component.
+- Commit ac746aded5429e5d43a5321a4952ed8ed95d5108 created `paper/e2e_gemma_experiment/test_patch_path_guard.py` with 10 CPU-only unit tests; extracts the guard via AST without importing Docker/dependencies.
+- GitHub fetch_file read-back confirmed both exact source files, diff guard and 10 tests are present. **Tests were NOT run against a checked-out repository in this environment**; do not record PASS from source inspection.
+
+### Outstanding blockers / next execution
+1. Run `python -m unittest discover -s paper/e2e_gemma_experiment -p 'test_patch_path_guard.py' -v` from a clean clone and log 10/10 actual results. Stop if any fail.
+2. Audit `run_in_docker`: current volume mounts include host `/home/mikhail/.local` (read-only), and copied virtualenv; isolation and compatibility must be confirmed before executing ANY model-generated code. Better use purpose-built, pinned, credential-free sandbox and read-only input mounts.
+3. Run evaluator gold/base/malformed/regression controls in appropriate isolated CPU-only environment, for all five real upstream tasks, and independently verify F2P vs P2P disjointness and actual test counts.
+4. No Gemma inference, GPU, Kaggle writeup modification or prize claim until all gates pass and relevant operations separately authorized.
+
+Current decision: **HOLD on real model patch execution**, CPU static path-hardening changes only. Previous successful historical CPU RED/GREEN artifacts are not a fresh rerun.
