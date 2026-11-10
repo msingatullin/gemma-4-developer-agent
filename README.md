@@ -71,3 +71,17 @@ We collected **150 live inference responses** from quantized Gemma 4 31B: an ini
 This repository supports the [Google Gemma 4 Developer Agent Competition](https://www.kaggle.com/competitions/gemma-4-developer-agent) and the separate [Paper Track](https://www.kaggle.com/competitions/gemma-4-developer-agent-paper). The Kaggle Paper Track entry is the canonical submitted research summary; repository artifacts provide reproducibility material. The Paper Track submission deadline is **November 12, 2026 (23:59 UTC)**.
 
 **Author:** Mikhail Singatullin (`msingatullin`). Licensed under Apache 2.0.
+
+
+## Evidence boundary: authentic upstream CPU controls (2026-11-10)
+
+The five pinned **authentic** historical SWE cases are **Flask (3) and Requests (2)**. They are separate from the 15 **synthetic** defect reproductions used for the original 120 Gemma 4 calls and the additional 30 post-hoc B2 calls. No Gemma 4 inference or autonomous repair success on the five authentic issues has been established.
+
+The isolated, offline, unprivileged CPU harness reproduced **5/5 RED** reference failures and **5/5 GREEN** historical gold fixes, with **155 selected P2P tests passing in both states**. Deterministic evaluator controls passed **12/12** and security/scoring unit tests **39/39**. Frozen A/B2/C prompts were checked for exact copied gold-code spans (**15/15 clear**); this does **not** establish absence of semantic leakage.
+
+- [Full real-task CPU acceptance report](paper/e2e_gemma_experiment/CPU_REAL5_FINAL_ACCEPTANCE_20261110.md)
+- [Final paper editorial evidence gates](paper/FINAL_EDITORIAL_GATES_20261110.md)
+- [Paper status and reproducibility notes](paper/STATUS.md)
+
+**Scientific limitation:** The B2 assertion-aware compressor achieved 29/30 synthetic patch tests against raw A's 30/30 (post-hoc exploratory comparison), with 39.05% fewer total API tokens. This does not prove functional noninferiority or transfer to authentic SWE issues.
+
