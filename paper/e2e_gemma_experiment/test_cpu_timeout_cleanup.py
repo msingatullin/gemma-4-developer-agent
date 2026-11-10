@@ -18,7 +18,7 @@ def load_runner():
         raise AssertionError("Expected exactly one runner")
     nodes = ast.fix_missing_locations(ast.Module(body=matches, type_ignores=[]))
     ns = {
-        "os": os, "re": re, "subprocess": subprocess, "uuid": uuid,
+        "os": os, "re": re, "subprocess": subprocess, "uuid": uuid, "Path": Path,
         "build_safe_docker_command": lambda path, cmd, image, name: [
             "docker", "run", "--name", name, image
         ] + cmd,
