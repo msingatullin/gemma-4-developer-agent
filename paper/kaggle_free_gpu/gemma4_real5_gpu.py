@@ -144,6 +144,34 @@ def bootstrap_vllm_in_fresh_process():
     return True
 
 
+def patch_vllm_t4_triton_attention():
+    """Conservative Turing-only vLLM 0.30 source workaround; fail closed.
+
+    Gemma4 full-attn head_size=512 with TILE_SIZE_PREFILL=32 requires
+    96 KiB shared memory on T4 (64 KiB hardware limit). Smaller tile and
+    single pipeline stage are documented upstream in issue #38918.
+    Only this Kaggle ephemeral kernel environment is modified.
+    """
+    import sysconfig
+    target = Path(sysconfig.get_path("purelib")) / (
+        "vllm/v1/attention/ops/triton_unified_attention.py"
+    )
+    original = target.read_text(encoding="utf-8")
+    tile_old = "    # Default behavior\\n    if is_prefill:\\n        return 32\\n"
+    tile_new = "    # Default behavior\\n    if is_prefill:\\n        return 16  # T4 Gemma4 head_size 512: <=64KiB shared memory\\n"
+    stages_old = "    launch_kwargs: dict[str, int] = {}\\n"
+    stages_new = "    launch_kwargs: dict[str, int] = {\\\"num_stages\\\": 1}\\n"
+    # Convert escaped literal backslashes to newlines for precise matching.
+    tile_old, tile_new = tile_old.replace("\\\\n", "\\n"), tile_new.replace("\\\\n", "\\n")
+    stages_old, stages_new = stages_old.replace("\\\\n", "\\n"), stages_new.replace("\\\\n", "\\n")
+    if original.count(tile_old) != 1 or original.count(stages_old) != 1:
+        raise RuntimeError("T4_TRITON_PATCH_UNSUPPORTED_SOURCE: stopping before GPU use")
+    changed = original.replace(tile_old, tile_new, 1).replace(stages_old, stages_new, 1)
+    compile(changed, str(target), "exec")
+    target.write_text(changed, encoding="utf-8")
+    print("T4_TRITON_PATCH_APPLIED tile_prefill=16 num_stages=1", flush=True)
+
+
 def load_backend(path):
     from vllm import LLM, SamplingParams
     import vllm
@@ -258,7 +286,8 @@ def main():
     try:
         if not args.after_bootstrap and bootstrap_vllm_in_fresh_process():
             return
-        run(args.local_frozen_root)
+        patch_vllm_t4_triton_attention()
+    run(args.local_frozen_root)
     except Exception as e:
         print("EXPERIMENT_STOPPED", type(e).__name__, str(e)[:1100], flush=True)
         raise
