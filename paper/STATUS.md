@@ -82,3 +82,15 @@ Authorization: owner approved free harness development and audit; **NO GPU**, no
 4. No Gemma inference, GPU, Kaggle writeup modification or prize claim until all gates pass and relevant operations separately authorized.
 
 Current decision: **HOLD on real model patch execution**, CPU static path-hardening changes only. Previous successful historical CPU RED/GREEN artifacts are not a fresh rerun.
+
+## Continuation — 2026-11-10, zero-cost CPU audit
+
+- GitHub hardening commit `375aa5f6748b547a0f0a6298c195a854bfdb273a`: additional fail-closed rejection for `Index:`, `*** ` context-patch headers, and multiple `diff --git` headers to prevent path-allowlist bypass.
+- GitHub test commit `a2f1fc806d2e5f314c216ba2ad58c9ae3b0c5612`: expanded pure CPU path guard regression suite from 10 to **13** cases.
+- The current ChatGPT container cannot clone GitHub (`Could not resolve host: github.com`), so **the repository's own 13-test suite has not been executed in a checkout**.
+- A **local manually reconstructed mirror** of the guard was executed with 13 matching tests: 13/13 PASS in 0.002s, but this is NOT an exact source checkout and must NOT be described as CI or production acceptance. Local diagnostic file: `/mnt/data/gemma-paper-cpu-audit/guard_cpu_check.py` (not a committed repository artifact).
+- Independent GitHub read-only audit of previously committed artifacts `real_repo_sample/evaluator_control_validation.json` found 12/12 recorded PASS (5 gold positive, 5 unchanged-base negative, 1 syntax-error, 1 deliberate-regression). Historical results only; no fresh Docker execution.
+- Independent GitHub read-only audit of `real_repo_sample/cpu_verification_results.jsonl`: 5/5 recorded RED exit=1, GREEN exit=0, regression exit=0. `requests_offline_p2p_tests.json` contains 43 listed tests, neither of the two Requests F2P test names occurs in that list. This checks manifest separation, not test execution completeness.
+- Critical sandbox blocker remains: `run_in_docker()` mounts host `/home/mikhail/.local` and `/tmp/real_tasks_cpu_eval`, copies environment-specific venvs and uses a mutable `python:3.12-slim` image; it is NOT approved for untrusted model-generated code without a cleaned, pinned, isolated runtime.
+
+**Decision:** STOP before full evaluator execution; no GPU, paid resources, Kaggle submission edits or new model outputs. Next gate must be actual 13/13 test execution from a clean clone, then safe sandbox/venv redesign and 12 controls rerun. Historical controls are NOT fresh post-patch verification.
