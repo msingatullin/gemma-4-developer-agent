@@ -107,24 +107,46 @@ def verify_gpus():
     return specs
 
 
-def load_backend(path):
+def bootstrap_vllm_in_fresh_process():
+    """Install in parent and run in a clean child to avoid mixed torch ABI.
+
+    Kaggle's notebook process may already have imported the old torch build;
+    pip replaces torch on disk when installing vLLM. Importing new modules
+    into the old interpreter caused the observed Config(deprecated=...) error.
+    """
+    from importlib.metadata import PackageNotFoundError, version
+    from packaging.version import Version
+
     try:
-        import vllm
-        from packaging.version import Version
-        if Version(vllm.__version__) < Version("0.29.0"):
-            raise ImportError("vLLM too old for this Gemma 4 trial")
-    except ImportError:
-        # Only inside the user's free Kaggle notebook; never on the host VPS.
-        print("VLLM_INSTALL_START: free Kaggle runtime only", flush=True)
-        subprocess.run(
-            [sys.executable, "-m", "pip", "install", "--quiet", "--no-input",
-             "--disable-pip-version-check", "vllm>=0.29.0,<0.31.0"],
-            check=True, timeout=540,
-        )
-        import importlib
-        importlib.invalidate_caches()
-        import vllm
+        current = version("vllm")
+        ready = Version(current) >= Version("0.29.0")
+    except PackageNotFoundError:
+        ready = False
+    if ready:
+        print("VLLM_INSTALLED_VERSION", current, flush=True)
+        return False
+
+    print("VLLM_INSTALL_START: free Kaggle GPU runtime; new Python process follows", flush=True)
+    subprocess.run(
+        [sys.executable, "-m", "pip", "install", "--quiet", "--no-input",
+         "--disable-pip-version-check", "vllm>=0.29.0,<0.31.0"],
+        check=True, timeout=540,
+    )
+    target = str(Path(__file__).resolve())
+    if not Path(target).is_file():
+        raise RuntimeError("Cannot locate Kaggle script for clean Python restart")
+    print("VLLM_INSTALL_DONE_START_CLEAN_PROCESS", target, flush=True)
+    subprocess.run(
+        [sys.executable, target, "--after-bootstrap"], check=True,
+        timeout=3300,
+    )
+    print("CLEAN_CHILD_PROCESS_FINISHED", flush=True)
+    return True
+
+
+def load_backend(path):
     from vllm import LLM, SamplingParams
+    import vllm
     print("VLLM_VERSION", vllm.__version__, flush=True)
     llm = LLM(
         model=str(path),
@@ -225,6 +247,7 @@ def run(local_root):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--preflight-only", action="store_true")
+    parser.add_argument("--after-bootstrap", action="store_true")
     parser.add_argument("--local-frozen-root", default=None)
     args = parser.parse_args()
     if args.preflight_only:
@@ -232,6 +255,8 @@ def main():
         print("PASS: frozen prompt manifest", len(x), "at", FROZEN_COMMIT)
         return
     try:
+        if not args.after_bootstrap and bootstrap_vllm_in_fresh_process():
+            return
         run(args.local_frozen_root)
     except Exception as e:
         print("EXPERIMENT_STOPPED", type(e).__name__, str(e)[:1100], flush=True)
