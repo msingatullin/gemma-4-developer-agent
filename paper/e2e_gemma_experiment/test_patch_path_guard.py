@@ -69,6 +69,15 @@ class PatchPathGuardTests(unittest.TestCase):
         d = "diff --git a/" + TARGET + " b/" + TARGET + "\n--- a/" + TARGET + "\n+++ b/" + TARGET
         self.assertFalse(self.validate(d, TARGET)[0])
 
+    def test_deny_index_directive(self):
+        self.assertFalse(self.validate(self.diff(extra="Index: tests/test_config.py\n"), TARGET)[0])
+
+    def test_deny_context_diff_header(self):
+        self.assertFalse(self.validate(self.diff(extra="*** tests/test_config.py\n"), TARGET)[0])
+
+    def test_deny_second_git_header(self):
+        self.assertFalse(self.validate(self.diff(extra="diff --git a/" + TARGET + " b/" + TARGET + "\n"), TARGET)[0])
+
     def test_deny_mismatched_git_header(self):
         d = self.diff().replace("diff --git a/" + TARGET, "diff --git a/tests/test_config.py")
         self.assertFalse(self.validate(d, TARGET)[0])
