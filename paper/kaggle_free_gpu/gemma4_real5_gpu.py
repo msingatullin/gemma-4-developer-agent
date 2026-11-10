@@ -31,8 +31,8 @@ CASES = (
 )
 VARIANTS = ("A_raw", "B2_assertion_aware", "C_tail35")
 MAX_NEW_TOKENS = 2048
-# Verified previous run v4 records are kept privately on VPS, never embedded in notebook.
-# Skip only these four pairs; final CPU intake requires an offline merged 15/15 corpus.
+# Verified previous v4+v5 responses remain private on VPS, never embedded in notebook.
+# Skip seven SHA-validated pairs; final scoring requires offline merged 15/15 corpus.
 PREVIOUSLY_VERIFIED_KEYS = frozenset({
     ("pallets__flask-4045", "A_raw"),
     ("pallets__flask-4045", "B2_assertion_aware"),
