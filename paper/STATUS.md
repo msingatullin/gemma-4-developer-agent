@@ -43,3 +43,25 @@ Evidence: paper/e2e_gemma_experiment/real_run_20261108/REAL_B2_EXPLORATORY_REPOR
 
 Decision: GO for $0 evidence/clarity/documentation checks; NO-GO for speculative paid GPU runs, Kaggle publication edits or submissions without approval.
 Next: draft concise, transparent B2 addendum, obtain approval, then verify live publishing status. No Kaggle changes made in this audit.
+
+## Competitor intelligence — 2026-11-10 (read-only update)
+
+Scope: public Kaggle notebooks and public sources, not a full verified ranking of submitted Paper Track Writeups. Kaggle competition notebook search returns public notebooks but cannot certify each notebook has an eligible final Writeup. Team count 752 as of previous official read; not number of valid prize candidates.
+
+| Rival | Public evidence | Relative threat / remaining uncertainty |
+| --- | --- | --- |
+| Taiko Toeda, Scaffolding Helps the Smallest Gemma 4 Agent | Zenodo https://zenodo.org/records/23834104: 3 model capacities x 2 scaffolds x 5 seeds x 104 public tasks, published preregistration; E4B claimed 10.0% to 15.4% resolved | Very high for Best Paper, not independently rerun |
+| xxsyrbest (Boyang Wang), Code Graph Localization | https://www.kaggle.com/code/xxsyrbest/gemma-4-code-graph-localization-reproducibility ; extensive prior verified artifacts and large reported runs | Very high novelty/verifiability risk, model inference not independently re-executed |
+| maroofiums (Muhammad Maroof), AST-Compressed Code Graphs | https://www.kaggle.com/code/maroofiums/ast-compressed-code-graphs-for-gemma-4-agents ; reported 150 SWE-bench Lite test, 60 dev, statistical analysis | Very high; direct overlap on AST/code graph, inference not independently rerun |
+| jaredga (Jared Anderson), Name the Method at Its Code | https://www.kaggle.com/code/jaredga/name-the-method-at-its-code-code-and-data ; 63 embedded files and recomputation | High threat to Best New Resource |
+| fabrianivan, Three Paradoxes & CA HGR | https://www.kaggle.com/code/fabrianivan/gemma-4-swe-agents-three-paradoxes-ca-hgr ; reports 1627 trajectories/294 tasks | High conditional, full underlying runs unverified |
+| pablodiegoo, L4 Decode Law & 12-Call Cliff | https://www.kaggle.com/code/pablodiegoo/gemma-4-paper-l4-decode-law-12-call-cliff ; reported 692 paired trajectories | High potential Quality threat; fresh inference not independently replayed |
+| Kevon Gaines, PhaseGuard-AST / Nullspace LoRA Surgeon | https://www.kaggle.com/code/kevongaines/phaseguard-ast-and-nullspace-lora-surgeon-repro ; currently public Kaggle notebook verified | Emerging, full outcomes still need independent review |
+| mobassir, Why Your Leaderboard Can't See a 3-Point Gain | https://www.kaggle.com/code/mobassir/why-your-leaderboard-can-t-see-a-3-point-gain ; current public notebook v8, discusses heldout and winner's curse | Emerging; methodological competition, not established Paper judging entry |
+| Mattbusel, SWE-Graph Lite | https://github.com/Mattbusel/swegraph-lite ; claims 300 SWE-bench Lite tasks released as code graphs | Potential strong Best New Resource rival; Kaggle submission unverified |
+
+Additional known contenders include Mark Whiteley (192 recorded episodes claimed), Akash Nair (16 constructed diagnostic cases), Pablo's competing hardware analysis, Roland Poulin E4B paper and recent GemmaGraph-Agent. These are monitored, not independently judged.
+
+**Competitive gap:** our 150 calls cover only 15 synthetic tasks and B2 is post-hoc. A_raw and C_tail35 had 30/30 patch tests while B2 had 29/30; cannot claim proven raw-equivalent quality. Our strongest defensible advantage is a small, readily auditable assertion-aware diagnostic preservation tool with raw data, fixed prompts and sandbox evaluation. Immediate best zero-cost improvement: concise manuscript coherence and evidence links; CPU-only heldout validation if safely runnable. DO NOT claim rivals are eligible submissions or compute a fake winning probability.
+
+**Next checkpoint:** verify direct Writeup links for top contenders if Kaggle exposes them; prioritize Toeda, xxsyrbest, maroofiums and Jared; monitor new notebooks such as Kevon and Mobassir. No spending or Kaggle submission changes authorized.
