@@ -35,9 +35,9 @@ MAX_NEW_TOKENS = 2048
 # Skip seven SHA-validated pairs; final scoring requires offline merged 15/15 corpus.
 PREVIOUSLY_VERIFIED_KEYS = frozenset({
     (case, variant)
-    for case in ("pallets__flask-4045", "pallets__flask-4992", "pallets__flask-5063")
+    for case in ("pallets__flask-4045", "pallets__flask-4992", "pallets__flask-5063", "psf__requests-1963")
     for variant in ("A_raw", "B2_assertion_aware", "C_tail35")
-})
+} | {("psf__requests-2148", "B2_assertion_aware")})
 CONTEXT_LIMIT = 16384
 TIME_BUDGET_SECONDS = 50 * 60
 OUTPUT = Path("/kaggle/working/gemma4_real5_collect_only.jsonl") if Path("/kaggle").exists() else Path("/tmp/gemma4_real5_collect_only.jsonl")
