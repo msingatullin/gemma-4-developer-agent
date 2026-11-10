@@ -155,7 +155,8 @@ def load_backend(path):
         dtype="float16",  # T4 does not support bfloat16
         max_model_len=CONTEXT_LIMIT,
         max_num_seqs=1,
-        gpu_memory_utilization=0.88,
+        gpu_memory_utilization=0.93,
+        cpu_offload_gb=6.0,  # GB per GPU: free memory for the frozen 16k-token context
         enforce_eager=True,
         trust_remote_code=False,
         disable_log_stats=True,
