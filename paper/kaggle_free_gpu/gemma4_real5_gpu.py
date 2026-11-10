@@ -38,6 +38,9 @@ PREVIOUSLY_VERIFIED_KEYS = frozenset({
     ("pallets__flask-4045", "B2_assertion_aware"),
     ("pallets__flask-4045", "C_tail35"),
     ("pallets__flask-4992", "B2_assertion_aware"),
+    ("pallets__flask-4992", "C_tail35"),
+    ("pallets__flask-4992", "A_raw"),
+    ("pallets__flask-5063", "C_tail35"),
 })
 CONTEXT_LIMIT = 16384
 TIME_BUDGET_SECONDS = 50 * 60
