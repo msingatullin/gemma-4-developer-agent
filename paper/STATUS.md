@@ -118,3 +118,16 @@ Current decision: **HOLD on real model patch execution**, CPU static path-harden
 4. Confirm F2P and P2P collected test counts and nonoverlap on all 5 tasks. If any fail, publish failure as failure, not a zero-filled result.
 
 **Financial and competition state:** $0 new spend; zero GPU launches; zero Kaggle Writeup edits/submissions. Current prize evidence and published Writeup preserved. No held-out model success or full CPU acceptance claimed.
+
+## 2026-11-10 — actual Gateway SSH execution gate (new confirmed checkpoint)
+
+**Host:** connected Gateway SSH `nuremberf` / Ubuntu 24.04. Separate sparse clone `/opt/kaggle/gemma-paper` (6 MB). Root disk **95% used**, about **6.8 GiB free**, so no packages/images pulled; production Docker services untouched.
+
+- Initial real repo test execution at `157b5377`: **29/31**; two pytest summary parsing regressions exposed, corrected in commit `d7288cd6bc4be01d441b9a8be9b1817a3f84632c`.
+- **Repeat exactly from GitHub checkout at `d7288cd6`: 31/31 PASS**, comprising patch-path 13, isolated Docker command builder 10, pytest pass-count 8. Gateway job `job_01M729DKTR00G3Z1DXN0PE8VEP`. Unlike prior reconstructed tests, these are actual checked-out source test runs.
+- **Frozen provenance/integrity:** 5/5 real upstream task metadata, 10/10 gold/test patch SHA256, 15/15 A/B2/C frozen prompt files and prompt SHA256, zero errors. Gateway job `job_01M729FZVC00P9VG18WKY8EVEK`.
+- Full audit: [CPU_GATEWAY_AUDIT_20261110.md](e2e_gemma_experiment/CPU_GATEWAY_AUDIT_20261110.md) (commit `31ef1c9283dd1a18e76a521a41d0da59d6b4ab5b`).
+
+**Not passed / no-go:** no upstream repo/cache or pinned Python 3.9/3.10/3.11 test images on this VPS. Re-running 5 authentic repo patch applications and twelve evaluator controls is **not complete**. Docker CLI timeout cleanup still needs explicit design and verification. Avoid downloading large images on 95%-full disk. No GPU/paid compute, no Kaggle modifications, no new model calls.
+
+**Next gate:** estimate storage and prebuild isolated CPU image without touching services only if resources allow; then actual independent RED/GREEN + F2P/P2P evidence on five tasks. Preserve complete previous baseline.
