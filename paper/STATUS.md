@@ -131,3 +131,15 @@ Current decision: **HOLD on real model patch execution**, CPU static path-harden
 **Not passed / no-go:** no upstream repo/cache or pinned Python 3.9/3.10/3.11 test images on this VPS. Re-running 5 authentic repo patch applications and twelve evaluator controls is **not complete**. Docker CLI timeout cleanup still needs explicit design and verification. Avoid downloading large images on 95%-full disk. No GPU/paid compute, no Kaggle modifications, no new model calls.
 
 **Next gate:** estimate storage and prebuild isolated CPU image without touching services only if resources allow; then actual independent RED/GREEN + F2P/P2P evidence on five tasks. Preserve complete previous baseline.
+
+
+## 2026-11-10 — Gateway SSH Phase 2, validated checkpoint
+
+- **Source and tests executed:** exact checkout `48155d56a0d73bb01afeb8aabb38b53953aa1a7e`, **38/38 CPU unit tests PASS**, job `job_01M72AKS4Z0080AVYEH6C6NN1X`; includes 7 new mocked Docker-timeout/Python profile tests. Fix of interpreter gate and unique named timed-out container cleanup in `3a53050f3e43dff0387bbf60a9264c0e0cc0e99c`. This is unit/mocked, NOT real Docker daemon cleanup.
+- **Storage:** VPS inventory 95% root filesystem, ~6.8 GiB free; no deletion, no large image pulls; working Git archives ~7–9MB for historical Flask/Requests commits; other services untouched. Initial full checkout timed out, so switched to exact source/test file retrieval.
+- **Authentic upstream source integrity:** 10/10 target/test file Git blob IDs match five pinned historical upstream commits, job `job_01M72AMQH000AEHPA4VZ7NBPA2`.
+- **Patch applicability:** five test patches and five gold patches each verified with `--dry-run --fuzz=0`, job `job_01M72AE92R005P0ZTYD3PCKYGQ`. Corrected path-complete, new-file-aware disposable qualification: **5/5 test+gold combinations applied sequentially**, all modified Python files pass AST parse, job `job_01M72ARZRZ00H7G17EFMZC1658`.
+- Earlier incomplete mini-scratch checks 4/5 were an audit setup defect: one extra touched file in Flask-4045 and legitimate new file `tests/static/config.toml` in Flask-4992; fully accounted for in successful v3 attempt, no model test involved.
+- Evidence: [CPU_GATEWAY_PHASE2_20261110.md](e2e_gemma_experiment/CPU_GATEWAY_PHASE2_20261110.md), commit `82365c9454252f976328c6a54b9e067d30633034`.
+
+**Decision:** static/provenance/patch-application acceptance PASS; real offline pytest RED/GREEN and 12 evaluator controls still NOT freshly rerun under pinned digest Docker images; **GPU and Kaggle edits forbidden, $0 incremental spend.** No new real-repo Gemma benchmark result or scientifically established advantage over competitors. Next: no-cost resource estimate of small pinned Python dependency images before further execution, protect disk and running services.
