@@ -36,8 +36,8 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 ARCHIVE_DIR = REPO_ROOT / "paper" / "e2e_gemma_experiment" / "real_repo_sample"
-WORK_BASE = Path("/tmp/eval_real_runs")
-UPSTREAM_CACHE = Path("/home/mikhail/upstream_repos")
+WORK_BASE = Path(os.environ.get("PAPER_EVAL_WORK_BASE", "/tmp/eval_real_runs"))
+UPSTREAM_CACHE = Path(os.environ.get("PAPER_EVAL_UPSTREAM_CACHE", "/home/mikhail/upstream_repos"))
 
 # Load verified offline P2P test list for Requests
 REQUESTS_OFFLINE_TESTS_FILE = ARCHIVE_DIR / "requests_offline_p2p_tests.json"
