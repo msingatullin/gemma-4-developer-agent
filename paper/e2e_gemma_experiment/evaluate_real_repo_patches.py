@@ -37,7 +37,6 @@ REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 ARCHIVE_DIR = REPO_ROOT / "paper" / "e2e_gemma_experiment" / "real_repo_sample"
 WORK_BASE = Path("/tmp/eval_real_runs")
 UPSTREAM_CACHE = Path("/home/mikhail/upstream_repos")
-CPU_EVAL_CACHE = Path("/tmp/real_tasks_cpu_eval")
 
 # Load verified offline P2P test list for Requests
 REQUESTS_OFFLINE_TESTS_FILE = ARCHIVE_DIR / "requests_offline_p2p_tests.json"
@@ -322,31 +321,52 @@ def apply_candidate_to_repo(task_work_dir: Path, target_rel_path: str, candidate
 
     return False, f"CODE_APPLY_ERROR: {splice_status}"
 
-def run_in_docker(task_work_dir: Path, cmd: list, timeout_sec: int = 60) -> tuple:
+def build_safe_docker_command(task_work_dir: Path, cmd: list, image: str) -> list:
+    """Construct a credential-free, immutable-image, read-only test sandbox.
+
+    The image must already contain a compatible Python interpreter, pytest
+    and pinned dependencies for the task. No host user/site-packages mounts.
     """
-    Executes command inside isolated Docker container with strict security bounds.
-    """
-    pythonpath = f"{task_work_dir}/src:{task_work_dir}"
-    docker_cmd = [
-        "docker", "run", "--rm",
-        "--network", "none",
-        "--cap-drop", "ALL",
-        "--user", "1000:1000",
-        "--memory", "1g",
-        "--cpus", "1.0",
-        "-e", f"PYTHONPATH={pythonpath}",
-        "-v", "/home/mikhail/.local:/home/mikhail/.local:ro",
-        "-v", "/tmp/real_tasks_cpu_eval:/tmp/real_tasks_cpu_eval:ro",
-        "-v", f"{task_work_dir}:{task_work_dir}:rw",
-        "-w", str(task_work_dir),
-        "python:3.12-slim"
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._:/-]*@sha256:[0-9a-f]{64}", image):
+        raise ValueError("PAPER_EVAL_IMAGE must be an immutable image@sha256:<64hex> reference")
+    work = task_work_dir.resolve(strict=True)
+    root = WORK_BASE.resolve()
+    if root not in work.parents:
+        raise ValueError("Evaluation directory must be inside WORK_BASE")
+    if not work.is_dir() or work.is_symlink():
+        raise ValueError("Unsafe evaluation directory")
+    if not cmd or cmd[0] != "python" or cmd[1:3] != ["-m", "pytest"]:
+        raise ValueError("Only Python pytest is permitted in the evaluation sandbox")
+    return [
+        "docker", "run", "--rm", "--pull", "never",
+        "--network", "none", "--cap-drop", "ALL",
+        "--security-opt", "no-new-privileges",
+        "--read-only", "--user", "65534:65534",
+        "--pids-limit", "64", "--memory", "1g", "--cpus", "1.0",
+        "--tmpfs", "/tmp:rw,nosuid,nodev,size=128m,mode=1777",
+        "--env", "HOME=/tmp",
+        "--env", "PYTHONDONTWRITEBYTECODE=1",
+        "--env", "PYTHONPATH=/workspace/src:/workspace",
+        "--mount", f"type=bind,source={work},target=/workspace,readonly",
+        "--workdir", "/workspace", image
     ] + cmd
+
+
+def run_in_docker(task_work_dir: Path, cmd: list, python_version: str, timeout_sec: int = 60) -> tuple:
+    """Use only prebuilt digest-pinned images; refuse implicit downloads/runs."""
+    if not re.fullmatch(r"3\\.(9|10|11)", python_version):
+        raise ValueError("Unsupported Python interpreter profile")
+    key = "PAPER_EVAL_IMAGE_PY" + python_version.replace(".", "_")
+    image = os.environ.get(key, "")
+    docker_cmd = build_safe_docker_command(task_work_dir, cmd, image)
 
     try:
         res = subprocess.run(docker_cmd, capture_output=True, text=True, timeout=timeout_sec)
         return res.returncode, res.stdout, res.stderr, False
     except subprocess.TimeoutExpired:
-        return -1, "", f"Container execution timed out after {timeout_sec}s", True
+        # The Docker daemon may retain a running container when its CLI is killed.
+        # Do not claim isolation teardown is complete until independently verified.
+        return -1, "", f"Container CLI timed out after {timeout_sec}s; verify daemon teardown", True
 
 def evaluate_patch_on_task(instance_id: str, candidate_output: str, run_id: str = "eval") -> dict:
     """
@@ -372,15 +392,9 @@ def evaluate_patch_on_task(instance_id: str, candidate_output: str, run_id: str 
         ]
         subprocess.run(checkout_cmd, check=True, capture_output=True)
 
-        # 2. Reuse pre-installed venv from CPU eval cache for fast execution
-        source_venv = CPU_EVAL_CACHE / instance_id / ".venv"
-        assert source_venv.exists(), f"Source venv does not exist: {source_venv}"
-        dest_venv = task_work / ".venv"
-        shutil.copytree(source_venv, dest_venv, symlinks=True)
-
-        # Update virtualenv bin wrappers if needed
-        python_bin = dest_venv / "bin" / "python"
-        pytest_bin = dest_venv / "bin" / "pytest"
+        # 2. Runtime dependencies must be baked into a prebuilt digest-pinned
+        # image of the matching Python version; never copy host virtualenvs.
+        python_bin = "python"
 
         # 3. Apply test patch
         test_patch_path = ARCHIVE_DIR / instance_id / "test_patch.diff"
@@ -439,8 +453,10 @@ def evaluate_patch_on_task(instance_id: str, candidate_output: str, run_id: str 
             }
 
         # 6. Run F2P tests in Docker sandbox
-        f2p_cmd = [str(python_bin), "-m", "pytest", str(task_work / spec["test_file"]), "-k", spec["test_filter"], "-v"]
-        f2p_code, f2p_out, f2p_err, f2p_timed_out = run_in_docker(task_work, f2p_cmd, timeout_sec=45)
+        f2p_cmd = [python_bin, "-m", "pytest", spec["test_file"], "-k", spec["test_filter"], "-v", "-p", "no:cacheprovider"]
+        f2p_code, f2p_out, f2p_err, f2p_timed_out = run_in_docker(
+            task_work, f2p_cmd, spec["python_version"], timeout_sec=45
+        )
         
         if f2p_timed_out:
             return {
@@ -463,8 +479,13 @@ def evaluate_patch_on_task(instance_id: str, candidate_output: str, run_id: str 
             }
 
         # 7. Run P2P regression tests in Docker sandbox
-        reg_cmd = [str(python_bin), "-m", "pytest"] + spec["regression_args"] + ["-q"]
-        reg_code, reg_out, reg_err, reg_timed_out = run_in_docker(task_work, reg_cmd, timeout_sec=45)
+        # Explicitly remove F2P cases from the regression subset.
+        reg_cmd = [python_bin, "-m", "pytest"] + spec["regression_args"] + [
+            "--deselect=" + nodeid for nodeid in spec["f2p_tests"]
+        ] + ["-q", "-p", "no:cacheprovider"]
+        reg_code, reg_out, reg_err, reg_timed_out = run_in_docker(
+            task_work, reg_cmd, spec["python_version"], timeout_sec=45
+        )
 
         if reg_timed_out:
             return {
