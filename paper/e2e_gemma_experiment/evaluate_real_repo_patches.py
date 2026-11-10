@@ -663,7 +663,9 @@ def run_evaluator_validation_controls() -> list:
     })
 
     # Save control validation report
-    ctrl_file = ARCHIVE_DIR / "evaluator_control_validation.json"
+    report_dir = Path(os.environ.get("PAPER_EVAL_REPORT_DIR", str(ARCHIVE_DIR)))
+    report_dir.mkdir(parents=True, exist_ok=True)
+    ctrl_file = report_dir / "evaluator_control_validation.json"
     ctrl_file.write_text(json.dumps(controls, indent=2), encoding="utf-8")
     print(f"\n[✓] All {len(controls)} Evaluator Controls Passed! Saved to {ctrl_file.name}")
     return controls
