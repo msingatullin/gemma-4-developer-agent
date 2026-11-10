@@ -46,6 +46,11 @@ class SandboxCommandTests(unittest.TestCase):
         self.assertIn("--pull", cmd)
         self.assertIn("never", cmd)
 
+    def test_local_content_sha256_id_allowed(self):
+        image_id = "sha256:" + ("b" * 64)
+        cmd = self.builder(self.work, self.command, image_id)
+        self.assertIn(image_id, cmd)
+
     def test_mutable_tag_rejected(self):
         with self.assertRaises(ValueError):
             self.builder(self.work, self.command, "python:3.12-slim")
