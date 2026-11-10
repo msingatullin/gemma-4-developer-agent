@@ -245,6 +245,43 @@ def splice_ast_into_source(base_source: str, candidate_code: str) -> tuple:
 
     return new_source, "AST_SPLICE_SUCCESS"
 
+def validate_candidate_diff_paths(candidate_code: str, target_rel_path: str) -> tuple:
+    """Fail closed unless every file in a unified diff is exactly the allowlisted source file.
+
+    This prevents candidates from changing tests, the evaluation harness or unrelated
+    files (and prevents absolute paths / parent directory escapes) via patch headers.
+    """
+    expected = target_rel_path.replace("\\", "/")
+    if not expected or expected.startswith("/") or ".." in expected.split("/"):
+        return False, "UNSAFE_TARGET_PATH"
+    old_paths, new_paths, git_paths = [], [], []
+    for line in candidate_code.splitlines():
+        if line.startswith("diff --git "):
+            tokens = line.split()
+            if len(tokens) != 4:
+                return False, "MALFORMED_DIFF_GIT_HEADER"
+            git_paths.extend(tokens[2:4])
+        elif line.startswith("--- "):
+            old_paths.append(line[4:].split("\t", 1)[0].strip())
+        elif line.startswith("+++ "):
+            new_paths.append(line[4:].split("\t", 1)[0].strip())
+        elif line.startswith(("rename from ", "rename to ", "copy from ", "copy to ",
+                              "GIT binary patch", "Binary files ", "new file mode ",
+                              "deleted file mode ", "symlink ")):
+            return False, "UNSUPPORTED_DIFF_OPERATION"
+    if len(old_paths) != 1 or len(new_paths) != 1:
+        return False, "REQUIRE_EXACTLY_ONE_FILE_PATCH"
+    for raw in old_paths + new_paths + git_paths:
+        if raw == "/dev/null" or not raw.startswith(("a/", "b/")):
+            return False, "UNSAFE_DIFF_PATH"
+        resolved = raw[2:]
+        if resolved != expected or resolved.startswith("/") or ".." in resolved.split("/"):
+            return False, "DIFF_TARGET_NOT_ALLOWLISTED"
+    if not any(line.startswith("@@ ") for line in candidate_code.splitlines()):
+        return False, "MISSING_DIFF_HUNK"
+    return True, "ALLOWED_SINGLE_FILE_DIFF"
+
+
 def apply_candidate_to_repo(task_work_dir: Path, target_rel_path: str, candidate_code: str, code_type: str) -> tuple:
     """
     Applies candidate code to target file in task directory.
@@ -255,8 +292,15 @@ def apply_candidate_to_repo(task_work_dir: Path, target_rel_path: str, candidate
         return False, f"Target file does not exist: {target_abs}"
 
     if code_type == "diff":
-        # Apply as unified diff
-        res = subprocess.run(["patch", "-p1", "-d", str(task_work_dir)], input=candidate_code.encode("utf-8"), capture_output=True)
+        # Never let a model-produced patch modify tests, other modules or parents.
+        safe, reason = validate_candidate_diff_paths(candidate_code, target_rel_path)
+        if not safe:
+            return False, f"DIFF_REJECTED: {reason}"
+        # Noninteractive, fail closed on fuzzy matches; checkout is disposable.
+        res = subprocess.run(
+            ["patch", "--batch", "--forward", "--fuzz=0", "-p1", "-d", str(task_work_dir)],
+            input=candidate_code.encode("utf-8"), capture_output=True
+        )
         if res.returncode == 0:
             valid, err = check_python_syntax(target_abs.read_text(encoding="utf-8"))
             if valid:
@@ -306,6 +350,10 @@ def evaluate_patch_on_task(instance_id: str, candidate_output: str, run_id: str 
     assert instance_id in TASKS_MAP, f"Unknown task: {instance_id}"
     spec = TASKS_MAP[instance_id]
     
+    # Run labels are not trusted as directory components.
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,48}", run_id):
+        raise ValueError("Invalid run_id: must be 1..48 ASCII letters, digits, _ or -")
+
     task_work = WORK_BASE / f"{instance_id}_{run_id}"
     if task_work.exists():
         shutil.rmtree(task_work)
