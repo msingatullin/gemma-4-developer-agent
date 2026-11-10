@@ -328,8 +328,10 @@ def build_safe_docker_command(task_work_dir: Path, cmd: list, image: str, contai
     The image must already contain a compatible Python interpreter, pytest
     and pinned dependencies for the task. No host user/site-packages mounts.
     """
-    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._:/-]*@sha256:[0-9a-f]{64}", image):
-        raise ValueError("PAPER_EVAL_IMAGE must be an immutable image@sha256:<64hex> reference")
+    pinned_reference = bool(re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._:/-]*@sha256:[0-9a-f]{64}", image))
+    local_content_id = bool(re.fullmatch(r"sha256:[0-9a-f]{64}", image))
+    if not (pinned_reference or local_content_id):
+        raise ValueError("PAPER_EVAL_IMAGE must be an immutable image@sha256:<64hex> or local sha256:<64hex> ID")
     # Resolve only after rejecting symbolic links, otherwise .resolve() masks them.
     if task_work_dir.is_symlink():
         raise ValueError("Symlinked evaluation directory is not allowed")
