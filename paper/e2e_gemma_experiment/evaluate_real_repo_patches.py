@@ -371,6 +371,17 @@ def run_in_docker(task_work_dir: Path, cmd: list, python_version: str, timeout_s
         # Do not claim isolation teardown is complete until independently verified.
         return -1, "", f"Container CLI timed out after {timeout_sec}s; verify daemon teardown", True
 
+def verified_pytest_pass_count(exit_code: int, output: str) -> int:
+    """Require successful execution AND at least one explicit passed test.
+
+    This avoids scoring an all-skipped/no-tests-collected run as success.
+    """
+    if exit_code != 0:
+        return 0
+    matches = re.findall(r"(?<![A-Za-z])([0-9]+)\\s+passed\\b", output)
+    return int(matches[-1]) if matches else 0
+
+
 def evaluate_patch_on_task(instance_id: str, candidate_output: str, run_id: str = "eval") -> dict:
     """
     Evaluates candidate model output on an isolated task clone.
@@ -456,7 +467,10 @@ def evaluate_patch_on_task(instance_id: str, candidate_output: str, run_id: str 
             }
 
         # 6. Run F2P tests in Docker sandbox
-        f2p_cmd = [python_bin, "-m", "pytest", spec["test_file"], "-k", spec["test_filter"], "-v", "-p", "no:cacheprovider"]
+        # Select exact frozen F2P node IDs, not a broad -k expression.
+        f2p_cmd = [python_bin, "-m", "pytest"] + spec["f2p_tests"] + [
+            "-v", "-p", "no:cacheprovider"
+        ]
         f2p_code, f2p_out, f2p_err, f2p_timed_out = run_in_docker(
             task_work, f2p_cmd, spec["python_version"], timeout_sec=45
         )
@@ -470,7 +484,8 @@ def evaluate_patch_on_task(instance_id: str, candidate_output: str, run_id: str 
                 "p2p_pass": False
             }
 
-        f2p_pass = (f2p_code == 0) and ("failed" not in f2p_out.lower() or "0 failed" in f2p_out.lower())
+        f2p_passed_count = verified_pytest_pass_count(f2p_code, f2p_out)
+        f2p_pass = f2p_passed_count >= len(spec["f2p_tests"])
         if not f2p_pass:
             return {
                 "instance_id": instance_id,
@@ -499,7 +514,8 @@ def evaluate_patch_on_task(instance_id: str, candidate_output: str, run_id: str 
                 "p2p_pass": False
             }
 
-        p2p_pass = (reg_code == 0) and ("failed" not in reg_out.lower() or "0 failed" in reg_out.lower())
+        p2p_passed_count = verified_pytest_pass_count(reg_code, reg_out)
+        p2p_pass = p2p_passed_count > 0
         if not p2p_pass:
             return {
                 "instance_id": instance_id,
