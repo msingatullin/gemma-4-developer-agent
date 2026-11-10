@@ -35,3 +35,7 @@ Sources: official Kaggle MCP get_competition, search_competition_submissions, an
 
 ## Next decision
 Recover exact v15/v16 submitted ZIP SHA and verify v17 clean-harness invocation. Then request approval for the bounded paired E4B GPU pilot *only if* CPU gates pass. Freeze v11/v14 (main) and v15 (E4B) as non-overwritable baselines. Continue Paper Track separately.
+
+## Autonomous operations (2026-11-10)
+- Scheduled daily agent cycle in Asia/Singapore, 10:00, for read-only Kaggle verification, next free evidence-gated work, MMW/GitHub status upkeep, meaningful-change alerts and Monday summary. Paper Track keeps its separate hourly sprint; do not duplicate it.
+- G0 read-only fresh check: live v17 prompt currently calls `python3 /tmp/ast_locator.py --query "SPECIFIC_IDENTIFIERS_FROM_ISSUE"` (not the older tools/ast_bm25_locator.py invocation documented above). Therefore implementation **changed since last audit**: must trace provenance/installation of /tmp/ast_locator.py and ensure the correct issue-derived query is actually passed before any claim of working integration. This was static source inspection only, not a sandbox smoke test. No paid compute or Kaggle submission.
