@@ -1,0 +1,198 @@
+{
+  "date": "2026-11-10",
+  "scope": "GOLD_REFERENCE_CPU_RED_GREEN_ONLY_NOT_GEMMA",
+  "tasks": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "expected_f2p_count": 2,
+      "expected_p2p_count": 47,
+      "checks": {
+        "red": {
+          "exit": 1,
+          "summary": {
+            "failed": 2,
+            "passed": 0
+          },
+          "sha256": "68f5dace8afd79fa2ca9c1fd30ac3450f665c04ac44aece8d21deb8f4963aeba",
+          "valid": true
+        },
+        "green": {
+          "exit": 0,
+          "summary": {
+            "failed": 0,
+            "passed": 2
+          },
+          "sha256": "19e95f03931508bcb63d5f1f276741db94fd3f8f0399d2690ed306a73c3ba6c7",
+          "valid": true
+        },
+        "p2p_red": {
+          "exit": 0,
+          "passed": 47,
+          "sha256": "93a0dc4e0d9b5ea92c27e4c9239ff40bcea54ca553b9c3c087eb43702024c460",
+          "valid": true
+        },
+        "p2p_green": {
+          "exit": 0,
+          "passed": 47,
+          "sha256": "ee84571bcb3d41d7f71fec4224d8d755d7cdb9c73e10130db877e42f99d28d10",
+          "valid": true
+        }
+      }
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "expected_f2p_count": 1,
+      "expected_p2p_count": 18,
+      "checks": {
+        "red": {
+          "exit": 1,
+          "summary": {
+            "failed": 1,
+            "passed": 0
+          },
+          "sha256": "b907cb2f17538eeec3d70274fc520a7b5603b2283c780cd312668fb256f0b73a",
+          "valid": true
+        },
+        "green": {
+          "exit": 0,
+          "summary": {
+            "failed": 0,
+            "passed": 1
+          },
+          "sha256": "a71df3ef716cabe43ead70bd8311cda3aeadcb986bea501da0ea9262f31c3925",
+          "valid": true
+        },
+        "p2p_red": {
+          "exit": 0,
+          "passed": 18,
+          "sha256": "4ab757e1c818b19b897460e0b4caae6f7ed6ebf98bceb7878e63b187309c8582",
+          "valid": true
+        },
+        "p2p_green": {
+          "exit": 0,
+          "passed": 18,
+          "sha256": "4ab757e1c818b19b897460e0b4caae6f7ed6ebf98bceb7878e63b187309c8582",
+          "valid": true
+        }
+      }
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "expected_f2p_count": 2,
+      "expected_p2p_count": 4,
+      "checks": {
+        "red": {
+          "exit": 1,
+          "summary": {
+            "failed": 2,
+            "passed": 0
+          },
+          "sha256": "701f6f9bfaca80a4741281299cfbb4ea36bbc932b0ba4a4a25b1327c6dbca1ff",
+          "valid": true
+        },
+        "green": {
+          "exit": 0,
+          "summary": {
+            "failed": 0,
+            "passed": 2
+          },
+          "sha256": "19e95f03931508bcb63d5f1f276741db94fd3f8f0399d2690ed306a73c3ba6c7",
+          "valid": true
+        },
+        "p2p_red": {
+          "exit": 0,
+          "passed": 4,
+          "sha256": "af12e83cb05151c20d16deffd7253186f7a2b8dffe40f045508c23e60966a5e5",
+          "valid": true
+        },
+        "p2p_green": {
+          "exit": 0,
+          "passed": 4,
+          "sha256": "b476f0fc74265d283df0db8af88d84b2c4e24a64140ae06a6825a770cdbe50f8",
+          "valid": true
+        }
+      }
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "expected_f2p_count": 1,
+      "expected_p2p_count": 43,
+      "checks": {
+        "red": {
+          "exit": 1,
+          "summary": {
+            "failed": 1,
+            "passed": 0
+          },
+          "sha256": "e884fe0cfdbd3982ad931c4aebea8cb26a47d2d4800a836dadd5a039c85507ed",
+          "valid": true
+        },
+        "green": {
+          "exit": 0,
+          "summary": {
+            "failed": 0,
+            "passed": 1
+          },
+          "sha256": "95b95efa96283110821d472aa340ac5f50c8756aa1fde5f817dfc07862150ace",
+          "valid": true
+        },
+        "p2p_red": {
+          "exit": 0,
+          "passed": 43,
+          "sha256": "8ebd6a81c0de8125e0f920fb2e70501aeb1e272860912372958520ff108155f8",
+          "valid": true
+        },
+        "p2p_green": {
+          "exit": 0,
+          "passed": 43,
+          "sha256": "98e41f3022ce56f6965cc2e86011e4c2c93b493ab02483d2a61ef60e104a4239",
+          "valid": true
+        }
+      }
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "expected_f2p_count": 1,
+      "expected_p2p_count": 43,
+      "checks": {
+        "red": {
+          "exit": 1,
+          "summary": {
+            "failed": 1,
+            "passed": 0
+          },
+          "sha256": "3ac49f5f205de29fa803df2119c7aa861e28fe06b07f718e42a2dae9d91d4a75",
+          "valid": true
+        },
+        "green": {
+          "exit": 0,
+          "summary": {
+            "failed": 0,
+            "passed": 1
+          },
+          "sha256": "e793208893ac305fb260e5149afc05605dfc1b2fa42ffb271141cf9c295a3bb4",
+          "valid": true
+        },
+        "p2p_red": {
+          "exit": 0,
+          "passed": 43,
+          "sha256": "ec4ba7e34bbe8ee91e13bc0b3016484965c1592ab616c1e4faa31d3710f8a426",
+          "valid": true
+        },
+        "p2p_green": {
+          "exit": 0,
+          "passed": 43,
+          "sha256": "a9ab54780c0b599e6bcc87d784968568cb58448bd9b4fbe65d9a306d0b424e26",
+          "valid": true
+        }
+      }
+    }
+  ],
+  "images": {
+    "py311": "sha256:ed700cf7dbc0604bed4374b3a027596162ac72b7ba6983d3c5b92988d527cc74",
+    "py310": "sha256:8eb06d4197a52bc0a21cdbc733523a94fb6ebb1b7daad3854d985e77c5f5e47b",
+    "py39": "sha256:80e945d7246b7d943fbbe20dbd5f3c010ed9e43c5ad85313164a2d84a1f0edb5"
+  },
+  "active_containers": [],
+  "errors": []
+}
