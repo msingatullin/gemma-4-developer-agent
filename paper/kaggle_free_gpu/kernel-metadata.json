@@ -1,0 +1,17 @@
+{
+  "id": "msingatullin/gemma4-paper-real5-free-t4-probe",
+  "title": "Gemma4 Paper Real5 Free T4 Probe",
+  "code_file": "gemma4_real5_gpu.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": [
+    "google/gemma-4/Other/gemma-4-31b-it-qat-w4a16-ct/2"
+  ]
+}
