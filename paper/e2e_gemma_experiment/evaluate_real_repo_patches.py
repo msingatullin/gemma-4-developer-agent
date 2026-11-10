@@ -329,11 +329,14 @@ def build_safe_docker_command(task_work_dir: Path, cmd: list, image: str) -> lis
     """
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._:/-]*@sha256:[0-9a-f]{64}", image):
         raise ValueError("PAPER_EVAL_IMAGE must be an immutable image@sha256:<64hex> reference")
+    # Resolve only after rejecting symbolic links, otherwise .resolve() masks them.
+    if task_work_dir.is_symlink():
+        raise ValueError("Symlinked evaluation directory is not allowed")
     work = task_work_dir.resolve(strict=True)
     root = WORK_BASE.resolve()
     if root not in work.parents:
         raise ValueError("Evaluation directory must be inside WORK_BASE")
-    if not work.is_dir() or work.is_symlink():
+    if not work.is_dir():
         raise ValueError("Unsafe evaluation directory")
     if not cmd or cmd[0] != "python" or cmd[1:3] != ["-m", "pytest"]:
         raise ValueError("Only Python pytest is permitted in the evaluation sandbox")
