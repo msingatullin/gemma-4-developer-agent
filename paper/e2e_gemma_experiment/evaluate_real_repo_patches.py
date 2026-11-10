@@ -255,8 +255,12 @@ def validate_candidate_diff_paths(candidate_code: str, target_rel_path: str) -> 
     if not expected or expected.startswith("/") or ".." in expected.split("/"):
         return False, "UNSAFE_TARGET_PATH"
     old_paths, new_paths, git_paths = [], [], []
+    git_header_count = 0
     for line in candidate_code.splitlines():
         if line.startswith("diff --git "):
+            git_header_count += 1
+            if git_header_count > 1:
+                return False, "MULTIPLE_DIFF_HEADERS"
             tokens = line.split()
             if len(tokens) != 4:
                 return False, "MALFORMED_DIFF_GIT_HEADER"
@@ -265,7 +269,8 @@ def validate_candidate_diff_paths(candidate_code: str, target_rel_path: str) -> 
             old_paths.append(line[4:].split("\t", 1)[0].strip())
         elif line.startswith("+++ "):
             new_paths.append(line[4:].split("\t", 1)[0].strip())
-        elif line.startswith(("rename from ", "rename to ", "copy from ", "copy to ",
+        elif line.startswith(("Index:", "*** ", "Only in ", "Property changes on:",
+                              "rename from ", "rename to ", "copy from ", "copy to ",
                               "GIT binary patch", "Binary files ", "new file mode ",
                               "deleted file mode ", "symlink ")):
             return False, "UNSUPPORTED_DIFF_OPERATION"
