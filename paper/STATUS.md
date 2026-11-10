@@ -167,3 +167,11 @@ Current decision: **HOLD on real model patch execution**, CPU static path-harden
 - Proposed minimal replacement text, fixes and evidence hyperlinks: [FINAL_EDITORIAL_GATES_20261110.md](FINAL_EDITORIAL_GATES_20261110.md), commit `79babffe72021e6fcc31308788fe55c6ac47a044`. This is a **GitHub editorial plan only**; published Kaggle content is untouched.
 - Competitive priority **P0**: reconcile live Kaggle writeup against new 5/5 reference CPU RED/GREEN and 12/12 evaluator controls, with explicit qualification **no new Gemma inference on authentic issues**. Need owner permission to edit Kaggle once final exact text and word budget are verified. Remaining critical model result A/B2/C requires explicit GPU approval; pending user hardware access.
 - Maintain existing verified CPU baseline 39/39, 12/12, 5/5 and 155 selected P2P. Do not spend extra CPU/disk capacity on blind experiments; VPS root is 96% used. No paid resources or Kaggle writes.
+
+## 2026-11-10 10:04 UTC — autonomous sprint cycle 1
+
+Read MMW latest sprint plan and P1 CPU audit, current GitHub `paper/STATUS.md` and `CPU_REAL5_FINAL_ACCEPTANCE_20261110.md`, and official Kaggle `get_hackathon_write_up` via VPS Gateway. Official Kaggle returned truncated 49,429-character result again; **live Kaggle text/3,000-word budget remain unverified**. No Kaggle write.
+
+Verified public GitHub `README.md` lacked an explicit accessible summary/link to new authentic CPU evidence. Updated README in commit `8c6fe9c42a4102ddb5664a8e8b75b2fa459874a0` with direct links to the CPU acceptance report, editorial gates and status, exact 5/5 RED/GREEN + 155 P2P + 12/12 evaluator + 39/39 security/scoring + 15/15 literal gold leakage audit, and clear boundaries between authentic CPU checks and synthetic Gemma inference. Also qualified exploratory B2 29/30 vs raw 30/30 and token economy. This is documentation only; no inference, spending, or Kaggle modification.
+
+Next P0: obtain complete current Kaggle Writeup body through a nontruncated authorized read method, calculate 3,000-word judged count including captions/tables, compare with GitHub surrogate, then propose exact minimal corrections for user approval. Preserve published Kaggle submission.
