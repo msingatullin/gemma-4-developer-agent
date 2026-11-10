@@ -109,14 +109,23 @@ def verify_gpus():
 
 def load_backend(path):
     try:
-        from vllm import LLM, SamplingParams
         import vllm
-        print("VLLM_VERSION", vllm.__version__, flush=True)
-    except ImportError as e:
-        raise RuntimeError(
-            "vLLM is not available. Install a compatible vLLM build in the Kaggle "
-            "notebook CPU setup before restarting GPU; do not silently switch models."
-        ) from e
+        from packaging.version import Version
+        if Version(vllm.__version__) < Version("0.29.0"):
+            raise ImportError("vLLM too old for this Gemma 4 trial")
+    except ImportError:
+        # Only inside the user's free Kaggle notebook; never on the host VPS.
+        print("VLLM_INSTALL_START: free Kaggle runtime only", flush=True)
+        subprocess.run(
+            [sys.executable, "-m", "pip", "install", "--quiet", "--no-input",
+             "--disable-pip-version-check", "vllm>=0.29.0,<0.31.0"],
+            check=True, timeout=540,
+        )
+        import importlib
+        importlib.invalidate_caches()
+        import vllm
+    from vllm import LLM, SamplingParams
+    print("VLLM_VERSION", vllm.__version__, flush=True)
     llm = LLM(
         model=str(path),
         tokenizer=str(path),
