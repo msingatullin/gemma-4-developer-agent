@@ -94,3 +94,27 @@ Current decision: **HOLD on real model patch execution**, CPU static path-harden
 - Critical sandbox blocker remains: `run_in_docker()` mounts host `/home/mikhail/.local` and `/tmp/real_tasks_cpu_eval`, copies environment-specific venvs and uses a mutable `python:3.12-slim` image; it is NOT approved for untrusted model-generated code without a cleaned, pinned, isolated runtime.
 
 **Decision:** STOP before full evaluator execution; no GPU, paid resources, Kaggle submission edits or new model outputs. Next gate must be actual 13/13 test execution from a clean clone, then safe sandbox/venv redesign and 12 controls rerun. Historical controls are NOT fresh post-patch verification.
+
+## 2026-11-10 CPU continuation — sandbox redesign / test truth
+
+**User authorization:** zero-cost audit and development only; **GPU PROHIBITED** and Kaggle publication unchanged.
+
+### Committed changes
+- `99649132a7287db392ce0e9033e4971ee147c281`: removed inherited host `/home/mikhail/.local` and CPU venv mounts; builder now requires `PAPER_EVAL_IMAGE_PY3_9`, `_PY3_10` or `_PY3_11` as locally available **digest-pinned** image references; Docker `--pull never`, `--network none`, `--read-only`, worktree bind `readonly`, no capabilities, no-new-privileges, unprivileged UID, limited resources, tmpfs for temporary writes, Python bytecode disabled. If image is absent/unpinned the evaluator fails closed before Docker starts. Dependency images MUST be separately built/provisioned and version-checked.
+- `aab58425c0958956424b12ea023080fcb4212ece`: added 10 CPU structural tests of safe Docker command. `6062c7feef5bb37a5b81eba415ab94d206ee58e7`: fixed potential symlink bypass (check before resolve).
+- `8197b33d874acff5e38acbad2a57e44c17a69689`: exact F2P node IDs; explicit nonzero number of passed tests for F2P and P2P; exclude frozen F2P node IDs from P2P regression run. A pytest exit code 0 with all skipped/no tests now cannot score as RESOLVED.
+- `48749df19dbbce12cbde5d950d76e8fc5aabf5f3`: added 8 CPU tests for pytest pass counter.
+
+### What has actually run
+- In isolated local Python, a faithful manually reconstructed sandbox command builder passed **10/10 CPU checks**. The actual GitHub checkout's new 10 structural tests have NOT run; this is a partial static sanity check, not CI.
+- In isolated local Python, the manually reconstructed pytest pass-count helper passed **8/8 CPU checks**. The exact GitHub source tests have NOT run.
+- Earlier locally reconstructed diff path guard passed 13/13; GitHub test source still has NOT been executed in checkout. Total repository unit tests authored for these 3 modules: **31** (13+10+8), but **0 newly executed from a full clone**.
+- Archived evaluator logs still contain 12 previously PASS controls and 5 upstream RED/GREEN task records. These predate current sandbox rewrite. No real post-change Docker run/validation, no model inference.
+
+### Remaining hard gates (NO-GO for any model-generated patch execution)
+1. Obtain exact repository checkout / safe CPU executor and actually run `python -m unittest discover -s paper/e2e_gemma_experiment -p 'test_*guard.py' -v`, plus `test_safe_sandbox_command.py` and `test_pytest_pass_contract.py`. Preserve command, Python version, stdout/stderr and SHA. GitHub Actions quota is exhausted; do not trigger paid CI.
+2. Provision audited local digest-pinned image per Python 3.9/3.10/3.11 with frozen dependencies. Ensure source checkout/test runner remains functional in read-only unprivileged sandbox; exercise CPU gold/base/syntax/regression controls afresh.
+3. Validate Docker daemon termination on subprocess timeout: `docker run --rm` with client-side timeout does not independently prove immediate container teardown. Explicit watchdog/cleanup is still pending.
+4. Confirm F2P and P2P collected test counts and nonoverlap on all 5 tasks. If any fail, publish failure as failure, not a zero-filled result.
+
+**Financial and competition state:** $0 new spend; zero GPU launches; zero Kaggle Writeup edits/submissions. Current prize evidence and published Writeup preserved. No held-out model success or full CPU acceptance claimed.
