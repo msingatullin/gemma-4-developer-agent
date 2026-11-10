@@ -31,6 +31,7 @@ import shutil
 import hashlib
 import textwrap
 import subprocess
+import uuid
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -321,7 +322,7 @@ def apply_candidate_to_repo(task_work_dir: Path, target_rel_path: str, candidate
 
     return False, f"CODE_APPLY_ERROR: {splice_status}"
 
-def build_safe_docker_command(task_work_dir: Path, cmd: list, image: str) -> list:
+def build_safe_docker_command(task_work_dir: Path, cmd: list, image: str, container_name: str = "") -> list:
     """Construct a credential-free, immutable-image, read-only test sandbox.
 
     The image must already contain a compatible Python interpreter, pytest
@@ -340,6 +341,9 @@ def build_safe_docker_command(task_work_dir: Path, cmd: list, image: str) -> lis
         raise ValueError("Unsafe evaluation directory")
     if not cmd or cmd[0] != "python" or cmd[1:3] != ["-m", "pytest"]:
         raise ValueError("Only Python pytest is permitted in the evaluation sandbox")
+    if container_name and not re.fullmatch(r"gemma-paper-cpu-[0-9a-f]{32}", container_name):
+        raise ValueError("Invalid dedicated CPU container name")
+    name_args = ["--name", container_name] if container_name else []
     return [
         "docker", "run", "--rm", "--pull", "never",
         "--network", "none", "--cap-drop", "ALL",
@@ -351,25 +355,42 @@ def build_safe_docker_command(task_work_dir: Path, cmd: list, image: str) -> lis
         "--env", "PYTHONDONTWRITEBYTECODE=1",
         "--env", "PYTHONPATH=/workspace/src:/workspace",
         "--mount", f"type=bind,source={work},target=/workspace,readonly",
-        "--workdir", "/workspace", image
-    ] + cmd
+        "--workdir", "/workspace"
+    ] + name_args + [image] + cmd
 
 
 def run_in_docker(task_work_dir: Path, cmd: list, python_version: str, timeout_sec: int = 60) -> tuple:
-    """Use only prebuilt digest-pinned images; refuse implicit downloads/runs."""
-    if not re.fullmatch(r"3\\.(9|10|11)", python_version):
+    """Use only prebuilt digest-pinned images and explicitly clean timed-out containers.
+
+    A unique exact name permits safe cleanup without touching unrelated Docker services.
+    """
+    if python_version not in ("3.9", "3.10", "3.11"):
         raise ValueError("Unsupported Python interpreter profile")
     key = "PAPER_EVAL_IMAGE_PY" + python_version.replace(".", "_")
     image = os.environ.get(key, "")
-    docker_cmd = build_safe_docker_command(task_work_dir, cmd, image)
+    name = "gemma-paper-cpu-" + uuid.uuid4().hex
+    docker_cmd = build_safe_docker_command(task_work_dir, cmd, image, name)
 
     try:
         res = subprocess.run(docker_cmd, capture_output=True, text=True, timeout=timeout_sec)
         return res.returncode, res.stdout, res.stderr, False
     except subprocess.TimeoutExpired:
-        # The Docker daemon may retain a running container when its CLI is killed.
-        # Do not claim isolation teardown is complete until independently verified.
-        return -1, "", f"Container CLI timed out after {timeout_sec}s; verify daemon teardown", True
+        # Killing the Docker CLI is NOT proof the daemon stopped the container.
+        try:
+            cleanup = subprocess.run(
+                ["docker", "rm", "-f", name],
+                capture_output=True, text=True, timeout=15
+            )
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            raise RuntimeError(
+                "Timed-out CPU container cleanup could not be verified: " + name
+            ) from exc
+        if cleanup.returncode != 0 and "No such container" not in cleanup.stderr:
+            raise RuntimeError(
+                "Timed-out CPU container may still exist: " + name + " " + cleanup.stderr[-500:]
+            )
+        return -1, "", "Timed out and Docker container cleanup confirmed", True
+
 
 def verified_pytest_pass_count(exit_code: int, output: str) -> int:
     """Require successful execution AND at least one explicit passed test.
