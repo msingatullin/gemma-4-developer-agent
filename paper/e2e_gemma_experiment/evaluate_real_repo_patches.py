@@ -304,14 +304,15 @@ def apply_candidate_to_repo(task_work_dir: Path, target_rel_path: str, candidate
         # Noninteractive, fail closed on fuzzy matches; checkout is disposable.
         res = subprocess.run(
             ["patch", "--batch", "--forward", "--fuzz=0", "-p1", "-d", str(task_work_dir)],
-            input=candidate_code.encode("utf-8"), capture_output=True
+            input=(candidate_code if candidate_code.endswith("\n") else candidate_code + "\n").encode("utf-8"),
+            capture_output=True
         )
         if res.returncode == 0:
             valid, err = check_python_syntax(target_abs.read_text(encoding="utf-8"))
             if valid:
                 return True, "DIFF_PATCH_APPLIED"
             return False, f"DIFF_POST_SYNTAX_ERROR: {err}"
-        return False, f"DIFF_APPLY_FAILED: {res.stderr.decode('utf-8', errors='replace')}"
+        return False, "DIFF_APPLY_FAILED: " + (res.stdout + b"\n" + res.stderr).decode("utf-8", errors="replace")[-1000:]
 
     # Python code
     base_content = target_abs.read_text(encoding="utf-8")
