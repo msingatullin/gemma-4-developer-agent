@@ -31,6 +31,14 @@ CASES = (
 )
 VARIANTS = ("A_raw", "B2_assertion_aware", "C_tail35")
 MAX_NEW_TOKENS = 2048
+# Verified previous run v4 records are kept privately on VPS, never embedded in notebook.
+# Skip only these four pairs; final CPU intake requires an offline merged 15/15 corpus.
+PREVIOUSLY_VERIFIED_KEYS = frozenset({
+    ("pallets__flask-4045", "A_raw"),
+    ("pallets__flask-4045", "B2_assertion_aware"),
+    ("pallets__flask-4045", "C_tail35"),
+    ("pallets__flask-4992", "B2_assertion_aware"),
+})
 CONTEXT_LIMIT = 16384
 TIME_BUDGET_SECONDS = 50 * 60
 OUTPUT = Path("/kaggle/working/gemma4_real5_collect_only.jsonl") if Path("/kaggle").exists() else Path("/tmp/gemma4_real5_collect_only.jsonl")
@@ -218,7 +226,11 @@ def run(local_root):
     print("ATTACHED_OFFICIAL_MODEL", str(path), flush=True)
     llm, sampling = load_backend(path)
     done = completed_keys()
+    if done & PREVIOUSLY_VERIFIED_KEYS:
+        raise RuntimeError("Duplicate prior checkpoint in current kernel; fail closed")
     print("CHECKPOINT_ALREADY_COMPLETED", len(done), flush=True)
+    print("PREVIOUSLY_VERIFIED_VPS_ONLY", len(PREVIOUSLY_VERIFIED_KEYS), flush=True)
+    done |= PREVIOUSLY_VERIFIED_KEYS
     total = 0
     for i, case in enumerate(CASES):
         # Rotating order avoids a systematic variant-vs-warm-up confound.
