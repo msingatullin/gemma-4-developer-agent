@@ -157,13 +157,10 @@ def patch_vllm_t4_triton_attention():
         "vllm/v1/attention/ops/triton_unified_attention.py"
     )
     original = target.read_text(encoding="utf-8")
-    tile_old = "    # Default behavior\\n    if is_prefill:\\n        return 32\\n"
-    tile_new = "    # Default behavior\\n    if is_prefill:\\n        return 16  # T4 Gemma4 head_size 512: <=64KiB shared memory\\n"
-    stages_old = "    launch_kwargs: dict[str, int] = {}\\n"
-    stages_new = "    launch_kwargs: dict[str, int] = {\\\"num_stages\\\": 1}\\n"
-    # Convert escaped literal backslashes to newlines for precise matching.
-    tile_old, tile_new = tile_old.replace("\\\\n", "\\n"), tile_new.replace("\\\\n", "\\n")
-    stages_old, stages_new = stages_old.replace("\\\\n", "\\n"), stages_new.replace("\\\\n", "\\n")
+    tile_old = "    # Default behavior\n    if is_prefill:\n        return 32\n"
+    tile_new = "    # Default behavior\n    if is_prefill:\n        return 16  # T4 workaround\n"
+    stages_old = "    launch_kwargs: dict[str, int] = {}\n"
+    stages_new = '    launch_kwargs: dict[str, int] = {"num_stages": 1}\n'
     if original.count(tile_old) != 1 or original.count(stages_old) != 1:
         raise RuntimeError("T4_TRITON_PATCH_UNSUPPORTED_SOURCE: stopping before GPU use")
     changed = original.replace(tile_old, tile_new, 1).replace(stages_old, stages_new, 1)
@@ -287,7 +284,7 @@ def main():
         if not args.after_bootstrap and bootstrap_vllm_in_fresh_process():
             return
         patch_vllm_t4_triton_attention()
-    run(args.local_frozen_root)
+        run(args.local_frozen_root)
     except Exception as e:
         print("EXPERIMENT_STOPPED", type(e).__name__, str(e)[:1100], flush=True)
         raise
