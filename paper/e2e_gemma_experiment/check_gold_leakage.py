@@ -11,13 +11,14 @@ Verifies:
 
 import re
 import json
+import os
 import subprocess
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 ARCHIVE_DIR = REPO_ROOT / "paper" / "e2e_gemma_experiment" / "real_repo_sample"
 PROMPTS_DIR = ARCHIVE_DIR / "frozen_prompts"
-UPSTREAM_CACHE = Path("/home/mikhail/upstream_repos")
+UPSTREAM_CACHE = Path(os.environ.get("PAPER_EVAL_UPSTREAM_CACHE", "/home/mikhail/upstream_repos"))
 
 def extract_added_hunks_from_patch(patch_path: Path) -> tuple:
     """
@@ -117,7 +118,9 @@ def main():
             "scope_disclaimer": "Syntactic check certifies 0 exact single-line or multi-line gold code matches. Does not claim complete semantic isolation from natural language problem statements or test traceback frames."
         })
 
-    report_file = ARCHIVE_DIR / "gold_leakage_audit_report.json"
+    report_dir = Path(os.environ.get("PAPER_EVAL_REPORT_DIR", str(ARCHIVE_DIR)))
+    report_dir.mkdir(parents=True, exist_ok=True)
+    report_file = report_dir / "gold_leakage_audit_report.json"
     report_file.write_text(json.dumps(audit_records, indent=2), encoding="utf-8")
 
     assert total_violations == 0, f"Audit failed with {total_violations} leakage violations!"
