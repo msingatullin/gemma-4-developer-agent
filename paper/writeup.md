@@ -217,10 +217,10 @@ session_timeout_seconds: 300
 All artifacts developed for this project are permanently archived and released under the open-source **Apache 2.0** license:
 - **Public Executable Notebook:** [msingatullin/ast-guided-loops-verification-for-gemma-4](https://www.kaggle.com/code/msingatullin/ast-guided-loops-verification-for-gemma-4)
 - **Open-Source Repository:** [github.com/msingatullin/gemma-4-developer-agent](https://github.com/msingatullin/gemma-4-developer-agent)
-- **120 Real Model Inferences:** `paper/e2e_gemma_experiment/real_run_20261108/real_experiment_checkpoint.jsonl`
-- **Exploratory B2 Benchmark (30 calls):** `paper/e2e_gemma_experiment/real_run_20261108/real_b2_experiment_checkpoint.jsonl`
-- **Containerized Patch Execution Results:** `paper/e2e_gemma_experiment/real_run_20261108/real_patch_execution_results.jsonl`
-- **Exploratory B2 Container Results:** `paper/e2e_gemma_experiment/real_run_20261108/real_b2_patch_execution_results.jsonl`
-- **Statistical Analysis & Clustered Bootstrap:** `paper/e2e_gemma_experiment/real_run_20261108/real_patch_execution_analysis.json`
-- **Post-Hoc Diagnostic Error Taxonomy:** `paper/e2e_gemma_experiment/real_run_20261108/blinded_diagnostic_audit.json`
+- **120 Real Model Inferences:** [`paper/e2e_gemma_experiment/real_run_20261108/real_experiment_checkpoint.jsonl`](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/e2e_gemma_experiment/real_run_20261108/real_experiment_checkpoint.jsonl)
+- **Exploratory B2 Benchmark (30 calls):** [`paper/e2e_gemma_experiment/real_run_20261108/real_b2_experiment_checkpoint.jsonl`](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/e2e_gemma_experiment/real_run_20261108/real_b2_experiment_checkpoint.jsonl)
+- **Containerized Patch Execution Results:** [`paper/e2e_gemma_experiment/real_run_20261108/real_patch_execution_results.jsonl`](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/e2e_gemma_experiment/real_run_20261108/real_patch_execution_results.jsonl)
+- **Exploratory B2 Container Results:** [`paper/e2e_gemma_experiment/real_run_20261108/real_b2_patch_execution_results.jsonl`](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/e2e_gemma_experiment/real_run_20261108/real_b2_patch_execution_results.jsonl)
+- **Statistical Analysis & Clustered Bootstrap:** [`paper/e2e_gemma_experiment/real_run_20261108/real_patch_execution_analysis.json`](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/e2e_gemma_experiment/real_run_20261108/real_patch_execution_analysis.json)
+- **Post-Hoc Diagnostic Error Taxonomy:** [`paper/e2e_gemma_experiment/real_run_20261108/blinded_diagnostic_audit.json`](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/e2e_gemma_experiment/real_run_20261108/blinded_diagnostic_audit.json)
 - **License:** Apache 2.0 (`LICENSE` in repository root)
