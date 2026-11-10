@@ -378,7 +378,7 @@ def verified_pytest_pass_count(exit_code: int, output: str) -> int:
     """
     if exit_code != 0:
         return 0
-    matches = re.findall(r"(?<![A-Za-z])([0-9]+)\\s+passed\\b", output)
+    matches = re.findall(r"(?<![A-Za-z])([0-9]+)\s+passed\b", output)
     return int(matches[-1]) if matches else 0
 
 
