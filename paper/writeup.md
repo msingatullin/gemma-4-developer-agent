@@ -11,7 +11,7 @@
 
 ## 1. Abstract & Executive Summary
 
-Deploying autonomous software engineering (SWE) agents with quantized large language models—specifically `google/gemma-4-31B-it-qat-w4a16-ct`—on edge developer workstations (1× NVIDIA L4 or RTX GPU with 24–48GB VRAM) exposes severe operational bottlenecks. Full-file reading across multi-thousand-line modules inflates prompt context, while unvalidated candidate patches waste expensive execution cycles on trivial syntax regressions. Furthermore, multi-test execution logs inundate model context with environment banners and captured stdout buffers, crowding out critical fault localization signals.
+Deploying quantized Gemma 4 SWE agents on memory-limited GPUs introduces context and validation bottlenecks: reading entire modules inflates prompts, unvalidated patches waste execution cycles, and noisy test logs obscure failure signals.
 
 The open-source **AST-Guided Verification Suite** combines AST (`ast.NodeVisitor`) symbol indexing, a pre-flight compiler gate (`compile(mode='exec')`), and assertion-preserving traceback compression for pytest, native tracebacks, and standalone exceptions.
 
@@ -52,9 +52,9 @@ Under memory-bound decoding ($I \approx 1$ FLOP/byte), modeled per-token latency
 ## 3. Related Work and Positioning Against Prior Art
 
 Autonomous SWE agents have advanced rapidly across benchmarks like SWE-bench:
-- **Hierarchical Inspection (`Agentless`):** Xia et al. (2024) proposed localization -> patch repair -> validation, relying on multi-query frontier LLMs unsuited for quantized local models.
-- **Iterative ReAct Loops (`SWE-agent`):** Yang et al. (2024) introduced ACIs, prompting models to perform verbose conversational reading that saturates local context.
-- **Code Graphs (`RepoCoder`):** Zhang et al. (2023) used cross-file retrieval, incurring heavy indexing overhead unsuited for lightweight execution loops.
+- **Agentless** (Xia et al., 2024): localization, repair, and validation.
+- **SWE-agent** (Yang et al., 2024): tool-based interactive coding.
+- **RepoCoder** (Zhang et al., 2023): cross-file retrieval and repository context.
 
 ### Architectural Novelty: The Deterministic Zero-Inference Stance
 
