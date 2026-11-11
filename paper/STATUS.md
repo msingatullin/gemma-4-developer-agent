@@ -1,5 +1,14 @@
 # Paper Track — STATUS
 
+## V6 publication-ready source release — 2026-11-11
+
+- User supplied Astra `REVIEW.md`, scoped independent review: 2677-word V6 review body, 147/147 SHA256SUMS, 146/146 JSON hashes, 142 prior artifact members preserved; Astra recommends exact new headline but did not grant owner publication authority.
+- New fully prepared V6 **final source release** on VPS `/opt/kaggle/gemma-paper-kaggle-cli/v6-final-candidate-20261111/GEMMA4_PAPER_RESOURCE_V6_RELEASE_20261111.zip`: 539294 bytes, SHA256 `9cc8fc88dff04ba048dce4544d093a0616a110119a75e184665625a55b5d4e9c`, 148 entries, 147/147 SHA256SUMS and 146/146 JSON manifest hashes, CRC PASS; code/data unchanged. Package status language is now **neutral**; no stale `REVIEW-ONLY`, `V6-REVIEW` or `NOT YET SUBMITTED` assertions. Metadata says `release_version=V6-FINAL-20261111`, Kaggle publication state must be checked independently.
+- Final paper file in same VPS folder `GEMMA4_PAPER_RESOURCE_V6_FINAL_MANUSCRIPT_20261111.md` is **2670 words**, SHA256 `5e2e9334eff4beaea7765c454fa99acd1d919858406d198e6c0112823642129b`, first H1/title `When Traceback Compression Lies: Verifiable Diagnostics for Gemma 4 SWE Agents`. Proposed separately entered Kaggle subtitle: `A falsification-tested, fail-open resource for preserving pytest evidence under CI log compression`.
+- New clean extracted V6 candidate proof replay before release-metadata-only update: old78/88 and 10 false PASS; new88/88; 704/704 tamper; raw-log results 11 byte-identical, 72.01% bytes reduced; versioned certificate 11/11 and 165/165 corruption controls. Following release-metadata update all checksum and manuscript equality assertions pass; executable code and fixtures unchanged.
+- **DO NOT CLAIM SUBMITTED OR PUBLISHED**: existing Kaggle writeup is still the verified 2977-word PUBLISHED V5, exact V5 attachment downloaded and checked. Owner must explicitly approve live rewrite, and separate Submitted flag remains to be confirmed in Kaggle UI. Until then source `paper/writeup.md` on GitHub remains V5.
+
+
 ## Owner-publication gate: V6 FINAL candidate prepared — 2026-11-11
 
 - Independent Codex Astra `REVIEW.md` (user supplied 2026-11-11) judges 2677-word V6-REVIEW manuscript and 148-member ZIP `PASS_SCOPED`, confirms 147/147 and 146/146 manifests, 142 frozen code/fixtures/results, recommends final headline `When Traceback Compression Lies: Verifiable Diagnostics for Gemma 4 SWE Agents`. This reviewer explicitly did **not** grant owner permission to publish, verify UI Submitted, or rerun tests.
