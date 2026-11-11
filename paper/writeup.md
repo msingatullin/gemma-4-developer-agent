@@ -11,9 +11,9 @@
 
 ## 1. Abstract & Executive Summary
 
-Deploying quantized Gemma 4 SWE agents on memory-limited GPUs introduces context and validation bottlenecks: reading entire modules inflates prompts, unvalidated patches waste execution cycles, and noisy test logs obscure failure signals.
+Local Gemma 4 SWE agents face bloated context, unsafe patches, and noisy test logs.
 
-The open-source **AST-Guided Verification Suite** contributes a deterministic **fail-open diagnostic-integrity layer**: AST symbol slicing and pre-flight compilation are coupled with traceback compression that explicitly verifies retained failure evidence and falls back to the uncompressed log when integrity cannot be established.
+Our open-source suite combines AST slicing, pre-flight compilation and **fail-open, evidence-checked** traceback compression.
 
 We report **120 live calls to quantized Gemma 4 31B (`google/gemma-4-31B-it-qat-w4a16-ct`)** on 15 synthetic defects across two seeds. Compared to native raw tracebacks, our AST-guided compression delivers a **31.5% reduction in total API tokens** (1,158 to 793 tokens per task call) and a **56.86% reduction in traceback characters** (2,314 to 998 characters), while preserving 100% localization accuracy and 86.7% objective diagnostic accuracy (versus 90.0% for raw traces, $\Delta = -3.33\%$, 95% bootstrap CI: $[-10.0\%, 0.0\%]$, permutation $p = 1.0000$). 
 
@@ -199,7 +199,7 @@ Hybrid attention makes unnecessary file and traceback text costly. Deterministic
 Traceback filtering isolates failing blocks and collapses stdout noise while preserving failure headers, assertion sites (`> assert ...`), assertion details (`E ...`), and multiline diff frames. We tested the unchanged compressor on **11 genuine failing pytest logs from eight repositories**. Three additional cases (Xarray, Pylint, SymPy) were [frozen before this run](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/e2e_gemma_experiment/real_repo_sample/UNSEEN_3REPO_PRECOMMIT_20261111.md) and verified RED→GREEN; two IDs overlapped a parallel pre-registration. On this new holdout, B2 retained all selected diagnostic/header/summary evidence **3/3** against `head35`/`tail35` **0/3**, reducing bytes **82.15%**. Across all 11, B2 retained evidence **11/11** versus **2/11** for each truncation baseline, at **72.01%** byte reduction. This supports diagnostic robustness, **not solve-rate superiority**. [Logs and baselines](https://github.com/msingatullin/gemma-4-developer-agent/tree/main/paper/e2e_gemma_experiment/real_repo_sample). Independent [integrity certificates](https://github.com/msingatullin/gemma-4-developer-agent/tree/main/paper/verification_certificate) verify source/output SHA-256 and exact selected-marker multiplicities: **11/11 certified**, **165/165 adversarial corruptions detected** (software checks, not semantic equivalence).
 
 ### 6.4 Production ADK Specification
-The complete system is formalized as a Google Agent Development Kit (ADK) specification in `agent.yaml`:
+ADK configuration (`agent.yaml`):
 ```yaml
 name: gemma4_ast_verified_agent
 model: gemma-4-31b-it-qat-w4a16-ct
@@ -224,7 +224,7 @@ session_timeout_seconds: 300
 
 ## 7. Artifacts & Open-Source Availability
 
-All artifacts developed for this project are permanently archived and released under the open-source **Apache 2.0** license:
+Open-source **Apache 2.0** artifacts:
 - **Public Executable Notebook:** [msingatullin/ast-guided-loops-verification-for-gemma-4](https://www.kaggle.com/code/msingatullin/ast-guided-loops-verification-for-gemma-4)
 - **Open-Source Repository:** [github.com/msingatullin/gemma-4-developer-agent](https://github.com/msingatullin/gemma-4-developer-agent)
 - **120 Real Model Inferences:** [`paper/e2e_gemma_experiment/real_run_20261108/real_experiment_checkpoint.jsonl`](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/e2e_gemma_experiment/real_run_20261108/real_experiment_checkpoint.jsonl)
