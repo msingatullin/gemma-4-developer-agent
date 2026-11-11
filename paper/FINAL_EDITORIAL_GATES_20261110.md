@@ -42,3 +42,17 @@ Replace `proving that assertion-aware compression preserves test signals without
 5. Without GPU approval, no A/B2/C Gemma inference on five authentic issues.
 
 **Recommended action:** prepare an exact minimal diff against the *live* Kaggle Writeup, not just the GitHub surrogate, and obtain owner approval. The competition deadline is less than three days away as of this audit.
+
+
+## 2026-11-11 verified evidence supersedes the earlier CPU-only/no-inference gate
+
+**Do not reuse the historical proposed Section 5.6 verbatim.** The statements above that no real-upstream Gemma inference was performed, and that GPU permission is missing, describe the earlier 2026-11-10 state and are now superseded. The published Kaggle Writeup remains unchanged pending explicit owner approval.
+
+- Private free Kaggle T4x2 notebook v10 completed, with 15/15 SHA-verified genuine Gemma4 31B model responses (five pinned upstream tasks × A_raw/B2_assertion_aware/C_tail35). Corpus SHA256: `7b9bddd1a410821db3bc4b509241fea8d18988340747d3a630706e19ef829ef2`. Raw responses stay private on VPS.
+- Isolated offline CPU evaluation against pinned local Docker images and upstream repositories completed with 15/15 verdicts and **zero harness errors**. An initial path-misconfigured run produced 15 HARNESS_ERROR verdicts and was excluded, not treated as model failures. Verified final score JSONL SHA256: `0dd65aea3355aaae5d16c7eb821aeb5ac2bf2bcfa00df8f4f97f383fd487930a`; summary SHA256: `af32d8e330db0688067bf1e5fe0d10f0f6985494c424918397890882f39a9ab0`.
+- Actual task resolution: **A_raw 1/5, B2_assertion_aware 1/5, C_tail35 1/5**; all three solved the same `psf__requests-1963` task, and the other four were unresolved. No observed resolution gain, no demonstrated noninferiority or generalizable performance improvement. Total prompt+completion tokens: A 41,013, B2 37,009, C 40,036; descriptive, not a proof of token savings at equal accuracy.
+- Validated historical CPU controls remain 39/39 unit, 12/12 evaluator controls, 5/5 gold RED/GREEN, 155 selected P2P. Exact copied-gold literal scan of 15 prompts does not establish semantic non-leakage.
+- **Proposed new manuscript wording, subject to live-text diff, word budget, and owner authorization:** “On five pinned authentic upstream issues (three Flask, two Requests), we additionally collected 15 genuine Gemma 4 31B responses under three frozen prompt variants using a private free Kaggle GPU notebook. An isolated, pinned CPU evaluator found one resolved task out of five for each variant, the same Requests issue in all three. This small exploratory sample does not show improved resolution or establish equivalence of compressed and raw prompts. All outputs were checked against frozen prompt hashes; the raw model responses are not publicly released.”
+- Official Kaggle MCP `get_competition` checked 2026-11-11: ID 163111, deadline **2026-11-12 23:59 UTC**, 847 teams at check, user entered, USD 35,000 prize pool. Live Writeup 115692 could not be fetched by `get_hackathon_write_up` in this run (`Not found`); do not claim live-vs-draft equality or certified 3,000-word compliance.
+
+**Release gate:** no published Kaggle Writeup edit or contest submission without explicit owner approval. Avoid publishing private model responses. The strongest final narrative is an honest negative/neutral real-upstream pilot plus reproducible deterministic infrastructure, not an unproven improvement claim.
