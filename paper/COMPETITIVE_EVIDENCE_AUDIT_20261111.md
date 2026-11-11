@@ -90,3 +90,21 @@ Artifacts: [unmodified local-study protocol](e2e_gemma_experiment/real_repo_samp
 **Separate exploratory per-log byte-budget stress:** five head/tail shares (0%, 25%, 50%, 75%, 100%) were given no more bytes *per input* than B2's output; an optimistic oracle picked the best of these five after knowing each task's markers. This oracle preserved selected markers **3/11** while B2 retained **11/11**. The family/oracle was devised after seeing split results; not pre-registered, no inference claims and no exhaustive claim against all compression algorithms. [Source and per-case output](e2e_gemma_experiment/heldout_three_repos/README.md).
 
 **Competition assessment:** prospective external evidence makes the open-source deterministic diagnostic tool stronger and more generalizable. It does **not** establish superiority over Taiko Toeda's real issue-resolution study, Jared's model reading Hit@3, Maroof's E4B file localization, or a hidden SWE leaderboard. Do not convert the 3/3 marker result into a model solve-rate claim.
+
+## Direct same-Gemma E4B File@1 comparison against Maroof (new 2026-11-11 evidence)
+
+Unlike the different-endpoint comparisons above, this study reuses Maroof's **actual released E4B `repomap_sig` ranked file predictions** and compares the original first choice to our zero-inference deterministic reranking **among those same candidates**. Both conditions receive the same already-generated model output; no extra Gemma model or context/generation tokens were used. It is a distinct file-selection module, not the previously claimed effect of AST traceback compression.
+
+[Public preregistered 150→60/90 split, model/source freeze, 90 paired outcomes, and uncertainty analysis](peer_head2head/README.md). The 60 development ids are selected mechanically by the presence of the peer's `ours_2stage` variant. The other 90 ids formed the only reserved evaluation; development grid of 256 transparent heuristics tuned exclusively on the 60. Source and chosen config were committed to GitHub **before** running the one-shot reserved scorer. A second clean-directory download independently reconstructed the holdout unlabeled issue input SHA and reproduced **every one of the 90 published outcomes**.
+
+| Outcome | Original E4B `repomap_sig` | Same output + our deterministic reranker |
+|---|---:|---:|
+| Development File@1 | 30/60 (50.0%) | 33/60 (55.0%), used for fitting |
+| Reserved 90 File@1 | 49/90 (54.44%) | **51/90 (56.67%)** |
+| Additional E4B inference | 0 | **0** |
+
+Heldout 90 paired task changes: four rescued, two regressed. **All four rescues are SymPy tasks**, while losses occurred in one Astropy and one Django task. Exact paired McNemar **p=0.6875**; 95% paired-task bootstrap improvement CI **[−3.33, +7.78] pp**, repository-cluster bootstrap **[−6.25, +11.34] pp**. The published strong-win precommit gate required at least five net extra correct and p≤0.05, **therefore it FAILED**. This is merely a narrowly defined **numerical advantage**, *not* a significant finding or evidence that our overall research outranks Maroof's larger paper. It also does not show Gemma resolution improvement.
+
+### Parallel holdout disclosure
+
+Two separate project research workers froze overlapping diagnostic log experiments on November 11: [first protocol](e2e_gemma_experiment/real_repo_sample/HELDOUT_CPU_PROTOCOL_20261111.md) was committed **11:51:23 UTC**, choosing Pylint5859, Xarray4094, SymPy11897; [second protocol](e2e_gemma_experiment/real_repo_sample/UNSEEN_3REPO_PRECOMMIT_20261111.md) committed **12:14:21 UTC**, choosing Pylint5859, Xarray4248, SymPy11897. Two issues **overlap**; neither cohort was blind to the project's broader existing task selection, and they are not independent replicates. The earlier protocol's 3/3 selected-marker retention included one raw fail-open fallback and **38.72% byte reduction**, versus the second cohort's 3/3 at **82.15%**. Our official writeup now explicitly mentions overlap. Pooled 11-case diagnostics are secondary descriptive statistics, not a new independent randomized sample. Keep both positive and limiting evidence public.
