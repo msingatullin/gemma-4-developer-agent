@@ -1,5 +1,17 @@
 # Paper Track — STATUS
 
+## Kaggle V6 live body and attachment CONFIRMED — title/Submitted still open (2026-11-11)
+
+- **Cross-channel source sync:** GitHub canonical `paper/writeup.md` updated to verified 2670-word V6 at commit `ce2dd5b011b0caa94145c168900f1e31e57a1d8a`, SHA256 `5e2e9334eff4beaea7765c454fa99acd1d919858406d198e6c0112823642129b`. Direct HTTPS GET of GitHub raw bytes exactly equals the final V6 paper on VPS and the one embedded in the V6 release ZIP.
+- **Fresh authenticated owner Kaggle SDK readback** found existing Paper Track `HackathonWriteUp.id=86845`, nested `WriteUp.id=115692`, **`PUBLISHED`** updated **2026-11-11 18:14:29.421 UTC** with **2670 whitespace words**. Live Kaggle Markdown SHA256 `6c7e4403eb7a8348a5e340bbb1306aef2dfb5975c8c54d9bfc351f3124d00f5b` matches GitHub/VPS/V6 body exactly after stripping final newline (Kaggle normalizes trailing newline).
+- **V6 Kaggle attachment VERIFIED FROM KAGGLE STORAGE**, not just via Gateway: attachment ID **54839** `GEMMA4_PAPER_RESOURCE_V6_RELEASE_20261111.zip`, 539294 bytes, directly downloaded HTTP200 and **byte-identical** to VPS original, SHA256 `9cc8fc88dff04ba048dce4544d093a0616a110119a75e184665625a55b5d4e9c`, CRC PASS. Embedded `paper/writeup.md` exactly equals GitHub current V6 source. V5 remains historical backup.
+- **Published public Notebook v23 stays `KernelWorkerStatus.COMPLETE`**, directly checked using Kaggle CLI. Original 31 strict PASS, guard 88/88, tamper 704/704 and E4B peer 49/90→51/90 verified by earlier direct v23 output.
+- **P0 still OPEN:** Kaggle metadata title `AST-Guided Verification Suite: Deterministic Code Slicing, Pre-Flight Validation` and subtitle `A modular, AST-guided navigation and test-time verification framework for autonomous software engineering with offline Gemma 4 models.` are stale even though H1/body are new. Proposed title `When Traceback Compression Lies: Verifiable Diagnostics for Gemma 4 SWE Agents`, subtitle `A falsification-tested, fail-open resource for preserving pytest evidence under CI log compression`.
+- **P0 still OPEN:** direct `Submitted` acknowledgement NOT exposed in Kaggle SDK; only `PUBLISHED` is confirmed. Official [competition requirements](https://www.kaggle.com/competitions/gemma-4-developer-agent-paper) explicitly require `Submit` after saving and say unsubmitted/draft Writeups are not eligible. Deadline 2026-11-12 23:59 UTC.
+- **Capability boundary:** connected Kaggle MCP + `kagglesdk.competitions.hackathon_api_client` and `discussions.write_ups_api_client` expose GET/LIST methods, no published writeup edit/upload/submit action; Browser tool in Chat mode supports read-only tab context. No unsupported direct Writeup mutation was attempted. User must update metadata + confirm UI Submitted from existing [Kaggle Writeup](https://www.kaggle.com/competitions/gemma-4-developer-agent-paper/writeups/ast-guided-deterministic-gemma4-agent) or run this final browser task via Work mode. **No new contest submission created.**
+- Audit report: [FINAL_KAGGLE_V6_VERIFICATION_20261111.md](FINAL_KAGGLE_V6_VERIFICATION_20261111.md) commit `b40c84fac52e98d7904d56f21333b9adafb4270c`.
+
+
 ## Kaggle public Notebook v23 — PUBLISHED & COMPLETE — 2026-11-11
 
 - **Owner explicitly authorized publication** of editorial-only v23. Used authenticated Kaggle CLI through Gateway SSH on `nuremberf`, verified existing notebook slug and original v22 `COMPLETE`, pulled public v22 SHA256 `5fdc54771c644ae54d7355e19ee2e1c62f30c74a2fd2637be60d14c0c55c6cb8`, and copied frozen v22 backup before upload.
