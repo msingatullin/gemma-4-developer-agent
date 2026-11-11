@@ -4,7 +4,7 @@ from collections import Counter
 import json,re,hashlib,importlib.util,statistics
 
 ROOT=Path('/opt/kaggle/gemma-paper')
-FX=Path('/opt/kaggle/gemma-paper-kaggle-cli/heldout-cpu-real-logs-20261111/REAL_LOG_FIXTURES_20261111.json')
+FX=Path(__file__).with_name('REAL_LOG_FIXTURES_20261111.json')
 SRC=ROOT/'paper/traceback_compressor.py'
 spec=importlib.util.spec_from_file_location('compressor',SRC)
 m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
