@@ -1,0 +1,87 @@
+{
+  "scope": "Secondary pooled (NON-PREREGISTERED) 8 earlier five-repo logs + prospectively frozen additional 3 new repo logs. The separately published 3-case holdout results are the precommitted primary endpoint. Do not claim random sampling or model success gain.",
+  "n_tasks": 11,
+  "n_repositories": 8,
+  "aggregation": {
+    "raw": {
+      "n": 11,
+      "retained_full": 11,
+      "input_bytes": 48973,
+      "out_bytes": 48973,
+      "corpus_byte_saving_pct": 0.0
+    },
+    "head35": {
+      "n": 11,
+      "retained_full": 2,
+      "input_bytes": 48973,
+      "out_bytes": 17644,
+      "corpus_byte_saving_pct": 63.97
+    },
+    "tail35": {
+      "n": 11,
+      "retained_full": 2,
+      "input_bytes": 48973,
+      "out_bytes": 18807,
+      "corpus_byte_saving_pct": 61.6
+    },
+    "tail20": {
+      "n": 11,
+      "retained_full": 1,
+      "input_bytes": 48973,
+      "out_bytes": 11740,
+      "corpus_byte_saving_pct": 76.03
+    },
+    "naive_diag": {
+      "n": 11,
+      "retained_full": 0,
+      "input_bytes": 48973,
+      "out_bytes": 5143,
+      "corpus_byte_saving_pct": 89.5
+    },
+    "ours_v1": {
+      "n": 11,
+      "retained_full": 11,
+      "input_bytes": 48973,
+      "out_bytes": 15960,
+      "corpus_byte_saving_pct": 67.41
+    },
+    "ours_v2_B2": {
+      "n": 11,
+      "retained_full": 11,
+      "input_bytes": 48973,
+      "out_bytes": 13706,
+      "corpus_byte_saving_pct": 72.01
+    }
+  },
+  "paired_exploratory": {
+    "head35": {
+      "B2_full_only": 9,
+      "competitor_full_only": 0,
+      "exploratory_exact_p_uncorrected": 0.00390625
+    },
+    "tail35": {
+      "B2_full_only": 9,
+      "competitor_full_only": 0,
+      "exploratory_exact_p_uncorrected": 0.00390625
+    },
+    "tail20": {
+      "B2_full_only": 10,
+      "competitor_full_only": 0,
+      "exploratory_exact_p_uncorrected": 0.001953125
+    },
+    "naive_diag": {
+      "B2_full_only": 11,
+      "competitor_full_only": 0,
+      "exploratory_exact_p_uncorrected": 0.0009765625
+    },
+    "ours_v1": {
+      "B2_full_only": 0,
+      "competitor_full_only": 0,
+      "exploratory_exact_p_uncorrected": 1
+    }
+  },
+  "replay_source_files": [
+    "baseline_comparison_5repos_results_20261111.json",
+    "baseline_comparison_holdout3_results_20261111.json"
+  ]
+}
