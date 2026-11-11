@@ -33,3 +33,11 @@ The benchmark uses Python standard library only; no model calls or original repo
 Exact-multiplicity verification covers selected pytest E-lines, failing-site markers, FAILED/ERROR summaries, exception diagnostic lines and underscored failure headers. It **does not** guarantee complete semantic equivalence, token-count reduction, improved Gemma patch solve rate or a superiority ranking against papers by Toeda, Jared Anderson, Maroof or others. Three new repositories are a useful prospective external sanity check, but still an extremely small, nonrandom sample of software failures.
 
 **Decision:** Accept as supplementary heldout generalization evidence for the open source verification resource. Do not alter the submitted Kaggle paper or advertise a model performance gain without separate validation.
+
+## Exploratory budget-matched stress test (not part of the frozen protocol)
+
+In a separate post-hoc check we capped simple head/tail truncation at **each individual log's actual B2 output byte count**, testing prefix/suffix shares 0%, 25%, 50%, 75%, and 100%. We even allowed an optimistic *per-task oracle* to choose the best of these five variants after seeing the diagnostic evidence. That oracle preserved all selected markers on **3/11 logs** (1/8 development + 2/3 prospective), whereas B2 retained **11/11** by construction of the same selected-marker oracle. Whole lines are retained, so truncation may underutilize its allotted byte budget slightly. The prospective split includes xarray where B2 and a trivial full-log baseline both use the original length.
+
+This is evidence against several *specified naive truncation strategies at approximately matched byte budgets*, not a theorem about all possible truncation methods, the general distribution of errors, end-to-end model quality, or statistical superiority over other research papers. The analysis family and oracle comparison were devised **after** observing the fixed split outcomes.
+
+[Exploratory head/tail comparison code](byte_matched_truncation_exploratory.py) and [11 per-task results](byte_matched_truncation_exploratory_result.json). A clean public-source replay regenerated all 11 rows identically.
