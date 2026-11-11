@@ -259,3 +259,8 @@ Next gate: read actual kernel state; if `COMPLETE`, download response JSONL, str
 - No Kaggle submission changes, paid resources, or publication write occurred. Deadline 2026-11-12 23:59 UTC.
 
 - **Editorial margin improvement:** trimmed redundant introductory/related-work prose without changing evidence; latest GitHub manuscript commit `12e788806c732f99affdd0a77e20634d137f7acf`, **2,913 whitespace-delimited words**. This supersedes the earlier 2,987-word checkpoint; actual Kaggle word-count rules remain to be verified in the editor.
+
+## 2026-11-11 05:52 UTC — Published Kaggle writeup updated; user screenshot confirms Submitted
+- Owner provided three current Kaggle screenshots of live Paper Track project page showing green `Submitted`, new Section 5.6 with authentic 5-task results A/B2/C 1/5 each, Project Links and Project Files still present. Screenshot display cannot certify exact full-body equality or Kaggle word-count algorithm.
+- Independent authenticated Kaggle MCP `list_hackathon_write_ups` now confirms writeup 115692 `content_state=PUBLISHED`, `update_time=2026-11-11T05:52:24.496662400Z` (previously 2026-11-08), hackathon project 86845 updated at 05:52:24.546855600Z. Therefore live publication was actually updated, resolving prior publishing blocker. Green Submitted is screenshot evidence, not a distinct API submission-status field.
+- Scientific conclusion unchanged: 15 authenticated real Gemma4 outputs, A_raw/B2/C each 1/5 on same issue; no demonstrated resolution gain, no paid spend. Current GitHub manuscript source commit `12e788806c732f99affdd0a77e20634d137f7acf` ~2913 whitespace words. Final live-body exact diff/word count still unverified.
