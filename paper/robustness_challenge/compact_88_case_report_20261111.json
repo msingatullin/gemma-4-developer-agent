@@ -1,0 +1,776 @@
+{
+  "experiment_id": "PAPER-CHAOS-20261111-001",
+  "scope": "88 synthetic format shifts of same 11 genuine upstream failures; NOT 88 independent real tasks.",
+  "protocol": "paper/robustness_challenge/PROTOCOL_20261111.md",
+  "input_real_failure_cases": 11,
+  "synthetic_cases": 88,
+  "legacy_pass": 78,
+  "legacy_fail": 10,
+  "legacy_certificate_false_accept": 10,
+  "optional_guard_pass": 88,
+  "optional_guard_fail": 0,
+  "old_fallbacks": 23,
+  "new_fallbacks": 33,
+  "certificate_tampering_rejected": 704,
+  "certificate_tampering_total": 704,
+  "original_11_byte_identical": true,
+  "original_11_byte_reduction_pct": 72.01,
+  "compressor_sha256": "a9e192fef9a0d53de60ea18c90e21167253f2e1445f6c17f70ad6354da1351d5",
+  "by_family": {
+    "ansi_critical": {
+      "n": 11,
+      "original_pass": 1,
+      "guard_pass": 11,
+      "guard_fallbacks": 11
+    },
+    "ansi_all": {
+      "n": 11,
+      "original_pass": 11,
+      "guard_pass": 11,
+      "guard_fallbacks": 0
+    },
+    "crlf": {
+      "n": 11,
+      "original_pass": 11,
+      "guard_pass": 11,
+      "guard_fallbacks": 0
+    },
+    "duplicate_diagnostic": {
+      "n": 11,
+      "original_pass": 11,
+      "guard_pass": 11,
+      "guard_fallbacks": 0
+    },
+    "captured_stdout_sentinel": {
+      "n": 11,
+      "original_pass": 11,
+      "guard_pass": 11,
+      "guard_fallbacks": 0
+    },
+    "native_traceback": {
+      "n": 11,
+      "original_pass": 11,
+      "guard_pass": 11,
+      "guard_fallbacks": 11
+    },
+    "exception_group": {
+      "n": 11,
+      "original_pass": 11,
+      "guard_pass": 11,
+      "guard_fallbacks": 11
+    },
+    "ci_log_prefix": {
+      "n": 11,
+      "original_pass": 11,
+      "guard_pass": 11,
+      "guard_fallbacks": 0
+    }
+  },
+  "full_rows_compact": [
+    {
+      "case": "mwaskom__seaborn-3010",
+      "format": "ansi_critical",
+      "legacy_pass": false,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "selected_evidence_multiplicity_mismatch"
+    },
+    {
+      "case": "mwaskom__seaborn-3010",
+      "format": "ansi_all",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "mwaskom__seaborn-3010",
+      "format": "crlf",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "mwaskom__seaborn-3010",
+      "format": "duplicate_diagnostic",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "mwaskom__seaborn-3010",
+      "format": "captured_stdout_sentinel",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "mwaskom__seaborn-3010",
+      "format": "native_traceback",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "mwaskom__seaborn-3010",
+      "format": "exception_group",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "mwaskom__seaborn-3010",
+      "format": "ci_log_prefix",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-4045",
+      "format": "ansi_critical",
+      "legacy_pass": false,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "selected_evidence_multiplicity_mismatch"
+    },
+    {
+      "case": "pallets__flask-4045",
+      "format": "ansi_all",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-4045",
+      "format": "crlf",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-4045",
+      "format": "duplicate_diagnostic",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-4045",
+      "format": "captured_stdout_sentinel",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-4045",
+      "format": "native_traceback",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-4045",
+      "format": "exception_group",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-4045",
+      "format": "ci_log_prefix",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-4992",
+      "format": "ansi_critical",
+      "legacy_pass": false,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "selected_evidence_multiplicity_mismatch"
+    },
+    {
+      "case": "pallets__flask-4992",
+      "format": "ansi_all",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-4992",
+      "format": "crlf",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-4992",
+      "format": "duplicate_diagnostic",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-4992",
+      "format": "captured_stdout_sentinel",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-4992",
+      "format": "native_traceback",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-4992",
+      "format": "exception_group",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-4992",
+      "format": "ci_log_prefix",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-5063",
+      "format": "ansi_critical",
+      "legacy_pass": false,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "selected_evidence_multiplicity_mismatch"
+    },
+    {
+      "case": "pallets__flask-5063",
+      "format": "ansi_all",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-5063",
+      "format": "crlf",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-5063",
+      "format": "duplicate_diagnostic",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-5063",
+      "format": "captured_stdout_sentinel",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-5063",
+      "format": "native_traceback",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-5063",
+      "format": "exception_group",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pallets__flask-5063",
+      "format": "ci_log_prefix",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "psf__requests-1963",
+      "format": "ansi_critical",
+      "legacy_pass": false,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "selected_evidence_multiplicity_mismatch"
+    },
+    {
+      "case": "psf__requests-1963",
+      "format": "ansi_all",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "psf__requests-1963",
+      "format": "crlf",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "psf__requests-1963",
+      "format": "duplicate_diagnostic",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "psf__requests-1963",
+      "format": "captured_stdout_sentinel",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "psf__requests-1963",
+      "format": "native_traceback",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "psf__requests-1963",
+      "format": "exception_group",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "psf__requests-1963",
+      "format": "ci_log_prefix",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "psf__requests-2148",
+      "format": "ansi_critical",
+      "legacy_pass": false,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "selected_evidence_multiplicity_mismatch"
+    },
+    {
+      "case": "psf__requests-2148",
+      "format": "ansi_all",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "psf__requests-2148",
+      "format": "crlf",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "psf__requests-2148",
+      "format": "duplicate_diagnostic",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "psf__requests-2148",
+      "format": "captured_stdout_sentinel",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "psf__requests-2148",
+      "format": "native_traceback",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "psf__requests-2148",
+      "format": "exception_group",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "psf__requests-2148",
+      "format": "ci_log_prefix",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pydata__xarray-4248",
+      "format": "ansi_critical",
+      "legacy_pass": false,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "selected_evidence_multiplicity_mismatch"
+    },
+    {
+      "case": "pydata__xarray-4248",
+      "format": "ansi_all",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pydata__xarray-4248",
+      "format": "crlf",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pydata__xarray-4248",
+      "format": "duplicate_diagnostic",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pydata__xarray-4248",
+      "format": "captured_stdout_sentinel",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pydata__xarray-4248",
+      "format": "native_traceback",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pydata__xarray-4248",
+      "format": "exception_group",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pydata__xarray-4248",
+      "format": "ci_log_prefix",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pylint-dev__pylint-5859",
+      "format": "ansi_critical",
+      "legacy_pass": false,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "selected_evidence_multiplicity_mismatch"
+    },
+    {
+      "case": "pylint-dev__pylint-5859",
+      "format": "ansi_all",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pylint-dev__pylint-5859",
+      "format": "crlf",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pylint-dev__pylint-5859",
+      "format": "duplicate_diagnostic",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pylint-dev__pylint-5859",
+      "format": "captured_stdout_sentinel",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pylint-dev__pylint-5859",
+      "format": "native_traceback",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pylint-dev__pylint-5859",
+      "format": "exception_group",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pylint-dev__pylint-5859",
+      "format": "ci_log_prefix",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pytest-dev__pytest-11143",
+      "format": "ansi_critical",
+      "legacy_pass": false,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "selected_evidence_multiplicity_mismatch"
+    },
+    {
+      "case": "pytest-dev__pytest-11143",
+      "format": "ansi_all",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pytest-dev__pytest-11143",
+      "format": "crlf",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pytest-dev__pytest-11143",
+      "format": "duplicate_diagnostic",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pytest-dev__pytest-11143",
+      "format": "captured_stdout_sentinel",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pytest-dev__pytest-11143",
+      "format": "native_traceback",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pytest-dev__pytest-11143",
+      "format": "exception_group",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "pytest-dev__pytest-11143",
+      "format": "ci_log_prefix",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sphinx-doc__sphinx-11445",
+      "format": "ansi_critical",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sphinx-doc__sphinx-11445",
+      "format": "ansi_all",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sphinx-doc__sphinx-11445",
+      "format": "crlf",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sphinx-doc__sphinx-11445",
+      "format": "duplicate_diagnostic",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sphinx-doc__sphinx-11445",
+      "format": "captured_stdout_sentinel",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sphinx-doc__sphinx-11445",
+      "format": "native_traceback",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sphinx-doc__sphinx-11445",
+      "format": "exception_group",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sphinx-doc__sphinx-11445",
+      "format": "ci_log_prefix",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sympy__sympy-11897",
+      "format": "ansi_critical",
+      "legacy_pass": false,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "selected_evidence_multiplicity_mismatch"
+    },
+    {
+      "case": "sympy__sympy-11897",
+      "format": "ansi_all",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sympy__sympy-11897",
+      "format": "crlf",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sympy__sympy-11897",
+      "format": "duplicate_diagnostic",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sympy__sympy-11897",
+      "format": "captured_stdout_sentinel",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sympy__sympy-11897",
+      "format": "native_traceback",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sympy__sympy-11897",
+      "format": "exception_group",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": true,
+      "reason": "verified_selected_diagnostics"
+    },
+    {
+      "case": "sympy__sympy-11897",
+      "format": "ci_log_prefix",
+      "legacy_pass": true,
+      "guard_pass": true,
+      "guard_fallback": false,
+      "reason": "verified_selected_diagnostics"
+    }
+  ],
+  "limits": "The 88 format perturbations reuse 11 known authentic logs; they are not 88 independent SWEBench tasks. All assertions concern selected diagnostic markers, not full meaning or model solve rate."
+}
