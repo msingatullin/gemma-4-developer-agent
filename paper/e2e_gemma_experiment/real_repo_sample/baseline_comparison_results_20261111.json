@@ -1,0 +1,465 @@
+{
+  "experiment_id": "PAPER-BASELINE-CMP-20261111-01",
+  "scope": "Retrospective comparison on five authentic failing pytest logs from two upstream repositories. Metrics use exact-multiplicity selected diagnostic/header/summary markers. This does not measure model solve rate or semantic completeness.",
+  "methods": [
+    "raw",
+    "head35",
+    "tail35",
+    "tail20",
+    "naive_diag",
+    "ours_v1",
+    "ours_v2_B2"
+  ],
+  "aggregate": {
+    "raw": {
+      "n_logs": 5,
+      "corpus_saved_pct": 0.0,
+      "mean_diag_recall_pct": 100.0,
+      "mean_header_recall_pct": 100.0,
+      "mean_summary_recall_pct": 100.0,
+      "logs_full_integrity": 5,
+      "n": 5
+    },
+    "head35": {
+      "n_logs": 5,
+      "corpus_saved_pct": 37.53,
+      "mean_diag_recall_pct": 79.57,
+      "mean_header_recall_pct": 100.0,
+      "mean_summary_recall_pct": 40.0,
+      "logs_full_integrity": 2,
+      "n": 5
+    },
+    "tail35": {
+      "n_logs": 5,
+      "corpus_saved_pct": 35.76,
+      "mean_diag_recall_pct": 78.29,
+      "mean_header_recall_pct": 50.0,
+      "mean_summary_recall_pct": 100.0,
+      "logs_full_integrity": 2,
+      "n": 5
+    },
+    "tail20": {
+      "n_logs": 5,
+      "corpus_saved_pct": 59.33,
+      "mean_diag_recall_pct": 67.93,
+      "mean_header_recall_pct": 20.0,
+      "mean_summary_recall_pct": 100.0,
+      "logs_full_integrity": 1,
+      "n": 5
+    },
+    "naive_diag": {
+      "n_logs": 5,
+      "corpus_saved_pct": 84.56,
+      "mean_diag_recall_pct": 100.0,
+      "mean_header_recall_pct": 0.0,
+      "mean_summary_recall_pct": 100.0,
+      "logs_full_integrity": 0,
+      "n": 5
+    },
+    "ours_v1": {
+      "n_logs": 5,
+      "corpus_saved_pct": 67.91,
+      "mean_diag_recall_pct": 100.0,
+      "mean_header_recall_pct": 100.0,
+      "mean_summary_recall_pct": 100.0,
+      "logs_full_integrity": 5,
+      "n": 5
+    },
+    "ours_v2_B2": {
+      "n_logs": 5,
+      "corpus_saved_pct": 55.89,
+      "mean_diag_recall_pct": 100.0,
+      "mean_header_recall_pct": 100.0,
+      "mean_summary_recall_pct": 100.0,
+      "logs_full_integrity": 5,
+      "n": 5
+    }
+  },
+  "rows": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "method": "raw",
+      "raw_bytes": 2172,
+      "out_bytes": 2172,
+      "saved_pct": 0.0,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pallets__flask-4045",
+      "method": "head35",
+      "raw_bytes": 2172,
+      "out_bytes": 1421,
+      "saved_pct": 34.576427255985266,
+      "diag_recall": 0.42857142857142855,
+      "header_recall": 1.0,
+      "summary_recall": 0.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pallets__flask-4045",
+      "method": "tail35",
+      "raw_bytes": 2172,
+      "out_bytes": 1520,
+      "saved_pct": 30.018416206261513,
+      "diag_recall": 0.7142857142857143,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pallets__flask-4045",
+      "method": "tail20",
+      "raw_bytes": 2172,
+      "out_bytes": 847,
+      "saved_pct": 61.003683241252304,
+      "diag_recall": 0.5714285714285714,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pallets__flask-4045",
+      "method": "naive_diag",
+      "raw_bytes": 2172,
+      "out_bytes": 463,
+      "saved_pct": 78.68324125230203,
+      "diag_recall": 1.0,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pallets__flask-4045",
+      "method": "ours_v1",
+      "raw_bytes": 2172,
+      "out_bytes": 1015,
+      "saved_pct": 53.26887661141805,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pallets__flask-4045",
+      "method": "ours_v2_B2",
+      "raw_bytes": 2172,
+      "out_bytes": 1223,
+      "saved_pct": 43.692449355432785,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "method": "raw",
+      "raw_bytes": 888,
+      "out_bytes": 888,
+      "saved_pct": 0.0,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "method": "head35",
+      "raw_bytes": 888,
+      "out_bytes": 887,
+      "saved_pct": 0.11261261261261701,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "method": "tail35",
+      "raw_bytes": 888,
+      "out_bytes": 887,
+      "saved_pct": 0.11261261261261701,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "method": "tail20",
+      "raw_bytes": 888,
+      "out_bytes": 887,
+      "saved_pct": 0.11261261261261701,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "method": "naive_diag",
+      "raw_bytes": 888,
+      "out_bytes": 190,
+      "saved_pct": 78.6036036036036,
+      "diag_recall": 1.0,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "method": "ours_v1",
+      "raw_bytes": 888,
+      "out_bytes": 467,
+      "saved_pct": 47.409909909909906,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "method": "ours_v2_B2",
+      "raw_bytes": 888,
+      "out_bytes": 530,
+      "saved_pct": 40.31531531531532,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "method": "raw",
+      "raw_bytes": 2231,
+      "out_bytes": 2231,
+      "saved_pct": 0.0,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "method": "head35",
+      "raw_bytes": 2231,
+      "out_bytes": 1931,
+      "saved_pct": 13.446884805020165,
+      "diag_recall": 0.75,
+      "header_recall": 1.0,
+      "summary_recall": 0.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "method": "tail35",
+      "raw_bytes": 2231,
+      "out_bytes": 1933,
+      "saved_pct": 13.357238906320035,
+      "diag_recall": 1.0,
+      "header_recall": 0.5,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "method": "tail20",
+      "raw_bytes": 2231,
+      "out_bytes": 1081,
+      "saved_pct": 51.546391752577314,
+      "diag_recall": 0.625,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "method": "naive_diag",
+      "raw_bytes": 2231,
+      "out_bytes": 809,
+      "saved_pct": 63.73823397579561,
+      "diag_recall": 1.0,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "method": "ours_v1",
+      "raw_bytes": 2231,
+      "out_bytes": 1359,
+      "saved_pct": 39.085611833258625,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "method": "ours_v2_B2",
+      "raw_bytes": 2231,
+      "out_bytes": 1399,
+      "saved_pct": 37.29269385925594,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "method": "raw",
+      "raw_bytes": 5173,
+      "out_bytes": 5173,
+      "saved_pct": 0.0,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "method": "head35",
+      "raw_bytes": 5173,
+      "out_bytes": 1749,
+      "saved_pct": 66.1898318190605,
+      "diag_recall": 0.8,
+      "header_recall": 1.0,
+      "summary_recall": 0.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "method": "tail35",
+      "raw_bytes": 5173,
+      "out_bytes": 1859,
+      "saved_pct": 64.0634061473033,
+      "diag_recall": 0.2,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "method": "tail20",
+      "raw_bytes": 5173,
+      "out_bytes": 1182,
+      "saved_pct": 77.15058959984535,
+      "diag_recall": 0.2,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "method": "naive_diag",
+      "raw_bytes": 5173,
+      "out_bytes": 219,
+      "saved_pct": 95.76647979895611,
+      "diag_recall": 1.0,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "method": "ours_v1",
+      "raw_bytes": 5173,
+      "out_bytes": 493,
+      "saved_pct": 90.46974676203364,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "method": "ours_v2_B2",
+      "raw_bytes": 5173,
+      "out_bytes": 1573,
+      "saved_pct": 69.59211289387203,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "method": "raw",
+      "raw_bytes": 1464,
+      "out_bytes": 1464,
+      "saved_pct": 0.0,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "method": "head35",
+      "raw_bytes": 1464,
+      "out_bytes": 1463,
+      "saved_pct": 0.0683060109289646,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "method": "tail35",
+      "raw_bytes": 1464,
+      "out_bytes": 1463,
+      "saved_pct": 0.0683060109289646,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "method": "tail20",
+      "raw_bytes": 1464,
+      "out_bytes": 854,
+      "saved_pct": 41.666666666666664,
+      "diag_recall": 1.0,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "method": "naive_diag",
+      "raw_bytes": 1464,
+      "out_bytes": 161,
+      "saved_pct": 89.00273224043715,
+      "diag_recall": 1.0,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "method": "ours_v1",
+      "raw_bytes": 1464,
+      "out_bytes": 494,
+      "saved_pct": 66.2568306010929,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "method": "ours_v2_B2",
+      "raw_bytes": 1464,
+      "out_bytes": 537,
+      "saved_pct": 63.31967213114754,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    }
+  ]
+}
