@@ -1,5 +1,13 @@
 # Paper Track — STATUS
 
+## Focused resource-paper draft — 2026-11-11
+
+- Prepared separate **review-only** English paper draft in ChatGPT artifact (NOT submitted/published to Kaggle, NOT committed to repository). 1,843 whitespace words, SHA256 `c979accc84587ffc66c6eec4e79320834a2ce5c0b531aa1a5c1a189304fa639d`. Focus is falsified legacy certificate (10/88 false approvals), corrected guard (88/88 and 704/704 controls), authentic selected-log retention 11/11 with 72.01% raw-byte reduction, and explicit no real SWE solve-rate gain (same 1/5).
+- Read public `paper/robustness_challenge/README.md` and `paper/verification_certificate/README.md`: both supply reproducible Python stdlib commands from a clean clone. Local draft reproducer commands copied from these verified READMEs; not rerun in this chat (network to GitHub blocked in isolated container).
+- **Documentation inconsistency found:** `paper/e2e_gemma_experiment/real_repo_sample/README.md` still says all 5 authentic issues are `ARCHIVED / NOT EXECUTED`; `paper/e2e_gemma_experiment/EXPERIMENTAL_PROTOCOL_AND_PROVENANCE.md` similarly says `NOT EXECUTED BY RUNNER`. That could be narrowly true for the *original synthetic inference runner*, but can mislead reviewers because a **separate later pilot** has now evaluated 5 authentic issues (A/B2/C all 1/5). Explicitly distinguish historical runner status from latest separate pilot when preparing final public docs.
+- Next gate: owner reviews draft before any Kaggle writeup replacement; validate official word count, final Submitted state, Project Files/links and archive version. Keep old published writeup and v22 Notebook unchanged until confirmed safe.
+
+
 ## Current checkpoint — 2026-11-11 (Astra independent winning audit)
 
 Status: ACTIVE / FINAL_REVIEW. This section supersedes older notebook/writeup state references below; older dated checkpoints are retained as history.
