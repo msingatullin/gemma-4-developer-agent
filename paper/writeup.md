@@ -159,8 +159,16 @@ Detailed inspection of the failure logs revealed the exact operational mechanism
 
 To test whether preserving assertion context repairs this degradation, we executed an exploratory benchmark: **`B2_assertion_aware`** (30 new live calls to Gemma 4 31B across the 15 tasks and two seeds). Crucially, this evaluation is explicitly designated as **post-hoc exploratory** (developed after failure inspection). `B2_assertion_aware` recovered **96.7% Pass Rate** (29/30 passed; tasks 04, 13, and 15 all passed 2/2) while delivering a **39.05% reduction in total API tokens** (706.0 tokens/call vs 1,158.3 for raw), suggesting a useful post-hoc trade-off on synthetic tasks, but not establishing noninferiority to raw traces or generalization to authentic upstream issues.
 
-### 5.6 Synthetic Tasks vs. Upstream Real Repository Archive
-The 15 model-evaluated tasks are synthetic. Five authentic upstream issues (Flask ×3; Requests ×2) passed CPU-only reference checks: 5/5 RED→GREEN, 155 P2P regression tests in both states, 12/12 evaluator controls, and 39/39 security/scoring tests. Fifteen frozen prompts passed an exact gold-code scan, not a semantic-leakage check. **No Gemma inference on these real issues.** [CPU evidence](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/e2e_gemma_experiment/CPU_REAL5_FINAL_ACCEPTANCE_20261110.md).
+### 5.6 Authentic Upstream Gemma 4 Pilot (November 11, 2026)
+The 150-call study above concerns **synthetic** tasks. Separately, five authentic upstream issues (Flask ×3, Requests ×2) received **15 genuine Gemma 4 31B responses** across A_raw, B2_assertion_aware and C_tail35. Frozen prompt hashes were verified; isolated CPU evaluation completed without harness errors.
+
+| Variant | Resolved | Total API tokens |
+| --- | ---: | ---: |
+| A_raw | **1/5** | 41,013 |
+| B2_assertion_aware | **1/5** | 37,009 |
+| C_tail35 | **1/5** | 40,036 |
+
+All variants solved **the same issue**. B2 reduced observed tokens by 9.8%, **without improved resolution**. Five issues cannot establish noninferiority or generalization. Gold-reference harness controls passed 5/5 RED→GREEN, 155 P2P tests, 12/12 evaluator checks and 39/39 unit tests; these are **not model successes**. [Independent result/provenance](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/STATUS.md). Raw responses remain private.
 
 ---
 
