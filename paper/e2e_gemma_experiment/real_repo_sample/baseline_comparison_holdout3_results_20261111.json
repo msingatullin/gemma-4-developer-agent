@@ -1,0 +1,311 @@
+{
+  "experiment_id": "PAPER-HOLDOUT-3REPOS-20261111-001",
+  "scope": "Prospectively frozen task IDs before log inspection, three genuine red-green failing pytest logs from three additional previously unseen source repositories (Xarray, Pylint, SymPy). Metrics use exact-multiplicity selected diagnostic/header/summary markers. This does not measure model solve rate or semantic completeness.",
+  "methods": [
+    "raw",
+    "head35",
+    "tail35",
+    "tail20",
+    "naive_diag",
+    "ours_v1",
+    "ours_v2_B2"
+  ],
+  "aggregate": {
+    "raw": {
+      "n_logs": 3,
+      "corpus_saved_pct": 0.0,
+      "mean_diag_recall_pct": 100.0,
+      "mean_header_recall_pct": 100.0,
+      "mean_summary_recall_pct": 100.0,
+      "logs_full_integrity": 3,
+      "n": 3
+    },
+    "head35": {
+      "n_logs": 3,
+      "corpus_saved_pct": 81.31,
+      "mean_diag_recall_pct": 30.16,
+      "mean_header_recall_pct": 100.0,
+      "mean_summary_recall_pct": 0.0,
+      "logs_full_integrity": 0,
+      "n": 3
+    },
+    "tail35": {
+      "n_logs": 3,
+      "corpus_saved_pct": 79.62,
+      "mean_diag_recall_pct": 43.17,
+      "mean_header_recall_pct": 0.0,
+      "mean_summary_recall_pct": 100.0,
+      "logs_full_integrity": 0,
+      "n": 3
+    },
+    "tail20": {
+      "n_logs": 3,
+      "corpus_saved_pct": 86.58,
+      "mean_diag_recall_pct": 36.03,
+      "mean_header_recall_pct": 0.0,
+      "mean_summary_recall_pct": 100.0,
+      "logs_full_integrity": 0,
+      "n": 3
+    },
+    "naive_diag": {
+      "n_logs": 3,
+      "corpus_saved_pct": 93.95,
+      "mean_diag_recall_pct": 100.0,
+      "mean_header_recall_pct": 0.0,
+      "mean_summary_recall_pct": 100.0,
+      "logs_full_integrity": 0,
+      "n": 3
+    },
+    "ours_v1": {
+      "n_logs": 3,
+      "corpus_saved_pct": 81.3,
+      "mean_diag_recall_pct": 100.0,
+      "mean_header_recall_pct": 100.0,
+      "mean_summary_recall_pct": 100.0,
+      "logs_full_integrity": 3,
+      "n": 3
+    },
+    "ours_v2_B2": {
+      "n_logs": 3,
+      "corpus_saved_pct": 82.15,
+      "mean_diag_recall_pct": 100.0,
+      "mean_header_recall_pct": 100.0,
+      "mean_summary_recall_pct": 100.0,
+      "logs_full_integrity": 3,
+      "n": 3
+    }
+  },
+  "rows": [
+    {
+      "instance_id": "pydata__xarray-4248",
+      "method": "raw",
+      "raw_bytes": 3691,
+      "out_bytes": 3691,
+      "saved_pct": 0.0,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pydata__xarray-4248",
+      "method": "head35",
+      "raw_bytes": 3691,
+      "out_bytes": 1250,
+      "saved_pct": 66.13383906800325,
+      "diag_recall": 0.0,
+      "header_recall": 1.0,
+      "summary_recall": 0.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pydata__xarray-4248",
+      "method": "tail35",
+      "raw_bytes": 3691,
+      "out_bytes": 1996,
+      "saved_pct": 45.922514223787594,
+      "diag_recall": 0.2,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pydata__xarray-4248",
+      "method": "tail20",
+      "raw_bytes": 3691,
+      "out_bytes": 1263,
+      "saved_pct": 65.78163099431049,
+      "diag_recall": 0.2,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pydata__xarray-4248",
+      "method": "naive_diag",
+      "raw_bytes": 3691,
+      "out_bytes": 239,
+      "saved_pct": 93.52479002980222,
+      "diag_recall": 1.0,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pydata__xarray-4248",
+      "method": "ours_v1",
+      "raw_bytes": 3691,
+      "out_bytes": 552,
+      "saved_pct": 85.04470333243023,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pydata__xarray-4248",
+      "method": "ours_v2_B2",
+      "raw_bytes": 3691,
+      "out_bytes": 516,
+      "saved_pct": 86.02004876727175,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pylint-dev__pylint-5859",
+      "method": "raw",
+      "raw_bytes": 3638,
+      "out_bytes": 3638,
+      "saved_pct": 0.0,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pylint-dev__pylint-5859",
+      "method": "head35",
+      "raw_bytes": 3638,
+      "out_bytes": 1677,
+      "saved_pct": 53.903243540406805,
+      "diag_recall": 0.07142857142857142,
+      "header_recall": 1.0,
+      "summary_recall": 0.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pylint-dev__pylint-5859",
+      "method": "tail35",
+      "raw_bytes": 3638,
+      "out_bytes": 1797,
+      "saved_pct": 50.6047278724574,
+      "diag_recall": 0.9285714285714286,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pylint-dev__pylint-5859",
+      "method": "tail20",
+      "raw_bytes": 3638,
+      "out_bytes": 1252,
+      "saved_pct": 65.58548653106102,
+      "diag_recall": 0.7142857142857143,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pylint-dev__pylint-5859",
+      "method": "naive_diag",
+      "raw_bytes": 3638,
+      "out_bytes": 840,
+      "saved_pct": 76.91039032435404,
+      "diag_recall": 1.0,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "pylint-dev__pylint-5859",
+      "method": "ours_v1",
+      "raw_bytes": 3638,
+      "out_bytes": 3638,
+      "saved_pct": 0.0,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "pylint-dev__pylint-5859",
+      "method": "ours_v2_B2",
+      "raw_bytes": 3638,
+      "out_bytes": 1277,
+      "saved_pct": 64.8982957669049,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "sympy__sympy-11897",
+      "method": "raw",
+      "raw_bytes": 19299,
+      "out_bytes": 19299,
+      "saved_pct": 0.0,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "sympy__sympy-11897",
+      "method": "head35",
+      "raw_bytes": 19299,
+      "out_bytes": 2049,
+      "saved_pct": 89.38286957873464,
+      "diag_recall": 0.8333333333333334,
+      "header_recall": 1.0,
+      "summary_recall": 0.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "sympy__sympy-11897",
+      "method": "tail35",
+      "raw_bytes": 19299,
+      "out_bytes": 1633,
+      "saved_pct": 91.53842167987979,
+      "diag_recall": 0.16666666666666666,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "sympy__sympy-11897",
+      "method": "tail20",
+      "raw_bytes": 19299,
+      "out_bytes": 1059,
+      "saved_pct": 94.51266905020985,
+      "diag_recall": 0.16666666666666666,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "sympy__sympy-11897",
+      "method": "naive_diag",
+      "raw_bytes": 19299,
+      "out_bytes": 532,
+      "saved_pct": 97.24338048603555,
+      "diag_recall": 1.0,
+      "header_recall": 0.0,
+      "summary_recall": 1.0,
+      "all_integrity": false
+    },
+    {
+      "instance_id": "sympy__sympy-11897",
+      "method": "ours_v1",
+      "raw_bytes": 19299,
+      "out_bytes": 790,
+      "saved_pct": 95.90652365407534,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    },
+    {
+      "instance_id": "sympy__sympy-11897",
+      "method": "ours_v2_B2",
+      "raw_bytes": 19299,
+      "out_bytes": 2960,
+      "saved_pct": 84.6624177418519,
+      "diag_recall": 1.0,
+      "header_recall": 1.0,
+      "summary_recall": 1.0,
+      "all_integrity": true
+    }
+  ]
+}
