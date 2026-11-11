@@ -1,5 +1,14 @@
 # Paper Track — STATUS
 
+## Fresh authenticated Kaggle submission artifact readback — 2026-11-11
+
+- **Official owner-authenticated Kaggle SDK direct read succeeded after correcting the API identifier**: `HackathonWriteUp.id=86845` is the correct `get_hackathon_write_up` request key, while `WriteUp.id=115692` is the nested manuscript ID; using 115692 for the outer request wrongly produced HTTP404. Competition `gemma-4-developer-agent-paper`, team ID 16981959, project track ID 7317.
+- Live `WriteUp.contentState=PUBLISHED` updated 2026-11-11 15:31:44.470 UTC, **2977 whitespace words**, SHA256 `2168e722feea6d9d1516c4dd459c423efd7dd2caf138abdff37e3027538ad9cc`, consistent with current GitHub canonical body except final newline. Kaggle metadata title/subtitle are **older AST/ADK-oriented** and should be checked for resource-first copy after any approved revision.
+- **V5 Kaggle attachment VERIFIED**, not just Gateway: message attachment ID **54811**, filename `GEMMA4_PAPER_RESOURCE_V5_20261111.zip`, 533621 bytes, fetched directly from its official Kaggle storage link HTTP200, SHA256 **`63746f918a7ec720ce2464efd3a02724efdb28b57c100106d213f87b46151146`** exactly matches independently reproduced V5 on VPS.
+- **Still NOT independently established:** a distinct final `Submitted` UI state, since Kaggle SDK GetHackathonWriteUp only exposes `PUBLISHED` and does not expose an explicit submission-accepted flag. Owner UI or more specific official endpoint must establish this. **No Kaggle edit or submission performed.**
+- V6 review ZIP remains LOCAL, not attached; do not confuse with currently attached valid V5. V6 release must be finalized/approved before replacement.
+
+
 ## Astra V6 candidate review — 2026-11-11
 
 - Astra's source-only `DRAFT_REVIEW.md` review of 2662-word candidate accepted the new resource-first structure and caught two editorial concerns: `two independent random seeds` improperly suggested 30 independent tasks despite greedy decoding; `Architectural Novelty` incorrectly overclaimed ordinary AST/`compile()` primitives. It also verified V5 147 entries / 146 hashes and warned that bundled V5 manuscript still has 2977 words. The separate current Kaggle UI `Submitted` state was **not checked** in Astra's review; no claims about peers' transparency are warranted.
