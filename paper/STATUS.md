@@ -1,5 +1,14 @@
 # Paper Track — STATUS
 
+## Owner-publication gate: V6 FINAL candidate prepared — 2026-11-11
+
+- Independent Codex Astra `REVIEW.md` (user supplied 2026-11-11) judges 2677-word V6-REVIEW manuscript and 148-member ZIP `PASS_SCOPED`, confirms 147/147 and 146/146 manifests, 142 frozen code/fixtures/results, recommends final headline `When Traceback Compression Lies: Verifiable Diagnostics for Gemma 4 SWE Agents`. This reviewer explicitly did **not** grant owner permission to publish, verify UI Submitted, or rerun tests.
+- **FINAL PUBLICATION CANDIDATE BUILT LOCALLY, NOT PUBLISHED:** title changed only in opening Markdown H1; subtitle proposed `A falsification-tested, fail-open resource for preserving pytest evidence under CI log compression`. Manuscript **2670 whitespace words**, SHA256 `5e2e9334eff4beaea7765c454fa99acd1d919858406d198e6c0112823642129b`, at VPS `/opt/kaggle/gemma-paper-kaggle-cli/v6-final-candidate-20261111/GEMMA4_PAPER_RESOURCE_V6_FINAL_MANUSCRIPT_20261111.md`.
+- FINAL archive candidate **539295 bytes**, SHA256 `286478e81d608ac2c758474c4d86662261775d0be8094617aca0ef754fb98a11`, VPS `/opt/kaggle/gemma-paper-kaggle-cli/v6-final-candidate-20261111/GEMMA4_PAPER_RESOURCE_V6_FINAL_20261111.zip`. It contains matching candidate `paper/writeup.md`, updated release README, JSON manifest and SHA256SUMS; package metadata accurately states `ready_for_owner_approval_not_submitted`, as **no public release has occurred**. 148 files, CRC clear, 147/147 SHA256SUMS and 146/146 JSON hashes; **142 V5 source, fixtures, and existing evidence files unchanged byte-for-byte**. Previous V5 and reviewed V6 ZIP preserved.
+- New fresh extract verification from FINAL candidate ZIP, Python stdlib and CPU only: original 78/88 with 10 false certificate PASS, new guard 88/88, tamper 704/704, original11 byte-identical 72.01% fewer bytes; separate certificate 11/11, deliberate tampering 165/165. No GPU, model calls, Kaggle updates or submission.
+- **Owner explicit approval pending** to publish final candidate via coordinated GitHub `paper/writeup.md`, same existing Kaggle Paper Track Writeup metadata/body, and V6 ZIP. The article and archive must match their SHA after publication. Live currently has PUBLISHED old 2977-word V5 and V5 attachment ID54811; distinct `Submitted` flag not exposed by the SDK and still needs owner/UI confirmation. Prevent new second application.
+
+
 ## Fresh authenticated Kaggle submission artifact readback — 2026-11-11
 
 - **Official owner-authenticated Kaggle SDK direct read succeeded after correcting the API identifier**: `HackathonWriteUp.id=86845` is the correct `get_hackathon_write_up` request key, while `WriteUp.id=115692` is the nested manuscript ID; using 115692 for the outer request wrongly produced HTTP404. Competition `gemma-4-developer-agent-paper`, team ID 16981959, project track ID 7317.
