@@ -1,0 +1,17 @@
+{
+  "n": 90,
+  "different_repositories": 10,
+  "paired_diff_pp": 2.2222,
+  "bootstrap_95_ci_pp": [
+    -3.333,
+    7.778
+  ],
+  "repo_cluster_bootstrap_95_ci_pp": [
+    -6.25,
+    11.34
+  ],
+  "rescued": 4,
+  "regressed": 2,
+  "statistic": 0.6875,
+  "methodology": "25,000 paired-task bootstrap and 25,000 repo-cluster bootstrap, fixed seed 20261111. Observational 90 tasks from 150 released peer rows, no new Gemma inference. The intervals are exploratory and may not account for competitor model-development leakage."
+}
