@@ -1,0 +1,71 @@
+{
+  "experiment_id": "PAPER-GEMMA-B2-SECOND-PASS-SOURCE-REBASE-20261111-004",
+  "design": "Exploratory same-case post-hoc second-pass from Gemma4 31B QAT T4 free notebook. Three original firstpass-F2P-failed Flask issues, 768-token maximum output; raw diffs rejected by strict evaluator. Apply frozen-model diff change clusters to exact immutable source only if uniquely anchored; optional doc-only insertion hunk may be omitted and is reported. Never read gold patches to create candidates. Patch correctness established independently via same pinned F2P/P2P CPU/Docker evaluator.",
+  "generation_not_model_training": true,
+  "independent_heldout": false,
+  "non_significant_small_pilot": true,
+  "raw_second_pass_resolved": 0,
+  "posthoc_static_source_rebase_resolved": 1,
+  "tasks_scored": 3,
+  "posthoc_composite_B2_on_original_real5": {
+    "before": 2,
+    "after": 3,
+    "denominator": 5,
+    "caveat": "Combines original 1/5 first-pass, previous same-case static namespace recovery, and new feedback-based Gemma second-pass + source rebase. Not a single comparable first-pass benchmark."
+  },
+  "model": "google/gemma-4-31B-it-qat-w4a16-ct",
+  "public_experiment_code_note": "Model outputs, feedback, and generated source diffs withheld from this public sanitized manifest. Re-execution requires private frozen model responses.",
+  "rows": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "variant": "B2_feedback_short_v2",
+      "response_sha256": "a033a4cf5d58c53cd0b3e3212ff5ca53fc7dcefa2a430cafcc15eef7bebb10f4",
+      "transform": {
+        "reason": "unique_source_anchored_hunk_salvage",
+        "replacements": 2,
+        "doc_hunks_omitted": [],
+        "candidate_sha256": "91da1e282aeb7e44ccd68aa09c3f30cc73fb378227ae2950c9529e324e73ce3a"
+      },
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "raw_second_pass_verdict": "PATCH_APPLY_ERROR"
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "variant": "B2_feedback_short_v2",
+      "response_sha256": "c141961d3772be72406ac4a83b88d0533f2d163d41bd3029b8bf64af896ad3f3",
+      "transform": {
+        "reason": "unique_source_anchored_hunk_salvage",
+        "replacements": 2,
+        "doc_hunks_omitted": [
+          {
+            "hunk": 1,
+            "reason": "optional_documentation_only",
+            "lines": 2
+          }
+        ],
+        "candidate_sha256": "88f0b43f0923cdf0cccc530b07d31b99403d0c421d039c287904d8c67129184f"
+      },
+      "verdict": "RESOLVED",
+      "f2p_pass": true,
+      "p2p_pass": true,
+      "raw_second_pass_verdict": "PATCH_APPLY_ERROR"
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "variant": "B2_feedback_short_v2",
+      "response_sha256": "54b5a527625e1914fbb6839a6f70212d8af6e68ee66a982bb3bca5daeb18b781",
+      "transform": {
+        "reason": "unique_source_anchored_hunk_salvage",
+        "replacements": 4,
+        "doc_hunks_omitted": [],
+        "candidate_sha256": "3be2d706e5088a33dbd84408e040441028dc0bec4b9891015b04955b3b28678b"
+      },
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "raw_second_pass_verdict": "PATCH_APPLY_ERROR"
+    }
+  ]
+}
