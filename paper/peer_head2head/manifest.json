@@ -1,0 +1,12 @@
+{
+  "experiment_id": "PAPER-HEAD2HEAD-MAROOF-20261111-001",
+  "prereg_commit": "ed66a5652e560440fa569088430ba1495909c290",
+  "peer_repo_commit": "b28c4b9790be7ae20ac584385a0cc122d4b5b58b",
+  "peer_rows_sha256": "d91325d689e3e492e5a3ba1e9689a4779ae92b6895fa765eed96a5e2f0c35ca2",
+  "dev_n": 60,
+  "heldout_n": 90,
+  "dev_ids_sha256": "1e65afab69dcf7ba06205c8b469684efc26ab773c6a18fb4b6b7a5d88b88d64f",
+  "holdout_ids_sha256": "358bfb25a642defb362493af2473488a0b63bb5616873e7c54eddbd0fe376369",
+  "holdout_unlabeled_sha256": "51e0f9f6e1a0c069b63eb8ff91b19426d9ffeef4e003c5808689f9fce1136e86",
+  "dev_labeled_sha256": "ca8fdec509eada7079e1e5272cdb20eb898ad8619261580af2fa3f2a38b5d3e0"
+}
