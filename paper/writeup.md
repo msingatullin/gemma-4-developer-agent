@@ -24,8 +24,8 @@ Furthermore, we evaluate all 120 candidate patches in an isolated, unprivileged 
 ## 2. Operating Constraints and Gemma 4 (31B QAT) Attention Mechanics
 
 ### Hardware Environments: Competition Cluster vs. Edge Deployments
-- **Official Competition Cluster:** 4 × NVIDIA L4 GPUs (96 GB GDDR6 total) with Tensor Parallelism (TP=4), distributing model weights and KV cache across four accelerators.
-- **Edge Developer Deployments:** Single accelerator (1 × NVIDIA L4 24GB or local workstation GPU) without multi-GPU orchestration. Memory headroom is strictly constrained, making deterministic context management imperative.
+- **Official cluster:** Four L4 GPUs (TP=4; 96 GB aggregate VRAM).
+- **Edge deployment:** One 24 GB L4 GPU, where memory efficiency matters.
 
 ### Architectural Specifications of `google/gemma-4-31B-it-qat-w4a16-ct`:
 - **Weights:** INT4 pack-quantized weights (group size 32, FP16 activations), occupying $\approx 18.24$ GiB VRAM.
@@ -51,14 +51,16 @@ Under memory-bound decoding ($I \approx 1$ FLOP/byte), modeled per-token latency
 
 ## 3. Related Work and Positioning Against Prior Art
 
-Autonomous SWE agents have advanced rapidly across benchmarks like SWE-bench:
+Related SWE research:
 - **Agentless** (Xia et al., 2024): localization, repair, and validation.
 - **SWE-agent** (Yang et al., 2024): tool-based interactive coding.
 - **RepoCoder** (Zhang et al., 2023): cross-file retrieval and repository context.
 
+**E4B transfer check (distinct module):** On 90 reserved SWE-bench Lite cases, a deterministic file reranker of Maroof's released Gemma E4B candidates achieved File@1 **51/90**, versus **49/90** for the original ordering, with zero additional model calls (exact paired McNemar $p=0.6875$). This non-significant result concerns file localization, **not** traceback compression or SWE issue resolution. [Frozen protocol, code, and paired outcomes](https://github.com/msingatullin/gemma-4-developer-agent/tree/main/paper/peer_head2head).
+
 ### Architectural Novelty: The Deterministic Zero-Inference Stance
 
-In contrast to prior art, this suite introduces a **zero-inference, deterministic verification layer**:
+Our suite adds a **deterministic, zero-inference verification layer**:
 1. **Zero LLM Overhead for Localization:** Symbol discovery relies on Python's built-in `ast` visitor, extracting precise function and class line ranges in sub-millisecond latency without consuming model generation tokens.
 2. **Native Pre-Flight Compilation Gate:** Catches syntax regressions, top-level return anomalies, and indentation corruptions in under 0.1 ms using Python's standard `compile(mode='exec')` before initiating container test suites.
 3. **Multi-Format Traceback Compression:** Strips hundreds of lines of pytest session banners and captured stdout spam while strictly preserving failing assertion lines (`E ...`), line pointers, and multiline exception messages across standard pytest (`--tb=auto`, `--tb=long`, `--tb=short`), native tracebacks (`--tb=native`), and standalone Python exceptions.
@@ -191,7 +193,7 @@ def check_preflight_syntax(patch_code: str) -> tuple[bool, str]:
 This intercepts malformed patches in under 0.1 ms (38.2 µs cloud mean latency), completely preventing wasted container executions.
 
 ### 6.2 Context Window Stability and Attention Mechanics
-Under hybrid attention (50 sliding-window layers with $W = 1024$ tokens, 10 full-attention layers), uncontrolled file reading and noisy logs quickly exhaust the active attention window. By deploying AST symbol slicing (44.6% context reduction) and traceback compression (31.5% API token reduction), agent conversations maintain critical early instructions within active attention without cache thrashing.
+Hybrid attention makes unnecessary file and traceback text costly. Deterministic slicing and evidence-preserving compression reduce that overhead without additional model inference.
 
 ### 6.3 Multi-Format Assertion Preservation
 Traceback filtering isolates failing blocks and collapses stdout noise while preserving failure headers, assertion sites (`> assert ...`), assertion details (`E ...`), and multiline diff frames. We tested the unchanged compressor on **11 genuine failing pytest logs from eight repositories**. The three newest repositories (Xarray, Pylint, SymPy) were frozen in [GitHub before testing](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/e2e_gemma_experiment/real_repo_sample/UNSEEN_3REPO_PRECOMMIT_20261111.md), then verified RED→GREEN. On this new holdout, B2 retained all selected diagnostic/header/summary evidence **3/3** against `head35`/`tail35` **0/3**, reducing bytes **82.15%**. Across all 11, B2 retained evidence **11/11** versus **2/11** for each truncation baseline, at **72.01%** byte reduction. This supports scoped diagnostic robustness, **not issue-resolution superiority**. [Reproducible evidence](https://github.com/msingatullin/gemma-4-developer-agent/tree/main/paper/e2e_gemma_experiment/real_repo_sample).
