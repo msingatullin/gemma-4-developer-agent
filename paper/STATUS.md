@@ -1,5 +1,14 @@
 # Paper Track — STATUS
 
+## Astra V6 candidate review — 2026-11-11
+
+- Astra's source-only `DRAFT_REVIEW.md` review of 2662-word candidate accepted the new resource-first structure and caught two editorial concerns: `two independent random seeds` improperly suggested 30 independent tasks despite greedy decoding; `Architectural Novelty` incorrectly overclaimed ordinary AST/`compile()` primitives. It also verified V5 147 entries / 146 hashes and warned that bundled V5 manuscript still has 2977 words. The separate current Kaggle UI `Submitted` state was **not checked** in Astra's review; no claims about peers' transparency are warranted.
+- Corrected BOTH draft concerns in an independent **V6 review-only** manuscript, **2677 whitespace words**, SHA256 `4b0040c30ff1fe820493f3319b49bb6c3e251ce82f94cd99dfd162513e130e90`. Local VPS path `/opt/kaggle/gemma-paper-kaggle-cli/v6-owner-review-20261111/GEMMA4_PAPER_RESOURCE_V6_MANUSCRIPT_20261111.md`.
+- Built **V6 REVIEW ZIP** from frozen V5, changed only manuscript/README/manifest and added release note; **source code, raw data and fixtures unchanged**. VPS path `/opt/kaggle/gemma-paper-kaggle-cli/v6-owner-review-20261111/GEMMA4_PAPER_RESOURCE_V6_REVIEW_20261111.zip`; size **540635 bytes**; SHA256 `16f486cb2dad3abababef533d63619f26b40acbf53aadaef015aa1a8bb28eaae`. Validated 148 ZIP entries, 147/147 SHA256SUMS, 146/146 JSON manifest hashes, CRC clean and 142 original ZIP content entries byte-identical. Original V5 unchanged SHA `63746f918a7ec720ce2464efd3a02724efdb28b57c100106d213f87b46151146`.
+- Replayed extracted V6 on free CPU (no model calls): old **78/88**, 10 false PASS, new **88/88**, tamper **704/704**, original11 byte-identical, **72.01%** raw-byte savings; certificate **11/11**, corruption rejection **165/165**. Resource-level checks only.
+- **No public writeup, GitHub manuscript, Kaggle Notebook, competition submission, or contest Project Files edited.** This package is expressly REVIEW-ONLY. After owner approval, create publication-ready release metadata and synchronize canonical GitHub manuscript, exact live Writeup text and final supplementary ZIP; independently verify UI Submitted and attachment. Do not upload the review-only archive unchanged if its NOT SUBMITTED release notes would be misleading.
+
+
 ## Deadline sprint — evidence-first top-prize strategy — 2026-11-11
 
 - **Official Kaggle Paper judging** (verified from https://www.kaggle.com/competitions/gemma-4-developer-agent-paper): Novelty, Quality, Relevance, Verifiability, Clarity weighted 20% each; max 3000 words, needs Title+Subtitle, Abstract, Introduction, methodology, Related Works and citations; **a Writeup needs explicit Submit, PUBLISHED/draft alone insufficient**. Deadline Nov12 23:59 UTC.
