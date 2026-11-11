@@ -1,0 +1,298 @@
+{
+  "experiment_id": "PAPER-RECOVER-FIRSTPASS-20261111-001",
+  "study": "Post-hoc replay of 15 original authenticated Gemma4 responses, strict preexisting CPU scorer and immutable image IDs; not independent validation, no new model calls or gold patch access",
+  "summary": {
+    "A_raw": {
+      "resolved_before": 1,
+      "resolved_after": 2,
+      "n": 5,
+      "transformed_count": 3
+    },
+    "B2_assertion_aware": {
+      "resolved_before": 1,
+      "resolved_after": 1,
+      "n": 5,
+      "transformed_count": 3
+    },
+    "C_tail35": {
+      "resolved_before": 1,
+      "resolved_after": 1,
+      "n": 5,
+      "transformed_count": 3
+    }
+  },
+  "rows": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "variant": "A_raw",
+      "original_verdict": "SYNTAX_ERROR",
+      "verdict": "RESOLVED",
+      "f2p_pass": true,
+      "p2p_pass": true,
+      "verified_by": "fresh_strict_Docker",
+      "raw_model_response_sha256": "0b1f9beaac41af1c1edee1ba18172c832787574ed96855fb42be69165a376dcc",
+      "adapter": {
+        "transformed": true,
+        "indent_recovered": true,
+        "reason": "class_aware_ast_multi_method_splice",
+        "class": "Blueprint",
+        "methods": [
+          "__init__",
+          "add_url_rule"
+        ],
+        "candidate_sha256": "ccfde1facaa973381bbb8f37dc2a138e51f95641e3f469c2a63e0381e4873b5a"
+      }
+    },
+    {
+      "instance_id": "pallets__flask-4045",
+      "variant": "B2_assertion_aware",
+      "original_verdict": "FAILED_F2P",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "verified_by": "fresh_strict_Docker",
+      "raw_model_response_sha256": "0495495fddfc142440750ccd256a838f3298c9d10e169973fd75b08d8706e180",
+      "adapter": {
+        "transformed": true,
+        "indent_recovered": false,
+        "reason": "class_aware_ast_multi_method_splice",
+        "class": "Blueprint",
+        "methods": [
+          "__init__"
+        ],
+        "candidate_sha256": "dd12135e57811dc1a39a3c72fa1b2af63bcdd7132a46ae442f9812f4bf8934e3"
+      }
+    },
+    {
+      "instance_id": "pallets__flask-4045",
+      "variant": "C_tail35",
+      "original_verdict": "FAILED_F2P",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "verified_by": "fresh_strict_Docker",
+      "raw_model_response_sha256": "0495495fddfc142440750ccd256a838f3298c9d10e169973fd75b08d8706e180",
+      "adapter": {
+        "transformed": true,
+        "indent_recovered": false,
+        "reason": "class_aware_ast_multi_method_splice",
+        "class": "Blueprint",
+        "methods": [
+          "__init__"
+        ],
+        "candidate_sha256": "dd12135e57811dc1a39a3c72fa1b2af63bcdd7132a46ae442f9812f4bf8934e3"
+      }
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "variant": "A_raw",
+      "original_verdict": "FAILED_F2P",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "verified_by": "fresh_strict_Docker",
+      "raw_model_response_sha256": "7fedb51a97b8a7f9b7755310168b84a4e51c8cb88f378801b2e8f21b9de45b70",
+      "adapter": {
+        "transformed": true,
+        "indent_recovered": false,
+        "reason": "class_aware_ast_multi_method_splice",
+        "class": "Config",
+        "methods": [
+          "from_file"
+        ],
+        "candidate_sha256": "1a00ac9ead648158bfed561ab96a4d66e35f5fa9d3e38dd208db1780de9ad6a0"
+      }
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "variant": "B2_assertion_aware",
+      "original_verdict": "FAILED_F2P",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "verified_by": "fresh_strict_Docker",
+      "raw_model_response_sha256": "07b11fe8f5805f57bebc4cd9ad54f1092a347448791435a08931b9ee85f5af89",
+      "adapter": {
+        "transformed": true,
+        "indent_recovered": false,
+        "reason": "class_aware_ast_multi_method_splice",
+        "class": "Config",
+        "methods": [
+          "from_file"
+        ],
+        "candidate_sha256": "1a00ac9ead648158bfed561ab96a4d66e35f5fa9d3e38dd208db1780de9ad6a0"
+      }
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "variant": "C_tail35",
+      "original_verdict": "FAILED_F2P",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "verified_by": "fresh_strict_Docker",
+      "raw_model_response_sha256": "7fedb51a97b8a7f9b7755310168b84a4e51c8cb88f378801b2e8f21b9de45b70",
+      "adapter": {
+        "transformed": true,
+        "indent_recovered": false,
+        "reason": "class_aware_ast_multi_method_splice",
+        "class": "Config",
+        "methods": [
+          "from_file"
+        ],
+        "candidate_sha256": "1a00ac9ead648158bfed561ab96a4d66e35f5fa9d3e38dd208db1780de9ad6a0"
+      }
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "variant": "A_raw",
+      "original_verdict": "FAILED_F2P",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "verified_by": "prior_immutable_score",
+      "raw_model_response_sha256": "c88a23d697434d420e2a0ec0b8b2491a3923f6d779f835e987dd3b042f05c021",
+      "adapter": {
+        "transformed": false,
+        "indent_recovered": false,
+        "reason": "not_class_methods"
+      }
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "variant": "B2_assertion_aware",
+      "original_verdict": "FAILED_F2P",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "verified_by": "prior_immutable_score",
+      "raw_model_response_sha256": "13877d3fb38c47f39d5d64e8af4025b54934d04094cf7ccf32b967d8381d337b",
+      "adapter": {
+        "transformed": false,
+        "indent_recovered": false,
+        "reason": "not_class_methods"
+      }
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "variant": "C_tail35",
+      "original_verdict": "FAILED_F2P",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "verified_by": "prior_immutable_score",
+      "raw_model_response_sha256": "e0080a6785676d430a60cd71e03e75409f07c031119748d075918d5179e08b7c",
+      "adapter": {
+        "transformed": false,
+        "indent_recovered": false,
+        "reason": "not_class_methods"
+      }
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "variant": "A_raw",
+      "original_verdict": "RESOLVED",
+      "verdict": "RESOLVED",
+      "f2p_pass": true,
+      "p2p_pass": true,
+      "verified_by": "prior_immutable_score",
+      "raw_model_response_sha256": "046588570ae1152211520d1463f3252af34deb6babdcdc334e2055ec78723e99",
+      "adapter": {
+        "transformed": false,
+        "indent_recovered": false,
+        "reason": "no_top_level_methods"
+      }
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "variant": "B2_assertion_aware",
+      "original_verdict": "RESOLVED",
+      "verdict": "RESOLVED",
+      "f2p_pass": true,
+      "p2p_pass": true,
+      "verified_by": "prior_immutable_score",
+      "raw_model_response_sha256": "39128f2b6eec34c9fb0825939cff9da5f4a2db8c37483bd8a93ef36380fab161",
+      "adapter": {
+        "transformed": false,
+        "indent_recovered": false,
+        "reason": "no_top_level_methods"
+      }
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "variant": "C_tail35",
+      "original_verdict": "RESOLVED",
+      "verdict": "RESOLVED",
+      "f2p_pass": true,
+      "p2p_pass": true,
+      "verified_by": "prior_immutable_score",
+      "raw_model_response_sha256": "58ca6bed227dff9d020b21e81085da4c65a44f405c5ab8f3db355af2781a1487",
+      "adapter": {
+        "transformed": false,
+        "indent_recovered": false,
+        "reason": "no_top_level_methods"
+      }
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "variant": "A_raw",
+      "original_verdict": "FAILED_F2P",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "verified_by": "fresh_strict_Docker",
+      "raw_model_response_sha256": "c4b4c8013e180eacbf83be3f40fb24534ae7c614a0f6b23eaba9bfe6c5b18852",
+      "adapter": {
+        "transformed": true,
+        "indent_recovered": false,
+        "reason": "class_aware_ast_multi_method_splice",
+        "class": "Response",
+        "methods": [
+          "iter_content"
+        ],
+        "candidate_sha256": "11a5975290da57048e2ce31f865bcd92fa7b89c851f9f6d13f92f004bf7fc463"
+      }
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "variant": "B2_assertion_aware",
+      "original_verdict": "FAILED_F2P",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "verified_by": "fresh_strict_Docker",
+      "raw_model_response_sha256": "8cacd14391f70fef5d1c0e7b56dc557c928e56e3a71b67dc70fe9e02c6a5e22a",
+      "adapter": {
+        "transformed": true,
+        "indent_recovered": false,
+        "reason": "class_aware_ast_multi_method_splice",
+        "class": "Response",
+        "methods": [
+          "iter_content"
+        ],
+        "candidate_sha256": "c52c450649d6f4731cfeab3ae589cdb03e13665d3fc68d8ac8acd35d845db3be"
+      }
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "variant": "C_tail35",
+      "original_verdict": "FAILED_F2P",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "verified_by": "fresh_strict_Docker",
+      "raw_model_response_sha256": "8d8bb328cd4841b0156ca7455e2447cadbe242f659f033b51bcb2cc5d042b624",
+      "adapter": {
+        "transformed": true,
+        "indent_recovered": false,
+        "reason": "class_aware_ast_multi_method_splice",
+        "class": "Response",
+        "methods": [
+          "iter_content"
+        ],
+        "candidate_sha256": "6c867493e24cca4a3e5d14c166b7509b8f57d374488ce3b4ba205af3399d89c1"
+      }
+    }
+  ],
+  "scope_limitations": "Post-hoc same five tasks; A_raw 4045 newly solved by patch adapter, B2 and C unchanged. No new inference or independent generalization."
+}
