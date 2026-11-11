@@ -13,7 +13,7 @@
 
 Deploying quantized Gemma 4 SWE agents on memory-limited GPUs introduces context and validation bottlenecks: reading entire modules inflates prompts, unvalidated patches waste execution cycles, and noisy test logs obscure failure signals.
 
-The open-source **AST-Guided Verification Suite** combines AST (`ast.NodeVisitor`) symbol indexing, a pre-flight compiler gate (`compile(mode='exec')`), and assertion-preserving traceback compression for pytest, native tracebacks, and standalone exceptions.
+The open-source **AST-Guided Verification Suite** contributes a deterministic **fail-open diagnostic-integrity layer**: AST symbol slicing and pre-flight compilation are coupled with traceback compression that explicitly verifies retained failure evidence and falls back to the uncompressed log when integrity cannot be established.
 
 We report **120 live calls to quantized Gemma 4 31B (`google/gemma-4-31B-it-qat-w4a16-ct`)** on 15 synthetic defects across two seeds. Compared to native raw tracebacks, our AST-guided compression delivers a **31.5% reduction in total API tokens** (1,158 to 793 tokens per task call) and a **56.86% reduction in traceback characters** (2,314 to 998 characters), while preserving 100% localization accuracy and 86.7% objective diagnostic accuracy (versus 90.0% for raw traces, $\Delta = -3.33\%$, 95% bootstrap CI: $[-10.0\%, 0.0\%]$, permutation $p = 1.0000$). 
 
