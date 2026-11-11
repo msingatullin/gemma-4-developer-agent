@@ -1,0 +1,81 @@
+{
+  "experiment_id": "PAPER-11-CASE-COMBINED-DESCRIPTIVE-20261111",
+  "scope": "Post-hoc descriptive pooling of an 8-case development benchmark and a separate 3-case locally prospective heldout audit; eight upstream repositories total. Never present pooled metrics as independent preregistered validation or model solve rate.",
+  "development_cases": 8,
+  "prospective_heldout_cases": 3,
+  "unique_upstream_repositories": 8,
+  "development_result_file_sha256": "696a51e67e382a9949764d5f9cbaf422a7d33520063f91f4d421f119ccd39cbc",
+  "heldout_result_file_sha256": "851646a4ffdd1e9cde3a695e7fa3c7f0c9c3fd9811b28dc65eba51964a530469",
+  "methods": {
+    "head35": {
+      "development_full_integrity": 2,
+      "prospective_heldout_full_integrity": 0,
+      "pooled_full_integrity": 2,
+      "pooled_n": 11,
+      "pooled_raw_bytes": 37459,
+      "pooled_output_bytes": 18222,
+      "pooled_corpus_byte_reduction_pct": 51.35,
+      "heldout_corpus_byte_reduction_pct": 63.25
+    },
+    "naive_diag": {
+      "development_full_integrity": 0,
+      "prospective_heldout_full_integrity": 0,
+      "pooled_full_integrity": 0,
+      "pooled_n": 11,
+      "pooled_raw_bytes": 37459,
+      "pooled_output_bytes": 5324,
+      "pooled_corpus_byte_reduction_pct": 85.79,
+      "heldout_corpus_byte_reduction_pct": 88.14
+    },
+    "ours_v1": {
+      "development_full_integrity": 8,
+      "prospective_heldout_full_integrity": 3,
+      "pooled_full_integrity": 11,
+      "pooled_n": 11,
+      "pooled_raw_bytes": 37459,
+      "pooled_output_bytes": 21514,
+      "pooled_corpus_byte_reduction_pct": 42.57,
+      "heldout_corpus_byte_reduction_pct": 30.3
+    },
+    "ours_v2_B2": {
+      "development_full_integrity": 8,
+      "prospective_heldout_full_integrity": 3,
+      "pooled_full_integrity": 11,
+      "pooled_n": 11,
+      "pooled_raw_bytes": 37459,
+      "pooled_output_bytes": 18215,
+      "pooled_corpus_byte_reduction_pct": 51.37,
+      "heldout_corpus_byte_reduction_pct": 38.72
+    },
+    "raw": {
+      "development_full_integrity": 8,
+      "prospective_heldout_full_integrity": 3,
+      "pooled_full_integrity": 11,
+      "pooled_n": 11,
+      "pooled_raw_bytes": 37459,
+      "pooled_output_bytes": 37459,
+      "pooled_corpus_byte_reduction_pct": 0.0,
+      "heldout_corpus_byte_reduction_pct": 0.0
+    },
+    "tail20": {
+      "development_full_integrity": 1,
+      "prospective_heldout_full_integrity": 0,
+      "pooled_full_integrity": 1,
+      "pooled_n": 11,
+      "pooled_raw_bytes": 37459,
+      "pooled_output_bytes": 11651,
+      "pooled_corpus_byte_reduction_pct": 68.9,
+      "heldout_corpus_byte_reduction_pct": 76.94
+    },
+    "tail35": {
+      "development_full_integrity": 2,
+      "prospective_heldout_full_integrity": 0,
+      "pooled_full_integrity": 2,
+      "pooled_n": 11,
+      "pooled_raw_bytes": 37459,
+      "pooled_output_bytes": 18709,
+      "pooled_corpus_byte_reduction_pct": 50.05,
+      "heldout_corpus_byte_reduction_pct": 64.75
+    }
+  }
+}
