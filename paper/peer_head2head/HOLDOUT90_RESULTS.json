@@ -1,0 +1,882 @@
+{
+  "experiment_id": "PAPER-HEAD2HEAD-MAROOF-20261111-001",
+  "design": "Dev60 selected as published peer ablation ids, 90 reserved complement; zero extra Gemma E4B calls or tokens. Postproc reorders only peer repomap_sig predictions. Development grid and final config published before exactly one heldout evaluation. Not a new model run.",
+  "n": 90,
+  "baseline_correct": 49,
+  "reranked_correct": 51,
+  "gain_tasks": 2,
+  "baseline_file_at1": 0.5444444444444444,
+  "reranked_file_at1": 0.5666666666666667,
+  "rescued": 4,
+  "regressed": 2,
+  "exact_mcnemar_two_sided_p_uncorrected": 0.6875,
+  "number_switched": 11,
+  "improved_over_peer": true,
+  "passed_preregistered_strong_gate": false,
+  "predictions_before_gold_sha256": "07c33d86b5f1beb86fb5fb1fe2e39230d57548a299383bef16e6240885e2532d",
+  "by_repository": {
+    "astropy/astropy": [
+      2,
+      2,
+      1
+    ],
+    "django/django": [
+      36,
+      22,
+      21
+    ],
+    "matplotlib/matplotlib": [
+      5,
+      2,
+      2
+    ],
+    "mwaskom/seaborn": [
+      1,
+      1,
+      1
+    ],
+    "pydata/xarray": [
+      2,
+      1,
+      1
+    ],
+    "pylint-dev/pylint": [
+      2,
+      0,
+      0
+    ],
+    "pytest-dev/pytest": [
+      5,
+      2,
+      2
+    ],
+    "scikit-learn/scikit-learn": [
+      10,
+      8,
+      8
+    ],
+    "sphinx-doc/sphinx": [
+      4,
+      1,
+      1
+    ],
+    "sympy/sympy": [
+      23,
+      10,
+      14
+    ]
+  },
+  "rows": [
+    {
+      "instance_id": "astropy__astropy-14182",
+      "repo": "astropy/astropy",
+      "baseline_correct": true,
+      "reranked_correct": false,
+      "switched": true,
+      "better": false,
+      "worse": true
+    },
+    {
+      "instance_id": "astropy__astropy-7746",
+      "repo": "astropy/astropy",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-11039",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": false,
+      "switched": true,
+      "better": false,
+      "worse": true
+    },
+    {
+      "instance_id": "django__django-11099",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-11422",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-11620",
+      "repo": "django/django",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-11848",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-11910",
+      "repo": "django/django",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-12125",
+      "repo": "django/django",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-12453",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-12700",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-12856",
+      "repo": "django/django",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": true,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-12915",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-12983",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-13220",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-13321",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-13590",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-13658",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-13925",
+      "repo": "django/django",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-13933",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-14016",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-14411",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-14667",
+      "repo": "django/django",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-14915",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-14999",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-15202",
+      "repo": "django/django",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-15213",
+      "repo": "django/django",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": true,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-15320",
+      "repo": "django/django",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-15347",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-15498",
+      "repo": "django/django",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-15695",
+      "repo": "django/django",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-15781",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-15902",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-16046",
+      "repo": "django/django",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-16139",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-16255",
+      "repo": "django/django",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-16910",
+      "repo": "django/django",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "django__django-17087",
+      "repo": "django/django",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-18869",
+      "repo": "matplotlib/matplotlib",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-22835",
+      "repo": "matplotlib/matplotlib",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-23299",
+      "repo": "matplotlib/matplotlib",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-23964",
+      "repo": "matplotlib/matplotlib",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-25079",
+      "repo": "matplotlib/matplotlib",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "mwaskom__seaborn-3190",
+      "repo": "mwaskom/seaborn",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "pydata__xarray-4493",
+      "repo": "pydata/xarray",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "pydata__xarray-5131",
+      "repo": "pydata/xarray",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "pylint-dev__pylint-6506",
+      "repo": "pylint-dev/pylint",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "pylint-dev__pylint-7228",
+      "repo": "pylint-dev/pylint",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5227",
+      "repo": "pytest-dev/pytest",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5413",
+      "repo": "pytest-dev/pytest",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": true,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "pytest-dev__pytest-6116",
+      "repo": "pytest-dev/pytest",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7168",
+      "repo": "pytest-dev/pytest",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7220",
+      "repo": "pytest-dev/pytest",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-10508",
+      "repo": "scikit-learn/scikit-learn",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-10949",
+      "repo": "scikit-learn/scikit-learn",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-12471",
+      "repo": "scikit-learn/scikit-learn",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13142",
+      "repo": "scikit-learn/scikit-learn",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13584",
+      "repo": "scikit-learn/scikit-learn",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-14894",
+      "repo": "scikit-learn/scikit-learn",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-14983",
+      "repo": "scikit-learn/scikit-learn",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-15535",
+      "repo": "scikit-learn/scikit-learn",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-25500",
+      "repo": "scikit-learn/scikit-learn",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-25747",
+      "repo": "scikit-learn/scikit-learn",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7975",
+      "repo": "sphinx-doc/sphinx",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8506",
+      "repo": "sphinx-doc/sphinx",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": true,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8595",
+      "repo": "sphinx-doc/sphinx",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8713",
+      "repo": "sphinx-doc/sphinx",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-11400",
+      "repo": "sympy/sympy",
+      "baseline_correct": false,
+      "reranked_correct": true,
+      "switched": true,
+      "better": true,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-12236",
+      "repo": "sympy/sympy",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-12419",
+      "repo": "sympy/sympy",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-12481",
+      "repo": "sympy/sympy",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-13043",
+      "repo": "sympy/sympy",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-13773",
+      "repo": "sympy/sympy",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-13971",
+      "repo": "sympy/sympy",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-14024",
+      "repo": "sympy/sympy",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-15011",
+      "repo": "sympy/sympy",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "repo": "sympy/sympy",
+      "baseline_correct": false,
+      "reranked_correct": true,
+      "switched": true,
+      "better": true,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-15345",
+      "repo": "sympy/sympy",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-16281",
+      "repo": "sympy/sympy",
+      "baseline_correct": false,
+      "reranked_correct": true,
+      "switched": true,
+      "better": true,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-16503",
+      "repo": "sympy/sympy",
+      "baseline_correct": false,
+      "reranked_correct": true,
+      "switched": true,
+      "better": true,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-18087",
+      "repo": "sympy/sympy",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": true,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-18698",
+      "repo": "sympy/sympy",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-19254",
+      "repo": "sympy/sympy",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-19487",
+      "repo": "sympy/sympy",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-20442",
+      "repo": "sympy/sympy",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-20590",
+      "repo": "sympy/sympy",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-21612",
+      "repo": "sympy/sympy",
+      "baseline_correct": false,
+      "reranked_correct": false,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-21847",
+      "repo": "sympy/sympy",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-22005",
+      "repo": "sympy/sympy",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    },
+    {
+      "instance_id": "sympy__sympy-24102",
+      "repo": "sympy/sympy",
+      "baseline_correct": true,
+      "reranked_correct": true,
+      "switched": false,
+      "better": false,
+      "worse": false
+    }
+  ],
+  "caveats": "Peer published dataset and outputs; split chosen based on peer ablation coverage, not random. The original source paper may have been tuned on all150 cases. No claim about overall judging, model solve rate, or statistically independent fresh tasks."
+}
