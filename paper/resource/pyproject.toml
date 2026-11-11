@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gemma4-verified-context"
+version = "0.1.0"
+description = "Deterministic AST slicing, syntax gates and fail-open pytest diagnostic compression for local SWE agents"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+authors = [{name = "Gemma 4 Developer Agent Paper Track research"}]
+classifiers = ["Programming Language :: Python :: 3", "Operating System :: OS Independent"]
+dependencies = []
+
+[project.scripts]
+gemma4-verified-context = "gemma4_verified_context.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
