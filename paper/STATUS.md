@@ -1,5 +1,13 @@
 # Paper Track — STATUS
 
+## Verified primary-evidence audit vs Astra — 2026-11-11
+
+- **Independent report:** [INDEPENDENT_AUDIT_VS_ASTRA_20261111.md](INDEPENDENT_AUDIT_VS_ASTRA_20261111.md), GitHub commit `ffa63590fb652f67805b9c6a73a86ec93a107891`. Includes first-hand official Kaggle CLI `COMPLETE`, a fresh notebook pull matching source SHA256 `5fdc54771c644ae54d7355e19ee2e1c62f30c74a2fd2637be60d14c0c55c6cb8`, original Kaggle output, a newly re-executed 88/704 challenge from public copy, manual recount of 150 synthetic+15 authentic issue outcomes, 90 E4B paired rows, and V5 ZIP 146/146 internal hashes.
+- **Conclusions:** Astra's principal evidence/positioning correct; first-pass real repair A/B2/C all 1/5, same Requests1963; peer E4B nonsignificant. Additional post-hoc real patch-feedback results exist (A=3/5, B2=3/5, C=2/5) but are not holdout nor method-equivalent. Important new guard cost: raw fallback count 23→33 for 88 synthetic cases. Public notebook v22 should remain untouched.
+- **CRITICAL UNVERIFIED:** current live Kaggle writeup content / separate Submitted state / Project Files V5. Current Gateway official tool calls `Not found`, direct authenticated Kaggle SDK writeup read `HTTP 404`, despite earlier authenticated 15:31:44 UTC PUBLISHED 2977-word snapshot. Owner UI check required before any replacement.
+- **Decision:** no automatic substitution with 1843-word draft; preserve verified existing writeup. Do minimal scientific correction only after final-source comparison and owner approval. No paid compute, Kaggle publication, or competition submission was performed.
+
+
 ## Focused resource-paper draft — 2026-11-11
 
 - Prepared separate **review-only** English paper draft in ChatGPT artifact (NOT submitted/published to Kaggle, NOT committed to repository). 1,843 whitespace words, SHA256 `c979accc84587ffc66c6eec4e79320834a2ce5c0b531aa1a5c1a189304fa639d`. Focus is falsified legacy certificate (10/88 false approvals), corrected guard (88/88 and 704/704 controls), authentic selected-log retention 11/11 with 72.01% raw-byte reduction, and explicit no real SWE solve-rate gain (same 1/5).
