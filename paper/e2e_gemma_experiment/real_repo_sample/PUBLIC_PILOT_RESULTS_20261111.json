@@ -1,0 +1,177 @@
+{
+  "schema": "gemma-paper-real-upstream-pilot-public-aggregate-v1",
+  "study": "Five held-out authentic upstream issues, A_raw/B2_assertion_aware/C_tail35",
+  "model": "google/gemma-4-31B-it-qat-w4a16-ct",
+  "scope": "Non-replayable result manifest: raw model responses and CPU patches are not published",
+  "input_corpus_sha256": "7b9bddd1a410821db3bc4b509241fea8d18988340747d3a630706e19ef829ef2",
+  "raw_scoring_jsonl_sha256": "0dd65aea3355aaae5d16c7eb821aeb5ac2bf2bcfa00df8f4f97f383fd487930a",
+  "tasks": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "variant": "A_raw",
+      "verdict": "SYNTAX_ERROR",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "response_sha256": "0b1f9beaac41af1c1edee1ba18172c832787574ed96855fb42be69165a376dcc",
+      "prompt_sha256": "2275acfb890626f596544cb391308a5978709e86c5e5be8f4e4358d4b7c1bd13",
+      "tokens": 7162
+    },
+    {
+      "instance_id": "pallets__flask-4045",
+      "variant": "B2_assertion_aware",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "response_sha256": "0495495fddfc142440750ccd256a838f3298c9d10e169973fd75b08d8706e180",
+      "prompt_sha256": "f2125d4a6fb93f445e8315294c424cd4b055bc68f84766802627f5a041daf17d",
+      "tokens": 6434
+    },
+    {
+      "instance_id": "pallets__flask-4045",
+      "variant": "C_tail35",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "response_sha256": "0495495fddfc142440750ccd256a838f3298c9d10e169973fd75b08d8706e180",
+      "prompt_sha256": "0d4d3d8792a309228169addea67a07d0de4ab9a4bff04a1275b08019716740c5",
+      "tokens": 6599
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "variant": "A_raw",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "response_sha256": "7fedb51a97b8a7f9b7755310168b84a4e51c8cb88f378801b2e8f21b9de45b70",
+      "prompt_sha256": "1301b6e4f0b069bca4f2251472be50152e61e4c629e9f9d794ab63b851fda8c3",
+      "tokens": 4547
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "variant": "B2_assertion_aware",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "response_sha256": "07b11fe8f5805f57bebc4cd9ad54f1092a347448791435a08931b9ee85f5af89",
+      "prompt_sha256": "a4621269076dd1e2171a32e623fc31ca7bb68c3623e5d1f79c6b6e86cbd59368",
+      "tokens": 4330
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "variant": "C_tail35",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "response_sha256": "7fedb51a97b8a7f9b7755310168b84a4e51c8cb88f378801b2e8f21b9de45b70",
+      "prompt_sha256": "d545e9d7d92d35dff01714dd95252fc83ca25afacac90f91c8e5c1db2afc11f6",
+      "tokens": 4549
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "variant": "A_raw",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "response_sha256": "c88a23d697434d420e2a0ec0b8b2491a3923f6d779f835e987dd3b042f05c021",
+      "prompt_sha256": "2dadc3f9fe13b87afb9423a0a1c57bcca50d7a592e6285e9d3f150cd2835716f",
+      "tokens": 11435
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "variant": "B2_assertion_aware",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "response_sha256": "13877d3fb38c47f39d5d64e8af4025b54934d04094cf7ccf32b967d8381d337b",
+      "prompt_sha256": "d4554607527c8e06e09d0c191bef767a8f53e452f86b64a6eabf3a73ed93cc2e",
+      "tokens": 10790
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "variant": "C_tail35",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "response_sha256": "e0080a6785676d430a60cd71e03e75409f07c031119748d075918d5179e08b7c",
+      "prompt_sha256": "4ffc8dd35096b93e72a23067b9a14d11c413671ce6c77034b271c81c555090cd",
+      "tokens": 11202
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "variant": "A_raw",
+      "verdict": "RESOLVED",
+      "f2p_pass": true,
+      "p2p_pass": true,
+      "response_sha256": "046588570ae1152211520d1463f3252af34deb6babdcdc334e2055ec78723e99",
+      "prompt_sha256": "0bb096d2786e78533e4e288e43da323ee16f3641c7cd8c6c38bf11d573280652",
+      "tokens": 7367
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "variant": "B2_assertion_aware",
+      "verdict": "RESOLVED",
+      "f2p_pass": true,
+      "p2p_pass": true,
+      "response_sha256": "39128f2b6eec34c9fb0825939cff9da5f4a2db8c37483bd8a93ef36380fab161",
+      "prompt_sha256": "9b8d7a4929bac828960a7b908cf68cca8c939c09edc1835b5694ed432f4fc634",
+      "tokens": 6746
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "variant": "C_tail35",
+      "verdict": "RESOLVED",
+      "f2p_pass": true,
+      "p2p_pass": true,
+      "response_sha256": "58ca6bed227dff9d020b21e81085da4c65a44f405c5ab8f3db355af2781a1487",
+      "prompt_sha256": "0f93e78c791a9e19728440e2f950010daafd1815b44f600911e78e50c9ccd338",
+      "tokens": 7210
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "variant": "A_raw",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "response_sha256": "c4b4c8013e180eacbf83be3f40fb24534ae7c614a0f6b23eaba9bfe6c5b18852",
+      "prompt_sha256": "fb40b444d7dfc8405552ecc461f40b0f52c0dbc097b426e75f02327ec7460f85",
+      "tokens": 10502
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "variant": "B2_assertion_aware",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "response_sha256": "8cacd14391f70fef5d1c0e7b56dc557c928e56e3a71b67dc70fe9e02c6a5e22a",
+      "prompt_sha256": "ed930b263e3ce22b46df30d5589075d0c6bc8db9f58abfca222f5a8eb190125d",
+      "tokens": 8709
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "variant": "C_tail35",
+      "verdict": "FAILED_F2P",
+      "f2p_pass": false,
+      "p2p_pass": false,
+      "response_sha256": "8d8bb328cd4841b0156ca7455e2447cadbe242f659f033b51bcb2cc5d042b624",
+      "prompt_sha256": "6afe0de2188b1fc9c50d4aac8c19c5f3087027ceff72f43205f748d766b7dcf5",
+      "tokens": 10476
+    }
+  ],
+  "summary": {
+    "A_raw": {
+      "resolved": 1,
+      "n": 5,
+      "tokens": 41013
+    },
+    "B2_assertion_aware": {
+      "resolved": 1,
+      "n": 5,
+      "tokens": 37009
+    },
+    "C_tail35": {
+      "resolved": 1,
+      "n": 5,
+      "tokens": 40036
+    }
+  }
+}
