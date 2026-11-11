@@ -1,5 +1,21 @@
 # Paper Track — STATUS
 
+## Current checkpoint — 2026-11-11 (Astra independent winning audit)
+
+Status: ACTIVE / FINAL_REVIEW. This section supersedes older notebook/writeup state references below; older dated checkpoints are retained as history.
+
+- **Scientific positioning:** prioritize **Best New Resource** ($10k) over unsupported "Overall Best Paper favorite" claims; prize is not guaranteed. Decision supported by Astra's `REPORT_WINNING_AUDIT.md` supplied by owner on 2026-11-11.
+- **Live evidence as reviewed by Astra:** Kaggle Paper Writeup ID 115692 `PUBLISHED`, modified 2026-11-11 15:31:44 UTC; 2,977 words by whitespace split (not Kaggle's official count); separate final `Submitted` UI state and attached Project Files V5 **not independently confirmed**. Notebook v22 run was verified COMPLETE in a previous independent check, with old 31 tests, 88 robustness-format variants and 704 tamper controls; avoid portraying these as SWE solve-rate results.
+- **Task outcomes:** 15 synthetic tasks x 2 seeds: Raw 30/30; original B 25/30; exploratory B2 29/30; tail35 30/30; no-trace 22/30. Five genuine upstream SWE issues: Raw/B2/tail35 all **1/5**, same case; B2 37,009 vs raw 41,013 API tokens (-9.76%), **no solve-rate gain**. Four of five upstream issue IDs were inspirations for synthetic task cases (Flask 4045/4992; Requests 1963/2148): disclose as non-independent task selection, not demonstrated gold-patch leakage.
+- **Defensible resource evidence:** B2 selected diagnostic/header/summary evidence 11/11 on real failing pytest logs from 8 repos versus head35/tail35 2/11; 72.01% fewer raw bytes. Historical ANSI-unaware certificate incorrectly accepted 10/88 formatted variants; optional fail-open evidence guard 88/88 and 704/704 deliberate tampering checks. These checks measure selected-marker preservation/software integrity, **not** semantic equivalence or task resolution.
+- **Competitor transfer:** E4B file@1 49/90->51/90, 4 rescues and 2 regressions, paired McNemar p=0.6875; non-significant and distinct from resource/repair results.
+- **Uncorrected writing risks on main, verified with GitHub read:** abstract foregrounds initial 120 calls and older B loss instead of actual resource; `paper/writeup.md` continues to say `completely preventing wasted container executions`; "pre-registered" for early study requires claim-specific frozen protocol/time check; avoid calling 5-issue experiment independent OOD. Trim secondary Roofline/ADK prose to free space for minimal reproducibility command, overlap disclosure, limitations and current guard/fallback story.
+- **Priority before official deadline 2026-11-12 23:59 UTC:** (1) reviewer-ready manuscript refinement; (2) clean clone CPU reproducibility / checked hashes and license; (3) confirm final Kaggle Submitted, exact public writeup content and supplementary upload. Preserve working notebook and experiments. Do not modify Kaggle writeup, post, or submit without user authorization.
+- **Provenance:** owner-supplied audit `REPORT_WINNING_AUDIT.md` and GitHub source manifests `paper/e2e_gemma_experiment/task_manifest.json`, `paper/e2e_gemma_experiment/heldout_upstream_protocol.md`, `paper/robustness_challenge/`; audit scope excludes full entrant gallery and fresh model inference.
+
+--- 
+
+
 Audit: 2026-11-10 UTC | ACTIVE / FINAL_REVIEW
 Competition: https://www.kaggle.com/competitions/gemma-4-developer-agent-paper
 Deadline: 2026-11-12 23:59 UTC
