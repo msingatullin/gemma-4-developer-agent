@@ -1,0 +1,380 @@
+{
+  "experiment_id": "PAPER-EXPLORATORY-MATCHED-BYTE-HEADTAIL-20261111-02",
+  "scope": "Posthoc exploratory five head/tail variants capped to each issue B2 output byte budget (whole-line truncation); per-issue oracle best unfairly favors baseline. Not preregistered or model token-equivalent.",
+  "rows": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "group": "development",
+      "b2_bytes": 1223,
+      "raw_bytes": 2172,
+      "truncation": {
+        "0": {
+          "full_integrity": false,
+          "output_bytes": 1195,
+          "budget_bytes": 1223
+        },
+        "0.25": {
+          "full_integrity": false,
+          "output_bytes": 1210,
+          "budget_bytes": 1223
+        },
+        "0.5": {
+          "full_integrity": false,
+          "output_bytes": 1155,
+          "budget_bytes": 1223
+        },
+        "0.75": {
+          "full_integrity": false,
+          "output_bytes": 1201,
+          "budget_bytes": 1223
+        },
+        "1": {
+          "full_integrity": false,
+          "output_bytes": 1223,
+          "budget_bytes": 1223
+        }
+      },
+      "oracle_best_full_integrity": false
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "group": "development",
+      "b2_bytes": 530,
+      "raw_bytes": 888,
+      "truncation": {
+        "0": {
+          "full_integrity": false,
+          "output_bytes": 526,
+          "budget_bytes": 530
+        },
+        "0.25": {
+          "full_integrity": false,
+          "output_bytes": 505,
+          "budget_bytes": 530
+        },
+        "0.5": {
+          "full_integrity": false,
+          "output_bytes": 459,
+          "budget_bytes": 530
+        },
+        "0.75": {
+          "full_integrity": false,
+          "output_bytes": 461,
+          "budget_bytes": 530
+        },
+        "1": {
+          "full_integrity": false,
+          "output_bytes": 511,
+          "budget_bytes": 530
+        }
+      },
+      "oracle_best_full_integrity": false
+    },
+    {
+      "instance_id": "pallets__flask-5063",
+      "group": "development",
+      "b2_bytes": 1399,
+      "raw_bytes": 2231,
+      "truncation": {
+        "0": {
+          "full_integrity": false,
+          "output_bytes": 1342,
+          "budget_bytes": 1399
+        },
+        "0.25": {
+          "full_integrity": false,
+          "output_bytes": 1379,
+          "budget_bytes": 1399
+        },
+        "0.5": {
+          "full_integrity": false,
+          "output_bytes": 1367,
+          "budget_bytes": 1399
+        },
+        "0.75": {
+          "full_integrity": false,
+          "output_bytes": 1330,
+          "budget_bytes": 1399
+        },
+        "1": {
+          "full_integrity": false,
+          "output_bytes": 1386,
+          "budget_bytes": 1399
+        }
+      },
+      "oracle_best_full_integrity": false
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "group": "development",
+      "b2_bytes": 1573,
+      "raw_bytes": 5173,
+      "truncation": {
+        "0": {
+          "full_integrity": false,
+          "output_bytes": 1533,
+          "budget_bytes": 1573
+        },
+        "0.25": {
+          "full_integrity": false,
+          "output_bytes": 1541,
+          "budget_bytes": 1573
+        },
+        "0.5": {
+          "full_integrity": false,
+          "output_bytes": 1382,
+          "budget_bytes": 1573
+        },
+        "0.75": {
+          "full_integrity": true,
+          "output_bytes": 1451,
+          "budget_bytes": 1573
+        },
+        "1": {
+          "full_integrity": false,
+          "output_bytes": 1557,
+          "budget_bytes": 1573
+        }
+      },
+      "oracle_best_full_integrity": true
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "group": "development",
+      "b2_bytes": 537,
+      "raw_bytes": 1464,
+      "truncation": {
+        "0": {
+          "full_integrity": false,
+          "output_bytes": 486,
+          "budget_bytes": 537
+        },
+        "0.25": {
+          "full_integrity": false,
+          "output_bytes": 444,
+          "budget_bytes": 537
+        },
+        "0.5": {
+          "full_integrity": false,
+          "output_bytes": 513,
+          "budget_bytes": 537
+        },
+        "0.75": {
+          "full_integrity": false,
+          "output_bytes": 501,
+          "budget_bytes": 537
+        },
+        "1": {
+          "full_integrity": false,
+          "output_bytes": 509,
+          "budget_bytes": 537
+        }
+      },
+      "oracle_best_full_integrity": false
+    },
+    {
+      "instance_id": "pytest-dev__pytest-11143",
+      "group": "development",
+      "b2_bytes": 919,
+      "raw_bytes": 4607,
+      "truncation": {
+        "0": {
+          "full_integrity": false,
+          "output_bytes": 900,
+          "budget_bytes": 919
+        },
+        "0.25": {
+          "full_integrity": false,
+          "output_bytes": 911,
+          "budget_bytes": 919
+        },
+        "0.5": {
+          "full_integrity": false,
+          "output_bytes": 863,
+          "budget_bytes": 919
+        },
+        "0.75": {
+          "full_integrity": false,
+          "output_bytes": 886,
+          "budget_bytes": 919
+        },
+        "1": {
+          "full_integrity": false,
+          "output_bytes": 908,
+          "budget_bytes": 919
+        }
+      },
+      "oracle_best_full_integrity": false
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-11445",
+      "group": "development",
+      "b2_bytes": 1709,
+      "raw_bytes": 3577,
+      "truncation": {
+        "0": {
+          "full_integrity": false,
+          "output_bytes": 1651,
+          "budget_bytes": 1709
+        },
+        "0.25": {
+          "full_integrity": false,
+          "output_bytes": 1663,
+          "budget_bytes": 1709
+        },
+        "0.5": {
+          "full_integrity": false,
+          "output_bytes": 1628,
+          "budget_bytes": 1709
+        },
+        "0.75": {
+          "full_integrity": false,
+          "output_bytes": 1678,
+          "budget_bytes": 1709
+        },
+        "1": {
+          "full_integrity": false,
+          "output_bytes": 1684,
+          "budget_bytes": 1709
+        }
+      },
+      "oracle_best_full_integrity": false
+    },
+    {
+      "instance_id": "mwaskom__seaborn-3010",
+      "group": "development",
+      "b2_bytes": 1063,
+      "raw_bytes": 2233,
+      "truncation": {
+        "0": {
+          "full_integrity": false,
+          "output_bytes": 1008,
+          "budget_bytes": 1063
+        },
+        "0.25": {
+          "full_integrity": false,
+          "output_bytes": 1045,
+          "budget_bytes": 1063
+        },
+        "0.5": {
+          "full_integrity": false,
+          "output_bytes": 996,
+          "budget_bytes": 1063
+        },
+        "0.75": {
+          "full_integrity": false,
+          "output_bytes": 1053,
+          "budget_bytes": 1063
+        },
+        "1": {
+          "full_integrity": false,
+          "output_bytes": 1057,
+          "budget_bytes": 1063
+        }
+      },
+      "oracle_best_full_integrity": false
+    },
+    {
+      "instance_id": "pylint-dev__pylint-5859",
+      "group": "prospective",
+      "b2_bytes": 1400,
+      "raw_bytes": 3676,
+      "truncation": {
+        "0": {
+          "full_integrity": false,
+          "output_bytes": 1367,
+          "budget_bytes": 1400
+        },
+        "0.25": {
+          "full_integrity": false,
+          "output_bytes": 1328,
+          "budget_bytes": 1400
+        },
+        "0.5": {
+          "full_integrity": false,
+          "output_bytes": 1343,
+          "budget_bytes": 1400
+        },
+        "0.75": {
+          "full_integrity": false,
+          "output_bytes": 1286,
+          "budget_bytes": 1400
+        },
+        "1": {
+          "full_integrity": false,
+          "output_bytes": 1363,
+          "budget_bytes": 1400
+        }
+      },
+      "oracle_best_full_integrity": false
+    },
+    {
+      "instance_id": "pydata__xarray-4094",
+      "group": "prospective",
+      "b2_bytes": 6068,
+      "raw_bytes": 6068,
+      "truncation": {
+        "0": {
+          "full_integrity": true,
+          "output_bytes": 6068,
+          "budget_bytes": 6068
+        },
+        "0.25": {
+          "full_integrity": true,
+          "output_bytes": 6068,
+          "budget_bytes": 6068
+        },
+        "0.5": {
+          "full_integrity": true,
+          "output_bytes": 6068,
+          "budget_bytes": 6068
+        },
+        "0.75": {
+          "full_integrity": true,
+          "output_bytes": 6068,
+          "budget_bytes": 6068
+        },
+        "1": {
+          "full_integrity": true,
+          "output_bytes": 6068,
+          "budget_bytes": 6068
+        }
+      },
+      "oracle_best_full_integrity": true
+    },
+    {
+      "instance_id": "sympy__sympy-11897",
+      "group": "prospective",
+      "b2_bytes": 1794,
+      "raw_bytes": 5370,
+      "truncation": {
+        "0": {
+          "full_integrity": false,
+          "output_bytes": 1730,
+          "budget_bytes": 1794
+        },
+        "0.25": {
+          "full_integrity": false,
+          "output_bytes": 1778,
+          "budget_bytes": 1794
+        },
+        "0.5": {
+          "full_integrity": false,
+          "output_bytes": 1792,
+          "budget_bytes": 1794
+        },
+        "0.75": {
+          "full_integrity": false,
+          "output_bytes": 1773,
+          "budget_bytes": 1794
+        },
+        "1": {
+          "full_integrity": true,
+          "output_bytes": 1775,
+          "budget_bytes": 1794
+        }
+      },
+      "oracle_best_full_integrity": true
+    }
+  ]
+}
