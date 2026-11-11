@@ -1,4 +1,6 @@
-# AST-Guided Verification Suite: Deterministic Code Slicing, Pre-Flight Validation, and Traceback Compression for Local SWE Agents on Gemma 4
+# When Traceback Compression Lies: Verifiable Diagnostics for Gemma 4 SWE Agents
+
+*Falsification-tested, fail-open diagnostics and a reproducible verification resource for local Gemma 4 software agents.*
 
 **Author:** Mikhail Singatullin (`msingatullin` / Team `Михаил`)  
 **Competition Track:** [Google - The Gemma 4 Developer Agent Paper Track](https://www.kaggle.com/competitions/gemma-4-developer-agent-paper)  
@@ -11,54 +13,32 @@
 
 ## 1. Abstract & Executive Summary
 
-Local Gemma 4 SWE agents face bloated context, unsafe patches, and noisy test logs.
+Local SWE agents often shorten pytest logs to reduce context costs. We found that this operation can silently remove failing-assertion evidence **and** cause an integrity certificate to certify the incomplete output. Our Apache-2.0 resource combines a deterministic assertion-aware compressor, an independently checked fail-open guard, versioned certificates, and reproducible tests that require no GPU, credentials, or model calls.
 
-Our open-source suite combines AST slicing, pre-flight compilation and **fail-open, evidence-checked** traceback compression.
+We used **11 authentic failing pytest logs from eight upstream repositories** and 88 synthetic CI/terminal-format perturbations (eight fixed transformations per log). The older ANSI-unaware compressor plus certificate incorrectly accepted **10/88** outputs missing selected evidence. The optional guard preserved the predefined diagnostic/header/summary markers in **88/88** cases and rejected **704/704** deliberate certificate-tampering controls; on the original 11 logs it left outputs byte-identical. Across those logs, B2 retained selected markers on **11/11** versus **2/11** for head35/tail35 while reducing UTF-8 log bytes by **72.01%**. These are bounded marker and software-integrity tests, not proof of semantic equivalence or 88 independent upstream defects.
 
-We report **120 live calls to quantized Gemma 4 31B (`google/gemma-4-31B-it-qat-w4a16-ct`)** on 15 synthetic defects across two seeds. Compared to native raw tracebacks, our AST-guided compression delivers a **31.5% reduction in total API tokens** (1,158 to 793 tokens per task call) and a **56.86% reduction in traceback characters** (2,314 to 998 characters), while preserving 100% localization accuracy and 86.7% objective diagnostic accuracy (versus 90.0% for raw traces, $\Delta = -3.33\%$, 95% bootstrap CI: $[-10.0\%, 0.0\%]$, permutation $p = 1.0000$). 
-
-Furthermore, we evaluate all 120 candidate patches in an isolated, unprivileged container sandbox (`--network none`, `--cap-drop ALL`, 512MB RAM, read-only mounts). The measured **Patch Test Pass Rate** was **100.0%** (30/30) for native raw traces (`A_raw`), **83.3%** (25/30) for AST-compressed traces (`B_compressed`), **100.0%** (30/30) for 35-line tail truncation (`C_tail35`), and **73.3%** (22/30) for zero traceback (`D_no_trace`). In paired hypothesis testing, the observed difference between compressed and raw traces ($\Delta_{B-A} = -16.67\%$, 95% CI: $[-36.7\%, 0.0\%]$, permutation $p = 0.2539$) does not achieve statistical significance at $\alpha = 0.05$. Nonsignificance does not establish functional equivalence; our failure taxonomy details compression-versus-precision trade-offs.
+We also release 150 saved Gemma 4 31B synthetic-task responses and a separate five-authentic-issue pilot. First-pass repair was **1/5 with each of Raw, B2, and tail35**, solving the same issue; B2 used **9.76% fewer API tokens** than Raw. We do **not** claim improved issue solve rate, noninferiority, or overall superiority over other papers. Public source files, hashes, and an executable Kaggle Notebook permit CPU-only verification of the resource.
 
 ---
 
-## 2. Operating Constraints and Gemma 4 (31B QAT) Attention Mechanics
+## 2. Introduction: What Is Being Verified?
 
-### Hardware Environments: Competition Cluster vs. Edge Deployments
-- **Official cluster:** Four L4 GPUs (TP=4; 96 GB aggregate VRAM).
-- **Edge deployment:** One 24 GB L4 GPU, where memory efficiency matters.
+A local SWE agent must interpret failing tests in a limited context window. Merely cutting logs by line count may remove the assertion and exception details that distinguish a valid fix from an incorrect one. Conventional software integrity checks can also be circular if both the compressor and its validator use the same flawed recognition logic.
 
-### Architectural Specifications of `google/gemma-4-31B-it-qat-w4a16-ct`:
-- **Weights:** INT4 pack-quantized weights (group size 32, FP16 activations), occupying $\approx 18.24$ GiB VRAM.
-- **Total Layers:** $L = 60$.
-- **Hybrid Attention:** 50 sliding-window layers (window $W = 1024$ tokens, $H_{kv} = 16$, head dimension $d_k = 256$) and 10 full-attention global layers (every 6th layer, $H_{kv,\text{global}} = 4$, $d_{k,\text{global}} = 512$).
-- **Query Heads:** $H_q = 32$.
-
-### Analytical KV Cache Growth Across Hybrid Attention Layers
-
-The KV cache memory footprints and Roofline decoding latencies below are analytical calculations based on theoretical memory bandwidth ($242.0 \times 10^9$ bytes/sec for NVIDIA L4) and INT4/FP16 cache layout under stated resident-memory assumptions; they are not empirical GPU runtime measurements.
-
-For context sequence $T$ in FP16 ($2$ bytes/scalar), memory allocation scales across sliding and global layers:
-1. **Sliding Layers (50 layers):** $M_{\text{KV,sliding}}(T) = 50 \times 2 \times 16 \times 256 \times \min(T, 1024) \times 2 = 819,200 \times \min(T, 1024) \text{ bytes}$. Saturates at $0.781$ GiB when $T \ge 1024$.
-2. **Global Layers (10 layers):** $M_{\text{KV,global}}(T) = 10 \times 2 \times 4 \times 512 \times T \times 2 = 80.0 \times T \text{ KB}$.
-3. **Total Footprint and Modeled Latency:**
-   - At $T = 1,024$: Total KV $= 0.859$ GiB; Total VRAM $= 19.15$ GiB ($4.85$ GiB headroom on 1× L4).
-   - At $T = 8,192$ (AST scope): Total KV $= 1.406$ GiB; Total VRAM $= 19.73$ GiB ($4.27$ GiB headroom).
-   - At $T = 24,576$ (Unconstrained): Total KV $= 2.656$ GiB; Total VRAM $= 21.06$ GiB ($2.94$ GiB headroom).
-
-Under memory-bound decoding ($I \approx 1$ FLOP/byte), modeled per-token latency is **87.2 ms/token at 8,192 tokens** versus **92.7 ms/token at 24,576 tokens** ($+6.36\%$ latency growth), while shrinking headroom from 4.27 GiB to 2.94 GiB on single-accelerator setups.
+Our research question is therefore deliberately narrow: **Can a low-cost resource reduce pytest log volume while independently detecting loss of a defined set of failure evidence, including under unexpected CI formatting?** Our proposed guard uses independent normalization and fails open to the original log on ambiguous input. We evaluate preserved marker multiplicities and compressed bytes separately from language-model repair success. AST slicing and Python `compile()` are conventional companion components, not our claim of standalone novelty. We do not measure GPU runtime acceleration here.
 
 ---
 
 ## 3. Related Work and Positioning Against Prior Art
 
 Related SWE research:
-- **Agentless** (Xia et al., 2024): localization, repair, and validation.
-- **SWE-agent** (Yang et al., 2024): tool-based interactive coding.
-- **RepoCoder** (Zhang et al., 2023): cross-file retrieval and repository context.
+- [**Agentless** (Xia et al., 2024)](https://arxiv.org/abs/2407.01489): localization, repair, and validation.
+- [**SWE-agent** (Yang et al., 2024)](https://arxiv.org/abs/2405.15793): tool-based interactive coding.
+- [**RepoCoder** (Zhang et al., 2023)](https://aclanthology.org/2023.emnlp-main.151/): cross-file retrieval and repository context.
 
 **E4B transfer check (distinct module):** On 90 reserved SWE-bench Lite cases, a deterministic file reranker of Maroof's released Gemma E4B candidates achieved File@1 **51/90**, versus **49/90** for the original ordering, with zero additional model calls (exact paired McNemar $p=0.6875$). This non-significant result concerns file localization, **not** traceback compression or SWE issue resolution. [Frozen protocol, code, and paired outcomes](https://github.com/msingatullin/gemma-4-developer-agent/tree/main/paper/peer_head2head).
 
-### Architectural Novelty: The Deterministic Zero-Inference Stance
+### Supporting Deterministic Components (Not Individually Novel)
 
 Our suite adds a **deterministic, zero-inference verification layer**:
 1. **Zero LLM Overhead for Localization:** Symbol discovery relies on Python's built-in `ast` visitor, extracting precise function and class line ranges in sub-millisecond latency without consuming model generation tokens.
@@ -80,32 +60,20 @@ We evaluated deterministic components across the `ASTVerificationBenchmark`, a c
 
 *Note on Token Estimation:* Reported token quantities are heuristic estimates via integer division `len(text) // 4` (matching BPE subword approximations).
 
-### Component Ablation and Real Pytest Traceback Validation
+### Additional CPU Ablations and Scope
 
-We benchmarked the components against naive agent baselines and unmocked pytest execution logs (`pytest 8.4.2`, `Python 3.12.3`) across diverse failure typologies (120 lines of stdout noise, 32-frame multiline assertion diffs, parametrized suites, distinct exception types):
-
-| Configuration / Mode | Volume Reduction (%) | Diagnostic Retention (%) | Syntax Errors Caught Pre-Flight | Processing Latency (CPU) |
-| :--- | :---: | :---: | :---: | :---: |
-| **Baseline 0: Naive SWE Agent** (Raw files, raw logs) | 0.0% (Baseline) | 100.0% (Uncompressed raw) | 0% (Escapes to runner) | N/A (Direct pass-through) |
-| **Ablation 1: AST Slicing Alone** (`ast.NodeVisitor`) | **44.6%** (Code context) | 100.0% (Uncompressed raw) | 0% (Escapes to runner) | 235.8 µs |
-| **Ablation 2: Syntax Gate Alone** (`compile(mode='exec')`) | 0.0% (Code context) | 100.0% (Uncompressed raw) | **100.0%** (Pre-flight) | 38.2 µs |
-| **Ablation 3: Traceback Compression Alone** | **30.6%** (Microbenchmark) | **100.0%** (Zero diagnostic loss) | 0% (Escapes to runner) | 159.3 µs |
-| **Real Pytest Verbose (`-v`, `--tb=auto`)** | **71.9%** (6,068 vs 21,557 ch) | **100.0%** (62/62 items preserved) | N/A | 5.93 ms ± 0.08 ms |
-| **Real Pytest Short (`--tb=short`)** | **75.1%** (4,509 vs 18,104 ch) | **100.0%** (55/55 items preserved) | N/A | 4.65 ms ± 0.06 ms |
-| **Baseline: Naive Tail-Cap (35 lines)** | 91.3% (Heuristic cutoff) | **22.6%** (Drops 48/62 items) | N/A | 0.08 ms ± 0.00 ms |
-| **Baseline: Naive E-Lines Only** | 86.6% (Strips headers/sites) | **62.9%** (Drops 23/62 items) | N/A | 0.25 ms ± 0.00 ms |
-| **Full AST Suite (All Components Active)** | **44.6% code / 71.9% trace** | **100.0% diagnostic retention** | **100.0% pre-flight catch** | **3.893 ms** (31 tasks combined) |
+The original ablation also measured real pytest verbose and short outputs: **62/62** and **55/55** selected items preserved by the original compressor on those fixtures, compared with **14/62** for a 35-line tail cap in the verbose fixture. These cases are distinct from the eleven authentic upstream logs and the adversarial format tests in Section 6.3. CPU microbenchmark timings are not end-to-end agent speedups.
 
 ---
 
 ## 5. End-to-End Empirical Validation with Real Gemma 4 (31B QAT) Inference and Containerized Execution
 
-To validate whether deterministic traceback compression translates into measurable prompt savings and robust defect resolution without degrading reasoning performance, we conducted a pre-registered end-to-end empirical study using live model inference and sandboxed test execution.
+To validate whether deterministic traceback compression translates into measurable prompt savings and robust defect resolution without degrading reasoning performance, we conducted a protocol-defined end-to-end empirical study using live model inference and sandboxed test execution. The published frozen artifacts identify the task corpus and evaluation conditions, but we do not treat the early study as independently time-verified preregistration without a matching pre-result commit.
 
 ### 5.1 Experimental Protocol and Task Corpus
 The benchmark corpus comprises 15 synthetic Python defect reproduction tasks directly modeled after canonical bug patterns in major open-source ecosystems (Flask, Requests, Click, Jinja2, Urllib3, Rich, Pluggy, Marshmallow, Pydantic, Attrs, ItsDangerous, Werkzeug, PyTest). Each task includes a buggy implementation, ground-truth metadata, and an executable pytest test suite.
 
-We tested four trace presentation variants across two independent random seeds ($S \in \{42, 100\}$), producing exactly $15 \times 4 \times 2 = 120$ unique model calls:
+We tested four trace presentation variants across two configured seed settings ($S \in \{42, 100\}$) with greedy decoding, giving $15 \times 4 \times 2 = 120$ recorded model calls. Repeated seeds are not independent tasks; task ID remains the statistical resampling unit:
 1. `A_raw`: Native, uncompressed traceback containing all session banners and captured stdout noise.
 2. `B_compressed`: Our AST-guided compressed traceback, eliminating stdout noise while preserving failure headers, assertion sites, and multiline error lines.
 3. `C_tail35`: Naive tail-truncation baseline retaining only the final 35 lines of the log.
@@ -131,10 +99,7 @@ Diagnostic reasoning was evaluated across all 120 responses:
 - **Pre-Flight Static Syntax Pass Rate:** **100.0%** (30/30) across all variants. Zero syntax errors were introduced by the model.
 - **Objective Root Cause Pass Rate:** **90.0%** (27/30) for `A_raw`, **86.7%** (26/30) for `B_compressed`, **93.3%** (28/30) for `C_tail35`, and **86.7%** (26/30) for `D_no_trace`. Paired delta between compressed and raw traces is $\Delta = -3.33\%$ (95% bootstrap CI: $[-10.0\%, 0.0\%]$, permutation $p = 1.0000$).
 
-To investigate the 13 automated diagnostic failures, we performed a post-hoc rule-based error taxonomy across all model responses, comparing generated explanations against the pre-registered literal string filters while retaining original primary outcomes strictly intact:
-- **Lexical Variant Formulations (3/13, 23.1%):** In task 07 (`urllib3`) and task 15 (`pytest`), the model diagnosed the valid failure mechanism, but used morphological variants (participle "preserving" vs infinitive "preserve"; verb "subtract" vs noun "subtraction") that did not match pre-registered literal substring filters.
-- **Competing Facet Prioritization (8/13, 61.5%):** In task 09 (`pluggy`), all variants across both seeds correctly localized `HookCaller.execute` and identified hook ordering bugs, but prioritized the `tryfirst` FIFO/LIFO ordering specification rather than the `trylast` appending rule.
-- **Scope Generalizations (2/13, 15.4%):** In task 07, variants under seed 100 correctly identified manual '+' replacement flaws, but generalized their reasoning to full URL unquoting.
+A post-hoc taxonomy classified 13 diagnostic misclassifications: 3 lexical wording differences, 8 competing-facet prioritizations, and 2 scope overgeneralizations. These exploratory labels do not alter the primary scores; the row-level taxonomy is publicly archived in the linked GitHub experiment results.
 
 ### 5.4 Containerized Patch Test Pass Rates and Hypothesis Testing
 To measure whether proposed candidate patches actually resolve defects without breaking existing behavior, all 120 generated patches were executed in an isolated, unprivileged container sandbox (`gemma4-eval-sandbox:latest`) configured with `--network none`, `--cap-drop ALL`, `--user 1000:1000`, 512MB RAM, 1.0 CPU core, and read-only host directory mounts.
@@ -142,7 +107,7 @@ To measure whether proposed candidate patches actually resolve defects without b
 | Variant | Description | Total Calls | Passed Tests | Pass Rate (%) | Std Error | 95% Bootstrap CI |
 |---|---|---|---|---|---|---|
 | **`A_raw`** | Native uncompressed traceback | 30 | 30 | **100.0%** | 0.00% | [100.0%, 100.0%] |
-| **`B_compressed`** | AST compressor v1 (Pre-registered) | 30 | 25 | **83.3%** | 6.80% | [63.3%, 100.0%] |
+| **`B_compressed`** | AST compressor v1 (original planned variant) | 30 | 25 | **83.3%** | 6.80% | [63.3%, 100.0%] |
 | **`B2_assertion_aware`** | **AST compressor v2 (Exploratory)** | **30** | **29** | **96.7%** | **3.28%** | **[86.7%, 100.0%]** |
 | **`C_tail35`** | Tail 35-line truncation baseline | 30 | 30 | **100.0%** | 0.00% | [100.0%, 100.0%] |
 | **`D_no_trace`** | Zero traceback (Exception text only) | 30 | 22 | **73.3%** | 8.07% | [46.7%, 93.3%] |
@@ -170,7 +135,7 @@ The 150-call study above concerns **synthetic** tasks. Separately, five authenti
 | B2_assertion_aware | **1/5** | 37,009 |
 | C_tail35 | **1/5** | 40,036 |
 
-All variants solved **the same issue**. B2 reduced observed tokens by 9.8%, **without improved resolution**. Five issues cannot establish noninferiority or generalization. Gold-reference harness controls passed 5/5 RED→GREEN, 155 P2P tests, 12/12 evaluator checks and 39/39 unit tests; these are **not model successes**. [Independent result/provenance](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/STATUS.md). Raw responses remain private.
+All variants solved **the same issue**. B2 reduced observed tokens by 9.8%, **without improved resolution**. Four of these five upstream issue IDs (Flask #4045/#4992 and Requests #1963/#2148) were also inspirations for the synthetic corpus; this weakens independence of task selection, though it is not evidence of gold-patch leakage. Five issues cannot establish noninferiority or broad generalization. Later post-hoc patch-application/feedback experiments on these **same issues** reached A=3/5, B2=3/5, C=2/5 under different additional procedures; they are not a new unbiased holdout or evidence that B2 improves repair. [Scope and provenance](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/COMPETITIVE_EVIDENCE_AUDIT_20261111.md). Gold-reference harness controls passed 5/5 RED→GREEN, 155 P2P tests, 12/12 evaluator checks and 39/39 unit tests; these are **not model successes**. [Independent result/provenance](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/STATUS.md). Raw responses remain private.
 
 ---
 
@@ -190,7 +155,7 @@ def check_preflight_syntax(patch_code: str) -> tuple[bool, str]:
     except SyntaxError as e:
         return False, f"SyntaxError at line {e.lineno}: {e.msg}"
 ```
-This intercepts malformed patches in under 0.1 ms (38.2 µs cloud mean latency), completely preventing wasted container executions.
+This rejects syntactically malformed source before a test run (38.2 µs mean in our microbenchmark), **not** all unproductive container executions or semantic failures.
 
 ### 6.2 Context Window Stability and Attention Mechanics
 Hybrid attention makes unnecessary file and traceback text costly. Deterministic slicing and evidence-preserving compression reduce that overhead without additional model inference.
@@ -198,33 +163,25 @@ Hybrid attention makes unnecessary file and traceback text costly. Deterministic
 ### 6.3 Multi-Format Assertion Preservation
 Traceback filtering isolates failing blocks and collapses stdout noise while preserving failure headers, assertion sites (`> assert ...`), assertion details (`E ...`), and multiline diff frames. We tested the unchanged compressor on **11 genuine failing pytest logs from eight repositories**. Three additional cases (Xarray, Pylint, SymPy) were [frozen before this run](https://github.com/msingatullin/gemma-4-developer-agent/blob/main/paper/e2e_gemma_experiment/real_repo_sample/UNSEEN_3REPO_PRECOMMIT_20261111.md) and verified RED→GREEN; two IDs overlapped a parallel pre-registration. On this new holdout, B2 retained all selected diagnostic/header/summary evidence **3/3** against `head35`/`tail35` **0/3**, reducing bytes **82.15%**. Across all 11, B2 retained evidence **11/11** versus **2/11** for each truncation baseline, at **72.01%** byte reduction. This supports diagnostic robustness, **not solve-rate superiority**. [Logs and baselines](https://github.com/msingatullin/gemma-4-developer-agent/tree/main/paper/e2e_gemma_experiment/real_repo_sample). Independent [integrity certificates](https://github.com/msingatullin/gemma-4-developer-agent/tree/main/paper/verification_certificate) verify source/output SHA-256 and exact selected-marker multiplicities: **11/11 certified**, **165/165 adversarial corruptions detected** (software checks, not semantic equivalence).
 
-A subsequent [format-robustness audit](https://github.com/msingatullin/gemma-4-developer-agent/tree/main/paper/robustness_challenge) exposed **10/88 false passes** by the original ANSI-unaware certificate on synthetically recolored real logs. An optional fail-open guard repaired these (**88/88 marker checks; 704/704 tampering controls rejected**) while preserving all 11 original outputs byte-for-byte. These variants are synthetic, not independent software bugs.
+A subsequent [format-robustness audit](https://github.com/msingatullin/gemma-4-developer-agent/tree/main/paper/robustness_challenge) exposed **10/88 false passes** by the original ANSI-unaware certificate on synthetically recolored real logs. An optional fail-open guard repaired these (**88/88 marker checks; 704/704 tampering controls rejected**) while preserving all 11 original outputs byte-for-byte. It increases raw-log fallback decisions from **23 to 33** across the 88 synthetic cases: safety may reduce compression when formatting is ambiguous. These variants are synthetic, not independent software bugs; the certificate verifies selected markers and consistency, not complete meaning or source authenticity.
 
-### 6.4 Production ADK Specification
-ADK configuration (`agent.yaml`):
-```yaml
-name: gemma4_ast_verified_agent
-model: gemma-4-31b-it-qat-w4a16-ct
-description: Deterministic AST-verified autonomous software engineering agent.
-instruction: !include prompts/system.md
-generate_content_config:
-  temperature: 0.1
-  top_p: 0.95
-  max_output_tokens: 2048
-tools:
-  - run_command
-  - read_file
-  - edit_file
-  - write_file
-  - submit_patch
-max_tool_calls: 24
-max_turns: 36
-session_timeout_seconds: 300
-```
 
 ---
 
 ## 7. Artifacts & Open-Source Availability
+
+### Independent reproduction (Python standard library; CPU-only)
+
+From a clean public checkout, with no model inference or secrets:
+
+```bash
+git clone https://github.com/msingatullin/gemma-4-developer-agent.git
+cd gemma-4-developer-agent
+python3 paper/robustness_challenge/run_chaos_experiment.py
+python3 paper/robustness_challenge/validate_robust_guard.py
+```
+
+Expected summary: old **78/88** with **10 false certificate PASS**; corrected guard **88/88**, tamper checks **704/704**, original 11 logs byte-identical, **72.01%** saved. The [versioned certificate runner](https://github.com/msingatullin/gemma-4-developer-agent/tree/main/paper/verification_certificate) provides separate **11/11** and **165/165** checks. The authentic Gemma model responses and private CPU-scoring JSONL are not part of the public resource, limiting independent replay of the five-issue pilot.
 
 Open-source **Apache 2.0** artifacts:
 - **Public Executable Notebook:** [msingatullin/ast-guided-loops-verification-for-gemma-4](https://www.kaggle.com/code/msingatullin/ast-guided-loops-verification-for-gemma-4)
