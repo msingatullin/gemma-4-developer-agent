@@ -1,0 +1,453 @@
+{
+  "source": "official Kaggle MCP search_notebooks competition gemma-4-developer-agent-paper, search sortBy DateRun/VoteCount",
+  "captured_date": "2026-11-11",
+  "caveat": "Notebook ordering and votes are NOT Paper Track judged standings. Kaggle API writeups list returns only owned entries; this is public notebook activity monitoring, not exhaustive list of published paper entries.",
+  "recent_query_count": 100,
+  "voted_query_count": 100,
+  "recent_top35": [
+    {
+      "ref": "hemantkumarbk/selective-restarts-monitor-audit-reproduction",
+      "title": "selective-restarts-monitor-audit-reproduction",
+      "author": "Hemant Kumar B K",
+      "last_run_time": "2026-11-11T14:57:02.857Z",
+      "votes": null
+    },
+    {
+      "ref": "hassantavakoli/instructions-lose-to-interfaces-reproduce-tables",
+      "title": "Instructions Lose to Interfaces - reproduce tables",
+      "author": "Hassan",
+      "last_run_time": "2026-11-11T14:56:18.340Z",
+      "votes": null
+    },
+    {
+      "ref": "pablodiegoo/gemma-4-developer-agent-paper-starter-notebook",
+      "title": "Gemma 4 Developer Agent Paper Starter Notebook",
+      "author": "Pablo Diego Pereira",
+      "last_run_time": "2026-11-11T13:27:54.207Z",
+      "votes": 9
+    },
+    {
+      "ref": "janaichowdaryvunnam/repolens-gemma-research-experiment",
+      "title": "RepoLens-Gemma-Research-Experiment",
+      "author": "JANAIAH CHOWDARY VUNNAM",
+      "last_run_time": "2026-11-11T13:01:23.367Z",
+      "votes": null
+    },
+    {
+      "ref": "hemantkumarbk/selective-restarts-monitor-audit-shard-5",
+      "title": "selective-restarts-monitor-audit-shard-5",
+      "author": "Hemant Kumar B K",
+      "last_run_time": "2026-11-11T12:07:41.833Z",
+      "votes": null
+    },
+    {
+      "ref": "lizhang20252026/nodes-or-edges-tool-ablation-notebook",
+      "title": "Nodes or Edges? Tool-ablation notebook",
+      "author": "li zhang",
+      "last_run_time": "2026-11-11T12:05:41.353Z",
+      "votes": null
+    },
+    {
+      "ref": "phanhoangvinhhien/egm-swe-paper-writeup",
+      "title": "EGM SWE Paper Writeup",
+      "author": "Phan Hoang Vinh Hien",
+      "last_run_time": "2026-11-11T11:58:27.447Z",
+      "votes": 1
+    },
+    {
+      "ref": "robinamirbahar/gemma-4-ccr-output-artifacts-telemetry-eda",
+      "title": "Gemma 4 CCR Output Artifacts Telemetry EDA",
+      "author": "Robina Mirbahar",
+      "last_run_time": "2026-11-11T11:41:19.747Z",
+      "votes": null
+    },
+    {
+      "ref": "robinamirbahar/gemma4-multilora-adk-eval-benchmark-suite",
+      "title": "Gemma4 MultiLoRA ADK Eval Benchmark Suite",
+      "author": "Robina Mirbahar",
+      "last_run_time": "2026-11-11T11:41:16.857Z",
+      "votes": null
+    },
+    {
+      "ref": "robinamirbahar/gemma-4-loop-breaker-ccr-trap-25-benchmark",
+      "title": "Gemma 4 Loop Breaker: CCR & Trap-25 Benchmark",
+      "author": "Robina Mirbahar",
+      "last_run_time": "2026-11-11T11:41:13.313Z",
+      "votes": null
+    },
+    {
+      "ref": "robinamirbahar/gemma-4-loop-breaker-ccr-verification",
+      "title": "Gemma 4 Loop-Breaker CCR Verification",
+      "author": "Robina Mirbahar",
+      "last_run_time": "2026-11-11T11:41:10.600Z",
+      "votes": 1
+    },
+    {
+      "ref": "robinamirbahar/gemma-4-loop-breaker-adk-agent",
+      "title": "Gemma 4 Loop-Breaker ADK Agent",
+      "author": "Robina Mirbahar",
+      "last_run_time": "2026-11-11T11:41:07.950Z",
+      "votes": 20
+    },
+    {
+      "ref": "hemantkumarbk/selective-restarts-monitor-audit-shard-3",
+      "title": "selective-restarts-monitor-audit-shard-3",
+      "author": "Hemant Kumar B K",
+      "last_run_time": "2026-11-11T11:28:13.513Z",
+      "votes": null
+    },
+    {
+      "ref": "brianyu37/heterocpg-steiner-paper-track-reproducibility",
+      "title": "HeteroCPG-Steiner Paper Track Reproducibility",
+      "author": "Brian Yu37",
+      "last_run_time": "2026-11-11T11:06:28.527Z",
+      "votes": null
+    },
+    {
+      "ref": "hemantkumarbk/selective-restarts-monitor-audit-shard-2",
+      "title": "selective-restarts-monitor-audit-shard-2",
+      "author": "Hemant Kumar B K",
+      "last_run_time": "2026-11-11T10:48:16.267Z",
+      "votes": null
+    },
+    {
+      "ref": "blueraddish/repair-witness-challenge",
+      "title": "Repair Witness Challenge",
+      "author": "Jeeho Lee",
+      "last_run_time": "2026-11-11T10:13:39.300Z",
+      "votes": null
+    },
+    {
+      "ref": "robinamirbahar/gemma-4-opaque-localization-variance-study",
+      "title": "Gemma 4 Opaque Localization & Variance Study",
+      "author": "Robina Mirbahar",
+      "last_run_time": "2026-11-11T09:57:54.143Z",
+      "votes": null
+    },
+    {
+      "ref": "msingatullin/ast-guided-loops-verification-for-gemma-4",
+      "title": "AST-Guided Loops Verification for Gemma 4",
+      "author": "Mikhail",
+      "last_run_time": "2026-11-11T09:30:39.737Z",
+      "votes": 6
+    },
+    {
+      "ref": "hemantkumarbk/selective-restarts-monitor-audit-shard-1",
+      "title": "selective-restarts-monitor-audit-shard-1",
+      "author": "Hemant Kumar B K",
+      "last_run_time": "2026-11-11T09:27:29.887Z",
+      "votes": null
+    },
+    {
+      "ref": "hemantkumarbk/selective-restarts-monitor-audit-shard-4",
+      "title": "selective-restarts-monitor-audit-shard-4",
+      "author": "Hemant Kumar B K",
+      "last_run_time": "2026-11-11T09:11:27.047Z",
+      "votes": null
+    },
+    {
+      "ref": "hemantkumarbk/selective-restarts-monitor-audit-shard-8",
+      "title": "selective-restarts-monitor-audit-shard-8",
+      "author": "Hemant Kumar B K",
+      "last_run_time": "2026-11-11T09:11:23.387Z",
+      "votes": null
+    },
+    {
+      "ref": "hemantkumarbk/selective-restarts-monitor-audit-shard-7",
+      "title": "selective-restarts-monitor-audit-shard-7",
+      "author": "Hemant Kumar B K",
+      "last_run_time": "2026-11-11T09:11:20.687Z",
+      "votes": null
+    },
+    {
+      "ref": "hemantkumarbk/selective-restarts-monitor-audit-shard-6",
+      "title": "selective-restarts-monitor-audit-shard-6",
+      "author": "Hemant Kumar B K",
+      "last_run_time": "2026-11-11T09:11:18.183Z",
+      "votes": null
+    },
+    {
+      "ref": "robinamirbahar/ccr-loop-breaker-telemetry-utils",
+      "title": "CCR Loop-Breaker Telemetry Utils",
+      "author": "Robina Mirbahar",
+      "last_run_time": "2026-11-11T08:37:14.323Z",
+      "votes": null
+    },
+    {
+      "ref": "robinamirbahar/robina-s-gemma-4-developer-agent",
+      "title": "Robina's-Gemma 4 Developer Agent",
+      "author": "Robina Mirbahar",
+      "last_run_time": "2026-11-11T08:37:11.433Z",
+      "votes": 1
+    },
+    {
+      "ref": "robinamirbahar/gemma-4-e4b-loop-breaker-developer-agent",
+      "title": "Gemma 4 E4B Loop-Breaker Developer Agent",
+      "author": "Robina Mirbahar",
+      "last_run_time": "2026-11-11T08:37:08.473Z",
+      "votes": null
+    },
+    {
+      "ref": "robinamirbahar/robina-gemma-4-sovereign-budget-calibrated-agent",
+      "title": "Robina Gemma 4 Sovereign Budget Calibrated Agent",
+      "author": "Robina Mirbahar",
+      "last_run_time": "2026-11-11T08:37:04.227Z",
+      "votes": null
+    },
+    {
+      "ref": "shivashankar98/systems-autopsy-of-gemma-4-developer-agent",
+      "title": "Systems Autopsy of Gemma 4 Developer Agent",
+      "author": "Shiva Shankar",
+      "last_run_time": "2026-11-11T08:15:28.653Z",
+      "votes": null
+    },
+    {
+      "ref": "muhammadrosihan/nura-x-biqsa-opaque-issues-compaction-amnesia",
+      "title": "NURA x BIQSA: Opaque Issues & Compaction-Amnesia",
+      "author": "Muhammad Rosihan",
+      "last_run_time": "2026-11-10T22:54:11.500Z",
+      "votes": null
+    },
+    {
+      "ref": "cliffordimaguezegie/gemma4-revision-aware-repair-verification",
+      "title": "Gemma4_Revision_Aware_Repair_Verification",
+      "author": "Clifford Imaguezegie",
+      "last_run_time": "2026-11-10T21:29:13.190Z",
+      "votes": null
+    },
+    {
+      "ref": "ronak1167/gemma-4-swe-agent-research-paper",
+      "title": "Gemma 4 SWE Agent Research Paper",
+      "author": "Ronak_1167",
+      "last_run_time": "2026-11-10T19:43:45.233Z",
+      "votes": null
+    },
+    {
+      "ref": "alexmaxi/gemma-4-tcgs-lyapunov-swe-agent-verification",
+      "title": "Gemma 4 TCGS & Lyapunov SWE Agent Verification",
+      "author": "Alessandro Massimiliano Gasparini",
+      "last_run_time": "2026-11-10T19:25:30.027Z",
+      "votes": null
+    },
+    {
+      "ref": "mobassir/why-your-leaderboard-can-t-see-a-3-point-gain",
+      "title": "Why Your Leaderboard Can't See a 3-Point Gain",
+      "author": "Mobassir",
+      "last_run_time": "2026-11-10T14:53:35.643Z",
+      "votes": 7
+    },
+    {
+      "ref": "aadarshmukundan/ept-tier-a-reproduction",
+      "title": "EpT Tier A reproduction",
+      "author": "Adarsh Mukundan",
+      "last_run_time": "2026-11-10T12:32:22.617Z",
+      "votes": null
+    },
+    {
+      "ref": "saeedhasen/my-gemma-4-agent-code-notebook-v2",
+      "title": "My Gemma 4 Agent - Code & Notebook V2",
+      "author": "Saeed Hasen",
+      "last_run_time": "2026-11-10T11:03:04.560Z",
+      "votes": 2
+    }
+  ],
+  "vote_top25": [
+    {
+      "ref": "manuelgagofernandez/google-the-gemma-4-developer-agent-competition",
+      "title": "Google - The Gemma 4 Developer Agent Competition",
+      "author": "Manuel Gago Fernandez",
+      "last_run_time": "2026-09-24T23:08:43.890Z",
+      "votes": 50
+    },
+    {
+      "ref": "robinamirbahar/gemma-4-loop-breaker-adk-agent",
+      "title": "Gemma 4 Loop-Breaker ADK Agent",
+      "author": "Robina Mirbahar",
+      "last_run_time": "2026-11-11T11:41:07.950Z",
+      "votes": 20
+    },
+    {
+      "ref": "dariushafshar/gemma-4-lb-58-tasks-bronze-is-a-124-team-tie",
+      "title": "Gemma 4 LB: 58 Tasks, Bronze Is a 124-Team Tie",
+      "author": "Dariush Afshar",
+      "last_run_time": "2026-10-17T17:35:43.690Z",
+      "votes": 11
+    },
+    {
+      "ref": "pablodiegoo/gemma-4-developer-agent-paper-starter-notebook",
+      "title": "Gemma 4 Developer Agent Paper Starter Notebook",
+      "author": "Pablo Diego Pereira",
+      "last_run_time": "2026-11-11T13:27:54.207Z",
+      "votes": 9
+    },
+    {
+      "ref": "mobassir/why-your-leaderboard-can-t-see-a-3-point-gain",
+      "title": "Why Your Leaderboard Can't See a 3-Point Gain",
+      "author": "Mobassir",
+      "last_run_time": "2026-11-10T14:53:35.643Z",
+      "votes": 7
+    },
+    {
+      "ref": "msingatullin/ast-guided-loops-verification-for-gemma-4",
+      "title": "AST-Guided Loops Verification for Gemma 4",
+      "author": "Mikhail",
+      "last_run_time": "2026-11-11T09:30:39.737Z",
+      "votes": 6
+    },
+    {
+      "ref": "jek1wantaufik/gemma-4-agent-research-artifact",
+      "title": "Gemma 4 Agent Research Artifact",
+      "author": "Jeki Wan Taufik",
+      "last_run_time": "2026-10-02T02:45:42.247Z",
+      "votes": 5
+    },
+    {
+      "ref": "jocelyndumlao/trace-test-guided-repository-exploration",
+      "title": "TRACE: Test-Guided Repository Exploration",
+      "author": "Jocelyn Dumlao",
+      "last_run_time": "2026-10-22T02:25:29.443Z",
+      "votes": 4
+    },
+    {
+      "ref": "jefferyjeromeharris/gemma-4-dev-agent-paper",
+      "title": "Gemma 4 Dev Agent Paper",
+      "author": "Jeffery Jerome Harris",
+      "last_run_time": "2026-09-27T17:25:16.780Z",
+      "votes": 4
+    },
+    {
+      "ref": "markwhiteley/gemma-4-coding-room-evidence-replay",
+      "title": "Gemma 4 Coding Room Evidence Replay",
+      "author": "Mark Whiteley",
+      "last_run_time": "2026-11-05T10:57:48.017Z",
+      "votes": 3
+    },
+    {
+      "ref": "manderson240/token-insulated-compound-agent-graphs-for-gemma-4",
+      "title": "Token-Insulated Compound Agent Graphs for Gemma-4",
+      "author": "Mike Anderson",
+      "last_run_time": "2026-10-15T05:28:35.307Z",
+      "votes": 3
+    },
+    {
+      "ref": "dariushafshar/gemma-4-a-16384-output-cap-refuses-long-prompts",
+      "title": "Gemma 4: A 16384 Output Cap Refuses Long Prompts",
+      "author": "Dariush Afshar",
+      "last_run_time": "2026-10-01T13:27:33.497Z",
+      "votes": 3
+    },
+    {
+      "ref": "rajrajak99/tfd-agent-autonomous-swe-bench-resolution-with-ge",
+      "title": "TFD-Agent: Autonomous SWE-bench Resolution with Ge",
+      "author": "Raja Rajak",
+      "last_run_time": "2026-10-01T13:45:09.970Z",
+      "votes": 3
+    },
+    {
+      "ref": "mdmahfujulkarim/gemma-4-paper-reproducibility",
+      "title": "Gemma 4 Paper Reproducibility",
+      "author": "Md.Mahfujul Karim Sheikh",
+      "last_run_time": "2026-10-19T14:55:20.710Z",
+      "votes": 3
+    },
+    {
+      "ref": "saeedhasen/my-gemma-4-agent-code-notebook-v2",
+      "title": "My Gemma 4 Agent - Code & Notebook V2",
+      "author": "Saeed Hasen",
+      "last_run_time": "2026-11-10T11:03:04.560Z",
+      "votes": 2
+    },
+    {
+      "ref": "kevongaines/phaseguard-ast-and-nullspace-lora-surgeon-repro",
+      "title": "PhaseGuard-AST and Nullspace LoRA Surgeon Repro",
+      "author": "Kevon Gaines",
+      "last_run_time": "2026-11-04T10:42:50.877Z",
+      "votes": 2
+    },
+    {
+      "ref": "jaredga/name-the-method-at-its-code-code-and-data",
+      "title": "Name the Method at Its Code: code and data",
+      "author": "Jared Anderson",
+      "last_run_time": "2026-11-04T06:58:38.307Z",
+      "votes": 2
+    },
+    {
+      "ref": "fabrianivan/gemma-4-swe-agents-three-paradoxes-ca-hgr",
+      "title": "Gemma 4 SWE Agents Three Paradoxes & CA HGR",
+      "author": "Fabrian Ivan Prasetya",
+      "last_run_time": "2026-10-31T08:03:15.553Z",
+      "votes": 2
+    },
+    {
+      "ref": "salahibrahiemu/budgetaudit-held-out-context-evidence-audit",
+      "title": "BudgetAudit - Held-out Context Evidence Audit",
+      "author": "Salah Ibrahiemu",
+      "last_run_time": "2026-10-31T08:56:50.980Z",
+      "votes": 2
+    },
+    {
+      "ref": "priyachauhan369/crag-code-graph-routed-memory-for-offline-gemma",
+      "title": "CRAG - Code-Graph Routed Memory for Offline Gemma ",
+      "author": "Priya Chauhan",
+      "last_run_time": "2026-10-28T05:57:08.263Z",
+      "votes": 2
+    },
+    {
+      "ref": "nairakash/dispatch-preservation-checker-and-reproductions",
+      "title": "Dispatch Preservation: Checker and Reproductions",
+      "author": "nair-akash",
+      "last_run_time": "2026-11-10T04:00:00.333Z",
+      "votes": 2
+    },
+    {
+      "ref": "maroofiums/ast-compressed-code-graphs-for-gemma-4-agents",
+      "title": "AST-Compressed Code Graphs for Gemma 4 Agents",
+      "author": "M.Maroof",
+      "last_run_time": "2026-10-26T10:22:56.857Z",
+      "votes": 2
+    },
+    {
+      "ref": "bayuanggara12/gemma-4-developer-agent-paper-track",
+      "title": "Gemma-4-Developer-Agent-Paper-Track",
+      "author": "Bayu Anggara",
+      "last_run_time": "2026-10-17T21:18:46.957Z",
+      "votes": 2
+    },
+    {
+      "ref": "kevlarzanderchi/easy-rlaif-grpo-12b-on-gemma-12b-tool-calling",
+      "title": "Easy RLAIF GRPO 12B on Gemma 12B Tool Calling",
+      "author": "KevlarZanderChi",
+      "last_run_time": "2026-10-26T00:30:13.803Z",
+      "votes": 2
+    },
+    {
+      "ref": "devs01/trinity-hybrid-retrieval-s7-gemma4-swe-agent",
+      "title": "Trinity Hybrid Retrieval S7 Gemma4 SWE Agent",
+      "author": "Devs01",
+      "last_run_time": "2026-10-15T15:39:35.107Z",
+      "votes": 2
+    }
+  ],
+  "emergent_risks": [
+    {
+      "ref": "robinamirbahar/gemma-4-loop-breaker-ccr-trap-25-benchmark",
+      "risk": "multiple model/trajectory benchmark artifacts, needs reproducible independent audit"
+    },
+    {
+      "ref": "brianyu37/heterocpg-steiner-paper-track-reproducibility",
+      "risk": "129 public PR analysis, hardcoded diagram series, distinct AST localization claim; distinguish real code replay from displayed metrics"
+    },
+    {
+      "ref": "blueraddish/repair-witness-challenge",
+      "risk": "reproducible 192 constructed cells, subprocess witness tests; not 192 upstream bug resolutions"
+    },
+    {
+      "ref": "hemantkumarbk/selective-restarts-monitor-audit-shard-5",
+      "risk": "8-shard structured reproducibility audit, relevant scientific verifiability"
+    },
+    {
+      "ref": "lizhang20252026/nodes-or-edges-tool-ablation-notebook",
+      "risk": "recent tool ablation; unpublished scientific quality unknown"
+    }
+  ]
+}
