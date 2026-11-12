@@ -1,0 +1,42 @@
+{
+  "experiment": "EXP-AGENT-GPU-001-F0",
+  "started_at_utc": "2026-11-12T18:51:29.358104+00:00",
+  "bound_seconds": 850,
+  "requested_model": "gemma-4-e4b-it-qat-w4a16-ct",
+  "actual_model_generation": "TRUE_LOCAL_E4B",
+  "kaggle_competition_submission": "NEVER",
+  "paid_api_calls": 0,
+  "status": "PASS_GPU_REAL_E4B_ONE_SHORT_COMPLETION_NOT_AGENT_PATCH",
+  "hardware": [
+    {
+      "name": "Tesla T4",
+      "memory_gib": 14.56,
+      "capability": [
+        7,
+        5
+      ]
+    },
+    {
+      "name": "Tesla T4",
+      "memory_gib": 14.56,
+      "capability": [
+        7,
+        5
+      ]
+    }
+  ],
+  "model_mount": "/kaggle/input/models/google/gemma-4/other/gemma-4-e4b-it-qat-w4a16-ct/2",
+  "model_config_sha256": "7f0cd2d17bdb0d5adc6db8e7168bb9a9aa68a6c4ad879d80ecf83e6819c893d3",
+  "model_weight_shards_count": 1,
+  "model_weights_names": [
+    "model.safetensors"
+  ],
+  "vllm_version": "0.30.0",
+  "ephemeral_t4_kernel_workaround": "APPLIED",
+  "model_load_seconds": 263.33,
+  "generation_seconds": 7.5,
+  "generated_text": "An unquoted `*.py` glob expands to a list of all matching files, and `git grep` might only process the first few or those it finds easily, potentially missing deeper files depending on the shell's expansion behavior and `git grep`'s internal traversal.",
+  "generated_token_count": 57,
+  "ended_at_utc": "2026-11-12T18:56:37.611636+00:00",
+  "elapsed_wall_seconds": 761.34
+}
