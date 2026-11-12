@@ -1,0 +1,62 @@
+{
+  "experiment_id": "G0-SEARCH-005",
+  "created_from": "Only first-line titles and first ~500 characters of issue problem statements; source gold_patch filenames NOT consulted for query selection",
+  "manifest_sha256": "8270d1b7f7b4d29cd5ea1ac21fe1a981a36c7455b522db69b6b2133ce1f6dfcf",
+  "benchmark_subset": "All nine DEV tasks from Flask, Requests and pytest, in frozen 50-task manifest; heldout excluded",
+  "queries": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "content_token": "blueprint",
+      "filename_token": null,
+      "rationale": "Title says blueprint names; no concrete file path"
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "content_token": "from_file",
+      "filename_token": "Config",
+      "rationale": "Title explicitly says flask.Config.from_file(); Config class is named"
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "content_token": "resolve_redirects",
+      "filename_token": "Session",
+      "rationale": "Issue begins `Session.resolve_redirects`"
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "content_token": "ConnectionError",
+      "filename_token": null,
+      "rationale": "Issue explicitly mentions requests.exceptions.ConnectionError"
+    },
+    {
+      "instance_id": "psf__requests-2317",
+      "content_token": "builtin_str",
+      "filename_token": "sessions",
+      "rationale": "Issue includes exact `builtin_str` and `requests/sessions.py` path"
+    },
+    {
+      "instance_id": "pytest-dev__pytest-11143",
+      "content_token": "docstring",
+      "filename_token": null,
+      "rationale": "Issue title describes rewriting numeric first statement as docstring"
+    },
+    {
+      "instance_id": "pytest-dev__pytest-11148",
+      "content_token": "importlib",
+      "filename_token": null,
+      "rationale": "Issue title explicitly names import-mode=importlib"
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5103",
+      "content_token": "all",
+      "filename_token": null,
+      "rationale": "Issue title names all/any builtin calls; deliberately broad token"
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5221",
+      "content_token": "fixtures",
+      "filename_token": null,
+      "rationale": "Issue title explicitly says pytest --fixtures"
+    }
+  ]
+}
