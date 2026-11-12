@@ -1,0 +1,678 @@
+{
+  "experiment": "G0-SEARCH-006",
+  "phase": "B: offline gold scoring only after A fully frozen",
+  "raw_sha256": "e664dbec94fd5015532e4da9fb89080ae5afce486b622a0918cc77f43ff3dedb",
+  "manifest_sha256": "8270d1b7f7b4d29cd5ea1ac21fe1a981a36c7455b522db69b6b2133ce1f6dfcf",
+  "scope": "same nine selected DEV, no independent heldout, no model inference",
+  "cases": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "gold_source_paths_offline_only": [
+        "src/flask/blueprints.py"
+      ],
+      "shell_glob_expands": true,
+      "measurements": {
+        "v15_original": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [],
+          "n_lines": 0,
+          "seconds": 0.00401
+        },
+        "quote_only": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "examples/tutorial/flaskr/__init__.py",
+            "src/flask/__init__.py",
+            "src/flask/app.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00517
+        },
+        "quote_casefold": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "examples/tutorial/flaskr/__init__.py",
+            "examples/tutorial/flaskr/auth.py",
+            "examples/tutorial/flaskr/blog.py",
+            "src/flask/__init__.py",
+            "src/flask/app.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00493
+        },
+        "quote_casefold_filtered": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "src/flask/__init__.py",
+            "src/flask/app.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00542
+        },
+        "exp001a_current": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "src/flask/__init__.py",
+            "src/flask/app.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00472
+        }
+      }
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "gold_source_paths_offline_only": [
+        "src/flask/config.py"
+      ],
+      "shell_glob_expands": false,
+      "measurements": {
+        "v15_original": {
+          "hit1": true,
+          "hit5": true,
+          "first_gold_rank": 1,
+          "unique_paths": [
+            "src/flask/config.py",
+            "tests/test_config.py"
+          ],
+          "n_lines": 7,
+          "seconds": 0.00463
+        },
+        "quote_only": {
+          "hit1": true,
+          "hit5": true,
+          "first_gold_rank": 1,
+          "unique_paths": [
+            "src/flask/config.py",
+            "tests/test_config.py"
+          ],
+          "n_lines": 7,
+          "seconds": 0.00457
+        },
+        "quote_casefold": {
+          "hit1": true,
+          "hit5": true,
+          "first_gold_rank": 1,
+          "unique_paths": [
+            "src/flask/config.py",
+            "tests/test_config.py"
+          ],
+          "n_lines": 7,
+          "seconds": 0.00412
+        },
+        "quote_casefold_filtered": {
+          "hit1": true,
+          "hit5": true,
+          "first_gold_rank": 1,
+          "unique_paths": [
+            "src/flask/config.py"
+          ],
+          "n_lines": 3,
+          "seconds": 0.00406
+        },
+        "exp001a_current": {
+          "hit1": true,
+          "hit5": true,
+          "first_gold_rank": 1,
+          "unique_paths": [
+            "src/flask/config.py"
+          ],
+          "n_lines": 1,
+          "seconds": 0.00531
+        }
+      }
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "gold_source_paths_offline_only": [
+        "requests/sessions.py"
+      ],
+      "shell_glob_expands": true,
+      "measurements": {
+        "v15_original": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [],
+          "n_lines": 0,
+          "seconds": 0.00372
+        },
+        "quote_only": {
+          "hit1": false,
+          "hit5": true,
+          "first_gold_rank": 2,
+          "unique_paths": [
+            "requests/models.py",
+            "requests/sessions.py"
+          ],
+          "n_lines": 4,
+          "seconds": 0.0045
+        },
+        "quote_casefold": {
+          "hit1": false,
+          "hit5": true,
+          "first_gold_rank": 2,
+          "unique_paths": [
+            "requests/models.py",
+            "requests/sessions.py"
+          ],
+          "n_lines": 4,
+          "seconds": 0.00459
+        },
+        "quote_casefold_filtered": {
+          "hit1": false,
+          "hit5": true,
+          "first_gold_rank": 2,
+          "unique_paths": [
+            "requests/models.py",
+            "requests/sessions.py"
+          ],
+          "n_lines": 4,
+          "seconds": 0.0052
+        },
+        "exp001a_current": {
+          "hit1": true,
+          "hit5": true,
+          "first_gold_rank": 1,
+          "unique_paths": [
+            "requests/sessions.py"
+          ],
+          "n_lines": 1,
+          "seconds": 0.00532
+        }
+      }
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "gold_source_paths_offline_only": [
+        "requests/models.py"
+      ],
+      "shell_glob_expands": true,
+      "measurements": {
+        "v15_original": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [],
+          "n_lines": 0,
+          "seconds": 0.00594
+        },
+        "quote_only": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "requests/__init__.py",
+            "requests/adapters.py",
+            "requests/exceptions.py",
+            "requests/packages/urllib3/exceptions.py"
+          ],
+          "n_lines": 8,
+          "seconds": 0.00544
+        },
+        "quote_casefold": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "requests/__init__.py",
+            "requests/adapters.py",
+            "requests/exceptions.py",
+            "requests/packages/urllib3/exceptions.py"
+          ],
+          "n_lines": 8,
+          "seconds": 0.00573
+        },
+        "quote_casefold_filtered": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "requests/__init__.py",
+            "requests/adapters.py",
+            "requests/exceptions.py",
+            "requests/packages/urllib3/exceptions.py"
+          ],
+          "n_lines": 8,
+          "seconds": 0.00468
+        },
+        "exp001a_current": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "requests/__init__.py",
+            "requests/adapters.py",
+            "requests/exceptions.py",
+            "requests/packages/urllib3/exceptions.py"
+          ],
+          "n_lines": 8,
+          "seconds": 0.00498
+        }
+      }
+    },
+    {
+      "instance_id": "psf__requests-2317",
+      "gold_source_paths_offline_only": [
+        "requests/sessions.py"
+      ],
+      "shell_glob_expands": true,
+      "measurements": {
+        "v15_original": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "test_requests.py"
+          ],
+          "n_lines": 2,
+          "seconds": 0.00371
+        },
+        "quote_only": {
+          "hit1": false,
+          "hit5": true,
+          "first_gold_rank": 3,
+          "unique_paths": [
+            "requests/compat.py",
+            "requests/models.py",
+            "requests/sessions.py",
+            "requests/utils.py",
+            "test_requests.py"
+          ],
+          "n_lines": 12,
+          "seconds": 0.00423
+        },
+        "quote_casefold": {
+          "hit1": false,
+          "hit5": true,
+          "first_gold_rank": 3,
+          "unique_paths": [
+            "requests/compat.py",
+            "requests/models.py",
+            "requests/sessions.py",
+            "requests/utils.py",
+            "test_requests.py"
+          ],
+          "n_lines": 12,
+          "seconds": 0.00446
+        },
+        "quote_casefold_filtered": {
+          "hit1": false,
+          "hit5": true,
+          "first_gold_rank": 3,
+          "unique_paths": [
+            "requests/compat.py",
+            "requests/models.py",
+            "requests/sessions.py",
+            "requests/utils.py",
+            "test_requests.py"
+          ],
+          "n_lines": 12,
+          "seconds": 0.00452
+        },
+        "exp001a_current": {
+          "hit1": true,
+          "hit5": true,
+          "first_gold_rank": 1,
+          "unique_paths": [
+            "requests/sessions.py"
+          ],
+          "n_lines": 1,
+          "seconds": 0.00417
+        }
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-11143",
+      "gold_source_paths_offline_only": [
+        "src/_pytest/assertion/rewrite.py"
+      ],
+      "shell_glob_expands": true,
+      "measurements": {
+        "v15_original": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [],
+          "n_lines": 0,
+          "seconds": 0.00361
+        },
+        "quote_only": {
+          "hit1": true,
+          "hit5": true,
+          "first_gold_rank": 1,
+          "unique_paths": [
+            "src/_pytest/assertion/rewrite.py",
+            "src/_pytest/doctest.py",
+            "src/_pytest/python.py",
+            "testing/acceptance_test.py",
+            "testing/python/show_fixtures_per_test.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00513
+        },
+        "quote_casefold": {
+          "hit1": true,
+          "hit5": true,
+          "first_gold_rank": 1,
+          "unique_paths": [
+            "src/_pytest/assertion/rewrite.py",
+            "src/_pytest/doctest.py",
+            "src/_pytest/python.py",
+            "testing/acceptance_test.py",
+            "testing/python/show_fixtures_per_test.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00528
+        },
+        "quote_casefold_filtered": {
+          "hit1": true,
+          "hit5": true,
+          "first_gold_rank": 1,
+          "unique_paths": [
+            "src/_pytest/assertion/rewrite.py",
+            "src/_pytest/doctest.py",
+            "src/_pytest/python.py",
+            "testing/acceptance_test.py",
+            "testing/python/show_fixtures_per_test.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00472
+        },
+        "exp001a_current": {
+          "hit1": true,
+          "hit5": true,
+          "first_gold_rank": 1,
+          "unique_paths": [
+            "src/_pytest/assertion/rewrite.py",
+            "src/_pytest/doctest.py",
+            "src/_pytest/python.py",
+            "testing/acceptance_test.py",
+            "testing/python/show_fixtures_per_test.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00538
+        }
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-11148",
+      "gold_source_paths_offline_only": [
+        "src/_pytest/pathlib.py"
+      ],
+      "shell_glob_expands": true,
+      "measurements": {
+        "v15_original": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [],
+          "n_lines": 0,
+          "seconds": 0.00472
+        },
+        "quote_only": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "doc/en/example/assertion/failure_demo.py",
+            "src/_pytest/_py/path.py",
+            "src/_pytest/assertion/rewrite.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00516
+        },
+        "quote_casefold": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "doc/en/example/assertion/failure_demo.py",
+            "src/_pytest/_py/path.py",
+            "src/_pytest/assertion/rewrite.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00457
+        },
+        "quote_casefold_filtered": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "doc/en/example/assertion/failure_demo.py",
+            "src/_pytest/_py/path.py",
+            "src/_pytest/assertion/rewrite.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00463
+        },
+        "exp001a_current": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "doc/en/example/assertion/failure_demo.py",
+            "src/_pytest/_py/path.py",
+            "src/_pytest/assertion/rewrite.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00433
+        }
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5103",
+      "gold_source_paths_offline_only": [
+        "src/_pytest/assertion/rewrite.py"
+      ],
+      "shell_glob_expands": true,
+      "measurements": {
+        "v15_original": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "setup.py"
+          ],
+          "n_lines": 1,
+          "seconds": 0.00398
+        },
+        "quote_only": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "doc/en/conf.py",
+            "doc/en/example/assertion/failure_demo.py",
+            "doc/en/example/assertion/test_setup_flow_example.py",
+            "doc/en/example/multipython.py",
+            "doc/en/example/nonpython/conftest.py",
+            "extra/get_issues.py",
+            "extra/setup-py.test/setup.py",
+            "scripts/release.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00437
+        },
+        "quote_casefold": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "doc/en/conf.py",
+            "doc/en/example/assertion/failure_demo.py",
+            "doc/en/example/assertion/test_setup_flow_example.py",
+            "doc/en/example/multipython.py",
+            "doc/en/example/nonpython/conftest.py",
+            "extra/get_issues.py",
+            "extra/setup-py.test/setup.py",
+            "scripts/release.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00493
+        },
+        "quote_casefold_filtered": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "doc/en/conf.py",
+            "doc/en/example/assertion/failure_demo.py",
+            "doc/en/example/multipython.py",
+            "doc/en/example/nonpython/conftest.py",
+            "extra/get_issues.py",
+            "extra/setup-py.test/setup.py",
+            "scripts/release.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00391
+        },
+        "exp001a_current": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "doc/en/conf.py",
+            "doc/en/example/assertion/failure_demo.py",
+            "doc/en/example/multipython.py",
+            "doc/en/example/nonpython/conftest.py",
+            "extra/get_issues.py",
+            "extra/setup-py.test/setup.py",
+            "scripts/release.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00502
+        }
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5221",
+      "gold_source_paths_offline_only": [
+        "src/_pytest/python.py"
+      ],
+      "shell_glob_expands": true,
+      "measurements": {
+        "v15_original": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [],
+          "n_lines": 0,
+          "seconds": 0.00382
+        },
+        "quote_only": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "src/_pytest/_code/code.py",
+            "src/_pytest/capture.py",
+            "src/_pytest/compat.py",
+            "src/_pytest/config/__init__.py",
+            "src/_pytest/deprecated.py",
+            "src/_pytest/doctest.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00606
+        },
+        "quote_casefold": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "src/_pytest/_code/code.py",
+            "src/_pytest/capture.py",
+            "src/_pytest/compat.py",
+            "src/_pytest/config/__init__.py",
+            "src/_pytest/deprecated.py",
+            "src/_pytest/doctest.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00538
+        },
+        "quote_casefold_filtered": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "src/_pytest/_code/code.py",
+            "src/_pytest/capture.py",
+            "src/_pytest/compat.py",
+            "src/_pytest/config/__init__.py",
+            "src/_pytest/deprecated.py",
+            "src/_pytest/doctest.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00433
+        },
+        "exp001a_current": {
+          "hit1": false,
+          "hit5": false,
+          "first_gold_rank": null,
+          "unique_paths": [
+            "src/_pytest/_code/code.py",
+            "src/_pytest/capture.py",
+            "src/_pytest/compat.py",
+            "src/_pytest/config/__init__.py",
+            "src/_pytest/deprecated.py",
+            "src/_pytest/doctest.py"
+          ],
+          "n_lines": 20,
+          "seconds": 0.00428
+        }
+      }
+    }
+  ],
+  "summary": {
+    "n": 9,
+    "totals": {
+      "v15_original": {
+        "hit1": 1,
+        "hit5": 1,
+        "losses_vs_v15": 0,
+        "gains_vs_v15": 0,
+        "losses_vs_full_001a": 3
+      },
+      "quote_only": {
+        "hit1": 2,
+        "hit5": 4,
+        "losses_vs_v15": 0,
+        "gains_vs_v15": 3,
+        "losses_vs_full_001a": 0
+      },
+      "quote_casefold": {
+        "hit1": 2,
+        "hit5": 4,
+        "losses_vs_v15": 0,
+        "gains_vs_v15": 3,
+        "losses_vs_full_001a": 0
+      },
+      "quote_casefold_filtered": {
+        "hit1": 2,
+        "hit5": 4,
+        "losses_vs_v15": 0,
+        "gains_vs_v15": 3,
+        "losses_vs_full_001a": 0
+      },
+      "exp001a_current": {
+        "hit1": 4,
+        "hit5": 4,
+        "losses_vs_v15": 0,
+        "gains_vs_v15": 3,
+        "losses_vs_full_001a": 0
+      }
+    }
+  },
+  "exploratory_simplest_retrieval_candidate": "quote_only",
+  "verdict": "CPU_ABLATION_ONLY_NO_AGENT_SOLVE_OR_KAGGLE_SCORE"
+}
