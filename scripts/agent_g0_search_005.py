@@ -100,9 +100,12 @@ def stage_search(a) -> None:
         historical_tree = command_out(
             ["git", "--git-dir=" + bare, "rev-parse", pin + "^{tree}"]
         ).stdout.strip()
-        cwd = a.output_dir / f"{i:02d}_{sid.replace('/', '_')}"
+        task_folder = a.output_dir / f"{i:02d}_{sid.replace('/', '_')}"
+        task_folder.mkdir(mode=0o700)
+        cwd = task_folder / "source"
         cwd.mkdir(mode=0o700)
-        archived = cwd / "historical_source.tar"
+        # Tar is deliberately OUTSIDE the tracked source checkout.
+        archived = task_folder / "historical_source.tar"
         with archived.open("xb") as f:
             r = subprocess.run(["git", "--git-dir="+bare, "archive", pin], stdout=f, stderr=subprocess.PIPE, timeout=40)
             if r.returncode:
