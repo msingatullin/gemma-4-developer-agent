@@ -1,0 +1,30 @@
+{
+  "experiment_id": "EXP-AGENT-001A",
+  "source_submission_ref": 58073369,
+  "source_archive_sha256": "f812377537d941a9d7308a0d0e153a7e1362ba5b8832e66520a3b8916e9ca63a",
+  "source_archive_bytes": 3321,
+  "candidate_filename": "exp_agent001a_v15_single_prompt_search.zip",
+  "candidate_archive_sha256": "5a93228a86397ae247e3b3395ae82cc31d4f724f23a083ca18a0926dfc79cde0",
+  "candidate_archive_bytes": 3140,
+  "modified_files": [
+    "prompts/system.md"
+  ],
+  "baseline_members": {
+    "agent.yaml": "2d25f715647c996542528d843cc6c9fdb7938aee86bcf559143d47ada20128fd",
+    "configs/sampling.yaml": "b39199dcd617e4cd6ae67efb1ccd5f08198780d0aca629d043e95a4aa264702c",
+    "eval_config.yaml": "79290bf4c03d341154fc884989ad2d1704c9a0c6194aa84e81e0ef698404631e",
+    "prompts/system.md": "0e8b54ef2ab231040686bbdf25fe20be0651aa823904497bcc7e6b9dc1ed7f89"
+  },
+  "candidate_members": {
+    "agent.yaml": "2d25f715647c996542528d843cc6c9fdb7938aee86bcf559143d47ada20128fd",
+    "configs/sampling.yaml": "b39199dcd617e4cd6ae67efb1ccd5f08198780d0aca629d043e95a4aa264702c",
+    "eval_config.yaml": "79290bf4c03d341154fc884989ad2d1704c9a0c6194aa84e81e0ef698404631e",
+    "prompts/system.md": "8231d74a34d08c0fa83f2a61a9c6cf1c054006a2d7e97cdecda5009fd35dd925"
+  },
+  "exactly_one_bullet_changed": true,
+  "all_nonprompt_bytes_identical": true,
+  "static_validation": "NOT RUN",
+  "e4b_model_inference": "NOT RUN",
+  "kaggle_submission": "NOT SENT",
+  "scope": "Private experimental archive, not an endorsed Kaggle entry"
+}
