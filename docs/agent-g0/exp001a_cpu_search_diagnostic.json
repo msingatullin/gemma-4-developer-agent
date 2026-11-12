@@ -1,0 +1,91 @@
+{
+  "experiment_id": "EXP-AGENT-001A",
+  "kind": "CPU search diagnostic; no model calls and no official Kaggle task solve evaluation",
+  "baseline": "Exact v15 first git-grep command from recovered prompt (case-sensitive, Git pathspec)",
+  "candidate": "One-bullet path-aware and filename-first alternative",
+  "repo_commit": "49943b5a94413a530761350f04e896f76e8d620e",
+  "cases": [
+    {
+      "issue_token": "Blueprint",
+      "oracle_file_used_only_in_offline_evaluator": "src/flask/blueprints.py",
+      "samples": [
+        {
+          "name": "v15_original_first_20_content_hits",
+          "command": "git grep -n \"Blueprint\" -- *.py | head -20",
+          "exit_code": 0,
+          "latency_seconds": 0.0063,
+          "emitted_lines": 20,
+          "target_file_rank_in_emitted_lines": 10,
+          "target_found_in_window": true,
+          "first_10_lines": [
+            "examples/celery/src/task_app/views.py:2:from flask import Blueprint",
+            "examples/celery/src/task_app/views.py:7:bp = Blueprint(\"tasks\", __name__, url_prefix=\"/tasks\")",
+            "examples/tutorial/flaskr/auth.py:3:from flask import Blueprint",
+            "examples/tutorial/flaskr/auth.py:16:bp = Blueprint(\"auth\", __name__, url_prefix=\"/auth\")",
+            "examples/tutorial/flaskr/blog.py:1:from flask import Blueprint",
+            "examples/tutorial/flaskr/blog.py:13:bp = Blueprint(\"blog\", __name__)",
+            "src/flask/__init__.py:3:from .blueprints import Blueprint as Blueprint",
+            "src/flask/app.py:1163:        view function. A route defined in a :class:`~flask.Blueprint`",
+            "src/flask/app.py:1479:        :meth:`Blueprint.teardown_request` if a blueprint handled the request.",
+            "src/flask/blueprints.py:10:from .sansio.blueprints import Blueprint as SansioBlueprint"
+          ]
+        },
+        {
+          "name": "exp001a_filename_first_10",
+          "command": "git ls-files '*.py' | grep -i -F 'Blueprint' | grep -Ev '(^|/)(tests?|docs?|examples?)/' | head -10",
+          "exit_code": 0,
+          "latency_seconds": 0.005,
+          "emitted_lines": 2,
+          "target_file_rank_in_emitted_lines": 1,
+          "target_found_in_window": true,
+          "first_10_lines": [
+            "src/flask/blueprints.py",
+            "src/flask/sansio/blueprints.py"
+          ]
+        }
+      ]
+    },
+    {
+      "issue_token": "Config",
+      "oracle_file_used_only_in_offline_evaluator": "src/flask/config.py",
+      "samples": [
+        {
+          "name": "v15_original_first_20_content_hits",
+          "command": "git grep -n \"Config\" -- *.py | head -20",
+          "exit_code": 0,
+          "latency_seconds": 0.0057,
+          "emitted_lines": 17,
+          "target_file_rank_in_emitted_lines": 2,
+          "target_found_in_window": true,
+          "first_10_lines": [
+            "src/flask/__init__.py:4:from .config import Config as Config",
+            "src/flask/config.py:20:class ConfigAttribute(t.Generic[T]):",
+            "src/flask/config.py:50:class Config(dict):  # type: ignore[type-arg]",
+            "src/flask/sansio/app.py:22:from ..config import Config",
+            "src/flask/sansio/app.py:23:from ..config import ConfigAttribute",
+            "src/flask/sansio/app.py:186:    #: Defaults to :class:`~flask.Config`.",
+            "src/flask/sansio/app.py:194:    config_class = Config",
+            "src/flask/sansio/app.py:206:    testing = ConfigAttribute[bool](\"TESTING\")",
+            "src/flask/sansio/app.py:214:    secret_key = ConfigAttribute[str | bytes | None](\"SECRET_KEY\")",
+            "src/flask/sansio/app.py:223:    permanent_session_lifetime = ConfigAttribute[timedelta]("
+          ]
+        },
+        {
+          "name": "exp001a_filename_first_10",
+          "command": "git ls-files '*.py' | grep -i -F 'Config' | grep -Ev '(^|/)(tests?|docs?|examples?)/' | head -10",
+          "exit_code": 0,
+          "latency_seconds": 0.0059,
+          "emitted_lines": 1,
+          "target_file_rank_in_emitted_lines": 1,
+          "target_found_in_window": true,
+          "first_10_lines": [
+            "src/flask/config.py"
+          ]
+        }
+      ]
+    }
+  ],
+  "workspace_unchanged": true,
+  "sampling_scope": "Two selected issue terms only; not preregistered independent SWE benchmark; no inference from these cases to solve rate",
+  "approval": "CPU only; no Kaggle submission, paid GPU or external model call"
+}
