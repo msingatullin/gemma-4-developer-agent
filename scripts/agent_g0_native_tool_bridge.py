@@ -54,6 +54,7 @@ def official_modules(wheel: Path):
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--wheel", required=True, type=Path)
+    parser.add_argument("--image", default="gemma-paper-cpu:py310-20261110")
     parser.add_argument("--source-tar", required=True, type=Path)
     parser.add_argument("--report", required=True, type=Path)
     args = parser.parse_args()
@@ -63,7 +64,7 @@ def main() -> None:
         raise FileNotFoundError(args.source_tar)
     container_config, Manager, native_run_command = official_modules(args.wheel)
     cfg = container_config(
-        image="gemma-paper-cpu:py310-20261110",
+        image=args.image,
         network_mode="none",
         mem_limit="768m",
         cpu_period=100000,
