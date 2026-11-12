@@ -1,0 +1,41 @@
+{
+  "id": "G0-PORTABLE-LOCATOR-20261112",
+  "created_utc": "2026-11-12T13:22:30.137624+00:00",
+  "branch": "agent/g0-portable-locator-20261112",
+  "branch_commit": "253493d6217c8ed585789689e07201f66f7e2582",
+  "prompt_sha256": "24706d08f86dd9c9c15902b632a6156a97dba699dcc9cf7aa68cef2fbb25d6b2",
+  "test_type": "Actual CPU subprocess execution of command extracted from committed prompt with /tmp locator absent",
+  "scope": "Isolated local Git repo smoke; NOT Kaggle harness, NOT Gemma E4B inference, NOT F2P/P2P issue-resolution evaluation",
+  "cases": [
+    {
+      "fixture": "portable_fixture",
+      "repository_head": "d8aeb43c612d0d2e685836bbbb0ad1f3e9ee315c",
+      "query": "socket reset error",
+      "expected_path_for_offline_assertion_only": "src/deep/transport.py",
+      "exit_code": 0,
+      "hit": true,
+      "workspace_unchanged": true,
+      "result": "PASS",
+      "stdout": "FILENAME_HITS\nCONTENT_FILE_HITS\nsrc/deep/transport.py\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "flask-public-latest",
+      "repository_head": "49943b5a94413a530761350f04e896f76e8d620e",
+      "query": "Blueprint",
+      "expected_path_for_offline_assertion_only": "src/flask/blueprints.py",
+      "exit_code": 0,
+      "hit": true,
+      "workspace_unchanged": true,
+      "result": "PASS",
+      "stdout": "FILENAME_HITS\nsrc/flask/blueprints.py\nsrc/flask/sansio/blueprints.py\nCONTENT_FILE_HITS\nsrc/flask/__init__.py\nsrc/flask/app.py\nsrc/flask/blueprints.py\nsrc/flask/cli.py\nsrc/flask/debughelpers.py\nsrc/flask/helpers.py\nsrc/flask/sansio/app.py\nsrc/flask/sansio/blueprints.py\nsrc/flask/sansio/scaffold.py\nsrc/flask/templating.py\nsrc/flask/typing.py\nsrc/flask/wrappers.py\n",
+      "stderr": ""
+    }
+  ],
+  "all_pass": true,
+  "limitations": [
+    "Historical pinned Flask 4045 upstream commit not present in local cache; smoke uses public Flask latest HEAD",
+    "No evidence Kaggle stages skill script at /tmp/ast_locator.py",
+    "Synthetic fixture and latest Flask source do not measure task resolution"
+  ]
+}
