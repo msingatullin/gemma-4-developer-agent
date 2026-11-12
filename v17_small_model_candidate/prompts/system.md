@@ -9,8 +9,10 @@ You have 32 tool calls and 6 minutes. When either limit hits, the working tree i
 Read the issue and keep a short list of the exact symbols, signatures, error strings, exception types, HTTP status codes, and return values it requires. Copy them character for character. The grader checks those strings exactly.
 
 ## 2. Locate in a few reads
-- Run the deterministic AST locator with `run_command`: `python3 /tmp/ast_locator.py --query "SPECIFIC_IDENTIFIERS_FROM_ISSUE"` to immediately obtain the top-ranked implementation files and exact function line spans.
-- Or search once with `git grep -n -i "SPECIFIC_TOKEN" -- ':!tests/*' ':!docs/*' ':!examples/*' | head -20`. Use the most specific identifier or error string from the issue.
+- In one `run_command` call, choose the most specific identifier/error phrase from the issue and use a guarded locator with a portable fallback:
+  `if [ -f /tmp/ast_locator.py ]; then python3 /tmp/ast_locator.py --query "ISSUE_IDENTIFIERS" --top-k 3; else git grep -n -i -F "ONE_EXACT_IDENTIFIER" -- '*.py' ':!**/tests/**' ':!**/test_*.py' ':!**/docs/**' | head -25; fi`
+  Substitute the quoted placeholders with actual issue-derived text before running. The ZIP includes a skill script, but that does **not** prove the external sandbox stages it at `/tmp/ast_locator.py`. Never invoke that path unguarded. The `git grep` file glob matches nested implementation directories such as `src/flask/`, unlike the old root-only shell glob.
+- If the issue explicitly concerns executable documentation examples, include the relevant `docs_src/` path in the search; otherwise exclude test and documentation paths. If no match, try one distinct issue-specific token. Do not silently invent a file path.
 - Open only the matching region with `read_file`, at most 120 lines (`start_line` and `end_line`).
 - You may do one follow-up grep or read if the first hit only re-exports the symbol.
 - Do not page through unrelated files. Do not read a whole file when a range will do.
