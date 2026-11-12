@@ -21,3 +21,9 @@ Runtime: existing CPU Docker Python 3.9, 3.10 or 3.11 image, no network during t
 Measured oracle coverage denominator is **all 50 tasks** in frozen manifest. Passing selected cases is not proof of candidate uplift, nor a competition solve-rate metric. If a task cannot run without environment repair, report blocker and move to next selected task; do not count as success.
 
 Resources: existing free CPU VPS, no GPU/RunPod/API; expected <=15 min overall CPU; $0 incremental external bill.
+
+## G1-006 environment-repair addendum (recorded after first ENV_BLOCKED run, before retry)
+
+The exact `pytest-dev__pytest-11143` upstream checkout imports `src/_pytest/_version.py` in `_pytest.assertion.rewrite`, but that path is a **build-generated** file declared by the checked-in `pyproject.toml` `[tool.setuptools_scm] write_to = "src/_pytest/_version.py"`. Neither BASE nor GOLD imported: `ModuleNotFoundError: No module named '_pytest._version'` (exit 1), so the first four executions are **ENV_BLOCKED**, not behavior failures.
+
+A CPU-only retry MAY reproduce the build output `src/_pytest/_version.py` with an explicit frozen local version identifier in both BASE and GOLD **identically**, after first asserting the original tracked tree is exact and that neither copy already contains the file. Record generated text and SHA256. Treat that file as a build artifact (not a model patch), assert the rest of the tracked tree remains unchanged, and never include it in an agent submission or task patch. If additional missing package dependencies or incompatible runner are encountered, classify ENV_BLOCKED; no broad installations or unapproved resource use.
