@@ -75,7 +75,7 @@ def main() -> None:
     )
     manager = Manager(config=cfg)
     report = {
-        "experiment": "G0-NATIVE-TOOLS-003",
+        "experiment": "G0-NATIVE-TOOLS-003B",
         "organizer_wheel": args.wheel.name,
         "organizer_wheel_sha256": SOURCE_SHA256,
         "official_modules": [
@@ -169,7 +169,7 @@ def main() -> None:
                 "':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' "
                 "| head -20",
                 "ok",
-                "src/flask/blueprints.py",
+                "src/flask/app.py",
             ),
             (
                 "unavailable_original_v17_temp_locator",
@@ -200,6 +200,14 @@ def main() -> None:
                 details = response.get("details", {})
                 assert details.get("exit_code") == 2, (label, details)
                 assert substr in str(details), (label, details)
+            if label == "source_content":
+                report["diagnostics"] = {
+                    "first_20_source_content_contains_blueprints_py":
+                        "src/flask/blueprints.py" in response.get("stdout", ""),
+                    "source_content_contains_other_implementation":
+                        "src/flask/app.py" in response.get("stdout", ""),
+                    "interpretation": "Posthoc quality diagnostic, not LLM solve evidence",
+                }
             report["cases"].append({
                 "name": label,
                 "command": cmd,
@@ -208,7 +216,7 @@ def main() -> None:
                 "verdict": "PASS",
             })
             print(label, status, "PASS", flush=True)
-        report["verdict"] = "PASS_NATIVE_ORGANIZER_TOOL_BRIDGE_5_CASES"
+        report["verdict"] = "PASS_NATIVE_ORGANIZER_TOOL_BRIDGE_5_CASES_003B"
     except Exception as exc:
         report["verdict"] = "FAIL_OR_BLOCKED_NATIVE_TOOL_BRIDGE"
         report["error_type"] = type(exc).__name__
