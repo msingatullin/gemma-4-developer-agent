@@ -23,3 +23,11 @@ Organizer wheelhouse source `metric/gemma-4-developer-agent-wheelhouse` version 
 - **PASS native tool bridge:** official ContainerManager create/copy/exec + official run_command valid JSON response for filename and implementation searches, detected absent `/tmp/ast_locator.py`, no source edits, cleanup. If directory/method API mismatch, classify blocker, not model failure.
 - This is **not the full task harness evaluation** (no `swegemma.evaluate`, no LLM inference, no F2P/P2P). It is stronger than direct manual Docker subprocess because it tests the real organizer tool bridge. No score lift claim.
 - No free Kaggle quota spent, no paid GPU/RunPod/API or production edits. Max existing CPU 1 core / 768MiB per container for under 2 minutes.
+
+## 2026-11-12 pre-retry addendum — missing Git in inherited CPU image
+
+First authentic organizer `ContainerManager` execution correctly created an air-gapped 1CPU/768MiB container and removed it in `finally`, but source snapshot preparation stopped before the smoke tests: `/bin/bash: git: command not found`. Verified ALL existing `gemma-paper-cpu:py39/py310/py311` and pre-existing `gemma-paper-holdout-django-pytest` images lack Git. The first run is **ENV_BLOCKED**, not an agent failure.
+
+**Approved technical change within free local research:** create a *new isolated test-only Docker image*, named `gemma-agent-g0-cpu-git:20261112`, derived from existing `gemma-paper-cpu:py310-20261110`, adding only Debian's `git` package at image-build time. Do not modify, delete, stop or replace any existing image/container, touch production services, or install packages inside an active production container. Build may access public Debian package mirrors; the test container **must** still be started with `network_mode=none`. If build fails, report `ENV_BLOCKED` and stop. Set time/memory caps and do not pull large base images: base already cached. Record new image digest and Dockerfile.
+
+Retry the exact same command sequence and criteria in the new isolated image, with unchanged official organizer `swegemma 0.2.11` `ContainerManager` and `run_command` Python code. Change only the harness image argument, not the task snapshot, benchmark oracle, query terms, or tool code.
