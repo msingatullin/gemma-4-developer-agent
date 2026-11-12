@@ -1,0 +1,96 @@
+{
+  "experiment": "G0-NATIVE-SCHEMA-001",
+  "source": "Organizer-owned metric/gemma-4-developer-agent-wheelhouse v31",
+  "official_wheel_sha256": "f156f0bd84580ccb9334726d114d7a5481f16d3a6e2887cc4d276ced0ef8d99d",
+  "official_adk_submission_version": "0.2.13",
+  "limits": "Identical keyword values copied from organizer swegemma 0.2.11 build_submission_limits",
+  "scope": "REAL official directory validation + YAML includes + Pydantic schema subset, not compile_submission",
+  "full_google_adk_compiler": "NOT RUN",
+  "native_swegemma_agent_runner": "NOT RUN",
+  "gemma_model_inference": "NOT RUN",
+  "kaggle_submission": "NOT SENT",
+  "cases": [
+    {
+      "case": "v15",
+      "source_dir": "/opt/kaggle/gemma-agent-g0-20261112-audit/baseline_extracted/v15",
+      "verdict": "PASS_OFFICIAL_STRUCTURAL_SCHEMA_SUBSET",
+      "root_config": "agent.yaml",
+      "model_name": "gemma-4-e4b-it-qat-w4a16-ct",
+      "root_schema_class": "SandboxedLlmAgentConfig",
+      "file_count": 4,
+      "files": {
+        "agent.yaml": "2d25f715647c996542528d843cc6c9fdb7938aee86bcf559143d47ada20128fd",
+        "configs/sampling.yaml": "b39199dcd617e4cd6ae67efb1ccd5f08198780d0aca629d043e95a4aa264702c",
+        "eval_config.yaml": "79290bf4c03d341154fc884989ad2d1704c9a0c6194aa84e81e0ef698404631e",
+        "prompts/system.md": "0e8b54ef2ab231040686bbdf25fe20be0651aa823904497bcc7e6b9dc1ed7f89"
+      },
+      "declared_skills": [],
+      "packaged_skill_manifests": [],
+      "warning_packaged_skills_not_declared": false,
+      "warning_no_runtime_locator_staging_verified": true
+    },
+    {
+      "case": "v16",
+      "source_dir": "/opt/kaggle/gemma-agent-g0-20261112-audit/baseline_extracted/v16",
+      "verdict": "PASS_OFFICIAL_STRUCTURAL_SCHEMA_SUBSET",
+      "root_config": "agent.yaml",
+      "model_name": "gemma-4-e4b-it-qat-w4a16-ct",
+      "root_schema_class": "SandboxedLlmAgentConfig",
+      "file_count": 4,
+      "files": {
+        "agent.yaml": "2d25f715647c996542528d843cc6c9fdb7938aee86bcf559143d47ada20128fd",
+        "configs/sampling.yaml": "6d5389a7b35f61caffce32acb66d51ddc4d7b27fe70fd9bccf08f9c99b8f7b09",
+        "eval_config.yaml": "5f852dfa1448626b136282fbfd45999c2b92a9f02dadec5a5d6885f565e24c1a",
+        "prompts/system.md": "5772f8e41858ff838070a2a30918e805bdacf9a8214df25c98cf03a04e1c8551"
+      },
+      "declared_skills": [],
+      "packaged_skill_manifests": [],
+      "warning_packaged_skills_not_declared": false,
+      "warning_no_runtime_locator_staging_verified": true
+    },
+    {
+      "case": "EXP-AGENT-001A",
+      "source_dir": "/opt/kaggle/gemma-agent-g0-20261112-audit/exp001a_private_build/extracted",
+      "verdict": "PASS_OFFICIAL_STRUCTURAL_SCHEMA_SUBSET",
+      "root_config": "agent.yaml",
+      "model_name": "gemma-4-e4b-it-qat-w4a16-ct",
+      "root_schema_class": "SandboxedLlmAgentConfig",
+      "file_count": 4,
+      "files": {
+        "agent.yaml": "2d25f715647c996542528d843cc6c9fdb7938aee86bcf559143d47ada20128fd",
+        "configs/sampling.yaml": "b39199dcd617e4cd6ae67efb1ccd5f08198780d0aca629d043e95a4aa264702c",
+        "eval_config.yaml": "79290bf4c03d341154fc884989ad2d1704c9a0c6194aa84e81e0ef698404631e",
+        "prompts/system.md": "8231d74a34d08c0fa83f2a61a9c6cf1c054006a2d7e97cdecda5009fd35dd925"
+      },
+      "declared_skills": [],
+      "packaged_skill_manifests": [],
+      "warning_packaged_skills_not_declared": false,
+      "warning_no_runtime_locator_staging_verified": true
+    },
+    {
+      "case": "v17_branch",
+      "source_dir": "/opt/kaggle/gemma-agent-g0-20261112-audit/native_harness_20261112/v17_branch",
+      "verdict": "PASS_OFFICIAL_STRUCTURAL_SCHEMA_SUBSET",
+      "root_config": "agent.yaml",
+      "model_name": "gemma-4-e4b-it-qat-w4a16-ct",
+      "root_schema_class": "SandboxedLlmAgentConfig",
+      "file_count": 6,
+      "files": {
+        "agent.yaml": "2d25f715647c996542528d843cc6c9fdb7938aee86bcf559143d47ada20128fd",
+        "configs/sampling.yaml": "b39199dcd617e4cd6ae67efb1ccd5f08198780d0aca629d043e95a4aa264702c",
+        "eval_config.yaml": "79290bf4c03d341154fc884989ad2d1704c9a0c6194aa84e81e0ef698404631e",
+        "prompts/system.md": "e8e1d46198be78e88b6bf12683425624515fd7869c7efe617bf4573c669dfd19",
+        "skills/repo_locator/SKILL.md": "7dabfa230d8fd06736be760634ca0c59f28f6fea9ab1aad969a0b33ac6179a7c",
+        "skills/repo_locator/ast_locator.py": "f7dd0280ed3b7c473973dd667858b65ba0a08efbc53bad27a6f9af2f7552b0ce"
+      },
+      "declared_skills": [],
+      "packaged_skill_manifests": [
+        "skills/repo_locator/SKILL.md"
+      ],
+      "warning_packaged_skills_not_declared": true,
+      "warning_no_runtime_locator_staging_verified": true
+    }
+  ],
+  "passed": 4,
+  "total": 4
+}
