@@ -1,0 +1,461 @@
+{
+  "id": "G0-SEARCH-005",
+  "phase": "B: offline gold path evaluation AFTER stage A frozen",
+  "unscored_raw_sha256": "58b050b73a64c18cdd741b8c947bc19ec20a48975588ad1a001572870b69d69a",
+  "manifest_sha256": "8270d1b7f7b4d29cd5ea1ac21fe1a981a36c7455b522db69b6b2133ce1f6dfcf",
+  "dev_scope_only": true,
+  "model_calls": 0,
+  "kaggle_submissions": 0,
+  "cases": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "repo": "pallets/flask",
+      "historical_tree": "a6c31469635e2e4ae19fb8ee8d8e6487a8dbe85b",
+      "content_token": "blueprint",
+      "filename_token": null,
+      "candidate_mode": "filtered_content",
+      "baseline_shell_unquoted_py_glob_expands": true,
+      "gold_path_offline_only": [
+        "src/flask/blueprints.py"
+      ],
+      "retrieval_outcomes": [
+        {
+          "name": "baseline_v15",
+          "gold_target_paths": [
+            "src/flask/blueprints.py"
+          ],
+          "top1_any_gold": false,
+          "top5_any_gold": false,
+          "top10_any_gold": false,
+          "top5_all_gold": false,
+          "first_gold_rank_in_unique_paths": null,
+          "returned_unique_paths": [],
+          "raw_line_count": 0,
+          "elapsed_seconds": 0.00539
+        },
+        {
+          "name": "candidate_001a",
+          "gold_target_paths": [
+            "src/flask/blueprints.py"
+          ],
+          "top1_any_gold": false,
+          "top5_any_gold": false,
+          "top10_any_gold": false,
+          "top5_all_gold": false,
+          "first_gold_rank_in_unique_paths": null,
+          "returned_unique_paths": [
+            "src/flask/__init__.py",
+            "src/flask/app.py"
+          ],
+          "raw_line_count": 20,
+          "elapsed_seconds": 0.00527
+        }
+      ],
+      "pairwise_hit_at5": "tie"
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "repo": "pallets/flask",
+      "historical_tree": "2ba551370f1a4204efbab1f82ba6cfd611634723",
+      "content_token": "from_file",
+      "filename_token": "Config",
+      "candidate_mode": "filename_first",
+      "baseline_shell_unquoted_py_glob_expands": false,
+      "gold_path_offline_only": [
+        "src/flask/config.py"
+      ],
+      "retrieval_outcomes": [
+        {
+          "name": "baseline_v15",
+          "gold_target_paths": [
+            "src/flask/config.py"
+          ],
+          "top1_any_gold": true,
+          "top5_any_gold": true,
+          "top10_any_gold": true,
+          "top5_all_gold": true,
+          "first_gold_rank_in_unique_paths": 1,
+          "returned_unique_paths": [
+            "src/flask/config.py",
+            "tests/test_config.py"
+          ],
+          "raw_line_count": 7,
+          "elapsed_seconds": 0.00689
+        },
+        {
+          "name": "candidate_001a",
+          "gold_target_paths": [
+            "src/flask/config.py"
+          ],
+          "top1_any_gold": true,
+          "top5_any_gold": true,
+          "top10_any_gold": true,
+          "top5_all_gold": true,
+          "first_gold_rank_in_unique_paths": 1,
+          "returned_unique_paths": [
+            "src/flask/config.py"
+          ],
+          "raw_line_count": 1,
+          "elapsed_seconds": 0.00654
+        }
+      ],
+      "pairwise_hit_at5": "tie"
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "repo": "psf/requests",
+      "historical_tree": "62502eaa272d8566a1b282039f07c5f1fcff14e3",
+      "content_token": "resolve_redirects",
+      "filename_token": "Session",
+      "candidate_mode": "filename_first",
+      "baseline_shell_unquoted_py_glob_expands": true,
+      "gold_path_offline_only": [
+        "requests/sessions.py"
+      ],
+      "retrieval_outcomes": [
+        {
+          "name": "baseline_v15",
+          "gold_target_paths": [
+            "requests/sessions.py"
+          ],
+          "top1_any_gold": false,
+          "top5_any_gold": false,
+          "top10_any_gold": false,
+          "top5_all_gold": false,
+          "first_gold_rank_in_unique_paths": null,
+          "returned_unique_paths": [],
+          "raw_line_count": 0,
+          "elapsed_seconds": 0.00563
+        },
+        {
+          "name": "candidate_001a",
+          "gold_target_paths": [
+            "requests/sessions.py"
+          ],
+          "top1_any_gold": true,
+          "top5_any_gold": true,
+          "top10_any_gold": true,
+          "top5_all_gold": true,
+          "first_gold_rank_in_unique_paths": 1,
+          "returned_unique_paths": [
+            "requests/sessions.py"
+          ],
+          "raw_line_count": 1,
+          "elapsed_seconds": 0.00571
+        }
+      ],
+      "pairwise_hit_at5": "gain"
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "repo": "psf/requests",
+      "historical_tree": "319437ae6f0d767c5885aff9d2c08cfe95e91e31",
+      "content_token": "ConnectionError",
+      "filename_token": null,
+      "candidate_mode": "filtered_content",
+      "baseline_shell_unquoted_py_glob_expands": true,
+      "gold_path_offline_only": [
+        "requests/models.py"
+      ],
+      "retrieval_outcomes": [
+        {
+          "name": "baseline_v15",
+          "gold_target_paths": [
+            "requests/models.py"
+          ],
+          "top1_any_gold": false,
+          "top5_any_gold": false,
+          "top10_any_gold": false,
+          "top5_all_gold": false,
+          "first_gold_rank_in_unique_paths": null,
+          "returned_unique_paths": [],
+          "raw_line_count": 0,
+          "elapsed_seconds": 0.00456
+        },
+        {
+          "name": "candidate_001a",
+          "gold_target_paths": [
+            "requests/models.py"
+          ],
+          "top1_any_gold": false,
+          "top5_any_gold": false,
+          "top10_any_gold": false,
+          "top5_all_gold": false,
+          "first_gold_rank_in_unique_paths": null,
+          "returned_unique_paths": [
+            "requests/__init__.py",
+            "requests/adapters.py",
+            "requests/exceptions.py",
+            "requests/packages/urllib3/exceptions.py"
+          ],
+          "raw_line_count": 8,
+          "elapsed_seconds": 0.00497
+        }
+      ],
+      "pairwise_hit_at5": "tie"
+    },
+    {
+      "instance_id": "psf__requests-2317",
+      "repo": "psf/requests",
+      "historical_tree": "980e006268fb816b7d2686baef7242418d895d9a",
+      "content_token": "builtin_str",
+      "filename_token": "sessions",
+      "candidate_mode": "filename_first",
+      "baseline_shell_unquoted_py_glob_expands": true,
+      "gold_path_offline_only": [
+        "requests/sessions.py"
+      ],
+      "retrieval_outcomes": [
+        {
+          "name": "baseline_v15",
+          "gold_target_paths": [
+            "requests/sessions.py"
+          ],
+          "top1_any_gold": false,
+          "top5_any_gold": false,
+          "top10_any_gold": false,
+          "top5_all_gold": false,
+          "first_gold_rank_in_unique_paths": null,
+          "returned_unique_paths": [
+            "test_requests.py"
+          ],
+          "raw_line_count": 2,
+          "elapsed_seconds": 0.00433
+        },
+        {
+          "name": "candidate_001a",
+          "gold_target_paths": [
+            "requests/sessions.py"
+          ],
+          "top1_any_gold": true,
+          "top5_any_gold": true,
+          "top10_any_gold": true,
+          "top5_all_gold": true,
+          "first_gold_rank_in_unique_paths": 1,
+          "returned_unique_paths": [
+            "requests/sessions.py"
+          ],
+          "raw_line_count": 1,
+          "elapsed_seconds": 0.00453
+        }
+      ],
+      "pairwise_hit_at5": "gain"
+    },
+    {
+      "instance_id": "pytest-dev__pytest-11143",
+      "repo": "pytest-dev/pytest",
+      "historical_tree": "5e87fec76a0ead331441eaf05a1510c6c6efe6cf",
+      "content_token": "docstring",
+      "filename_token": null,
+      "candidate_mode": "filtered_content",
+      "baseline_shell_unquoted_py_glob_expands": true,
+      "gold_path_offline_only": [
+        "src/_pytest/assertion/rewrite.py"
+      ],
+      "retrieval_outcomes": [
+        {
+          "name": "baseline_v15",
+          "gold_target_paths": [
+            "src/_pytest/assertion/rewrite.py"
+          ],
+          "top1_any_gold": false,
+          "top5_any_gold": false,
+          "top10_any_gold": false,
+          "top5_all_gold": false,
+          "first_gold_rank_in_unique_paths": null,
+          "returned_unique_paths": [],
+          "raw_line_count": 0,
+          "elapsed_seconds": 0.00404
+        },
+        {
+          "name": "candidate_001a",
+          "gold_target_paths": [
+            "src/_pytest/assertion/rewrite.py"
+          ],
+          "top1_any_gold": true,
+          "top5_any_gold": true,
+          "top10_any_gold": true,
+          "top5_all_gold": true,
+          "first_gold_rank_in_unique_paths": 1,
+          "returned_unique_paths": [
+            "src/_pytest/assertion/rewrite.py",
+            "src/_pytest/doctest.py",
+            "src/_pytest/python.py",
+            "testing/acceptance_test.py",
+            "testing/python/show_fixtures_per_test.py"
+          ],
+          "raw_line_count": 20,
+          "elapsed_seconds": 0.00567
+        }
+      ],
+      "pairwise_hit_at5": "gain"
+    },
+    {
+      "instance_id": "pytest-dev__pytest-11148",
+      "repo": "pytest-dev/pytest",
+      "historical_tree": "267464d5003e787a35a2379726c9c5a54a43cf17",
+      "content_token": "importlib",
+      "filename_token": null,
+      "candidate_mode": "filtered_content",
+      "baseline_shell_unquoted_py_glob_expands": true,
+      "gold_path_offline_only": [
+        "src/_pytest/pathlib.py"
+      ],
+      "retrieval_outcomes": [
+        {
+          "name": "baseline_v15",
+          "gold_target_paths": [
+            "src/_pytest/pathlib.py"
+          ],
+          "top1_any_gold": false,
+          "top5_any_gold": false,
+          "top10_any_gold": false,
+          "top5_all_gold": false,
+          "first_gold_rank_in_unique_paths": null,
+          "returned_unique_paths": [],
+          "raw_line_count": 0,
+          "elapsed_seconds": 0.0054
+        },
+        {
+          "name": "candidate_001a",
+          "gold_target_paths": [
+            "src/_pytest/pathlib.py"
+          ],
+          "top1_any_gold": false,
+          "top5_any_gold": false,
+          "top10_any_gold": false,
+          "top5_all_gold": false,
+          "first_gold_rank_in_unique_paths": null,
+          "returned_unique_paths": [
+            "doc/en/example/assertion/failure_demo.py",
+            "src/_pytest/_py/path.py",
+            "src/_pytest/assertion/rewrite.py"
+          ],
+          "raw_line_count": 20,
+          "elapsed_seconds": 0.00781
+        }
+      ],
+      "pairwise_hit_at5": "tie"
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5103",
+      "repo": "pytest-dev/pytest",
+      "historical_tree": "b4f1860291efcf9923b7977bed74e34299ac4ebb",
+      "content_token": "all",
+      "filename_token": null,
+      "candidate_mode": "filtered_content",
+      "baseline_shell_unquoted_py_glob_expands": true,
+      "gold_path_offline_only": [
+        "src/_pytest/assertion/rewrite.py"
+      ],
+      "retrieval_outcomes": [
+        {
+          "name": "baseline_v15",
+          "gold_target_paths": [
+            "src/_pytest/assertion/rewrite.py"
+          ],
+          "top1_any_gold": false,
+          "top5_any_gold": false,
+          "top10_any_gold": false,
+          "top5_all_gold": false,
+          "first_gold_rank_in_unique_paths": null,
+          "returned_unique_paths": [
+            "setup.py"
+          ],
+          "raw_line_count": 1,
+          "elapsed_seconds": 0.00516
+        },
+        {
+          "name": "candidate_001a",
+          "gold_target_paths": [
+            "src/_pytest/assertion/rewrite.py"
+          ],
+          "top1_any_gold": false,
+          "top5_any_gold": false,
+          "top10_any_gold": false,
+          "top5_all_gold": false,
+          "first_gold_rank_in_unique_paths": null,
+          "returned_unique_paths": [
+            "doc/en/conf.py",
+            "doc/en/example/assertion/failure_demo.py",
+            "doc/en/example/multipython.py",
+            "doc/en/example/nonpython/conftest.py",
+            "extra/get_issues.py",
+            "extra/setup-py.test/setup.py",
+            "scripts/release.py"
+          ],
+          "raw_line_count": 20,
+          "elapsed_seconds": 0.00525
+        }
+      ],
+      "pairwise_hit_at5": "tie"
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5221",
+      "repo": "pytest-dev/pytest",
+      "historical_tree": "3efcdc2414e6d778661034a058bec6d5ef85b145",
+      "content_token": "fixtures",
+      "filename_token": null,
+      "candidate_mode": "filtered_content",
+      "baseline_shell_unquoted_py_glob_expands": true,
+      "gold_path_offline_only": [
+        "src/_pytest/python.py"
+      ],
+      "retrieval_outcomes": [
+        {
+          "name": "baseline_v15",
+          "gold_target_paths": [
+            "src/_pytest/python.py"
+          ],
+          "top1_any_gold": false,
+          "top5_any_gold": false,
+          "top10_any_gold": false,
+          "top5_all_gold": false,
+          "first_gold_rank_in_unique_paths": null,
+          "returned_unique_paths": [],
+          "raw_line_count": 0,
+          "elapsed_seconds": 0.00427
+        },
+        {
+          "name": "candidate_001a",
+          "gold_target_paths": [
+            "src/_pytest/python.py"
+          ],
+          "top1_any_gold": false,
+          "top5_any_gold": false,
+          "top10_any_gold": false,
+          "top5_all_gold": false,
+          "first_gold_rank_in_unique_paths": null,
+          "returned_unique_paths": [
+            "src/_pytest/_code/code.py",
+            "src/_pytest/capture.py",
+            "src/_pytest/compat.py",
+            "src/_pytest/config/__init__.py",
+            "src/_pytest/deprecated.py",
+            "src/_pytest/doctest.py"
+          ],
+          "raw_line_count": 20,
+          "elapsed_seconds": 0.00475
+        }
+      ],
+      "pairwise_hit_at5": "tie"
+    }
+  ],
+  "summary": {
+    "n": 9,
+    "hit5_baseline": 1,
+    "hit5_candidate": 4,
+    "hit1_baseline": 1,
+    "hit1_candidate": 4,
+    "gains": 3,
+    "regressions": 0,
+    "ties": 6,
+    "net_hit5_delta": 3,
+    "root_glob_expansion_count": 8
+  },
+  "preregistered_pilot_gate": {
+    "condition": "net hit@5 delta >=2 AND regressions <=1 across all 9 DEV cases",
+    "passed": true,
+    "decision": "PROMISING_RETRIEVAL_ONLY"
+  }
+}
