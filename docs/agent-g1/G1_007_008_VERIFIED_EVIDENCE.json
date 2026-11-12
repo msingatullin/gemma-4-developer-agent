@@ -1,0 +1,120 @@
+{
+  "id": "G1-007-008-VERIFIED",
+  "timestamp_utc": "2026-11-12T18:16:53.405302+00:00",
+  "scope": "authentic CPU F2P/P2P offline gold oracle, NOT Gemma-generated patches",
+  "protocol": "docs/agent-g1/G1_007_008_PROTOCOL.md and preregistered environment addenda",
+  "cases": [
+    {
+      "id": "G1-007",
+      "instance": "pytest-dev__pytest-11148",
+      "split": "dev",
+      "pin": "2f7415cfbc4b6ca62f9013f1abd27136f46b9653",
+      "tree_sha": "267464d5003e787a35a2379726c9c5a54a43cf17",
+      "test_patch_sha": "2de425c018454ccdc21c39faab9d52436f7acfbde774b65f5df24354881fd6d6",
+      "gold_patch_sha": "2ce6f1a00a78b5250cd1469fe57656b2902bc990179446189780997251af128e",
+      "runs": {
+        "BASE_F2P": {
+          "exit_code": 1,
+          "tests": [
+            "testing/test_pathlib.py::TestImportPath::test_remembers_previous_imports",
+            "testing/acceptance_test.py::test_doctest_and_normal_imports_with_importlib"
+          ],
+          "log_sha256": "94115fcca895406780604b477b217cc082c28d5c902285e32e6d84687749b887",
+          "stdout_stderr": "EXIT=1\nSTDOUT:\nFF                                                                       [100%]\n=================================== FAILURES ===================================\n________________ TestImportPath.test_remembers_previous_imports ________________\ntesting/test_pathlib.py:315: in test_remembers_previous_imports\n    assert module1 is module2\nE   AssertionError: assert <module '_src.tests.mymod_test_remembers_previous_imports' from '/tmp/pytest-of-root/pytest-0/test_remembers_previous_import0/_src/tests/mymod_test_remembers_previous_imports.py'> is <module '_src.tests.mymod_test_remembers_previous_imports' from '/tmp/pytest-of-root/pytest-0/test_remembers_previous_import0/_src/tests/mymod_test_remembers_previous_imports.py'>\n________________ test_doctest_and_normal_imports_with_importlib ________________\n/workspace/testing/acceptance_test.py:1352: in test_doctest_and_normal_imports_with_importlib\n    result.stdout.fnmatch_lines(\"*1 passed*\")\nE   Failed: nomatch: '*1 passed*'\nE       and: '============================= test session starts =============================='\nE       and: 'platform linux -- Python 3.11.18, pytest-7.2.0.dev0, pluggy-1.7.0'\nE       and: 'rootdir: /tmp/pytest-of-root/pytest-0/test_doctest_and_normal_imports_with_importlib0'\nE       and: 'configfile: tox.ini'\nE       and: 'collected 1 item'\nE       and: ''\nE       and: 'tests/test_commands.py F                                                 [100%]'\nE       and: ''\nE       and: '=================================== FAILURES ==================================='\nE       and: '____________________________ TestCommands.test_boo _____________________________'\nE       and: ''\nE       and: 'self = <tests.test_commands.TestCommands object at 0x7eb744937e10>'\nE       and: ''\nE       and: '    def test_boo(self):'\nE       and: \">       assert importlib.import_module('pmxbot.logging') is logging\"\nE       and: \"E       AssertionError: assert <module 'pmxbot.logging' from '/tmp/pytest-of-root/pytest-0/test_doctest_and_normal_imports_with_importlib0/pmxbot/logging.py'> is logging\"\nE       and: \"E        +  where <module 'pmxbot.logging' from '/tmp/pytest-of-root/pytest-0/test_doctest_and_normal_imports_with_importlib0/pmxbot/logging.py'> = <function import_module at 0x7eb74556dda0>('pmxbot.logging')\"\nE       and: 'E        +    where <function import_module at 0x7eb74556dda0> = importlib.import_module'\nE       and: ''\nE       and: 'tests/test_commands.py:6: AssertionError'\nE       and: '=========================== short test summary info ============================'\nE       and: 'FAILED tests/test_commands.py::TestCommands::test_boo - AssertionError: asser...'\nE       and: '============================== 1 failed in 0.03s ==============================='\nE   remains unmatched: '*1 passed*'\n----------------------------- Captured stdout call -----------------------------\nrunning: /usr/local/bin/python -mpytest --basetemp=/tmp/pytest-of-root/pytest-0/test_doctest_and_normal_imports_with_importlib0/runpytest-0\n     in: /tmp/pytest-of-root/pytest-0/test_doctest_and_normal_imports_with_importlib0\n============================= test session starts ==============================\nplatform linux -- Python 3.11.18, pytest-7.2.0.dev0, pluggy-1.7.0\nrootdir: /tmp/pytest-of-root/pytest-0/test_doctest_and_normal_imports_with_importlib0\nconfigfile: tox.ini\ncollected 1 item\n\ntests/test_commands.py F                                                 [100%]\n\n=================================== FAILURES ===================================\n____________________________ TestCommands.test_boo _____________________________\n\nself = <tests.test_commands.TestCommands object at 0x7eb744937e10>\n\n    def test_boo(self):\n>       assert importlib.import_module('pmxbot.logging') is logging\nE       AssertionError: assert <module 'pmxbot.logging' from '/tmp/pytest-of-root/pytest-0/test_doctest_and_normal_imports_with_importlib0/pmxbot/logging.py'> is logging\nE        +  where <module 'pmxbot.logging' from '/tmp/pytest-of-root/pytest-0/test_doctest_and_normal_imports_with_importlib0/pmxbot/logging.py'> = <function import_module at 0x7eb74556dda0>('pmxbot.logging')\nE        +    where <function import_module at 0x7eb74556dda0> = importlib.import_module\n\ntests/test_commands.py:6: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_commands.py::TestCommands::test_boo - AssertionError: asser...\n============================== 1 failed in 0.03s ===============================\n=========================== short test summary info ============================\nFAILED testing/test_pathlib.py::TestImportPath::test_remembers_previous_imports\nFAILED testing/acceptance_test.py::test_doctest_and_normal_imports_with_importlib\n2 failed in 0.58s\n\nSTDERR:\n"
+        },
+        "GOLD_F2P": {
+          "exit_code": 0,
+          "tests": [
+            "testing/test_pathlib.py::TestImportPath::test_remembers_previous_imports",
+            "testing/acceptance_test.py::test_doctest_and_normal_imports_with_importlib"
+          ],
+          "log_sha256": "2608bd288583adc9a5014eda447651bcefea17a7b6a00e2854b619ec0cf70cb5",
+          "stdout_stderr": "EXIT=0\nSTDOUT:\n..                                                                       [100%]\n2 passed in 0.53s\n\nSTDERR:\n"
+        },
+        "BASE_P2P": {
+          "exit_code": 0,
+          "tests": [
+            "testing/acceptance_test.py::TestGeneralUsage::test_docstring_on_hookspec",
+            "testing/acceptance_test.py::TestInvocationVariants::test_invoke_with_invalid_type"
+          ],
+          "log_sha256": "32d768195eda2a96f9b0418016c1582892762208b7a75c7de26d9bd63e2f8a0a",
+          "stdout_stderr": "EXIT=0\nSTDOUT:\n..                                                                       [100%]\n2 passed in 0.06s\n\nSTDERR:\n"
+        },
+        "GOLD_P2P": {
+          "exit_code": 0,
+          "tests": [
+            "testing/acceptance_test.py::TestGeneralUsage::test_docstring_on_hookspec",
+            "testing/acceptance_test.py::TestInvocationVariants::test_invoke_with_invalid_type"
+          ],
+          "log_sha256": "0efbd873bd637c41b22c3b2647aefea86936058758737cdf91733324566829dd",
+          "stdout_stderr": "EXIT=0\nSTDOUT:\n..                                                                       [100%]\n2 passed in 0.05s\n\nSTDERR:\n"
+        }
+      },
+      "verdict": "PASS_OFFLINE_ORACLE_ONLY"
+    },
+    {
+      "id": "G1-008",
+      "instance": "pytest-dev__pytest-5103",
+      "split": "dev",
+      "pin": "10ca84ffc56c2dd2d9dc4bd71b7b898e083500cd",
+      "tree_sha": "b4f1860291efcf9923b7977bed74e34299ac4ebb",
+      "test_patch_sha": "89740f6cb7127fc954eb9fa2a84e7b6df26e77f18b76bf96b50db5bfb0ba5c86",
+      "gold_patch_sha": "5b621eb0099e1e4eeb2bcb42f24a48b15b540e46fe23403475890578f546680c",
+      "runs": {
+        "BASE_F2P": {
+          "exit_code": 1,
+          "tests": [
+            "testing/test_assertrewrite.py::TestAssertionRewrite::test_unroll_expression"
+          ],
+          "log_sha256": "d717c56ebec7be1357f386f6526d41cf5ca7db84860ffde75e0c55b80e23a3c6",
+          "stdout_stderr": "EXIT=1\nSTDOUT:\nF                                                                        [100%]\n=================================== FAILURES ===================================\n_________________ TestAssertionRewrite.test_unroll_expression __________________\ntesting/test_assertrewrite.py:663: in test_unroll_expression\n    assert \"0 == 1\" in getmsg(f)\nE   AssertionError: assert '0 == 1' in 'assert False\\n +  where False = all(<generator object f.<locals>.<genexpr> at 0x77cd42e4ff90>)'\nE    +  where 'assert False\\n +  where False = all(<generator object f.<locals>.<genexpr> at 0x77cd42e4ff90>)' = getmsg(<function TestAssertionRewrite.test_unroll_expression.<locals>.f at 0x77cd42e44280>)\n=========================== short test summary info ============================\nFAILED testing/test_assertrewrite.py::TestAssertionRewrite::test_unroll_expression\n1 failed in 0.34 seconds\n\nSTDERR:\n"
+        },
+        "GOLD_F2P": {
+          "exit_code": 0,
+          "tests": [
+            "testing/test_assertrewrite.py::TestAssertionRewrite::test_unroll_expression"
+          ],
+          "log_sha256": "3e374e52ff85dd1ca2e3aad9babce261616602eac501b089ea945659c6462641",
+          "stdout_stderr": "EXIT=0\nSTDOUT:\n.                                                                        [100%]\n1 passed in 0.22 seconds\n\nSTDERR:\n"
+        },
+        "BASE_P2P": {
+          "exit_code": 0,
+          "tests": [
+            "testing/test_assertrewrite.py::TestAssertionRewrite::test_place_initial_imports",
+            "testing/test_assertrewrite.py::TestAssertionRewrite::test_dont_rewrite"
+          ],
+          "log_sha256": "41b763cae0fc869774d91aec7b89f66f53dc775f57ed14646f22931b2e2afd6d",
+          "stdout_stderr": "EXIT=0\nSTDOUT:\n..                                                                       [100%]\n2 passed in 0.24 seconds\n\nSTDERR:\n"
+        },
+        "GOLD_P2P": {
+          "exit_code": 0,
+          "tests": [
+            "testing/test_assertrewrite.py::TestAssertionRewrite::test_place_initial_imports",
+            "testing/test_assertrewrite.py::TestAssertionRewrite::test_dont_rewrite"
+          ],
+          "log_sha256": "ccba37b63465b1d844cfe48c856e03c14139d513c2be00579140021d6fd589b1",
+          "stdout_stderr": "EXIT=0\nSTDOUT:\n..                                                                       [100%]\n2 passed in 0.27 seconds\n\nSTDERR:\n"
+        }
+      },
+      "verdict": "PASS_OFFLINE_ORACLE_ONLY"
+    }
+  ],
+  "raw_source_sha256": "528268f939fe7798f961d5914b16e182fbbae181fec6f853d32c408a511a6d21",
+  "g1_008_final_retry_sha256": "7cd91be8e27a3e488902f1543a72833f8ceb7bac130638f5a13500dc076e7562",
+  "totals": {
+    "new_oracle_passed": 2,
+    "previous_oracle_passed": 6,
+    "total_oracle_passed": 8,
+    "dev": 6,
+    "heldout": 2,
+    "repos": 3,
+    "model_calls": 0,
+    "submissions": 0
+  },
+  "limitations": [
+    "Gold and test patches were in offline evaluator only",
+    "Three pre-final G1-008 attempts ENV_BLOCKED; never counted as RED",
+    "Selected 2 P2P subset per task, not full grader",
+    "Not evidence of E4B solve rate or leaderboard uplift"
+  ]
+}
