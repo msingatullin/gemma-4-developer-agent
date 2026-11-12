@@ -1,0 +1,68 @@
+{
+  "id": "G0-FORENSICS-20261112",
+  "source": "Kaggle SDK competition_download_submission() authenticated owner read",
+  "competition": "gemma-4-developer-agent",
+  "submission_ids": {
+    "v15": 58073369,
+    "v16": 58126337
+  },
+  "archives": {
+    "v15": {
+      "zip_sha256": "f812377537d941a9d7308a0d0e153a7e1362ba5b8832e66520a3b8916e9ca63a",
+      "zip_bytes": 3321,
+      "zip_crc": "PASS",
+      "files": {
+        "agent.yaml": {
+          "bytes": 245,
+          "sha256": "2d25f715647c996542528d843cc6c9fdb7938aee86bcf559143d47ada20128fd"
+        },
+        "eval_config.yaml": {
+          "bytes": 94,
+          "sha256": "79290bf4c03d341154fc884989ad2d1704c9a0c6194aa84e81e0ef698404631e"
+        },
+        "configs/sampling.yaml": {
+          "bytes": 129,
+          "sha256": "b39199dcd617e4cd6ae67efb1ccd5f08198780d0aca629d043e95a4aa264702c"
+        },
+        "prompts/system.md": {
+          "bytes": 4253,
+          "sha256": "0e8b54ef2ab231040686bbdf25fe20be0651aa823904497bcc7e6b9dc1ed7f89"
+        }
+      }
+    },
+    "v16": {
+      "zip_sha256": "b6c470a38d4eb60a529b1f716e3d5a28b3f74b80f8197080549f1c3ee9c92a7c",
+      "zip_bytes": 2891,
+      "zip_crc": "PASS",
+      "files": {
+        "agent.yaml": {
+          "bytes": 245,
+          "sha256": "2d25f715647c996542528d843cc6c9fdb7938aee86bcf559143d47ada20128fd"
+        },
+        "configs/sampling.yaml": {
+          "bytes": 130,
+          "sha256": "6d5389a7b35f61caffce32acb66d51ddc4d7b27fe70fd9bccf08f9c99b8f7b09"
+        },
+        "eval_config.yaml": {
+          "bytes": 94,
+          "sha256": "5f852dfa1448626b136282fbfd45999c2b92a9f02dadec5a5d6885f565e24c1a"
+        },
+        "prompts/system.md": {
+          "bytes": 4464,
+          "sha256": "5772f8e41858ff838070a2a30918e805bdacf9a8214df25c98cf03a04e1c8551"
+        }
+      }
+    }
+  },
+  "changed_files": [
+    "configs/sampling.yaml",
+    "eval_config.yaml",
+    "prompts/system.md"
+  ],
+  "created_utc": "2026-11-12T13:25:22.886601+00:00",
+  "caveats": [
+    "Owner submission ZIPs verified, not actual private grader per-task logs",
+    "v15->v16 multiple variables changed, scoring cause cannot be inferred from public score delta",
+    "Raw files remain on private VPS; only hashes and summaries may go to public GitHub"
+  ]
+}
