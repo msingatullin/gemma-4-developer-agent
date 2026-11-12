@@ -1,20 +1,23 @@
 ---
 name: repo_locator
-description: Portable repository localization with an optional AST/BM25 helper and a safe built-in git-grep fallback.
+description: Portable filename-first repository search with optional AST/BM25 locator.
 ---
 
-# Repository Locator Skill
+# Repository Locator
 
-The skill directory contains `ast_locator.py`, but the Kaggle task workspace is isolated from the submission package. **Do not assume** a copy exists at `/tmp/ast_locator.py`. The current candidate does not prove that staging.
+The skill archive contains `ast_locator.py`. **Its presence in the submission archive does not imply it is mounted at `/tmp/ast_locator.py` inside the Kaggle task sandbox.** Never invoke that path without checking that it exists.
 
-Use one `run_command` call with issue-derived strings replacing the placeholders:
+Use one `run_command` with quoted placeholders replaced by actual issue-derived identifiers:
 
 ```bash
 if [ -f /tmp/ast_locator.py ]; then
   python3 /tmp/ast_locator.py --query "ISSUE_IDENTIFIERS" --top-k 3
 else
-  git grep -n -i -F "ONE_EXACT_IDENTIFIER" -- '*.py' ':!**/tests/**' ':!**/test_*.py' ':!**/docs/**' | head -25
+  echo FILENAME_HITS
+  git ls-files '*.py' | grep -i -F "ONE_EXACT_IDENTIFIER" | grep -Ev '(^|/)(tests?|docs?|examples?)/' | head -10
+  echo CONTENT_FILE_HITS
+  git grep -i -l -F "ONE_EXACT_IDENTIFIER" -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20
 fi
 ```
 
-The fallback searches nested Python implementation paths using Git pathspecs (not a shell-expanded root-only glob). If the exact term has no hits, try one alternate identifier or error string. For tasks explicitly concerning documentation examples, include the appropriate `docs_src/` paths. Never create locator scripts or other scratch files inside the task repository. A clean fallback is **not** evidence that BM25 ran, nor that the agent solved the task.
+Inspect filename hits first; then look at listed implementation modules. This fallback uses Git pathspec matching nested `.py` paths. If the issue concerns documentation examples, deliberately include `docs_src/` in the search. No test oracle, `target_file`, gold patch, or answer key may be passed to the agent. No workspace scripts or repo pollution. This fallback is not a BM25 result and does not prove issue resolution.
