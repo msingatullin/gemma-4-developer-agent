@@ -1,0 +1,81 @@
+{
+  "experiment_id": "G0-NATIVE-SNAPSHOT-004",
+  "official_wheel_sha256": "9ad876581f3acde8ec3c369858f0834e2b9f41a3cffce3ca42f09cb090aea9d3",
+  "organizer_methods": [
+    "swegemma.harness.container_setup.extract_snapshot",
+    "swegemma.sandbox.docker.ContainerManager",
+    "swegemma.tools.execution.run_command"
+  ],
+  "image": "gemma-agent-g0-cpu-git:20261112",
+  "expected_image_digest": "sha256:dfc9164e95596719ef4b420ed713b3ce8b6616fa3ce5917dd6bcd45bfd99b6ee",
+  "source_pinned_tar_sha256": "710752defce88fe5b29a679a6f2ee68ab1243f709baada1a7d2d88f946032776",
+  "source_pinned_tar_gzip_sha256": "b95d7a0941a654e5af4b16000be04029e73b1ac4db4e29a2c408a95f93a0c490",
+  "pinned_git_tree": "2ba551370f1a4204efbab1f82ba6cfd611634723",
+  "model_calls": 0,
+  "kaggle_submissions": 0,
+  "cases": [
+    {
+      "case": "clean_tmp_locator_absence",
+      "status": "PASS"
+    },
+    {
+      "case": "official_extract_snapshot",
+      "status": "PASS"
+    },
+    {
+      "case": "pinned_git_tree_byte_content",
+      "status": "PASS",
+      "git_tree": "2ba551370f1a4204efbab1f82ba6cfd611634723"
+    },
+    {
+      "case": "working_directory",
+      "status": "PASS",
+      "command": "pwd",
+      "tool_response": {
+        "status": "ok",
+        "stdout": "/workspace\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "case": "original_source_file",
+      "status": "PASS",
+      "command": "git ls-files '*.py' | grep -i -F 'blueprint' | grep -Ev '(^|/)(tests?|docs?|examples?)/' | head -10",
+      "tool_response": {
+        "status": "ok",
+        "stdout": "src/flask/blueprints.py\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "case": "original_v17_locator_absent_after_official_extract",
+      "status": "PASS",
+      "command": "test ! -f /tmp/ast_locator.py && echo NO_STAGED_AST_LOCATOR",
+      "tool_response": {
+        "status": "ok",
+        "stdout": "NO_STAGED_AST_LOCATOR\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "case": "clean_tracked_tree",
+      "status": "PASS",
+      "command": "git status --porcelain",
+      "tool_response": {
+        "status": "ok",
+        "stdout": "",
+        "stderr": "",
+        "exit_code": 0
+      }
+    }
+  ],
+  "cleanup": {
+    "attempted": true,
+    "removed": true
+  },
+  "container_id": "bc4ee732048b8c6b38fea47b9d1364e3d4cb078f0fb9c76bdb59f5928136d2c3",
+  "verdict": "PASS_OFFICIAL_SNAPSHOT_AND_TOOL_BRIDGE"
+}
