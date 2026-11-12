@@ -1,0 +1,98 @@
+{
+  "id": "G1-001-REAL-FLASK4045",
+  "date_utc": "2026-11-12T14:51:35.607873+00:00",
+  "task": "pallets__flask-4045",
+  "pinned_base": "d8c37f43724cd9fb0870f77877b7c4c7e38a19e0",
+  "manifest_sha256": "8270d1b7f7b4d29cd5ea1ac21fe1a981a36c7455b522db69b6b2133ce1f6dfcf",
+  "test_patch_sha256": "def1da53a3857f67b571f108abde6fcdac61da5c7820c0749fa7c487fe87a62a",
+  "gold_patch_sha256": "6c4055e1cb35cf9c5d50bbba639af1787d6f5d5146f9539cedc364a43d01c687",
+  "isolation": "Docker --network none --read-only --cpus1 --memory768m --pids-limit64, source repo bind-mounted readonly",
+  "image": "gemma-paper-cpu:py310-20261110",
+  "pre_registered_protocol": "docs/agent-g0/G1_001_ORACLE_PROTOCOL.md",
+  "test_runs": [
+    {
+      "case": "BASE_F2P",
+      "task": "pallets__flask-4045",
+      "repo_base_commit": "d8c37f43724cd9fb0870f77877b7c4c7e38a19e0",
+      "variant": "base",
+      "tests": [
+        "tests/test_blueprints.py::test_dotted_name_not_allowed",
+        "tests/test_blueprints.py::test_route_decorator_custom_endpoint_with_dots"
+      ],
+      "exit": 1,
+      "timeout": false,
+      "seconds": 0.786,
+      "pytest_summary_lines": [
+        "2 failed in 0.16s"
+      ],
+      "log_filename": "BASE_F2P.log",
+      "log_sha256": "3ac0c4b618f32c87b8b3e8a53271cd8bf933127e9268a50f8ec8970ac2865420"
+    },
+    {
+      "case": "GOLD_F2P",
+      "task": "pallets__flask-4045",
+      "repo_base_commit": "d8c37f43724cd9fb0870f77877b7c4c7e38a19e0",
+      "variant": "gold",
+      "tests": [
+        "tests/test_blueprints.py::test_dotted_name_not_allowed",
+        "tests/test_blueprints.py::test_route_decorator_custom_endpoint_with_dots"
+      ],
+      "exit": 0,
+      "timeout": false,
+      "seconds": 0.711,
+      "pytest_summary_lines": [
+        "2 passed in 0.08s"
+      ],
+      "log_filename": "GOLD_F2P.log",
+      "log_sha256": "daa0f3b2448758058fcaa43cb9ccec766571d63ae3132ecfa5260d9b9bfd3099"
+    },
+    {
+      "case": "GOLD_P2P",
+      "task": "pallets__flask-4045",
+      "repo_base_commit": "d8c37f43724cd9fb0870f77877b7c4c7e38a19e0",
+      "variant": "gold",
+      "tests": [
+        "tests/test_blueprints.py::test_template_filter",
+        "tests/test_blueprints.py::test_add_template_filter"
+      ],
+      "exit": 0,
+      "timeout": false,
+      "seconds": 0.625,
+      "pytest_summary_lines": [
+        "2 passed in 0.06s"
+      ],
+      "log_filename": "GOLD_P2P.log",
+      "log_sha256": "32d768195eda2a96f9b0418016c1582892762208b7a75c7de26d9bd63e2f8a0a"
+    }
+  ],
+  "supplementary_base_p2p": true,
+  "logs": {
+    "BASE_F2P": {
+      "sha256": "3ac0c4b618f32c87b8b3e8a53271cd8bf933127e9268a50f8ec8970ac2865420",
+      "text": "EXIT=1\nSTDOUT:\nFF                                                                       [100%]\n=================================== FAILURES ===================================\n_________________________ test_dotted_name_not_allowed _________________________\ntests/test_blueprints.py:255: in test_dotted_name_not_allowed\n    with pytest.raises(ValueError):\nE   Failed: DID NOT RAISE <class 'ValueError'>\n________________ test_route_decorator_custom_endpoint_with_dots ________________\ntests/test_blueprints.py:326: in test_route_decorator_custom_endpoint_with_dots\n    bp.route(\"/\", endpoint=\"a.b\")(lambda: \"\")\nsrc/flask/scaffold.py:433: in decorator\n    self.add_url_rule(rule, endpoint, f, **options)\nsrc/flask/blueprints.py:364: in add_url_rule\n    assert \".\" not in endpoint, \"Blueprint endpoints should not contain dots\"\nE   AssertionError: Blueprint endpoints should not contain dots\n=========================== short test summary info ============================\nFAILED tests/test_blueprints.py::test_dotted_name_not_allowed - Failed: DID N...\nFAILED tests/test_blueprints.py::test_route_decorator_custom_endpoint_with_dots\n2 failed in 0.16s\n\nSTDERR:\n"
+    },
+    "GOLD_F2P": {
+      "sha256": "daa0f3b2448758058fcaa43cb9ccec766571d63ae3132ecfa5260d9b9bfd3099",
+      "text": "EXIT=0\nSTDOUT:\n..                                                                       [100%]\n2 passed in 0.08s\n\nSTDERR:\n"
+    },
+    "GOLD_P2P": {
+      "sha256": "32d768195eda2a96f9b0418016c1582892762208b7a75c7de26d9bd63e2f8a0a",
+      "text": "EXIT=0\nSTDOUT:\n..                                                                       [100%]\n2 passed in 0.06s\n\nSTDERR:\n"
+    },
+    "BASE_P2P": {
+      "sha256": "eebaab3297e10ba0e60c777062aa6e76b53e888177b5e6c3e8d36c04279882b1",
+      "text": "EXIT=0\nSTDOUT:\n..                                                                       [100%]\n2 passed in 0.08s\nSTDERR:\n"
+    }
+  },
+  "assertions": {
+    "base_f2p_two_actual_behavior_failures": true,
+    "gold_f2p_two_passing_tests": true,
+    "gold_p2p_two_distinct_passing_tests": true,
+    "base_p2p_two_distinct_passing_tests_supplemental": true,
+    "isolated_base_has_no_gold_patch": true,
+    "pinned_repositories_identical_head": true,
+    "no_e4b_inference": true
+  },
+  "verdict": "PASS_REAL_CPU_ORACLE_BRINGUP_1_TASK",
+  "limitations": "This is only one historical SWE issue; gold patch and tests used exclusively in isolated offline evaluator, not model inputs; no v15/v17 agent patch, no hidden Kaggle evaluation."
+}
