@@ -1,0 +1,399 @@
+{
+  "id": "G0-SEARCH-005",
+  "phase": "A: only issue-text queries and original source; do NOT read gold/test patches",
+  "query_plan_sha256": "a0673b12d821907ba4391f7684a5eafd962c73ef5b4dc091eb443b78c4f06226",
+  "manifest_sha256": "8270d1b7f7b4d29cd5ea1ac21fe1a981a36c7455b522db69b6b2133ce1f6dfcf",
+  "original_v15_prompt_sha256": "0e8b54ef2ab231040686bbdf25fe20be0651aa823904497bcc7e6b9dc1ed7f89",
+  "candidate_001a_prompt_sha256": "8231d74a34d08c0fa83f2a61a9c6cf1c054006a2d7e97cdecda5009fd35dd925",
+  "cases": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "split": "dev",
+      "repo": "pallets/flask",
+      "pin": "d8c37f43724cd9fb0870f77877b7c4c7e38a19e0",
+      "historical_tree": "a6c31469635e2e4ae19fb8ee8d8e6487a8dbe85b",
+      "source_tar_sha256": "11737f521dceb81f3580f95932d73ff2ff1ffea60641247e86741621633b0230",
+      "issue_content_token": "blueprint",
+      "issue_filename_token": null,
+      "candidate_mode": "filtered_content",
+      "root_py_files": [
+        "setup.py"
+      ],
+      "shell_unquoted_glob_expands": true,
+      "search_runs": [
+        {
+          "name": "baseline_v15",
+          "command": "git grep -n \"blueprint\" -- *.py | head -20",
+          "returncode": 0,
+          "output_lines": 0,
+          "unique_paths": [],
+          "stdout": "",
+          "stderr": "",
+          "elapsed_seconds": 0.00539
+        },
+        {
+          "name": "candidate_001a",
+          "command": "git grep -n -i -F blueprint -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "returncode": 0,
+          "output_lines": 20,
+          "unique_paths": [
+            "src/flask/__init__.py",
+            "src/flask/app.py"
+          ],
+          "stdout": "src/flask/__init__.py:10:from .blueprints import Blueprint as Blueprint\nsrc/flask/app.py:76:    from .blueprints import Blueprint\nsrc/flask/app.py:457:        #: Maps registered blueprint names to blueprint objects. The\nsrc/flask/app.py:458:        #: dict retains the order the blueprints were registered in.\nsrc/flask/app.py:459:        #: Blueprints can be registered multiple times, this dict does\nsrc/flask/app.py:463:        self.blueprints: t.Dict[str, \"Blueprint\"] = {}\nsrc/flask/app.py:718:        and the individual blueprints.\nsrc/flask/app.py:750:            for bp in self._request_blueprints():\nsrc/flask/app.py:1004:    def register_blueprint(self, blueprint: \"Blueprint\", **options: t.Any) -> None:\nsrc/flask/app.py:1005:        \"\"\"Register a :class:`~flask.Blueprint` on the application. Keyword\nsrc/flask/app.py:1007:        blueprint.\nsrc/flask/app.py:1009:        Calls the blueprint's :meth:`~flask.Blueprint.register` method after\nsrc/flask/app.py:1010:        recording the blueprint in the application's :attr:`blueprints`.\nsrc/flask/app.py:1012:        :param blueprint: The blueprint to register.\nsrc/flask/app.py:1013:        :param url_prefix: Blueprint routes will be prefixed with this.\nsrc/flask/app.py:1014:        :param subdomain: Blueprint routes will match on this subdomain.\nsrc/flask/app.py:1015:        :param url_defaults: Blueprint routes will use these default values for\nsrc/flask/app.py:1018:            :class:`~flask.blueprints.BlueprintSetupState`. They can be\nsrc/flask/app.py:1019:            accessed in :meth:`~flask.Blueprint.record` callbacks.\nsrc/flask/app.py:1023:        blueprint.register(self, options)\n",
+          "stderr": "",
+          "elapsed_seconds": 0.00527
+        }
+      ],
+      "workspace_clean": true
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "split": "dev",
+      "repo": "pallets/flask",
+      "pin": "4c288bc97ea371817199908d0d9b12de9dae327e",
+      "historical_tree": "2ba551370f1a4204efbab1f82ba6cfd611634723",
+      "source_tar_sha256": "710752defce88fe5b29a679a6f2ee68ab1243f709baada1a7d2d88f946032776",
+      "issue_content_token": "from_file",
+      "issue_filename_token": "Config",
+      "candidate_mode": "filename_first",
+      "root_py_files": [],
+      "shell_unquoted_glob_expands": false,
+      "search_runs": [
+        {
+          "name": "baseline_v15",
+          "command": "git grep -n \"from_file\" -- *.py | head -20",
+          "returncode": 0,
+          "output_lines": 7,
+          "unique_paths": [
+            "src/flask/config.py",
+            "tests/test_config.py"
+          ],
+          "stdout": "src/flask/config.py:232:    def from_file(\nsrc/flask/config.py:245:            app.config.from_file(\"config.json\", load=json.load)\nsrc/flask/config.py:248:            app.config.from_file(\"config.toml\", load=toml.load)\ntests/test_config.py:33:def test_config_from_file():\ntests/test_config.py:36:    app.config.from_file(os.path.join(current_dir, \"static\", \"config.json\"), json.load)\ntests/test_config.py:181:        app.config.from_file(\"missing.json\", load=json.load)\ntests/test_config.py:187:    assert not app.config.from_file(\"missing.json\", load=json.load, silent=True)\n",
+          "stderr": "",
+          "elapsed_seconds": 0.00689
+        },
+        {
+          "name": "candidate_001a",
+          "command": "git ls-files '*.py' | grep -i -F Config | grep -Ev '(^|/)(tests?|docs?|examples?)/' | head -10",
+          "returncode": 0,
+          "output_lines": 1,
+          "unique_paths": [
+            "src/flask/config.py"
+          ],
+          "stdout": "src/flask/config.py\n",
+          "stderr": "",
+          "elapsed_seconds": 0.00654
+        }
+      ],
+      "workspace_clean": true
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "split": "dev",
+      "repo": "psf/requests",
+      "pin": "110048f9837f8441ea536804115e80b69f400277",
+      "historical_tree": "62502eaa272d8566a1b282039f07c5f1fcff14e3",
+      "source_tar_sha256": "4f9afda7f38ef178515d694026b39883ffbfd60d97a04d15188462d4bd5b7b53",
+      "issue_content_token": "resolve_redirects",
+      "issue_filename_token": "Session",
+      "candidate_mode": "filename_first",
+      "root_py_files": [
+        "setup.py",
+        "test_requests.py"
+      ],
+      "shell_unquoted_glob_expands": true,
+      "search_runs": [
+        {
+          "name": "baseline_v15",
+          "command": "git grep -n \"resolve_redirects\" -- *.py | head -20",
+          "returncode": 0,
+          "output_lines": 0,
+          "unique_paths": [],
+          "stdout": "",
+          "stderr": "",
+          "elapsed_seconds": 0.00563
+        },
+        {
+          "name": "candidate_001a",
+          "command": "git ls-files '*.py' | grep -i -F Session | grep -Ev '(^|/)(tests?|docs?|examples?)/' | head -10",
+          "returncode": 0,
+          "output_lines": 1,
+          "unique_paths": [
+            "requests/sessions.py"
+          ],
+          "stdout": "requests/sessions.py\n",
+          "stderr": "",
+          "elapsed_seconds": 0.00571
+        }
+      ],
+      "workspace_clean": true
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "split": "dev",
+      "repo": "psf/requests",
+      "pin": "fe693c492242ae532211e0c173324f09ca8cf227",
+      "historical_tree": "319437ae6f0d767c5885aff9d2c08cfe95e91e31",
+      "source_tar_sha256": "0ecb0f8b661319e7bfd76a9fe635e40acfb1991b4fd8231412a9361d9b3c8738",
+      "issue_content_token": "ConnectionError",
+      "issue_filename_token": null,
+      "candidate_mode": "filtered_content",
+      "root_py_files": [
+        "setup.py",
+        "test_requests.py"
+      ],
+      "shell_unquoted_glob_expands": true,
+      "search_runs": [
+        {
+          "name": "baseline_v15",
+          "command": "git grep -n \"ConnectionError\" -- *.py | head -20",
+          "returncode": 0,
+          "output_lines": 0,
+          "unique_paths": [],
+          "stdout": "",
+          "stderr": "",
+          "elapsed_seconds": 0.00456
+        },
+        {
+          "name": "candidate_001a",
+          "command": "git grep -n -i -F ConnectionError -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "returncode": 0,
+          "output_lines": 8,
+          "unique_paths": [
+            "requests/__init__.py",
+            "requests/adapters.py",
+            "requests/exceptions.py",
+            "requests/packages/urllib3/exceptions.py"
+          ],
+          "stdout": "requests/__init__.py:65:    TooManyRedirects, HTTPError, ConnectionError\nrequests/adapters.py:28:from .exceptions import ConnectionError, Timeout, SSLError, ProxyError\nrequests/adapters.py:390:            raise ConnectionError(sockerr, request=request)\nrequests/adapters.py:393:            raise ConnectionError(e, request=request)\nrequests/exceptions.py:34:class ConnectionError(RequestException):\nrequests/exceptions.py:38:class ProxyError(ConnectionError):\nrequests/exceptions.py:42:class SSLError(ConnectionError):\nrequests/packages/urllib3/exceptions.py:57:ConnectionError = ProtocolError\n",
+          "stderr": "",
+          "elapsed_seconds": 0.00497
+        }
+      ],
+      "workspace_clean": true
+    },
+    {
+      "instance_id": "psf__requests-2317",
+      "split": "dev",
+      "repo": "psf/requests",
+      "pin": "091991be0da19de9108dbe5e3752917fea3d7fdc",
+      "historical_tree": "980e006268fb816b7d2686baef7242418d895d9a",
+      "source_tar_sha256": "bbdb5c20e74e72a7aebaacffb265b6cfe11edd8994a0794c82a1ada6c658fda8",
+      "issue_content_token": "builtin_str",
+      "issue_filename_token": "sessions",
+      "candidate_mode": "filename_first",
+      "root_py_files": [
+        "setup.py",
+        "test_requests.py"
+      ],
+      "shell_unquoted_glob_expands": true,
+      "search_runs": [
+        {
+          "name": "baseline_v15",
+          "command": "git grep -n \"builtin_str\" -- *.py | head -20",
+          "returncode": 0,
+          "output_lines": 2,
+          "unique_paths": [
+            "test_requests.py"
+          ],
+          "stdout": "test_requests.py:19:    Morsel, cookielib, getproxies, str, urljoin, urlparse, is_py3, builtin_str)\ntest_requests.py:999:        assert isinstance(s, builtin_str)\n",
+          "stderr": "",
+          "elapsed_seconds": 0.00433
+        },
+        {
+          "name": "candidate_001a",
+          "command": "git ls-files '*.py' | grep -i -F sessions | grep -Ev '(^|/)(tests?|docs?|examples?)/' | head -10",
+          "returncode": 0,
+          "output_lines": 1,
+          "unique_paths": [
+            "requests/sessions.py"
+          ],
+          "stdout": "requests/sessions.py\n",
+          "stderr": "",
+          "elapsed_seconds": 0.00453
+        }
+      ],
+      "workspace_clean": true
+    },
+    {
+      "instance_id": "pytest-dev__pytest-11143",
+      "split": "dev",
+      "repo": "pytest-dev/pytest",
+      "pin": "6995257cf470d2143ad1683824962de4071c0eb7",
+      "historical_tree": "5e87fec76a0ead331441eaf05a1510c6c6efe6cf",
+      "source_tar_sha256": "ae22934355f0ec3ad64e13bae97637543eefd5077ea162274f51e399df77c72d",
+      "issue_content_token": "docstring",
+      "issue_filename_token": null,
+      "candidate_mode": "filtered_content",
+      "root_py_files": [
+        "setup.py"
+      ],
+      "shell_unquoted_glob_expands": true,
+      "search_runs": [
+        {
+          "name": "baseline_v15",
+          "command": "git grep -n \"docstring\" -- *.py | head -20",
+          "returncode": 0,
+          "output_lines": 0,
+          "unique_paths": [],
+          "stdout": "",
+          "stderr": "",
+          "elapsed_seconds": 0.00404
+        },
+        {
+          "name": "candidate_001a",
+          "command": "git grep -n -i -F docstring -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "returncode": 0,
+          "output_lines": 20,
+          "unique_paths": [
+            "src/_pytest/assertion/rewrite.py",
+            "src/_pytest/doctest.py",
+            "src/_pytest/python.py",
+            "testing/acceptance_test.py",
+            "testing/python/show_fixtures_per_test.py"
+          ],
+          "stdout": "src/_pytest/assertion/rewrite.py:667:        # docstrings and __future__ imports, so first figure out where that is.\nsrc/_pytest/assertion/rewrite.py:668:        doc = getattr(mod, \"docstring\", None)\nsrc/_pytest/assertion/rewrite.py:669:        expect_docstring = doc is None\nsrc/_pytest/assertion/rewrite.py:676:                expect_docstring\nsrc/_pytest/assertion/rewrite.py:683:                expect_docstring = False\nsrc/_pytest/assertion/rewrite.py:745:    def is_rewrite_disabled(docstring: str) -> bool:\nsrc/_pytest/assertion/rewrite.py:746:        return \"PYTEST_DONT_REWRITE\" in docstring\nsrc/_pytest/doctest.py:347:                assert failure.test.docstring is not None\nsrc/_pytest/doctest.py:348:                lines = failure.test.docstring.splitlines(False)\nsrc/_pytest/doctest.py:354:                # trim docstring error lines to 10\nsrc/_pytest/python.py:1583:            write_docstring(\nsrc/_pytest/python.py:1587:            tw.line(\"    no docstring available\", red=True)\nsrc/_pytest/python.py:1666:            write_docstring(tw, doc.split(\"\\n\\n\")[0] if verbose <= 0 else doc)\nsrc/_pytest/python.py:1668:            tw.line(\"    no docstring available\", red=True)\nsrc/_pytest/python.py:1672:def write_docstring(tw: TerminalWriter, doc: str, indent: str = \"    \") -> None:\ntesting/acceptance_test.py:355:    def test_docstring_on_hookspec(self) -> None:\ntesting/acceptance_test.py:360:                assert value.__doc__, \"no docstring for %s\" % name\ntesting/python/show_fixtures_per_test.py:19:            \"\"\"arg1 docstring\"\"\"\ntesting/python/show_fixtures_per_test.py:33:            \"    arg1 docstring\",\ntesting/python/show_fixtures_per_test.py:45:            \"\"\"arg1 docstring\"\"\"\n",
+          "stderr": "",
+          "elapsed_seconds": 0.00567
+        }
+      ],
+      "workspace_clean": true
+    },
+    {
+      "instance_id": "pytest-dev__pytest-11148",
+      "split": "dev",
+      "repo": "pytest-dev/pytest",
+      "pin": "2f7415cfbc4b6ca62f9013f1abd27136f46b9653",
+      "historical_tree": "267464d5003e787a35a2379726c9c5a54a43cf17",
+      "source_tar_sha256": "cc423dddfab2d4eb6a6609aa0eaf06317a63997c15743c83ec0c11fce8e21e2b",
+      "issue_content_token": "importlib",
+      "issue_filename_token": null,
+      "candidate_mode": "filtered_content",
+      "root_py_files": [
+        "setup.py"
+      ],
+      "shell_unquoted_glob_expands": true,
+      "search_runs": [
+        {
+          "name": "baseline_v15",
+          "command": "git grep -n \"importlib\" -- *.py | head -20",
+          "returncode": 0,
+          "output_lines": 0,
+          "unique_paths": [],
+          "stdout": "",
+          "stderr": "",
+          "elapsed_seconds": 0.0054
+        },
+        {
+          "name": "candidate_001a",
+          "command": "git grep -n -i -F importlib -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "returncode": 0,
+          "output_lines": 20,
+          "unique_paths": [
+            "doc/en/example/assertion/failure_demo.py",
+            "src/_pytest/_py/path.py",
+            "src/_pytest/assertion/rewrite.py"
+          ],
+          "stdout": "doc/en/example/assertion/failure_demo.py:192:    import importlib.util\ndoc/en/example/assertion/failure_demo.py:197:    spec = importlib.util.spec_from_loader(name, loader=None)\ndoc/en/example/assertion/failure_demo.py:198:    module = importlib.util.module_from_spec(spec)\nsrc/_pytest/_py/path.py:6:import importlib.util\nsrc/_pytest/_py/path.py:1083:        Special value of ensuresyspath==\"importlib\" is intended\nsrc/_pytest/_py/path.py:1094:        if ensuresyspath == \"importlib\":\nsrc/_pytest/_py/path.py:1097:            spec = importlib.util.spec_from_file_location(modname, str(self))\nsrc/_pytest/_py/path.py:1102:            mod = importlib.util.module_from_spec(spec)\nsrc/_pytest/assertion/rewrite.py:5:import importlib.abc\nsrc/_pytest/assertion/rewrite.py:6:import importlib.machinery\nsrc/_pytest/assertion/rewrite.py:7:import importlib.util\nsrc/_pytest/assertion/rewrite.py:56:class AssertionRewritingHook(importlib.abc.MetaPathFinder, importlib.abc.Loader):\nsrc/_pytest/assertion/rewrite.py:80:    _find_spec = importlib.machinery.PathFinder.find_spec\nsrc/_pytest/assertion/rewrite.py:87:    ) -> Optional[importlib.machinery.ModuleSpec]:\nsrc/_pytest/assertion/rewrite.py:104:            or not isinstance(spec.loader, importlib.machinery.SourceFileLoader)\nsrc/_pytest/assertion/rewrite.py:115:        return importlib.util.spec_from_file_location(\nsrc/_pytest/assertion/rewrite.py:123:        self, spec: importlib.machinery.ModuleSpec\nsrc/_pytest/assertion/rewrite.py:277:            from importlib.resources.abc import TraversableResources\nsrc/_pytest/assertion/rewrite.py:279:            from importlib.abc import TraversableResources\nsrc/_pytest/assertion/rewrite.py:283:                from importlib.readers import FileReader\n",
+          "stderr": "",
+          "elapsed_seconds": 0.00781
+        }
+      ],
+      "workspace_clean": true
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5103",
+      "split": "dev",
+      "repo": "pytest-dev/pytest",
+      "pin": "10ca84ffc56c2dd2d9dc4bd71b7b898e083500cd",
+      "historical_tree": "b4f1860291efcf9923b7977bed74e34299ac4ebb",
+      "source_tar_sha256": "9d159dd0e3e323b30657b38d727c7f0a56d64b147e166c3bd8205637a182ee98",
+      "issue_content_token": "all",
+      "issue_filename_token": null,
+      "candidate_mode": "filtered_content",
+      "root_py_files": [
+        "setup.py"
+      ],
+      "shell_unquoted_glob_expands": true,
+      "search_runs": [
+        {
+          "name": "baseline_v15",
+          "command": "git grep -n \"all\" -- *.py | head -20",
+          "returncode": 0,
+          "output_lines": 1,
+          "unique_paths": [
+            "setup.py"
+          ],
+          "stdout": "setup.py:37:        install_requires=INSTALL_REQUIRES,\n",
+          "stderr": "",
+          "elapsed_seconds": 0.00516
+        },
+        {
+          "name": "candidate_001a",
+          "command": "git grep -n -i -F all -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "returncode": 0,
+          "output_lines": 20,
+          "unique_paths": [
+            "doc/en/conf.py",
+            "doc/en/example/assertion/failure_demo.py",
+            "doc/en/example/multipython.py",
+            "doc/en/example/nonpython/conftest.py",
+            "extra/get_issues.py",
+            "extra/setup-py.test/setup.py",
+            "scripts/release.py"
+          ],
+          "stdout": "doc/en/conf.py:8:# Note that not all possible configuration values are present in this\ndoc/en/conf.py:11:# All configuration values have a default; values that are commented out\ndoc/en/conf.py:78:# Else, today_fmt is used as the format for a strftime call.\ndoc/en/conf.py:97:# The reST default role (used for this markup: `text`) to use for all documents.\ndoc/en/conf.py:103:# If true, the current module name will be prepended to all description\ndoc/en/conf.py:162:# typographically correct entities.\ndoc/en/conf.py:210:# If true, an OpenSearch description file will be output, and all pages will\ndoc/en/conf.py:259:# Documents to append as an appendix to all manuals.\ndoc/en/conf.py:308:# Allow duplicate toc entries.\ndoc/en/example/assertion/failure_demo.py:247:    def test_try_finally(self):\ndoc/en/example/assertion/failure_demo.py:251:        finally:\ndoc/en/example/multipython.py:46:        subprocess.check_call((self.pythonpath, str(dumpfile)))\ndoc/en/example/multipython.py:66:        subprocess.check_call((self.pythonpath, str(loadfile)))\ndoc/en/example/nonpython/conftest.py:31:        \"\"\" called when self.runtest() raises an exception. \"\"\"\nextra/get_issues.py:13:        get_data = {\"state\": \"all\"}\nextra/setup-py.test/setup.py:10:        description=\"please use 'pytest' for installation\",\nscripts/release.py:6:from subprocess import call\nscripts/release.py:7:from subprocess import check_call\nscripts/release.py:65:    check_call([\"git\", \"add\", str(target)])\nscripts/release.py:69:    \"\"\"Call regendoc tool to update examples and pytest output in the docs.\"\"\"\n",
+          "stderr": "",
+          "elapsed_seconds": 0.00525
+        }
+      ],
+      "workspace_clean": true
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5221",
+      "split": "dev",
+      "repo": "pytest-dev/pytest",
+      "pin": "4a2fdce62b73944030cff9b3e52862868ca9584d",
+      "historical_tree": "3efcdc2414e6d778661034a058bec6d5ef85b145",
+      "source_tar_sha256": "15879a09935b18fa600dadfbc953bfdbe65b6f49d7eb88f8b254b03112881f04",
+      "issue_content_token": "fixtures",
+      "issue_filename_token": null,
+      "candidate_mode": "filtered_content",
+      "root_py_files": [
+        "setup.py"
+      ],
+      "shell_unquoted_glob_expands": true,
+      "search_runs": [
+        {
+          "name": "baseline_v15",
+          "command": "git grep -n \"fixtures\" -- *.py | head -20",
+          "returncode": 0,
+          "output_lines": 0,
+          "unique_paths": [],
+          "stdout": "",
+          "stderr": "",
+          "elapsed_seconds": 0.00427
+        },
+        {
+          "name": "candidate_001a",
+          "command": "git grep -n -i -F fixtures -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "returncode": 0,
+          "output_lines": 20,
+          "unique_paths": [
+            "src/_pytest/_code/code.py",
+            "src/_pytest/capture.py",
+            "src/_pytest/compat.py",
+            "src/_pytest/config/__init__.py",
+            "src/_pytest/deprecated.py",
+            "src/_pytest/doctest.py"
+          ],
+          "stdout": "src/_pytest/_code/code.py:522:            Show fixtures (\"funcargs\" for legacy purposes) per traceback entry.\nsrc/_pytest/capture.py:78:    * fixture: when a test function or one of its fixture depend on the ``capsys`` or ``capfd`` fixtures. In this\nsrc/_pytest/capture.py:79:      case special handling is needed to ensure the fixtures take precedence over the global capture.\nsrc/_pytest/capture.py:250:capture_fixtures = {\"capfd\", \"capfdbinary\", \"capsys\", \"capsysbinary\"}\nsrc/_pytest/capture.py:254:    fixtures = set(request.fixturenames) & capture_fixtures - {name}\nsrc/_pytest/capture.py:255:    if fixtures:\nsrc/_pytest/capture.py:256:        fixtures = sorted(fixtures)\nsrc/_pytest/capture.py:257:        fixtures = fixtures[0] if len(fixtures) == 1 else fixtures\nsrc/_pytest/capture.py:259:            \"cannot use {} and {} at the same time\".format(fixtures, name)\nsrc/_pytest/capture.py:350:    fixtures.\nsrc/_pytest/compat.py:129:    revisit fixtures. The fixture mechanism should ask the node for\nsrc/_pytest/compat.py:270:    when we are creating fixtures, because we wrap the function object ourselves with a decorator\nsrc/_pytest/config/__init__.py:121:    \"fixtures\",\nsrc/_pytest/deprecated.py:23:    'Fixture \"{name}\" called directly. Fixtures are not meant to be called directly,\\n'\nsrc/_pytest/deprecated.py:25:    \"See https://docs.pytest.org/en/latest/fixture.html for more information about fixtures, and\\n\"\nsrc/_pytest/deprecated.py:26:    \"https://docs.pytest.org/en/latest/deprecations.html#calling-fixtures-directly about how to update your code.\"\nsrc/_pytest/deprecated.py:30:    \"'request' is a reserved name for fixtures and will raise an error in future versions\"\nsrc/_pytest/doctest.py:17:from _pytest.fixtures import FixtureRequest\nsrc/_pytest/doctest.py:191:            self.fixture_request = _setup_fixtures(self)\nsrc/_pytest/doctest.py:434:def _setup_fixtures(doctest_item):\n",
+          "stderr": "",
+          "elapsed_seconds": 0.00475
+        }
+      ],
+      "workspace_clean": true
+    }
+  ]
+}
