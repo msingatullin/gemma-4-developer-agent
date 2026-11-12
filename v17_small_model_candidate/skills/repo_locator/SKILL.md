@@ -1,18 +1,20 @@
 ---
 name: repo_locator
-description: Deterministic AST and BM25 lexical repository locator for finding exact defect locations and function line spans without reading whole files.
+description: Portable repository localization with an optional AST/BM25 helper and a safe built-in git-grep fallback.
 ---
 
 # Repository Locator Skill
 
-Use the AST + BM25 repository locator to find the implementation files and symbols for any issue statement without searching tests or documentation:
+The skill directory contains `ast_locator.py`, but the Kaggle task workspace is isolated from the submission package. **Do not assume** a copy exists at `/tmp/ast_locator.py`. The current candidate does not prove that staging.
+
+Use one `run_command` call with issue-derived strings replacing the placeholders:
 
 ```bash
-python3 /tmp/ast_locator.py --query "SPECIFIC_IDENTIFIERS_FROM_ISSUE"
+if [ -f /tmp/ast_locator.py ]; then
+  python3 /tmp/ast_locator.py --query "ISSUE_IDENTIFIERS" --top-k 3
+else
+  git grep -n -i -F "ONE_EXACT_IDENTIFIER" -- '*.py' ':!**/tests/**' ':!**/test_*.py' ':!**/docs/**' | head -25
+fi
 ```
 
-Or search directly with git grep excluding test and documentation trees:
-
-```bash
-git grep -n -i "SPECIFIC_TOKEN" -- ':!tests/*' ':!docs/*' ':!examples/*' | head -20
-```
+The fallback searches nested Python implementation paths using Git pathspecs (not a shell-expanded root-only glob). If the exact term has no hits, try one alternate identifier or error string. For tasks explicitly concerning documentation examples, include the appropriate `docs_src/` paths. Never create locator scripts or other scratch files inside the task repository. A clean fallback is **not** evidence that BM25 ran, nor that the agent solved the task.
