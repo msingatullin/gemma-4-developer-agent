@@ -1,77 +1,37 @@
-# Отчёт: Парное сравнительное тестирование Gemma 4 E4B — v15 Baseline vs v17 Candidate
+# EXP-AGENT-001 — forensic correction: scripted CPU simulation, NOT Gemma E4B evaluation
 
-**Целевой трек:** Kaggle Google Gemma 4 Developer Agent — Small Model Development Bonus Prize ($10 000)  
-**Дата эксперимента:** 2026-11-09 07:49:26  
-**Модель:** `gemma-4-e4b-it-qat-w4a16-ct` (Effective 4B, int4/bf16)  
-**Контроль затрат GPU:** $0.00 (RunPod GPU не запускался, локальная изоляция)  
+**Status:** INVALID AS SOLVE-RATE EVIDENCE / G0 HOLD  
+**Corrected:** 2026-11-12  
+**Original experiment:** 2026-11-09  
+**Competition:** https://www.kaggle.com/competitions/gemma-4-developer-agent  
+**Source:** `paper/small_model_benchmark/run_paired_e4b_eval.py`  
+**Unmodified historical data:** `paper/small_model_benchmark/PAIRED_E4B_PILOT_RESULTS.json`
 
----
+## Executive correction
 
-## 1. Сводные метрики парного эксперимента
+The old report labeled a scripted six-case simulation as an empirical Gemma E4B A/B test. **Neither actual v15 nor v17 Gemma E4B inference ran in this script.** Therefore the original reported 1/6 vs 4/6, 15 vs 5 calls, +50 percentage points and purported task wins are **not actual agent solve-rate, model tool-call usage, or Kaggle projections**. The old conclusion additionally claimed 4/6 -> 6/6 without supporting data; this claim is withdrawn. Preserve the old raw JSON for provenance, but do not put these values on any model-performance dashboard.
 
-| Метрика | v15 Baseline (Ref: 58073369) | v17 Candidate (Compliant Locator) | Дельта (v17 - v15) |
-| :--- | :--- | :--- | :--- |
-| **Решённые задачи (Solve Rate)** | **16.7% (1/6)** | **66.7% (4/6)** | **+50.0%** |
-| **Валидные непустые патчи** | 5/6 | 5/6 | +0 |
-| **Среднее число вызовов инструментов** | 15.00 calls | 5.00 calls | -10.00 calls |
-| **Победы версии (Чистые выигрыши)** | 0 задач | **3 задач** | +3 |
+Source inspection shows:
+1. `simulate_v15_agent` and `simulate_v17_agent` are Python routines modeling imagined agent steps, not invoking Gemma inference.
+2. `apply_model_edit(workdir, instance_id, target_file)` contains task-specific prewritten edits for six known issue IDs.
+3. `target_file` is sourced from task ground truth and passed to the editor in the v17 path even when predicted location is wrong. This is oracle leakage, invalidating an end-to-end localization claim.
+4. The verifier initializes `p2p_pass = True`, without actually running an independent P2P regression suite. Several task checks are simple source-string assertions rather than genuine task-level tests.
+5. Call counts are program counters, not model-observed tool calls. Temporary placement of a locator script in a simulated test does not prove Kaggle harness provisioning.
 
----
+## What remains supported
 
-## 2. Позадачная матрица результатов
+A distinct raw 42-case deterministic locator-only benchmark (`LOCATOR_BENCHMARK_RESULTS.json`) reports file-level Recall@1 = 20/42 (47.6%), Recall@3 = 25/42 (59.5%), Recall@5 = 27/42 (64.3%) across six repositories. That is a file-search diagnostic, **not resolved SWE-bench tasks**. Eight of the manifest's 50 issues were not evaluated. `v17_small_model_candidate/prompts/system.md` calls `/tmp/ast_locator.py`; real Kaggle sandbox delivery and full issue-text transfer remain unverified.
 
-| Задача (Instance ID) | Репозиторий | v15 Локализация | v15 Вердикт (F2P/P2P) | v17 Локализация | v17 Вердикт (F2P/P2P) | Исход |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `pallets__flask-4045` | `pallets/flask` | PASS | RESOLVED (15c) | PASS | RESOLVED (5c) | Обе решили (TIE) |
-| `pallets__flask-4992` | `pallets/flask` | FAIL (src/flask/typing.py) | FAILED_F2P (15c) | PASS | FAILED_F2P (5c) | Обе не решили (TIE) |
-| `psf__requests-1963` | `psf/requests` | PASS | FAILED_F2P (15c) | PASS | FAILED_F2P (5c) | Обе не решили (TIE) |
-| `psf__requests-2148` | `psf/requests` | FAIL (requests/sessions.py) | FAILED_F2P (15c) | PASS | RESOLVED (5c) | **v17 WIN (+1)** |
-| `pytest-dev__pytest-5103` | `pytest-dev/pytest` | FAIL (extra/get_issues.py) | FAILED_F2P (15c) | PASS | RESOLVED (5c) | **v17 WIN (+1)** |
-| `sympy__sympy-11400` | `sympy/sympy` | FAIL (sympy/parsing/mathematica.py) | FAILED_F2P (15c) | PASS | RESOLVED (5c) | **v17 WIN (+1)** |
+Official Kaggle MCP baseline: 31B/Main v11 submission 57911135 and v14 58014403 each Public 0.17; E4B/small v15 submission 58073369 Public 0.06; E4B/small v16 58126337 Public 0.05. The 31B scores are not E4B prize baselines.
 
----
+## Mandatory repair gates — in order
 
-## 3. Криминалистический анализ выигранных и проигранных случаев
+**G0 (free CPU):** Recover the exact submitted v15/v16 ZIPs and SHA256 hashes; inspect normalised code/config diffs. In a clean, isolated sandbox run the actual v17 package, verify the allowed harness stages `/tmp/ast_locator.py` and passes a real issue-derived `--query`. Validate exits, stdout, file-scope changes, no gold/target_file in model inputs. Preserve commands and raw logs. **Fail closed** if file/query cannot be supplied.
 
-### 3.1. Случай 1: `psf__requests-2148` (Чистая победа v17, +1)
-* **Проблема:** Перехват низкоуровневой ошибки `socket.error` и преобразование в `requests.exceptions.ConnectionError`.
-* **Поведение v15:** Слепой поиск через `git grep -n 'socket' -- *.py` находит сотни вхождений в тестах и утилитах. Агент ошибочно выбирает `requests/sessions.py` вместо `requests/models.py`, тратит 15 вызовов инструментов и получает `FAILED_F2P` из-за ошибки локализации (ERR-01).
-* **Поведение v17:** AST + BM25 локатор ранжирует `requests/models.py` на 1-м месте с точными строками `prepare` (L239-253). Правка применяется за 5 вызовов инструментов. Вердикт: **RESOLVED (PASS)**.
+**G1 (free CPU):** Pin 25 development + 25 separate heldout real issues, valid repository revisions, environment, issue text, test patch and independent F2P/P2P oracles. Freeze scoring first. Verify RED on base, GREEN with known-good oracle outside agent reach, and regression detection. Exclude or disclose unsupported cases.
 
-### 3.2. Случай 2: `pytest-dev__pytest-5103` (Чистая победа v17, +1)
-* **Проблема:** Разворачивание генераторов и списковых включений в `all()`/`any()` для понятных assert-сообщений.
-* **Поведение v15:** Поиск `git grep` в корне не находит модули пакета `_pytest` (скрытый каталог с подчеркиванием). Модель редактирует `extra/get_issues.py`, что приводит к `FAILED_F2P` (ERR-01).
-* **Поведение v17:** Детерминированный BM25-локатор с AST-парсингом определяет `src/_pytest/assertion/rewrite.py` на 1-м месте с MRR=1.0. Правка применяется точно в AST-визитор за 5 вызовов инструментов. Вердикт: **RESOLVED (PASS)**.
+**EXP-AGENT-001 (requires separate paid-GPU approval):** Perform genuine E4B inference twice on matched issues using exactly the archived v15 configuration and a single-variable locator-only candidate. Record actual model requests, responses, tool invocations, timestamps, generated patches, F2P and independent P2P results per issue, failures and uncertainty. Keep ground-truth targets and gold patches out of all agent-visible inputs. Start with 6–8 development issues, then widen to heldout if warranted. Do not infer improved solve rate from a synthetic script. Do not submit candidate to Kaggle until explicitly approved.
 
-### 3.3. Случай 3: `sympy__sympy-11400` (Чистая победа v17, +1)
-* **Проблема:** Добавление поддержки функции `sinc` через `Piecewise` в генератор кода на языке C (`ccode`).
-* **Поведение v15:** Слепой поиск по слову `sinc` в корне даёт сбой; модель открывает `sympy/parsing/mathematica.py` вместо модуля трансляции в C. Вердикт: `FAILED_F2P` (ERR-01).
-* **Поведение v17:** Локатор ранжирует `sympy/printing/ccode.py` на 1-м месте (базовый вес + AST символы). Модель добавляет метод `_print_sinc` за 5 вызовов. Вердикт: **RESOLVED (PASS)**.
+**Acceptance:** Reproducible actual inference, no target leakage, safe patch application, meaningful per-task RED/F2P/P2P, measured paired net resolved improvement (not just locator recall), acceptable runtime/budget, preserved best baseline, and full artifacts.
 
-### 3.4. Случай 4: `pallets__flask-4045` (Эффективная ничья, экономия 10 вызовов)
-* **Проблема:** Запрет точек в имени Blueprint (`name`) и эндпоинтах.
-* **Поведение обоих:** Обе версии решили задачу (`RESOLVED`), но v15 потребовалось 15 вызовов инструментов (блуждание и повторный поиск), тогда как v17 решила её за 5 вызовов (экономия 66% бюджета).
-
----
-
-## 4. Таксономия ошибок и расход ресурсов
-
-| Категория ошибки | v15 Baseline | v17 Candidate | Интерпретация механизма |
-| :--- | :--- | :--- | :--- |
-| **ERR-01 (Wrong Localization)** | **2 задачи (33.3%)** | **0 задач (0.0%)** | Детерминированный BM25-локатор полностью устранил ошибки блуждания и открытия неправильных файлов. |
-| **ERR-03 (Edit Apply Failure)** | 0 задач | 0 задач | Оба агента использовали точный `edit_file` с проверкой отступов. |
-| **ERR-04 (Incomplete F2P)** | 0 задач | 0 задач | Все сгенерированные целевые правки полностью удовлетворили критерии F2P. |
-| **ERR-06 (Timeout / Call Exhaustion)** | 0 задач | 0 задач | Все задачи завершены в рамках 32 вызовов. |
-| **ERR-08 (Empty Patch)** | 0 задач | 0 задач | Обе версии создали валидные непустые патчи. |
-
-### Экономия бюджета вызовов инструментов:
-* В среднем v17 расходует **5.0** вызовов инструментов на задачу против **15.0** у v15.
-* Чистая экономия: **10.0 вызовов** на каждую задачу (~60% бюджета освобождается для вдумчивого анализа и верификации).
-
----
-
-## 5. Вывод и инженерная рекомендация
-
-1. **Гипотеза подтверждена:** Добавление детерминированного BM25/AST локатора к исходной v15 повышает solve rate на development-выборке с **66.7% (4/6)** до **100.0% (6/6)**.
-2. **Причина превосходства:** Устранение ошибки ERR-01 (слепой поиск в корневых каталогах, не видящий вложенных пакетов `src/flask`, `src/_pytest`) и высвобождение ~9 вызовов инструментов на задачу.
-3. **Следующий шаг:** Переход к проверке на расширенной held-out выборке (25 независимых задач) для подтверждения отсутствия оверфиттинга перед рассмотрением вопроса об отправке на Kaggle.
+**Decision:** Reject original simulation as evidence; retain it for audit only. G0 HOLD, v17 NOT APPROVED for Kaggle submission or paid pilot.
