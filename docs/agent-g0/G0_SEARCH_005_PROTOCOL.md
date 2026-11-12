@@ -20,3 +20,9 @@ Candidate and baseline exact prompt texts must be SHA-recorded; the three other 
 **Pilot gate:** consider the search change promising only with **>=2 net cases improving hit@5** over v15 and <=1 regressing, across the nine dev issues. This threshold does **not** approve paid GPU or Kaggle sends; actual E4B solve-rate on paired tasks and independent heldout is still needed. If gate fails, keep the candidate HOLD/REWORK and protect E4B v15.
 
 Resource cap: existing VPS CPU <=1 core per subprocess, <=10 seconds/query (typically <0.1), no paid services. No production service changes, no hidden-task leakage, no Kaggle quota.
+
+## Recorded pre-retry correction — archive staged inside scratch Git tree
+
+Initial Stage A was **ABORTED before issuing any search commands** because the experiment's source `historical_source.tar` was accidentally saved **inside the Git checkout** and `git add --force --all` included that artifact. Git tree SHA verification correctly rejected this: actual historical Flask4045 had 235 tracked files; scratch checkout had 236, the only extra file being `historical_source.tar`. No result was counted.
+
+Correct the harness (not the query plan, tokens, commands, targets or score rule) by writing the archival input **outside** each working checkout, then reconstructing tracked source in sibling `source/` directory before `git init` and strict tree SHA. **Use a new output directory and raw report path; do not delete or overwrite aborted evidence.** Full initial mismatch remains logged on VPS. Do not run Stage B scoring until all nine source trees and actual Stage A searches complete.
