@@ -1,0 +1,44 @@
+{
+  "id": "EXP-AGENT-002",
+  "source": "Exact authenticated Kaggle E4B v15 submission 58073369",
+  "source_zip_sha256": "f812377537d941a9d7308a0d0e153a7e1362ba5b8832e66520a3b8916e9ca63a",
+  "source_zip_bytes": 3321,
+  "candidate_zip_filename": "exp_agent002_quote_only.zip",
+  "candidate_zip_sha256": "90601ff0fbcd805e6e4a72b9767a464c5b56c4657d09897a8770ee475777882f",
+  "candidate_zip_bytes": 2829,
+  "file_names": [
+    "agent.yaml",
+    "configs/sampling.yaml",
+    "eval_config.yaml",
+    "prompts/system.md"
+  ],
+  "changed_member_files": [
+    "prompts/system.md"
+  ],
+  "baseline_members": {
+    "agent.yaml": "2d25f715647c996542528d843cc6c9fdb7938aee86bcf559143d47ada20128fd",
+    "configs/sampling.yaml": "b39199dcd617e4cd6ae67efb1ccd5f08198780d0aca629d043e95a4aa264702c",
+    "eval_config.yaml": "79290bf4c03d341154fc884989ad2d1704c9a0c6194aa84e81e0ef698404631e",
+    "prompts/system.md": "0e8b54ef2ab231040686bbdf25fe20be0651aa823904497bcc7e6b9dc1ed7f89"
+  },
+  "candidate_members": {
+    "agent.yaml": "2d25f715647c996542528d843cc6c9fdb7938aee86bcf559143d47ada20128fd",
+    "configs/sampling.yaml": "b39199dcd617e4cd6ae67efb1ccd5f08198780d0aca629d043e95a4aa264702c",
+    "eval_config.yaml": "79290bf4c03d341154fc884989ad2d1704c9a0c6194aa84e81e0ef698404631e",
+    "prompts/system.md": "fc42c6a21ece3f17eb11aae5a2a864babbce399bb53afa735f25788f45291afc"
+  },
+  "prompt_line_minus_plus": {
+    "removed": [
+      "-- Search once with `git grep -n \"SPECIFIC_TOKEN\" -- *.py | head -20`. Use the most specific identifier or error string from the issue."
+    ],
+    "added": [
+      "+- Search once with `git grep -n \"SPECIFIC_TOKEN\" -- '*.py' | head -20`. Use the most specific identifier or error string from the issue."
+    ]
+  },
+  "other_prompt_bytes_identical": true,
+  "all_other_member_files_byte_identical": true,
+  "static_validator": "NOT RUN",
+  "organizer_adk_compiler": "NOT RUN",
+  "model_inference": "NOT RUN",
+  "kaggle_submission": "NOT SENT"
+}
