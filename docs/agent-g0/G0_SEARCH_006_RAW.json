@@ -1,0 +1,732 @@
+{
+  "experiment": "G0-SEARCH-006",
+  "phase": "A: original sources and frozen issue-derived search only; no gold paths",
+  "plan_sha256": "a0673b12d821907ba4391f7684a5eafd962c73ef5b4dc091eb443b78c4f06226",
+  "g0_005_raw_sha256": "58b050b73a64c18cdd741b8c947bc19ec20a48975588ad1a001572870b69d69a",
+  "variants": [
+    "v15_original",
+    "quote_only",
+    "quote_casefold",
+    "quote_casefold_filtered",
+    "exp001a_current"
+  ],
+  "cases": [
+    {
+      "instance_id": "pallets__flask-4045",
+      "split": "dev",
+      "repo": "pallets/flask",
+      "historical_git_tree": "a6c31469635e2e4ae19fb8ee8d8e6487a8dbe85b",
+      "content_token": "blueprint",
+      "filename_token": null,
+      "candidate_uses_filename_first": false,
+      "bash_glob_expanded": true,
+      "all_source_tree_bytes_unchanged": true,
+      "stdout_reproduced_exactly_for_v15_and_001a": true,
+      "variants": {
+        "v15_original": {
+          "command": "git grep -n \"blueprint\" -- *.py | head -20",
+          "stdout": "",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [],
+          "n_lines": 0,
+          "latency_seconds": 0.00401
+        },
+        "quote_only": {
+          "command": "git grep -n \"blueprint\" -- '*.py' | head -20",
+          "stdout": "examples/tutorial/flaskr/__init__.py:38:    # apply the blueprints to the app\nexamples/tutorial/flaskr/__init__.py:41:    app.register_blueprint(auth.bp)\nexamples/tutorial/flaskr/__init__.py:42:    app.register_blueprint(blog.bp)\nexamples/tutorial/flaskr/__init__.py:46:    # app.route, while giving the blog blueprint a url_prefix, but for\nsrc/flask/__init__.py:10:from .blueprints import Blueprint as Blueprint\nsrc/flask/app.py:76:    from .blueprints import Blueprint\nsrc/flask/app.py:457:        #: Maps registered blueprint names to blueprint objects. The\nsrc/flask/app.py:458:        #: dict retains the order the blueprints were registered in.\nsrc/flask/app.py:463:        self.blueprints: t.Dict[str, \"Blueprint\"] = {}\nsrc/flask/app.py:718:        and the individual blueprints.\nsrc/flask/app.py:750:            for bp in self._request_blueprints():\nsrc/flask/app.py:1004:    def register_blueprint(self, blueprint: \"Blueprint\", **options: t.Any) -> None:\nsrc/flask/app.py:1007:        blueprint.\nsrc/flask/app.py:1009:        Calls the blueprint's :meth:`~flask.Blueprint.register` method after\nsrc/flask/app.py:1010:        recording the blueprint in the application's :attr:`blueprints`.\nsrc/flask/app.py:1012:        :param blueprint: The blueprint to register.\nsrc/flask/app.py:1018:            :class:`~flask.blueprints.BlueprintSetupState`. They can be\nsrc/flask/app.py:1023:        blueprint.register(self, options)\nsrc/flask/app.py:1025:    def iter_blueprints(self) -> t.ValuesView[\"Blueprint\"]:\nsrc/flask/app.py:1026:        \"\"\"Iterates over all blueprints by the order they were registered.\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "examples/tutorial/flaskr/__init__.py",
+            "src/flask/__init__.py",
+            "src/flask/app.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00517
+        },
+        "quote_casefold": {
+          "command": "git grep -n -i -F blueprint -- '*.py' | head -20",
+          "stdout": "examples/tutorial/flaskr/__init__.py:38:    # apply the blueprints to the app\nexamples/tutorial/flaskr/__init__.py:41:    app.register_blueprint(auth.bp)\nexamples/tutorial/flaskr/__init__.py:42:    app.register_blueprint(blog.bp)\nexamples/tutorial/flaskr/__init__.py:46:    # app.route, while giving the blog blueprint a url_prefix, but for\nexamples/tutorial/flaskr/auth.py:3:from flask import Blueprint\nexamples/tutorial/flaskr/auth.py:16:bp = Blueprint(\"auth\", __name__, url_prefix=\"/auth\")\nexamples/tutorial/flaskr/blog.py:1:from flask import Blueprint\nexamples/tutorial/flaskr/blog.py:13:bp = Blueprint(\"blog\", __name__)\nsrc/flask/__init__.py:10:from .blueprints import Blueprint as Blueprint\nsrc/flask/app.py:76:    from .blueprints import Blueprint\nsrc/flask/app.py:457:        #: Maps registered blueprint names to blueprint objects. The\nsrc/flask/app.py:458:        #: dict retains the order the blueprints were registered in.\nsrc/flask/app.py:459:        #: Blueprints can be registered multiple times, this dict does\nsrc/flask/app.py:463:        self.blueprints: t.Dict[str, \"Blueprint\"] = {}\nsrc/flask/app.py:718:        and the individual blueprints.\nsrc/flask/app.py:750:            for bp in self._request_blueprints():\nsrc/flask/app.py:1004:    def register_blueprint(self, blueprint: \"Blueprint\", **options: t.Any) -> None:\nsrc/flask/app.py:1005:        \"\"\"Register a :class:`~flask.Blueprint` on the application. Keyword\nsrc/flask/app.py:1007:        blueprint.\nsrc/flask/app.py:1009:        Calls the blueprint's :meth:`~flask.Blueprint.register` method after\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "examples/tutorial/flaskr/__init__.py",
+            "examples/tutorial/flaskr/auth.py",
+            "examples/tutorial/flaskr/blog.py",
+            "src/flask/__init__.py",
+            "src/flask/app.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00493
+        },
+        "quote_casefold_filtered": {
+          "command": "git grep -n -i -F blueprint -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "src/flask/__init__.py:10:from .blueprints import Blueprint as Blueprint\nsrc/flask/app.py:76:    from .blueprints import Blueprint\nsrc/flask/app.py:457:        #: Maps registered blueprint names to blueprint objects. The\nsrc/flask/app.py:458:        #: dict retains the order the blueprints were registered in.\nsrc/flask/app.py:459:        #: Blueprints can be registered multiple times, this dict does\nsrc/flask/app.py:463:        self.blueprints: t.Dict[str, \"Blueprint\"] = {}\nsrc/flask/app.py:718:        and the individual blueprints.\nsrc/flask/app.py:750:            for bp in self._request_blueprints():\nsrc/flask/app.py:1004:    def register_blueprint(self, blueprint: \"Blueprint\", **options: t.Any) -> None:\nsrc/flask/app.py:1005:        \"\"\"Register a :class:`~flask.Blueprint` on the application. Keyword\nsrc/flask/app.py:1007:        blueprint.\nsrc/flask/app.py:1009:        Calls the blueprint's :meth:`~flask.Blueprint.register` method after\nsrc/flask/app.py:1010:        recording the blueprint in the application's :attr:`blueprints`.\nsrc/flask/app.py:1012:        :param blueprint: The blueprint to register.\nsrc/flask/app.py:1013:        :param url_prefix: Blueprint routes will be prefixed with this.\nsrc/flask/app.py:1014:        :param subdomain: Blueprint routes will match on this subdomain.\nsrc/flask/app.py:1015:        :param url_defaults: Blueprint routes will use these default values for\nsrc/flask/app.py:1018:            :class:`~flask.blueprints.BlueprintSetupState`. They can be\nsrc/flask/app.py:1019:            accessed in :meth:`~flask.Blueprint.record` callbacks.\nsrc/flask/app.py:1023:        blueprint.register(self, options)\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/flask/__init__.py",
+            "src/flask/app.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00542
+        },
+        "exp001a_current": {
+          "command": "git grep -n -i -F blueprint -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "src/flask/__init__.py:10:from .blueprints import Blueprint as Blueprint\nsrc/flask/app.py:76:    from .blueprints import Blueprint\nsrc/flask/app.py:457:        #: Maps registered blueprint names to blueprint objects. The\nsrc/flask/app.py:458:        #: dict retains the order the blueprints were registered in.\nsrc/flask/app.py:459:        #: Blueprints can be registered multiple times, this dict does\nsrc/flask/app.py:463:        self.blueprints: t.Dict[str, \"Blueprint\"] = {}\nsrc/flask/app.py:718:        and the individual blueprints.\nsrc/flask/app.py:750:            for bp in self._request_blueprints():\nsrc/flask/app.py:1004:    def register_blueprint(self, blueprint: \"Blueprint\", **options: t.Any) -> None:\nsrc/flask/app.py:1005:        \"\"\"Register a :class:`~flask.Blueprint` on the application. Keyword\nsrc/flask/app.py:1007:        blueprint.\nsrc/flask/app.py:1009:        Calls the blueprint's :meth:`~flask.Blueprint.register` method after\nsrc/flask/app.py:1010:        recording the blueprint in the application's :attr:`blueprints`.\nsrc/flask/app.py:1012:        :param blueprint: The blueprint to register.\nsrc/flask/app.py:1013:        :param url_prefix: Blueprint routes will be prefixed with this.\nsrc/flask/app.py:1014:        :param subdomain: Blueprint routes will match on this subdomain.\nsrc/flask/app.py:1015:        :param url_defaults: Blueprint routes will use these default values for\nsrc/flask/app.py:1018:            :class:`~flask.blueprints.BlueprintSetupState`. They can be\nsrc/flask/app.py:1019:            accessed in :meth:`~flask.Blueprint.record` callbacks.\nsrc/flask/app.py:1023:        blueprint.register(self, options)\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/flask/__init__.py",
+            "src/flask/app.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00472
+        }
+      }
+    },
+    {
+      "instance_id": "pallets__flask-4992",
+      "split": "dev",
+      "repo": "pallets/flask",
+      "historical_git_tree": "2ba551370f1a4204efbab1f82ba6cfd611634723",
+      "content_token": "from_file",
+      "filename_token": "Config",
+      "candidate_uses_filename_first": true,
+      "bash_glob_expanded": false,
+      "all_source_tree_bytes_unchanged": true,
+      "stdout_reproduced_exactly_for_v15_and_001a": true,
+      "variants": {
+        "v15_original": {
+          "command": "git grep -n \"from_file\" -- *.py | head -20",
+          "stdout": "src/flask/config.py:232:    def from_file(\nsrc/flask/config.py:245:            app.config.from_file(\"config.json\", load=json.load)\nsrc/flask/config.py:248:            app.config.from_file(\"config.toml\", load=toml.load)\ntests/test_config.py:33:def test_config_from_file():\ntests/test_config.py:36:    app.config.from_file(os.path.join(current_dir, \"static\", \"config.json\"), json.load)\ntests/test_config.py:181:        app.config.from_file(\"missing.json\", load=json.load)\ntests/test_config.py:187:    assert not app.config.from_file(\"missing.json\", load=json.load, silent=True)\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/flask/config.py",
+            "tests/test_config.py"
+          ],
+          "n_lines": 7,
+          "latency_seconds": 0.00463
+        },
+        "quote_only": {
+          "command": "git grep -n \"from_file\" -- '*.py' | head -20",
+          "stdout": "src/flask/config.py:232:    def from_file(\nsrc/flask/config.py:245:            app.config.from_file(\"config.json\", load=json.load)\nsrc/flask/config.py:248:            app.config.from_file(\"config.toml\", load=toml.load)\ntests/test_config.py:33:def test_config_from_file():\ntests/test_config.py:36:    app.config.from_file(os.path.join(current_dir, \"static\", \"config.json\"), json.load)\ntests/test_config.py:181:        app.config.from_file(\"missing.json\", load=json.load)\ntests/test_config.py:187:    assert not app.config.from_file(\"missing.json\", load=json.load, silent=True)\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/flask/config.py",
+            "tests/test_config.py"
+          ],
+          "n_lines": 7,
+          "latency_seconds": 0.00457
+        },
+        "quote_casefold": {
+          "command": "git grep -n -i -F from_file -- '*.py' | head -20",
+          "stdout": "src/flask/config.py:232:    def from_file(\nsrc/flask/config.py:245:            app.config.from_file(\"config.json\", load=json.load)\nsrc/flask/config.py:248:            app.config.from_file(\"config.toml\", load=toml.load)\ntests/test_config.py:33:def test_config_from_file():\ntests/test_config.py:36:    app.config.from_file(os.path.join(current_dir, \"static\", \"config.json\"), json.load)\ntests/test_config.py:181:        app.config.from_file(\"missing.json\", load=json.load)\ntests/test_config.py:187:    assert not app.config.from_file(\"missing.json\", load=json.load, silent=True)\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/flask/config.py",
+            "tests/test_config.py"
+          ],
+          "n_lines": 7,
+          "latency_seconds": 0.00412
+        },
+        "quote_casefold_filtered": {
+          "command": "git grep -n -i -F from_file -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "src/flask/config.py:232:    def from_file(\nsrc/flask/config.py:245:            app.config.from_file(\"config.json\", load=json.load)\nsrc/flask/config.py:248:            app.config.from_file(\"config.toml\", load=toml.load)\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/flask/config.py"
+          ],
+          "n_lines": 3,
+          "latency_seconds": 0.00406
+        },
+        "exp001a_current": {
+          "command": "git ls-files '*.py' | grep -i -F Config | grep -Ev '(^|/)(tests?|docs?|examples?)/' | head -10",
+          "stdout": "src/flask/config.py\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/flask/config.py"
+          ],
+          "n_lines": 1,
+          "latency_seconds": 0.00531
+        }
+      }
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "split": "dev",
+      "repo": "psf/requests",
+      "historical_git_tree": "62502eaa272d8566a1b282039f07c5f1fcff14e3",
+      "content_token": "resolve_redirects",
+      "filename_token": "Session",
+      "candidate_uses_filename_first": true,
+      "bash_glob_expanded": true,
+      "all_source_tree_bytes_unchanged": true,
+      "stdout_reproduced_exactly_for_v15_and_001a": true,
+      "variants": {
+        "v15_original": {
+          "command": "git grep -n \"resolve_redirects\" -- *.py | head -20",
+          "stdout": "",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [],
+          "n_lines": 0,
+          "latency_seconds": 0.00372
+        },
+        "quote_only": {
+          "command": "git grep -n \"resolve_redirects\" -- '*.py' | head -20",
+          "stdout": "requests/models.py:606:        been processed automatically (by :meth:`Session.resolve_redirects`).\nrequests/sessions.py:84:    def resolve_redirects(self, resp, req, stream=False, timeout=None,\nrequests/sessions.py:480:        # Set up variables needed for resolve_redirects and dispatching of hooks\nrequests/sessions.py:514:        gen = self.resolve_redirects(r, request,\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "requests/models.py",
+            "requests/sessions.py"
+          ],
+          "n_lines": 4,
+          "latency_seconds": 0.0045
+        },
+        "quote_casefold": {
+          "command": "git grep -n -i -F resolve_redirects -- '*.py' | head -20",
+          "stdout": "requests/models.py:606:        been processed automatically (by :meth:`Session.resolve_redirects`).\nrequests/sessions.py:84:    def resolve_redirects(self, resp, req, stream=False, timeout=None,\nrequests/sessions.py:480:        # Set up variables needed for resolve_redirects and dispatching of hooks\nrequests/sessions.py:514:        gen = self.resolve_redirects(r, request,\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "requests/models.py",
+            "requests/sessions.py"
+          ],
+          "n_lines": 4,
+          "latency_seconds": 0.00459
+        },
+        "quote_casefold_filtered": {
+          "command": "git grep -n -i -F resolve_redirects -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "requests/models.py:606:        been processed automatically (by :meth:`Session.resolve_redirects`).\nrequests/sessions.py:84:    def resolve_redirects(self, resp, req, stream=False, timeout=None,\nrequests/sessions.py:480:        # Set up variables needed for resolve_redirects and dispatching of hooks\nrequests/sessions.py:514:        gen = self.resolve_redirects(r, request,\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "requests/models.py",
+            "requests/sessions.py"
+          ],
+          "n_lines": 4,
+          "latency_seconds": 0.0052
+        },
+        "exp001a_current": {
+          "command": "git ls-files '*.py' | grep -i -F Session | grep -Ev '(^|/)(tests?|docs?|examples?)/' | head -10",
+          "stdout": "requests/sessions.py\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "requests/sessions.py"
+          ],
+          "n_lines": 1,
+          "latency_seconds": 0.00532
+        }
+      }
+    },
+    {
+      "instance_id": "psf__requests-2148",
+      "split": "dev",
+      "repo": "psf/requests",
+      "historical_git_tree": "319437ae6f0d767c5885aff9d2c08cfe95e91e31",
+      "content_token": "ConnectionError",
+      "filename_token": null,
+      "candidate_uses_filename_first": false,
+      "bash_glob_expanded": true,
+      "all_source_tree_bytes_unchanged": true,
+      "stdout_reproduced_exactly_for_v15_and_001a": true,
+      "variants": {
+        "v15_original": {
+          "command": "git grep -n \"ConnectionError\" -- *.py | head -20",
+          "stdout": "",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [],
+          "n_lines": 0,
+          "latency_seconds": 0.00594
+        },
+        "quote_only": {
+          "command": "git grep -n \"ConnectionError\" -- '*.py' | head -20",
+          "stdout": "requests/__init__.py:65:    TooManyRedirects, HTTPError, ConnectionError\nrequests/adapters.py:28:from .exceptions import ConnectionError, Timeout, SSLError, ProxyError\nrequests/adapters.py:390:            raise ConnectionError(sockerr, request=request)\nrequests/adapters.py:393:            raise ConnectionError(e, request=request)\nrequests/exceptions.py:34:class ConnectionError(RequestException):\nrequests/exceptions.py:38:class ProxyError(ConnectionError):\nrequests/exceptions.py:42:class SSLError(ConnectionError):\nrequests/packages/urllib3/exceptions.py:57:ConnectionError = ProtocolError\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "requests/__init__.py",
+            "requests/adapters.py",
+            "requests/exceptions.py",
+            "requests/packages/urllib3/exceptions.py"
+          ],
+          "n_lines": 8,
+          "latency_seconds": 0.00544
+        },
+        "quote_casefold": {
+          "command": "git grep -n -i -F ConnectionError -- '*.py' | head -20",
+          "stdout": "requests/__init__.py:65:    TooManyRedirects, HTTPError, ConnectionError\nrequests/adapters.py:28:from .exceptions import ConnectionError, Timeout, SSLError, ProxyError\nrequests/adapters.py:390:            raise ConnectionError(sockerr, request=request)\nrequests/adapters.py:393:            raise ConnectionError(e, request=request)\nrequests/exceptions.py:34:class ConnectionError(RequestException):\nrequests/exceptions.py:38:class ProxyError(ConnectionError):\nrequests/exceptions.py:42:class SSLError(ConnectionError):\nrequests/packages/urllib3/exceptions.py:57:ConnectionError = ProtocolError\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "requests/__init__.py",
+            "requests/adapters.py",
+            "requests/exceptions.py",
+            "requests/packages/urllib3/exceptions.py"
+          ],
+          "n_lines": 8,
+          "latency_seconds": 0.00573
+        },
+        "quote_casefold_filtered": {
+          "command": "git grep -n -i -F ConnectionError -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "requests/__init__.py:65:    TooManyRedirects, HTTPError, ConnectionError\nrequests/adapters.py:28:from .exceptions import ConnectionError, Timeout, SSLError, ProxyError\nrequests/adapters.py:390:            raise ConnectionError(sockerr, request=request)\nrequests/adapters.py:393:            raise ConnectionError(e, request=request)\nrequests/exceptions.py:34:class ConnectionError(RequestException):\nrequests/exceptions.py:38:class ProxyError(ConnectionError):\nrequests/exceptions.py:42:class SSLError(ConnectionError):\nrequests/packages/urllib3/exceptions.py:57:ConnectionError = ProtocolError\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "requests/__init__.py",
+            "requests/adapters.py",
+            "requests/exceptions.py",
+            "requests/packages/urllib3/exceptions.py"
+          ],
+          "n_lines": 8,
+          "latency_seconds": 0.00468
+        },
+        "exp001a_current": {
+          "command": "git grep -n -i -F ConnectionError -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "requests/__init__.py:65:    TooManyRedirects, HTTPError, ConnectionError\nrequests/adapters.py:28:from .exceptions import ConnectionError, Timeout, SSLError, ProxyError\nrequests/adapters.py:390:            raise ConnectionError(sockerr, request=request)\nrequests/adapters.py:393:            raise ConnectionError(e, request=request)\nrequests/exceptions.py:34:class ConnectionError(RequestException):\nrequests/exceptions.py:38:class ProxyError(ConnectionError):\nrequests/exceptions.py:42:class SSLError(ConnectionError):\nrequests/packages/urllib3/exceptions.py:57:ConnectionError = ProtocolError\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "requests/__init__.py",
+            "requests/adapters.py",
+            "requests/exceptions.py",
+            "requests/packages/urllib3/exceptions.py"
+          ],
+          "n_lines": 8,
+          "latency_seconds": 0.00498
+        }
+      }
+    },
+    {
+      "instance_id": "psf__requests-2317",
+      "split": "dev",
+      "repo": "psf/requests",
+      "historical_git_tree": "980e006268fb816b7d2686baef7242418d895d9a",
+      "content_token": "builtin_str",
+      "filename_token": "sessions",
+      "candidate_uses_filename_first": true,
+      "bash_glob_expanded": true,
+      "all_source_tree_bytes_unchanged": true,
+      "stdout_reproduced_exactly_for_v15_and_001a": true,
+      "variants": {
+        "v15_original": {
+          "command": "git grep -n \"builtin_str\" -- *.py | head -20",
+          "stdout": "test_requests.py:19:    Morsel, cookielib, getproxies, str, urljoin, urlparse, is_py3, builtin_str)\ntest_requests.py:999:        assert isinstance(s, builtin_str)\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "test_requests.py"
+          ],
+          "n_lines": 2,
+          "latency_seconds": 0.00371
+        },
+        "quote_only": {
+          "command": "git grep -n \"builtin_str\" -- '*.py' | head -20",
+          "stdout": "requests/compat.py:96:    builtin_str = str\nrequests/compat.py:111:    builtin_str = str\nrequests/models.py:34:    is_py2, chardet, json, builtin_str, basestring)\nrequests/models.py:443:                self.headers['Content-Length'] = builtin_str(length)\nrequests/models.py:469:            self.headers['Content-Length'] = builtin_str(body.tell())\nrequests/models.py:474:                self.headers['Content-Length'] = builtin_str(l)\nrequests/sessions.py:16:from .compat import cookielib, OrderedDict, urljoin, urlparse, builtin_str\nrequests/sessions.py:428:        method = builtin_str(method)\nrequests/utils.py:27:                     builtin_str, getproxies, proxy_bypass, urlunparse)\nrequests/utils.py:663:    if isinstance(string, builtin_str):\ntest_requests.py:19:    Morsel, cookielib, getproxies, str, urljoin, urlparse, is_py3, builtin_str)\ntest_requests.py:999:        assert isinstance(s, builtin_str)\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "requests/compat.py",
+            "requests/models.py",
+            "requests/sessions.py",
+            "requests/utils.py",
+            "test_requests.py"
+          ],
+          "n_lines": 12,
+          "latency_seconds": 0.00423
+        },
+        "quote_casefold": {
+          "command": "git grep -n -i -F builtin_str -- '*.py' | head -20",
+          "stdout": "requests/compat.py:96:    builtin_str = str\nrequests/compat.py:111:    builtin_str = str\nrequests/models.py:34:    is_py2, chardet, json, builtin_str, basestring)\nrequests/models.py:443:                self.headers['Content-Length'] = builtin_str(length)\nrequests/models.py:469:            self.headers['Content-Length'] = builtin_str(body.tell())\nrequests/models.py:474:                self.headers['Content-Length'] = builtin_str(l)\nrequests/sessions.py:16:from .compat import cookielib, OrderedDict, urljoin, urlparse, builtin_str\nrequests/sessions.py:428:        method = builtin_str(method)\nrequests/utils.py:27:                     builtin_str, getproxies, proxy_bypass, urlunparse)\nrequests/utils.py:663:    if isinstance(string, builtin_str):\ntest_requests.py:19:    Morsel, cookielib, getproxies, str, urljoin, urlparse, is_py3, builtin_str)\ntest_requests.py:999:        assert isinstance(s, builtin_str)\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "requests/compat.py",
+            "requests/models.py",
+            "requests/sessions.py",
+            "requests/utils.py",
+            "test_requests.py"
+          ],
+          "n_lines": 12,
+          "latency_seconds": 0.00446
+        },
+        "quote_casefold_filtered": {
+          "command": "git grep -n -i -F builtin_str -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "requests/compat.py:96:    builtin_str = str\nrequests/compat.py:111:    builtin_str = str\nrequests/models.py:34:    is_py2, chardet, json, builtin_str, basestring)\nrequests/models.py:443:                self.headers['Content-Length'] = builtin_str(length)\nrequests/models.py:469:            self.headers['Content-Length'] = builtin_str(body.tell())\nrequests/models.py:474:                self.headers['Content-Length'] = builtin_str(l)\nrequests/sessions.py:16:from .compat import cookielib, OrderedDict, urljoin, urlparse, builtin_str\nrequests/sessions.py:428:        method = builtin_str(method)\nrequests/utils.py:27:                     builtin_str, getproxies, proxy_bypass, urlunparse)\nrequests/utils.py:663:    if isinstance(string, builtin_str):\ntest_requests.py:19:    Morsel, cookielib, getproxies, str, urljoin, urlparse, is_py3, builtin_str)\ntest_requests.py:999:        assert isinstance(s, builtin_str)\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "requests/compat.py",
+            "requests/models.py",
+            "requests/sessions.py",
+            "requests/utils.py",
+            "test_requests.py"
+          ],
+          "n_lines": 12,
+          "latency_seconds": 0.00452
+        },
+        "exp001a_current": {
+          "command": "git ls-files '*.py' | grep -i -F sessions | grep -Ev '(^|/)(tests?|docs?|examples?)/' | head -10",
+          "stdout": "requests/sessions.py\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "requests/sessions.py"
+          ],
+          "n_lines": 1,
+          "latency_seconds": 0.00417
+        }
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-11143",
+      "split": "dev",
+      "repo": "pytest-dev/pytest",
+      "historical_git_tree": "5e87fec76a0ead331441eaf05a1510c6c6efe6cf",
+      "content_token": "docstring",
+      "filename_token": null,
+      "candidate_uses_filename_first": false,
+      "bash_glob_expanded": true,
+      "all_source_tree_bytes_unchanged": true,
+      "stdout_reproduced_exactly_for_v15_and_001a": true,
+      "variants": {
+        "v15_original": {
+          "command": "git grep -n \"docstring\" -- *.py | head -20",
+          "stdout": "",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [],
+          "n_lines": 0,
+          "latency_seconds": 0.00361
+        },
+        "quote_only": {
+          "command": "git grep -n \"docstring\" -- '*.py' | head -20",
+          "stdout": "src/_pytest/assertion/rewrite.py:667:        # docstrings and __future__ imports, so first figure out where that is.\nsrc/_pytest/assertion/rewrite.py:668:        doc = getattr(mod, \"docstring\", None)\nsrc/_pytest/assertion/rewrite.py:669:        expect_docstring = doc is None\nsrc/_pytest/assertion/rewrite.py:676:                expect_docstring\nsrc/_pytest/assertion/rewrite.py:683:                expect_docstring = False\nsrc/_pytest/assertion/rewrite.py:745:    def is_rewrite_disabled(docstring: str) -> bool:\nsrc/_pytest/assertion/rewrite.py:746:        return \"PYTEST_DONT_REWRITE\" in docstring\nsrc/_pytest/doctest.py:347:                assert failure.test.docstring is not None\nsrc/_pytest/doctest.py:348:                lines = failure.test.docstring.splitlines(False)\nsrc/_pytest/doctest.py:354:                # trim docstring error lines to 10\nsrc/_pytest/python.py:1583:            write_docstring(\nsrc/_pytest/python.py:1587:            tw.line(\"    no docstring available\", red=True)\nsrc/_pytest/python.py:1666:            write_docstring(tw, doc.split(\"\\n\\n\")[0] if verbose <= 0 else doc)\nsrc/_pytest/python.py:1668:            tw.line(\"    no docstring available\", red=True)\nsrc/_pytest/python.py:1672:def write_docstring(tw: TerminalWriter, doc: str, indent: str = \"    \") -> None:\ntesting/acceptance_test.py:355:    def test_docstring_on_hookspec(self) -> None:\ntesting/acceptance_test.py:360:                assert value.__doc__, \"no docstring for %s\" % name\ntesting/python/show_fixtures_per_test.py:19:            \"\"\"arg1 docstring\"\"\"\ntesting/python/show_fixtures_per_test.py:33:            \"    arg1 docstring\",\ntesting/python/show_fixtures_per_test.py:45:            \"\"\"arg1 docstring\"\"\"\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/_pytest/assertion/rewrite.py",
+            "src/_pytest/doctest.py",
+            "src/_pytest/python.py",
+            "testing/acceptance_test.py",
+            "testing/python/show_fixtures_per_test.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00513
+        },
+        "quote_casefold": {
+          "command": "git grep -n -i -F docstring -- '*.py' | head -20",
+          "stdout": "src/_pytest/assertion/rewrite.py:667:        # docstrings and __future__ imports, so first figure out where that is.\nsrc/_pytest/assertion/rewrite.py:668:        doc = getattr(mod, \"docstring\", None)\nsrc/_pytest/assertion/rewrite.py:669:        expect_docstring = doc is None\nsrc/_pytest/assertion/rewrite.py:676:                expect_docstring\nsrc/_pytest/assertion/rewrite.py:683:                expect_docstring = False\nsrc/_pytest/assertion/rewrite.py:745:    def is_rewrite_disabled(docstring: str) -> bool:\nsrc/_pytest/assertion/rewrite.py:746:        return \"PYTEST_DONT_REWRITE\" in docstring\nsrc/_pytest/doctest.py:347:                assert failure.test.docstring is not None\nsrc/_pytest/doctest.py:348:                lines = failure.test.docstring.splitlines(False)\nsrc/_pytest/doctest.py:354:                # trim docstring error lines to 10\nsrc/_pytest/python.py:1583:            write_docstring(\nsrc/_pytest/python.py:1587:            tw.line(\"    no docstring available\", red=True)\nsrc/_pytest/python.py:1666:            write_docstring(tw, doc.split(\"\\n\\n\")[0] if verbose <= 0 else doc)\nsrc/_pytest/python.py:1668:            tw.line(\"    no docstring available\", red=True)\nsrc/_pytest/python.py:1672:def write_docstring(tw: TerminalWriter, doc: str, indent: str = \"    \") -> None:\ntesting/acceptance_test.py:355:    def test_docstring_on_hookspec(self) -> None:\ntesting/acceptance_test.py:360:                assert value.__doc__, \"no docstring for %s\" % name\ntesting/python/show_fixtures_per_test.py:19:            \"\"\"arg1 docstring\"\"\"\ntesting/python/show_fixtures_per_test.py:33:            \"    arg1 docstring\",\ntesting/python/show_fixtures_per_test.py:45:            \"\"\"arg1 docstring\"\"\"\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/_pytest/assertion/rewrite.py",
+            "src/_pytest/doctest.py",
+            "src/_pytest/python.py",
+            "testing/acceptance_test.py",
+            "testing/python/show_fixtures_per_test.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00528
+        },
+        "quote_casefold_filtered": {
+          "command": "git grep -n -i -F docstring -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "src/_pytest/assertion/rewrite.py:667:        # docstrings and __future__ imports, so first figure out where that is.\nsrc/_pytest/assertion/rewrite.py:668:        doc = getattr(mod, \"docstring\", None)\nsrc/_pytest/assertion/rewrite.py:669:        expect_docstring = doc is None\nsrc/_pytest/assertion/rewrite.py:676:                expect_docstring\nsrc/_pytest/assertion/rewrite.py:683:                expect_docstring = False\nsrc/_pytest/assertion/rewrite.py:745:    def is_rewrite_disabled(docstring: str) -> bool:\nsrc/_pytest/assertion/rewrite.py:746:        return \"PYTEST_DONT_REWRITE\" in docstring\nsrc/_pytest/doctest.py:347:                assert failure.test.docstring is not None\nsrc/_pytest/doctest.py:348:                lines = failure.test.docstring.splitlines(False)\nsrc/_pytest/doctest.py:354:                # trim docstring error lines to 10\nsrc/_pytest/python.py:1583:            write_docstring(\nsrc/_pytest/python.py:1587:            tw.line(\"    no docstring available\", red=True)\nsrc/_pytest/python.py:1666:            write_docstring(tw, doc.split(\"\\n\\n\")[0] if verbose <= 0 else doc)\nsrc/_pytest/python.py:1668:            tw.line(\"    no docstring available\", red=True)\nsrc/_pytest/python.py:1672:def write_docstring(tw: TerminalWriter, doc: str, indent: str = \"    \") -> None:\ntesting/acceptance_test.py:355:    def test_docstring_on_hookspec(self) -> None:\ntesting/acceptance_test.py:360:                assert value.__doc__, \"no docstring for %s\" % name\ntesting/python/show_fixtures_per_test.py:19:            \"\"\"arg1 docstring\"\"\"\ntesting/python/show_fixtures_per_test.py:33:            \"    arg1 docstring\",\ntesting/python/show_fixtures_per_test.py:45:            \"\"\"arg1 docstring\"\"\"\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/_pytest/assertion/rewrite.py",
+            "src/_pytest/doctest.py",
+            "src/_pytest/python.py",
+            "testing/acceptance_test.py",
+            "testing/python/show_fixtures_per_test.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00472
+        },
+        "exp001a_current": {
+          "command": "git grep -n -i -F docstring -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "src/_pytest/assertion/rewrite.py:667:        # docstrings and __future__ imports, so first figure out where that is.\nsrc/_pytest/assertion/rewrite.py:668:        doc = getattr(mod, \"docstring\", None)\nsrc/_pytest/assertion/rewrite.py:669:        expect_docstring = doc is None\nsrc/_pytest/assertion/rewrite.py:676:                expect_docstring\nsrc/_pytest/assertion/rewrite.py:683:                expect_docstring = False\nsrc/_pytest/assertion/rewrite.py:745:    def is_rewrite_disabled(docstring: str) -> bool:\nsrc/_pytest/assertion/rewrite.py:746:        return \"PYTEST_DONT_REWRITE\" in docstring\nsrc/_pytest/doctest.py:347:                assert failure.test.docstring is not None\nsrc/_pytest/doctest.py:348:                lines = failure.test.docstring.splitlines(False)\nsrc/_pytest/doctest.py:354:                # trim docstring error lines to 10\nsrc/_pytest/python.py:1583:            write_docstring(\nsrc/_pytest/python.py:1587:            tw.line(\"    no docstring available\", red=True)\nsrc/_pytest/python.py:1666:            write_docstring(tw, doc.split(\"\\n\\n\")[0] if verbose <= 0 else doc)\nsrc/_pytest/python.py:1668:            tw.line(\"    no docstring available\", red=True)\nsrc/_pytest/python.py:1672:def write_docstring(tw: TerminalWriter, doc: str, indent: str = \"    \") -> None:\ntesting/acceptance_test.py:355:    def test_docstring_on_hookspec(self) -> None:\ntesting/acceptance_test.py:360:                assert value.__doc__, \"no docstring for %s\" % name\ntesting/python/show_fixtures_per_test.py:19:            \"\"\"arg1 docstring\"\"\"\ntesting/python/show_fixtures_per_test.py:33:            \"    arg1 docstring\",\ntesting/python/show_fixtures_per_test.py:45:            \"\"\"arg1 docstring\"\"\"\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/_pytest/assertion/rewrite.py",
+            "src/_pytest/doctest.py",
+            "src/_pytest/python.py",
+            "testing/acceptance_test.py",
+            "testing/python/show_fixtures_per_test.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00538
+        }
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-11148",
+      "split": "dev",
+      "repo": "pytest-dev/pytest",
+      "historical_git_tree": "267464d5003e787a35a2379726c9c5a54a43cf17",
+      "content_token": "importlib",
+      "filename_token": null,
+      "candidate_uses_filename_first": false,
+      "bash_glob_expanded": true,
+      "all_source_tree_bytes_unchanged": true,
+      "stdout_reproduced_exactly_for_v15_and_001a": true,
+      "variants": {
+        "v15_original": {
+          "command": "git grep -n \"importlib\" -- *.py | head -20",
+          "stdout": "",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [],
+          "n_lines": 0,
+          "latency_seconds": 0.00472
+        },
+        "quote_only": {
+          "command": "git grep -n \"importlib\" -- '*.py' | head -20",
+          "stdout": "doc/en/example/assertion/failure_demo.py:192:    import importlib.util\ndoc/en/example/assertion/failure_demo.py:197:    spec = importlib.util.spec_from_loader(name, loader=None)\ndoc/en/example/assertion/failure_demo.py:198:    module = importlib.util.module_from_spec(spec)\nsrc/_pytest/_py/path.py:6:import importlib.util\nsrc/_pytest/_py/path.py:1083:        Special value of ensuresyspath==\"importlib\" is intended\nsrc/_pytest/_py/path.py:1094:        if ensuresyspath == \"importlib\":\nsrc/_pytest/_py/path.py:1097:            spec = importlib.util.spec_from_file_location(modname, str(self))\nsrc/_pytest/_py/path.py:1102:            mod = importlib.util.module_from_spec(spec)\nsrc/_pytest/assertion/rewrite.py:5:import importlib.abc\nsrc/_pytest/assertion/rewrite.py:6:import importlib.machinery\nsrc/_pytest/assertion/rewrite.py:7:import importlib.util\nsrc/_pytest/assertion/rewrite.py:56:class AssertionRewritingHook(importlib.abc.MetaPathFinder, importlib.abc.Loader):\nsrc/_pytest/assertion/rewrite.py:80:    _find_spec = importlib.machinery.PathFinder.find_spec\nsrc/_pytest/assertion/rewrite.py:87:    ) -> Optional[importlib.machinery.ModuleSpec]:\nsrc/_pytest/assertion/rewrite.py:104:            or not isinstance(spec.loader, importlib.machinery.SourceFileLoader)\nsrc/_pytest/assertion/rewrite.py:115:        return importlib.util.spec_from_file_location(\nsrc/_pytest/assertion/rewrite.py:123:        self, spec: importlib.machinery.ModuleSpec\nsrc/_pytest/assertion/rewrite.py:277:            from importlib.resources.abc import TraversableResources\nsrc/_pytest/assertion/rewrite.py:279:            from importlib.abc import TraversableResources\nsrc/_pytest/assertion/rewrite.py:283:                from importlib.readers import FileReader\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "doc/en/example/assertion/failure_demo.py",
+            "src/_pytest/_py/path.py",
+            "src/_pytest/assertion/rewrite.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00516
+        },
+        "quote_casefold": {
+          "command": "git grep -n -i -F importlib -- '*.py' | head -20",
+          "stdout": "doc/en/example/assertion/failure_demo.py:192:    import importlib.util\ndoc/en/example/assertion/failure_demo.py:197:    spec = importlib.util.spec_from_loader(name, loader=None)\ndoc/en/example/assertion/failure_demo.py:198:    module = importlib.util.module_from_spec(spec)\nsrc/_pytest/_py/path.py:6:import importlib.util\nsrc/_pytest/_py/path.py:1083:        Special value of ensuresyspath==\"importlib\" is intended\nsrc/_pytest/_py/path.py:1094:        if ensuresyspath == \"importlib\":\nsrc/_pytest/_py/path.py:1097:            spec = importlib.util.spec_from_file_location(modname, str(self))\nsrc/_pytest/_py/path.py:1102:            mod = importlib.util.module_from_spec(spec)\nsrc/_pytest/assertion/rewrite.py:5:import importlib.abc\nsrc/_pytest/assertion/rewrite.py:6:import importlib.machinery\nsrc/_pytest/assertion/rewrite.py:7:import importlib.util\nsrc/_pytest/assertion/rewrite.py:56:class AssertionRewritingHook(importlib.abc.MetaPathFinder, importlib.abc.Loader):\nsrc/_pytest/assertion/rewrite.py:80:    _find_spec = importlib.machinery.PathFinder.find_spec\nsrc/_pytest/assertion/rewrite.py:87:    ) -> Optional[importlib.machinery.ModuleSpec]:\nsrc/_pytest/assertion/rewrite.py:104:            or not isinstance(spec.loader, importlib.machinery.SourceFileLoader)\nsrc/_pytest/assertion/rewrite.py:115:        return importlib.util.spec_from_file_location(\nsrc/_pytest/assertion/rewrite.py:123:        self, spec: importlib.machinery.ModuleSpec\nsrc/_pytest/assertion/rewrite.py:277:            from importlib.resources.abc import TraversableResources\nsrc/_pytest/assertion/rewrite.py:279:            from importlib.abc import TraversableResources\nsrc/_pytest/assertion/rewrite.py:283:                from importlib.readers import FileReader\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "doc/en/example/assertion/failure_demo.py",
+            "src/_pytest/_py/path.py",
+            "src/_pytest/assertion/rewrite.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00457
+        },
+        "quote_casefold_filtered": {
+          "command": "git grep -n -i -F importlib -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "doc/en/example/assertion/failure_demo.py:192:    import importlib.util\ndoc/en/example/assertion/failure_demo.py:197:    spec = importlib.util.spec_from_loader(name, loader=None)\ndoc/en/example/assertion/failure_demo.py:198:    module = importlib.util.module_from_spec(spec)\nsrc/_pytest/_py/path.py:6:import importlib.util\nsrc/_pytest/_py/path.py:1083:        Special value of ensuresyspath==\"importlib\" is intended\nsrc/_pytest/_py/path.py:1094:        if ensuresyspath == \"importlib\":\nsrc/_pytest/_py/path.py:1097:            spec = importlib.util.spec_from_file_location(modname, str(self))\nsrc/_pytest/_py/path.py:1102:            mod = importlib.util.module_from_spec(spec)\nsrc/_pytest/assertion/rewrite.py:5:import importlib.abc\nsrc/_pytest/assertion/rewrite.py:6:import importlib.machinery\nsrc/_pytest/assertion/rewrite.py:7:import importlib.util\nsrc/_pytest/assertion/rewrite.py:56:class AssertionRewritingHook(importlib.abc.MetaPathFinder, importlib.abc.Loader):\nsrc/_pytest/assertion/rewrite.py:80:    _find_spec = importlib.machinery.PathFinder.find_spec\nsrc/_pytest/assertion/rewrite.py:87:    ) -> Optional[importlib.machinery.ModuleSpec]:\nsrc/_pytest/assertion/rewrite.py:104:            or not isinstance(spec.loader, importlib.machinery.SourceFileLoader)\nsrc/_pytest/assertion/rewrite.py:115:        return importlib.util.spec_from_file_location(\nsrc/_pytest/assertion/rewrite.py:123:        self, spec: importlib.machinery.ModuleSpec\nsrc/_pytest/assertion/rewrite.py:277:            from importlib.resources.abc import TraversableResources\nsrc/_pytest/assertion/rewrite.py:279:            from importlib.abc import TraversableResources\nsrc/_pytest/assertion/rewrite.py:283:                from importlib.readers import FileReader\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "doc/en/example/assertion/failure_demo.py",
+            "src/_pytest/_py/path.py",
+            "src/_pytest/assertion/rewrite.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00463
+        },
+        "exp001a_current": {
+          "command": "git grep -n -i -F importlib -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "doc/en/example/assertion/failure_demo.py:192:    import importlib.util\ndoc/en/example/assertion/failure_demo.py:197:    spec = importlib.util.spec_from_loader(name, loader=None)\ndoc/en/example/assertion/failure_demo.py:198:    module = importlib.util.module_from_spec(spec)\nsrc/_pytest/_py/path.py:6:import importlib.util\nsrc/_pytest/_py/path.py:1083:        Special value of ensuresyspath==\"importlib\" is intended\nsrc/_pytest/_py/path.py:1094:        if ensuresyspath == \"importlib\":\nsrc/_pytest/_py/path.py:1097:            spec = importlib.util.spec_from_file_location(modname, str(self))\nsrc/_pytest/_py/path.py:1102:            mod = importlib.util.module_from_spec(spec)\nsrc/_pytest/assertion/rewrite.py:5:import importlib.abc\nsrc/_pytest/assertion/rewrite.py:6:import importlib.machinery\nsrc/_pytest/assertion/rewrite.py:7:import importlib.util\nsrc/_pytest/assertion/rewrite.py:56:class AssertionRewritingHook(importlib.abc.MetaPathFinder, importlib.abc.Loader):\nsrc/_pytest/assertion/rewrite.py:80:    _find_spec = importlib.machinery.PathFinder.find_spec\nsrc/_pytest/assertion/rewrite.py:87:    ) -> Optional[importlib.machinery.ModuleSpec]:\nsrc/_pytest/assertion/rewrite.py:104:            or not isinstance(spec.loader, importlib.machinery.SourceFileLoader)\nsrc/_pytest/assertion/rewrite.py:115:        return importlib.util.spec_from_file_location(\nsrc/_pytest/assertion/rewrite.py:123:        self, spec: importlib.machinery.ModuleSpec\nsrc/_pytest/assertion/rewrite.py:277:            from importlib.resources.abc import TraversableResources\nsrc/_pytest/assertion/rewrite.py:279:            from importlib.abc import TraversableResources\nsrc/_pytest/assertion/rewrite.py:283:                from importlib.readers import FileReader\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "doc/en/example/assertion/failure_demo.py",
+            "src/_pytest/_py/path.py",
+            "src/_pytest/assertion/rewrite.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00433
+        }
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5103",
+      "split": "dev",
+      "repo": "pytest-dev/pytest",
+      "historical_git_tree": "b4f1860291efcf9923b7977bed74e34299ac4ebb",
+      "content_token": "all",
+      "filename_token": null,
+      "candidate_uses_filename_first": false,
+      "bash_glob_expanded": true,
+      "all_source_tree_bytes_unchanged": true,
+      "stdout_reproduced_exactly_for_v15_and_001a": true,
+      "variants": {
+        "v15_original": {
+          "command": "git grep -n \"all\" -- *.py | head -20",
+          "stdout": "setup.py:37:        install_requires=INSTALL_REQUIRES,\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "setup.py"
+          ],
+          "n_lines": 1,
+          "latency_seconds": 0.00398
+        },
+        "quote_only": {
+          "command": "git grep -n \"all\" -- '*.py' | head -20",
+          "stdout": "doc/en/conf.py:8:# Note that not all possible configuration values are present in this\ndoc/en/conf.py:78:# Else, today_fmt is used as the format for a strftime call.\ndoc/en/conf.py:97:# The reST default role (used for this markup: `text`) to use for all documents.\ndoc/en/conf.py:103:# If true, the current module name will be prepended to all description\ndoc/en/conf.py:162:# typographically correct entities.\ndoc/en/conf.py:210:# If true, an OpenSearch description file will be output, and all pages will\ndoc/en/conf.py:259:# Documents to append as an appendix to all manuals.\ndoc/en/example/assertion/failure_demo.py:247:    def test_try_finally(self):\ndoc/en/example/assertion/failure_demo.py:251:        finally:\ndoc/en/example/assertion/test_setup_flow_example.py:40:Note that ``setup_class(TestStateFullThing)`` is called and not\ndoc/en/example/assertion/test_setup_flow_example.py:43:your setup function callable.\ndoc/en/example/multipython.py:46:        subprocess.check_call((self.pythonpath, str(dumpfile)))\ndoc/en/example/multipython.py:66:        subprocess.check_call((self.pythonpath, str(loadfile)))\ndoc/en/example/nonpython/conftest.py:31:        \"\"\" called when self.runtest() raises an exception. \"\"\"\nextra/get_issues.py:13:        get_data = {\"state\": \"all\"}\nextra/setup-py.test/setup.py:10:        description=\"please use 'pytest' for installation\",\nscripts/release.py:6:from subprocess import call\nscripts/release.py:7:from subprocess import check_call\nscripts/release.py:65:    check_call([\"git\", \"add\", str(target)])\nscripts/release.py:69:    \"\"\"Call regendoc tool to update examples and pytest output in the docs.\"\"\"\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "doc/en/conf.py",
+            "doc/en/example/assertion/failure_demo.py",
+            "doc/en/example/assertion/test_setup_flow_example.py",
+            "doc/en/example/multipython.py",
+            "doc/en/example/nonpython/conftest.py",
+            "extra/get_issues.py",
+            "extra/setup-py.test/setup.py",
+            "scripts/release.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00437
+        },
+        "quote_casefold": {
+          "command": "git grep -n -i -F all -- '*.py' | head -20",
+          "stdout": "doc/en/conf.py:8:# Note that not all possible configuration values are present in this\ndoc/en/conf.py:11:# All configuration values have a default; values that are commented out\ndoc/en/conf.py:78:# Else, today_fmt is used as the format for a strftime call.\ndoc/en/conf.py:97:# The reST default role (used for this markup: `text`) to use for all documents.\ndoc/en/conf.py:103:# If true, the current module name will be prepended to all description\ndoc/en/conf.py:162:# typographically correct entities.\ndoc/en/conf.py:210:# If true, an OpenSearch description file will be output, and all pages will\ndoc/en/conf.py:259:# Documents to append as an appendix to all manuals.\ndoc/en/conf.py:308:# Allow duplicate toc entries.\ndoc/en/example/assertion/failure_demo.py:247:    def test_try_finally(self):\ndoc/en/example/assertion/failure_demo.py:251:        finally:\ndoc/en/example/assertion/test_setup_flow_example.py:40:Note that ``setup_class(TestStateFullThing)`` is called and not\ndoc/en/example/assertion/test_setup_flow_example.py:43:your setup function callable.\ndoc/en/example/multipython.py:46:        subprocess.check_call((self.pythonpath, str(dumpfile)))\ndoc/en/example/multipython.py:66:        subprocess.check_call((self.pythonpath, str(loadfile)))\ndoc/en/example/nonpython/conftest.py:31:        \"\"\" called when self.runtest() raises an exception. \"\"\"\nextra/get_issues.py:13:        get_data = {\"state\": \"all\"}\nextra/setup-py.test/setup.py:10:        description=\"please use 'pytest' for installation\",\nscripts/release.py:6:from subprocess import call\nscripts/release.py:7:from subprocess import check_call\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "doc/en/conf.py",
+            "doc/en/example/assertion/failure_demo.py",
+            "doc/en/example/assertion/test_setup_flow_example.py",
+            "doc/en/example/multipython.py",
+            "doc/en/example/nonpython/conftest.py",
+            "extra/get_issues.py",
+            "extra/setup-py.test/setup.py",
+            "scripts/release.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00493
+        },
+        "quote_casefold_filtered": {
+          "command": "git grep -n -i -F all -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "doc/en/conf.py:8:# Note that not all possible configuration values are present in this\ndoc/en/conf.py:11:# All configuration values have a default; values that are commented out\ndoc/en/conf.py:78:# Else, today_fmt is used as the format for a strftime call.\ndoc/en/conf.py:97:# The reST default role (used for this markup: `text`) to use for all documents.\ndoc/en/conf.py:103:# If true, the current module name will be prepended to all description\ndoc/en/conf.py:162:# typographically correct entities.\ndoc/en/conf.py:210:# If true, an OpenSearch description file will be output, and all pages will\ndoc/en/conf.py:259:# Documents to append as an appendix to all manuals.\ndoc/en/conf.py:308:# Allow duplicate toc entries.\ndoc/en/example/assertion/failure_demo.py:247:    def test_try_finally(self):\ndoc/en/example/assertion/failure_demo.py:251:        finally:\ndoc/en/example/multipython.py:46:        subprocess.check_call((self.pythonpath, str(dumpfile)))\ndoc/en/example/multipython.py:66:        subprocess.check_call((self.pythonpath, str(loadfile)))\ndoc/en/example/nonpython/conftest.py:31:        \"\"\" called when self.runtest() raises an exception. \"\"\"\nextra/get_issues.py:13:        get_data = {\"state\": \"all\"}\nextra/setup-py.test/setup.py:10:        description=\"please use 'pytest' for installation\",\nscripts/release.py:6:from subprocess import call\nscripts/release.py:7:from subprocess import check_call\nscripts/release.py:65:    check_call([\"git\", \"add\", str(target)])\nscripts/release.py:69:    \"\"\"Call regendoc tool to update examples and pytest output in the docs.\"\"\"\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "doc/en/conf.py",
+            "doc/en/example/assertion/failure_demo.py",
+            "doc/en/example/multipython.py",
+            "doc/en/example/nonpython/conftest.py",
+            "extra/get_issues.py",
+            "extra/setup-py.test/setup.py",
+            "scripts/release.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00391
+        },
+        "exp001a_current": {
+          "command": "git grep -n -i -F all -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "doc/en/conf.py:8:# Note that not all possible configuration values are present in this\ndoc/en/conf.py:11:# All configuration values have a default; values that are commented out\ndoc/en/conf.py:78:# Else, today_fmt is used as the format for a strftime call.\ndoc/en/conf.py:97:# The reST default role (used for this markup: `text`) to use for all documents.\ndoc/en/conf.py:103:# If true, the current module name will be prepended to all description\ndoc/en/conf.py:162:# typographically correct entities.\ndoc/en/conf.py:210:# If true, an OpenSearch description file will be output, and all pages will\ndoc/en/conf.py:259:# Documents to append as an appendix to all manuals.\ndoc/en/conf.py:308:# Allow duplicate toc entries.\ndoc/en/example/assertion/failure_demo.py:247:    def test_try_finally(self):\ndoc/en/example/assertion/failure_demo.py:251:        finally:\ndoc/en/example/multipython.py:46:        subprocess.check_call((self.pythonpath, str(dumpfile)))\ndoc/en/example/multipython.py:66:        subprocess.check_call((self.pythonpath, str(loadfile)))\ndoc/en/example/nonpython/conftest.py:31:        \"\"\" called when self.runtest() raises an exception. \"\"\"\nextra/get_issues.py:13:        get_data = {\"state\": \"all\"}\nextra/setup-py.test/setup.py:10:        description=\"please use 'pytest' for installation\",\nscripts/release.py:6:from subprocess import call\nscripts/release.py:7:from subprocess import check_call\nscripts/release.py:65:    check_call([\"git\", \"add\", str(target)])\nscripts/release.py:69:    \"\"\"Call regendoc tool to update examples and pytest output in the docs.\"\"\"\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "doc/en/conf.py",
+            "doc/en/example/assertion/failure_demo.py",
+            "doc/en/example/multipython.py",
+            "doc/en/example/nonpython/conftest.py",
+            "extra/get_issues.py",
+            "extra/setup-py.test/setup.py",
+            "scripts/release.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00502
+        }
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5221",
+      "split": "dev",
+      "repo": "pytest-dev/pytest",
+      "historical_git_tree": "3efcdc2414e6d778661034a058bec6d5ef85b145",
+      "content_token": "fixtures",
+      "filename_token": null,
+      "candidate_uses_filename_first": false,
+      "bash_glob_expanded": true,
+      "all_source_tree_bytes_unchanged": true,
+      "stdout_reproduced_exactly_for_v15_and_001a": true,
+      "variants": {
+        "v15_original": {
+          "command": "git grep -n \"fixtures\" -- *.py | head -20",
+          "stdout": "",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [],
+          "n_lines": 0,
+          "latency_seconds": 0.00382
+        },
+        "quote_only": {
+          "command": "git grep -n \"fixtures\" -- '*.py' | head -20",
+          "stdout": "src/_pytest/_code/code.py:522:            Show fixtures (\"funcargs\" for legacy purposes) per traceback entry.\nsrc/_pytest/capture.py:78:    * fixture: when a test function or one of its fixture depend on the ``capsys`` or ``capfd`` fixtures. In this\nsrc/_pytest/capture.py:79:      case special handling is needed to ensure the fixtures take precedence over the global capture.\nsrc/_pytest/capture.py:250:capture_fixtures = {\"capfd\", \"capfdbinary\", \"capsys\", \"capsysbinary\"}\nsrc/_pytest/capture.py:254:    fixtures = set(request.fixturenames) & capture_fixtures - {name}\nsrc/_pytest/capture.py:255:    if fixtures:\nsrc/_pytest/capture.py:256:        fixtures = sorted(fixtures)\nsrc/_pytest/capture.py:257:        fixtures = fixtures[0] if len(fixtures) == 1 else fixtures\nsrc/_pytest/capture.py:259:            \"cannot use {} and {} at the same time\".format(fixtures, name)\nsrc/_pytest/capture.py:350:    fixtures.\nsrc/_pytest/compat.py:129:    revisit fixtures. The fixture mechanism should ask the node for\nsrc/_pytest/compat.py:270:    when we are creating fixtures, because we wrap the function object ourselves with a decorator\nsrc/_pytest/config/__init__.py:121:    \"fixtures\",\nsrc/_pytest/deprecated.py:25:    \"See https://docs.pytest.org/en/latest/fixture.html for more information about fixtures, and\\n\"\nsrc/_pytest/deprecated.py:26:    \"https://docs.pytest.org/en/latest/deprecations.html#calling-fixtures-directly about how to update your code.\"\nsrc/_pytest/deprecated.py:30:    \"'request' is a reserved name for fixtures and will raise an error in future versions\"\nsrc/_pytest/doctest.py:17:from _pytest.fixtures import FixtureRequest\nsrc/_pytest/doctest.py:191:            self.fixture_request = _setup_fixtures(self)\nsrc/_pytest/doctest.py:434:def _setup_fixtures(doctest_item):\nsrc/_pytest/doctest.py:448:    fixture_request._fillfixtures()\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/_pytest/_code/code.py",
+            "src/_pytest/capture.py",
+            "src/_pytest/compat.py",
+            "src/_pytest/config/__init__.py",
+            "src/_pytest/deprecated.py",
+            "src/_pytest/doctest.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00606
+        },
+        "quote_casefold": {
+          "command": "git grep -n -i -F fixtures -- '*.py' | head -20",
+          "stdout": "src/_pytest/_code/code.py:522:            Show fixtures (\"funcargs\" for legacy purposes) per traceback entry.\nsrc/_pytest/capture.py:78:    * fixture: when a test function or one of its fixture depend on the ``capsys`` or ``capfd`` fixtures. In this\nsrc/_pytest/capture.py:79:      case special handling is needed to ensure the fixtures take precedence over the global capture.\nsrc/_pytest/capture.py:250:capture_fixtures = {\"capfd\", \"capfdbinary\", \"capsys\", \"capsysbinary\"}\nsrc/_pytest/capture.py:254:    fixtures = set(request.fixturenames) & capture_fixtures - {name}\nsrc/_pytest/capture.py:255:    if fixtures:\nsrc/_pytest/capture.py:256:        fixtures = sorted(fixtures)\nsrc/_pytest/capture.py:257:        fixtures = fixtures[0] if len(fixtures) == 1 else fixtures\nsrc/_pytest/capture.py:259:            \"cannot use {} and {} at the same time\".format(fixtures, name)\nsrc/_pytest/capture.py:350:    fixtures.\nsrc/_pytest/compat.py:129:    revisit fixtures. The fixture mechanism should ask the node for\nsrc/_pytest/compat.py:270:    when we are creating fixtures, because we wrap the function object ourselves with a decorator\nsrc/_pytest/config/__init__.py:121:    \"fixtures\",\nsrc/_pytest/deprecated.py:23:    'Fixture \"{name}\" called directly. Fixtures are not meant to be called directly,\\n'\nsrc/_pytest/deprecated.py:25:    \"See https://docs.pytest.org/en/latest/fixture.html for more information about fixtures, and\\n\"\nsrc/_pytest/deprecated.py:26:    \"https://docs.pytest.org/en/latest/deprecations.html#calling-fixtures-directly about how to update your code.\"\nsrc/_pytest/deprecated.py:30:    \"'request' is a reserved name for fixtures and will raise an error in future versions\"\nsrc/_pytest/doctest.py:17:from _pytest.fixtures import FixtureRequest\nsrc/_pytest/doctest.py:191:            self.fixture_request = _setup_fixtures(self)\nsrc/_pytest/doctest.py:434:def _setup_fixtures(doctest_item):\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/_pytest/_code/code.py",
+            "src/_pytest/capture.py",
+            "src/_pytest/compat.py",
+            "src/_pytest/config/__init__.py",
+            "src/_pytest/deprecated.py",
+            "src/_pytest/doctest.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00538
+        },
+        "quote_casefold_filtered": {
+          "command": "git grep -n -i -F fixtures -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "src/_pytest/_code/code.py:522:            Show fixtures (\"funcargs\" for legacy purposes) per traceback entry.\nsrc/_pytest/capture.py:78:    * fixture: when a test function or one of its fixture depend on the ``capsys`` or ``capfd`` fixtures. In this\nsrc/_pytest/capture.py:79:      case special handling is needed to ensure the fixtures take precedence over the global capture.\nsrc/_pytest/capture.py:250:capture_fixtures = {\"capfd\", \"capfdbinary\", \"capsys\", \"capsysbinary\"}\nsrc/_pytest/capture.py:254:    fixtures = set(request.fixturenames) & capture_fixtures - {name}\nsrc/_pytest/capture.py:255:    if fixtures:\nsrc/_pytest/capture.py:256:        fixtures = sorted(fixtures)\nsrc/_pytest/capture.py:257:        fixtures = fixtures[0] if len(fixtures) == 1 else fixtures\nsrc/_pytest/capture.py:259:            \"cannot use {} and {} at the same time\".format(fixtures, name)\nsrc/_pytest/capture.py:350:    fixtures.\nsrc/_pytest/compat.py:129:    revisit fixtures. The fixture mechanism should ask the node for\nsrc/_pytest/compat.py:270:    when we are creating fixtures, because we wrap the function object ourselves with a decorator\nsrc/_pytest/config/__init__.py:121:    \"fixtures\",\nsrc/_pytest/deprecated.py:23:    'Fixture \"{name}\" called directly. Fixtures are not meant to be called directly,\\n'\nsrc/_pytest/deprecated.py:25:    \"See https://docs.pytest.org/en/latest/fixture.html for more information about fixtures, and\\n\"\nsrc/_pytest/deprecated.py:26:    \"https://docs.pytest.org/en/latest/deprecations.html#calling-fixtures-directly about how to update your code.\"\nsrc/_pytest/deprecated.py:30:    \"'request' is a reserved name for fixtures and will raise an error in future versions\"\nsrc/_pytest/doctest.py:17:from _pytest.fixtures import FixtureRequest\nsrc/_pytest/doctest.py:191:            self.fixture_request = _setup_fixtures(self)\nsrc/_pytest/doctest.py:434:def _setup_fixtures(doctest_item):\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/_pytest/_code/code.py",
+            "src/_pytest/capture.py",
+            "src/_pytest/compat.py",
+            "src/_pytest/config/__init__.py",
+            "src/_pytest/deprecated.py",
+            "src/_pytest/doctest.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00433
+        },
+        "exp001a_current": {
+          "command": "git grep -n -i -F fixtures -- '*.py' ':!tests/**' ':!**/tests/**' ':!**/test_*.py' ':!docs/**' ':!**/docs/**' ':!examples/**' ':!**/examples/**' | head -20",
+          "stdout": "src/_pytest/_code/code.py:522:            Show fixtures (\"funcargs\" for legacy purposes) per traceback entry.\nsrc/_pytest/capture.py:78:    * fixture: when a test function or one of its fixture depend on the ``capsys`` or ``capfd`` fixtures. In this\nsrc/_pytest/capture.py:79:      case special handling is needed to ensure the fixtures take precedence over the global capture.\nsrc/_pytest/capture.py:250:capture_fixtures = {\"capfd\", \"capfdbinary\", \"capsys\", \"capsysbinary\"}\nsrc/_pytest/capture.py:254:    fixtures = set(request.fixturenames) & capture_fixtures - {name}\nsrc/_pytest/capture.py:255:    if fixtures:\nsrc/_pytest/capture.py:256:        fixtures = sorted(fixtures)\nsrc/_pytest/capture.py:257:        fixtures = fixtures[0] if len(fixtures) == 1 else fixtures\nsrc/_pytest/capture.py:259:            \"cannot use {} and {} at the same time\".format(fixtures, name)\nsrc/_pytest/capture.py:350:    fixtures.\nsrc/_pytest/compat.py:129:    revisit fixtures. The fixture mechanism should ask the node for\nsrc/_pytest/compat.py:270:    when we are creating fixtures, because we wrap the function object ourselves with a decorator\nsrc/_pytest/config/__init__.py:121:    \"fixtures\",\nsrc/_pytest/deprecated.py:23:    'Fixture \"{name}\" called directly. Fixtures are not meant to be called directly,\\n'\nsrc/_pytest/deprecated.py:25:    \"See https://docs.pytest.org/en/latest/fixture.html for more information about fixtures, and\\n\"\nsrc/_pytest/deprecated.py:26:    \"https://docs.pytest.org/en/latest/deprecations.html#calling-fixtures-directly about how to update your code.\"\nsrc/_pytest/deprecated.py:30:    \"'request' is a reserved name for fixtures and will raise an error in future versions\"\nsrc/_pytest/doctest.py:17:from _pytest.fixtures import FixtureRequest\nsrc/_pytest/doctest.py:191:            self.fixture_request = _setup_fixtures(self)\nsrc/_pytest/doctest.py:434:def _setup_fixtures(doctest_item):\n",
+          "stderr": "",
+          "returncode": 0,
+          "unique_paths": [
+            "src/_pytest/_code/code.py",
+            "src/_pytest/capture.py",
+            "src/_pytest/compat.py",
+            "src/_pytest/config/__init__.py",
+            "src/_pytest/deprecated.py",
+            "src/_pytest/doctest.py"
+          ],
+          "n_lines": 20,
+          "latency_seconds": 0.00428
+        }
+      }
+    }
+  ]
+}
