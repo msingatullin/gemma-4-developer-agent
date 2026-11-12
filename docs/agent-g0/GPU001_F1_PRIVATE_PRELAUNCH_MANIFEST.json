@@ -1,0 +1,28 @@
+{
+  "id": "GPU001_F1_PRIVATE_INPUT_FREEZE",
+  "input_json_sha256": "6580e0d7e0b37f4e392b99d293af55b168452c34e2acc6421caacd09a8fec84f",
+  "source_template_sha256": "008bc02cf47e167f420b02eb12215204afb16fd050399d50a109e464f6dffa44",
+  "final_kernel_source_sha256": "26646f7762e84b9b47d1a6b1a0a287f370a02059fcef377d29aec0533106da43",
+  "script_bytes": 38198,
+  "issue_chars": 5252,
+  "arm_prompt_shas": {
+    "v15": "0e8b54ef2ab231040686bbdf25fe20be0651aa823904497bcc7e6b9dc1ed7f89",
+    "exp002_quote_only": "fc42c6a21ece3f17eb11aae5a2a864babbce399bb53afa735f25788f45291afc",
+    "exp001a_search_rewrite": "8231d74a34d08c0fa83f2a61a9c6cf1c054006a2d7e97cdecda5009fd35dd925"
+  },
+  "arm_submission_zip_shas": {
+    "v15": "f812377537d941a9d7308a0d0e153a7e1362ba5b8832e66520a3b8916e9ca63a",
+    "exp002_quote_only": "90601ff0fbcd805e6e4a72b9767a464c5b56c4657d09897a8770ee475777882f",
+    "exp001a_search_rewrite": "5a93228a86397ae247e3b3395ae82cc31d4f724f23a083ca18a0926dfc79cde0"
+  },
+  "source_pin": "6995257cf470d2143ad1683824962de4071c0eb7",
+  "notebook": "PRIVATE",
+  "cost_cash": 0,
+  "wall_limit_seconds": 1950,
+  "previous_F0_wall_seconds": 761.34,
+  "cumulative_max_wall_seconds": 2711.34,
+  "Kaggle_competition_submission": false,
+  "grader_gold_test_patch_embedded": false,
+  "cpu_static_preflight": "PASS_PROMPTS_HASHED_ACTIONS_PARSE_AND_UNSAFE_SHELL_BLOCKED",
+  "preflight_timestamp": "2026-11-12"
+}
