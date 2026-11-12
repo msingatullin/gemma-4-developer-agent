@@ -1,0 +1,64 @@
+{
+  "experiment": "G0-NATIVE-TOOLS-003",
+  "organizer_wheel": "swegemma-0.2.11-py3-none-any.whl",
+  "organizer_wheel_sha256": "9ad876581f3acde8ec3c369858f0834e2b9f41a3cffce3ca42f09cb090aea9d3",
+  "official_modules": [
+    "swegemma.sandbox.docker.ContainerManager",
+    "swegemma.tools.execution.run_command"
+  ],
+  "source_tar_sha256": "710752defce88fe5b29a679a6f2ee68ab1243f709baada1a7d2d88f946032776",
+  "expected_historical_git_tree": "2ba551370f1a4204efbab1f82ba6cfd611634723",
+  "image": "gemma-agent-g0-cpu-git:20261112",
+  "container_network": "none",
+  "cpu_quota_cores": 1,
+  "memory_limit": "768m",
+  "model_calls": 0,
+  "kaggle_submissions": 0,
+  "cases": [
+    {
+      "name": "working_directory",
+      "command": "pwd && git rev-parse --show-toplevel",
+      "response": {
+        "status": "ok",
+        "stdout": "/workspace\n/workspace\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "wall_seconds": 0.0696,
+      "verdict": "PASS"
+    },
+    {
+      "name": "filename_first",
+      "command": "git ls-files '*.py' | grep -i -F 'blueprint' | grep -Ev '(^|/)(tests?|docs?|examples?)/' | head -10",
+      "response": {
+        "status": "ok",
+        "stdout": "src/flask/blueprints.py\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "wall_seconds": 0.0596,
+      "verdict": "PASS"
+    }
+  ],
+  "setup": {
+    "container_id": "0f1835d10b8f4a5fb75c1c0028fbcc03e4effb4ca172886b63f38b56c88f307c",
+    "actual_network": "none",
+    "actual_memory_bytes": 805306368,
+    "cpu_period": 100000,
+    "cpu_quota": 100000,
+    "git_prep": {
+      "status": "ok",
+      "exit_code": 0,
+      "stdout": "2ba551370f1a4204efbab1f82ba6cfd611634723\n",
+      "stderr": ""
+    },
+    "verified_git_tree": "2ba551370f1a4204efbab1f82ba6cfd611634723"
+  },
+  "cleanup": {
+    "attempted": true,
+    "container_removed": true
+  },
+  "verdict": "FAIL_OR_BLOCKED_NATIVE_TOOL_BRIDGE",
+  "error_type": "AssertionError",
+  "error": "('source_content', 'src/flask/__init__.py:5:from .blueprints import Blueprint as Blueprint\\nsrc/flask/app.py:46:from .helpers import _split_blueprint_path\\nsrc/flask/app.py:72:    from .blueprints import Blueprint\\nsrc/flask/app.py:456:        #: Maps registered blueprint names to blueprint objects. The\\nsrc/flask/app.py:457:        #: dict retains the order the blueprints were registered in.\\nsrc/flask/app.py:458:        #: Blueprints can be registered multiple times, this dict does\\nsrc/flask/app.py:462:        self.blueprints: t.Dict[str, \"Blueprint\"] = {}\\nsrc/flask/app.py:707:        and the individual blueprints.\\nsrc/flask/app.py:741:            names = chain(names, reversed(request.blueprints))\\nsrc/flask/app.py:985:    def register_blueprint(self, blueprint: \"Blueprint\", **options: t.Any) -> None:\\nsrc/flask/app.py:986:        \"\"\"Register a :class:`~flask.Blueprint` on the application. Keyword\\nsrc/flask/app.py:988:        blueprint.\\nsrc/flask/app.py:990:        Calls the blueprint\\'s :meth:`~flask.Blueprint.register` method after\\nsrc/flask/app.py:991:        recording the blueprint in the application\\'s :attr:`blueprints`.\\nsrc/flask/app.py:993:        :param blueprint: The blueprint to register.\\nsrc/flask/app.py:994:        :param url_prefix: Blueprint routes will be prefixed with this.\\nsrc/flask/app.py:995:        :param subdomain: Blueprint routes will match on this subdomain.\\nsrc/flask/app.py:996:        :param url_defaults: Blueprint routes will use these default values for\\nsrc/flask/app.py:999:            :class:`~flask.blueprints.BlueprintSetupState`. They can be\\nsrc/flask/app.py:1000:            accessed in :meth:`~flask.Blueprint.record` callbacks.\\n')"
+}
