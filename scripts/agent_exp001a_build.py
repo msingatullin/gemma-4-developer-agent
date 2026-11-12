@@ -55,9 +55,18 @@ def build(baseline: Path, output_dir: Path) -> dict:
         if bad_file is not None:
             raise ValueError(f"Baseline corrupt ZIP: {bad_file}")
         members = z.namelist()
-        if len(members) != len(set(members)) or set(members) != EXPECTED:
-            raise ValueError(f"Unexpected ZIP members: {members}")
-        original = {name: z.read(name) for name in members}
+        file_members = [info.filename for info in z.infolist() if not info.is_dir()]
+        directory_members = [info.filename for info in z.infolist() if info.is_dir()]
+        # Kaggle's exact v15 archive contains harmless directory entries.
+        allowed_directories = {"configs/", "prompts/"}
+        if (
+            len(members) != len(set(members))
+            or set(file_members) != EXPECTED
+            or not set(directory_members).issubset(allowed_directories)
+            or any(name.startswith("/") or ".." in Path(name).parts for name in members)
+        ):
+            raise ValueError(f"Unexpected/unsafe ZIP members: {members}")
+        original = {name: z.read(name) for name in file_members}
     prompt = original["prompts/system.md"].decode("utf-8")
     if prompt.count(OLD) != 1:
         raise ValueError(f"Expected exactly one canonical v15 locator bullet, got {prompt.count(OLD)}")
