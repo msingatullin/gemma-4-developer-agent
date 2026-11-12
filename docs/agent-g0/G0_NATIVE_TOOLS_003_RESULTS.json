@@ -1,0 +1,38 @@
+{
+  "experiment": "G0-NATIVE-TOOLS-003",
+  "organizer_wheel": "swegemma-0.2.11-py3-none-any.whl",
+  "organizer_wheel_sha256": "9ad876581f3acde8ec3c369858f0834e2b9f41a3cffce3ca42f09cb090aea9d3",
+  "official_modules": [
+    "swegemma.sandbox.docker.ContainerManager",
+    "swegemma.tools.execution.run_command"
+  ],
+  "source_tar_sha256": "710752defce88fe5b29a679a6f2ee68ab1243f709baada1a7d2d88f946032776",
+  "expected_historical_git_tree": "2ba551370f1a4204efbab1f82ba6cfd611634723",
+  "image": "gemma-paper-cpu:py310-20261110",
+  "container_network": "none",
+  "cpu_quota_cores": 1,
+  "memory_limit": "768m",
+  "model_calls": 0,
+  "kaggle_submissions": 0,
+  "cases": [],
+  "setup": {
+    "container_id": "9c5b247da7890fcbeb4d0d62dc74a8990479eb36089882a7eaea10373a1d403c",
+    "actual_network": "none",
+    "actual_memory_bytes": 805306368,
+    "cpu_period": 100000,
+    "cpu_quota": 100000,
+    "git_prep": {
+      "status": "error",
+      "exit_code": 127,
+      "stdout": "",
+      "stderr": "/bin/bash: line 1: git: command not found\n"
+    }
+  },
+  "cleanup": {
+    "attempted": true,
+    "container_removed": true
+  },
+  "verdict": "FAIL_OR_BLOCKED_NATIVE_TOOL_BRIDGE",
+  "error_type": "RuntimeError",
+  "error": "Historical tree setup failed: /bin/bash: line 1: git: command not found\n"
+}
