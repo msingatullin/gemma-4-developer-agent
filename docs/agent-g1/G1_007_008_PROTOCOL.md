@@ -34,3 +34,9 @@ Complete the *existing declared dependency set* in the **private test-only depen
 ## Package pin correction before install/test
 
 First fixed-dependency `pip --only-binary=:all:` call failed **before installing anything** because `atomicwrites==1.4.1` does not exist in the package index (available release is `1.4.0`). Revise only that test-environment dependency to **`atomicwrites==1.4.0`**, preserving `more-itertools==8.14.0`, `wcwidth==0.2.14`, `six==1.17.0` and all original F2P/P2P queries and patches. No SWE test has yet run successfully in G1-008.
+
+## 2026-11-12 G1-008 generated historical version metadata (before final retry)
+
+Following the exact declared dependency repair, all four G1-008 processes progressed to pytest configuration but were **ENV_BLOCKED** with `packaging.version.InvalidVersion: Invalid version: 'unknown'`. The pinned project's `setup.py` explicitly configures `setuptools_scm` `write_to: src/_pytest/_version.py`, but Stage-A historical source archive (correctly) lacks this generated build artifact. The earlier script looked only for `pyproject.toml` write_to, not the same instruction in `setup.py`.
+
+One controlled **build-environment-only** repair: generate **identical** untracked `src/_pytest/_version.py` in both BASE and GOLD using frozen valid PEP440 test version `4.5.0.dev0` and `version_tuple=(4,5,0,"dev0")`. Record SHA256, verify both original tracked Git HEAD tree unchanged, retain all earlier logs. Continue only with identical F2P/P2P selectors and same four declared dependencies mounted read-only. If further version/pluggy incompatibility prevents tests, label `ENV_BLOCKED` and do not treat it as any task failure/success. This repair is not code intended for submission or agent prompt.
