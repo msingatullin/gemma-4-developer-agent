@@ -18,3 +18,8 @@ Frozen task manifest: `paper/small_model_benchmark/manifest.json`, SHA256 `8270d
 4. Do not label 2/2 CPU test pass as model solve rate. Stop before expensive compute or Kaggle submissions. The private historical file snapshots stay on VPS; publication should contain hashes and bounded reproducible logs without secrets.
 
 G1 task coverage denominator remains 50 frozen manifest tasks, not just successful selected cases. Aim for two additional valid tasks and heterogeneous repositories; otherwise explain blocker and update STATUS.md and MMW.
+
+
+## Pre-execution storage-method addendum (2026-11-12)
+
+The registered local upstream bare caches are shallow/promisor repositories: fetching pinned commit via local `git fetch` failed because parent objects are absent, although both **pinned commit trees and all tracked file blobs were locally readable**. A direct `git archive <pinned SHA>` for each returned exit 0 without network. We will therefore use **an isolated `git archive` extraction of the exact pinned commit's tracked tree** and create a local baseline Git commit solely for diff operations. Mandatory check: `git rev-parse LOCAL_BASELINE^{tree}` **must byte-for-byte equal** `git --git-dir UPSTREAM_BARE rev-parse HISTORIC_PIN^{tree}` *before* any patch is applied. This verifies the full tracked file snapshot while honestly noting the local Git commit hash differs from the historical commit hash. On a mismatch, stop as SETUP_BLOCKED. This substitution is not permission to use a newer upstream version. All F2P/P2P test selectors, patches, image constraints and PASS criteria above remain unchanged.
