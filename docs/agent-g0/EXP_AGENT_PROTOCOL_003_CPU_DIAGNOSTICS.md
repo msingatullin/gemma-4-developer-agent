@@ -1,0 +1,13 @@
+# EXP-AGENT-PROTOCOL-003 — 2026-11-14 CPU-only tool-transport forensics
+
+**Hypothesis:** Some GPU001-F1 failures are due to the custom JSON transport rather than Gemma's ability to locate/repair. **Expected uplift:** fewer protocol failures; no numeric solve-rate prediction without new paired real-model evaluation. **Baseline:** F1, 0/3 variants solve one DEV pytest11143; this is not a benchmark solve rate.
+
+**Resources:** Existing nuremberf VPS CPU, no GPU, $0 incremental, no Kaggle submission, no production changes. **Acceptance:** trace-based failure categorization and offline unit tests for narrowly proposed adapter changes, with command allowlist intact.
+
+**Observed original F1 raw trace:** v15 10 calls: 3 failed edit_file exact-string matches (line numbers copied from read_file output), 1 unsupported test command, 0 successful edits. EXP002 10 calls: 1 successful edit but wrong bench/empty.py patch; 6 unsupported test commands; F2P fails, P2P passes. EXP001A 10 calls: 2 unknown tool invocations (bare Git commands as tool names), 3 blocked attempts to edit testing files, 1 unsupported test command, 0 successful edits. All arms exhausted 10 calls; one original DEV task only.
+
+**CPU stage actually executed:** New prospective `protocol_adapter_v2.py` and `test_protocol.py` under `/opt/kaggle/gemma-agent-g0-20261112-audit/gpu001_private_preflight/f2_cpu_protocol_20261114`; `python3 -m unittest discover -s ... -p 'test_*.py' -v` **8 tests PASS**, exit 0. SHA256 source `97ff083328ca6a8579cdda39ac8d9039c4df4ef42a1a181c2e12957c93977065`; tests `22842a233da11df7af95382afffbc64f8b2147e693e06d2b793e4693c2c459be`. Tests cover contiguous read-file line-number stripping, preserving nonconsecutive/plain code, safe bare-git alias normalization, original search allowlist, rejecting unsupported pytest, destructive/sensitive commands, and unknown tools. This is an isolated **prototype**, NOT the deployed F1 adapter or official swegemma ADK runner. No actual new model calls or F2P/P2P from this stage.
+
+**Interpretation:** Transport defects demonstrably consume tool-call budgets. v15's attempted patch is not valid; auto-stripping line numbers is only a candidate and needs stricter exact-source matching before integration. EXP001A's bare shell commands are incompatible with the JSON adapter. A command alias is safe only after validating the same read-only allowlist. Adding pytest execution must be done in a tightly bounded isolated evaluator, not a general shell pass-through.
+
+**Verdict:** CPU protocol diagnostics PASS (8/8), **real agent solve uplift NOT PROVEN**. G0 official harness parity and E4B paired validation remain HOLD. No further GPU without separate owner approval; preserve Main v11/v14 0.17 and E4B v15 0.06.
