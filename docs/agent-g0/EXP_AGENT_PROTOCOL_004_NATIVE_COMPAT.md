@@ -1,0 +1,13 @@
+# EXP-AGENT-PROTOCOL-004 — native swegemma compatibility audit (2026-11-15)
+
+Hypothesis: the CPU-only protocol adapter from EXP-AGENT-PROTOCOL-003 can be integrated safely with the official swegemma tool interface after verifying names and command filtering. Expected uplift: fewer invalid tool calls; **no predicted numerical solve-rate gain**. Baseline: GPU F1 0/3 arms solved one DEV pytest11143, prior prototype 8/8 CPU unit tests.
+
+Environment: existing free nuremberf VPS, CPU only, cash $0, no model, GPU, Kaggle submission, publication or production access. Official swegemma0.2.11 wheel was previously downloaded from the Kaggle organizer wheelhouse. Audited exact source `swegemma/tools/execution.py`, SHA256 `ff4df981ae1070334665ce8ab726c231e139ac5cf34bb5ebc4660eada28a7b2d`.
+
+**Observed critical mismatch:** official tool names include `run_command`, `submit_patch`, `get_status`; the F1 custom adapter additionally exposed `read_file` and `edit_file`, which are not official native tools. Hence prior F1 is not a native swegemma agent test. Additionally the v2 command validator checked only the first pipeline command: `git status | python3 -c "print(1)"` was erroneously accepted. The native runner would execute it. New regression test exposed this: 4 PASS / 1 FAIL on unmodified v2.
+
+**Actual corrective action:** created isolated `protocol_adapter_v3_candidate.py` in VPS `/opt/kaggle/gemma-agent-g0-20261112-audit/gpu001_private_preflight/f3_native_compat_20261115/` without overwriting v2. Each shell pipeline segment must now have an allowed executable and git subcommand; empty segments are rejected. Re-ran native compatibility suite **5/5 PASS**, previous v2 suite **8/8 PASS**. This is a CPU-only static/unit test; no native end-to-end invocation or model-generated patch yet.
+
+Evidence: candidate SHA256 `12a3633e2f5a55d1ed25ff2181f81a01c1aaecbafa74fb5793951894a192e7cb`, compatibility test SHA256 `f87c5baa828568d4b470f39f7a064a5dea5ed89e0301ac5f6c0dec60c7559eec`, passing log SHA256 `3ec1131261897a684a3e6a825309ac2c50ddb0e2319a0725406e7dd11a7f9bb9`. Original v2 SHA256 `97ff083328ca6a8579cdda39ac8d9039c4df4ef42a1a181c2e12957c93977065`.
+
+Verdict: **PASS for detecting/fixing pipeline command allowlist bypass in isolated candidate; HOLD native integration** until tool schema is reconciled and official runner CPU smoke is executed. Do not deploy the custom F1 bridge as official swegemma. Frozen Main v11/v14 0.17; Small E4B v15 0.06. Next: build native-schema-compatible transport, CPU-only integration test with the official run_command and submit_patch in sandbox. No GPU without explicit new approval.
